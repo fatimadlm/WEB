@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Acceso • CocinaBonita</title>
+  <meta name="description" content="Formulario de inicio de sesión y registro estilo One UI / iOS, sin JavaScript." />
+  <style>
+    /* ======================
+       One UI / iOS Style Tokens
+    =======================*/
+    :root{
+      /* Neutrals */
+      --bg:#f2f2f7;           /* iOS grouped background */
+      --surface:#ffffff;       /* cards */
+      --text:#111827;          /* primary text */
+      --subtle:#6b7280;        /* secondary text */
+      --border:#e5e7eb;        /* hairline */
+      --shadow: 0 6px 24px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      /* Accents */
+      --accent:#0a84ff;        /* iOS blue */
+      --accent-press:#0060df;
+      --login:#34c759;         /* iOS green */
+      --register:#0a84ff;      /* iOS blue */
+      /* Radii & sizes */
+      --r-lg: 22px;            /* iOS big pill */
+      --r-md: 14px;
+      --r-sm: 10px;
+      --space: 16px;
+      --space-lg: 24px;
+      --focus: 3px solid rgba(10,132,255,.35);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+
+    /* ============= Layout ============= */
+    .wrap{
+      min-height:100%;
+      display:grid; place-items:center;
+      padding: clamp(20px, 4vw, 48px);
+    }
+    .card{
+      width:min(92vw, 460px);
+      background:var(--surface);
+      border-radius: 28px;  /* iOS extra rounded */
+      box-shadow: var(--shadow);
+      border:1px solid var(--border);
+      overflow:hidden;
+    }
+
+    /* ============= Header ============= */
+    .header{
+      padding: 22px 22px 8px;
+    }
+    .nav-title{
+      font-weight:800; letter-spacing:-0.02em;
+      font-size: clamp(20px, 3.6vw, 24px);
+      margin:0 0 6px;
+    }
+    .subtitle{ margin:0; color:var(--subtle); font-size:14px }
+
+    /* ============= Segmented Control (tabs) ============= */
+    .seg-wrap{ padding: 12px 14px 2px }
+    .segments{
+      position:relative;
+      display:grid; grid-template-columns:1fr 1fr; gap:0;
+      background:#f3f4f6; border:1px solid var(--border); border-radius: 999px;
+      padding:4px; user-select:none;
+    }
+    .segments input{ position:absolute; opacity:0; pointer-events:none }
+    .segments label{
+      position:relative; z-index:2; text-align:center; padding:12px 14px;
+      font-weight:800; border-radius:999px; cursor:pointer; color:#4b5563;
+      transition: color .2s ease, background-color .2s ease, filter .2s ease;
+    }
+    /* Hover tint & text color per option */
+    .segments label[for="t-login"]:hover{ background: rgba(52,199,89,.14); color: var(--login) }
+    .segments label[for="t-register"]:hover{ background: rgba(10,132,255,.14); color: var(--register) }
+
+    /* slider */
+    .segments .thumb{
+      position:absolute; inset:4px auto 4px 4px; width: calc(50% - 4px);
+      background:#fff; border-radius:999px; box-shadow: 0 2px 8px rgba(0,0,0,.08);
+      transition: transform .25s cubic-bezier(.2,.8,.2,1), background-color .25s ease, box-shadow .25s ease;
+    }
+    /* Colored thumb depending on selection (vibrant) */
+    #t-login:checked ~ .seg-wrap .segments .thumb{
+      transform: translateX(0%);
+      background:#ffffff;
+      border:1px solid rgba(52,199,89,.5);
+      box-shadow: 0 2px 8px rgba(0,0,0,.08), 0 4px 12px rgba(52,199,89,.20);
+    }
+    #t-register:checked ~ .seg-wrap .segments .thumb{
+      transform: translateX(100%);
+      background:#ffffff;
+      border:1px solid rgba(10,132,255,.5);
+      box-shadow: 0 2px 8px rgba(0,0,0,.08), 0 4px 12px rgba(10,132,255,.20);
+    }
+
+    /* Selected label over white thumb: dark text for readability */
+    #t-login:checked ~ .seg-wrap .segments label[for="t-login"],
+    #t-register:checked ~ .seg-wrap .segments label[for="t-register"]{ color: var(--text) }
+
+    /* Avoid hover overlay when selected */
+    #t-login:checked ~ .seg-wrap .segments label[for="t-login"]:hover,
+    #t-register:checked ~ .seg-wrap .segments label[for="t-register"]:hover{ background: transparent }
+
+    /* Keep structure from radios to panels */
+    .panels{ position:relative }
+    .panel{ display:none; padding: 18px 22px 24px; animation: fadeUp .25s ease both }
+    #t-login:checked ~ .panels #p-login{ display:block }
+    #t-register:checked ~ .panels #p-register{ display:block }
+    @keyframes fadeUp{ from{opacity:0; transform: translateY(6px)} to{opacity:1; transform:none} }
+    .panel{ display:none; padding: 18px 22px 24px; animation: fadeUp .25s ease both }
+    #t-login:checked ~ .panels #p-login{ display:block }
+    #t-register:checked ~ .panels #p-register{ display:block }
+    @keyframes fadeUp{ from{opacity:0; transform: translateY(6px)} to{opacity:1; transform:none} }
+
+    /* ============= Form ============= */
+    form{ display:grid; gap:14px }
+    .field{ display:grid; gap:8px }
+    label{ font-weight:600; font-size:14px }
+    .control{
+      display:flex; align-items:center; gap:12px;
+      padding: 14px 16px;
+      border:1px solid var(--border);
+      border-radius: var(--r-lg);
+      background:#fff;
+      transition: .2s ease;
+    }
+    .control:focus-within{ outline: var(--focus); box-shadow: 0 0 0 4px rgba(10,132,255,.08) }
+    .control svg{ width:18px; height:18px; opacity:.55 }
+    input[type="text"], input[type="email"], input[type="password"]{
+      border:0; outline:0; width:100%; font: inherit; background:transparent; color:inherit;
+    }
+    ::placeholder{ color:#9aa3af }
+
+    .row{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap }
+    .link{ color:var(--accent); text-decoration:none; font-weight:600; font-size:14px }
+    .link:hover{ text-decoration:underline }
+
+    /* iOS switch (checkbox) */
+    .switch-wrap{ display:flex; align-items:center; gap:10px; font-size:14px }
+    .switch{ position:relative; width:48px; height:28px; border-radius:999px; background:#e5e7eb; border:1px solid #d1d5db; transition:.2s ease }
+    .switch::after{ content:""; position:absolute; top:2px; left:2px; width:24px; height:24px; border-radius:50%; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.12); transition:.2s ease }
+    .switch-input{ position:absolute; opacity:0 }
+    .switch-input:checked + .switch{ background:var(--accent); border-color:transparent }
+    .switch-input:checked + .switch::after{ transform: translateX(20px) }
+
+    /* Primary button (base) */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding: 14px 18px; border:0; cursor:pointer; width:100%;
+      border-radius: 16px; font-weight:800; font-size:15px;
+      color:#fff; background:#0a84ff; /* will be overridden by state rules */
+      box-shadow: 0 10px 26px rgba(0,0,0,.12);
+      transition: transform .06s ease, filter .15s ease;
+    }
+    .btn:hover{ filter: brightness(1.06) }
+    .btn:active{ transform: translateY(1px) }
+
+    .note{ font-size:13px; color:var(--subtle) }
+
+    /* Footer (grouped style) */
+    .foot{ padding:12px 16px; border-top:1px solid var(--border); background:#fafafa; color:#4b5563; font-weight:600; display:flex; gap:10px; align-items:center }
+    .badge{ font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:#fff }
+
+    :focus-visible{ outline: var(--focus); outline-offset:2px }
+      /* Hide top-level radios controlling tabs */
+    input[name="tab"]{ position:absolute; opacity:0; pointer-events:none; width:0; height:0 }
+      /* Dynamic button colors by active tab */
+    #t-login:checked ~ .panels #p-login .btn{
+      background: linear-gradient(180deg, #34C759, #2ABB4E);
+      box-shadow: 0 14px 28px rgba(52,199,89,.35);
+    }
+    #t-register:checked ~ .panels #p-register .btn{
+      background: linear-gradient(180deg, #0A84FF, #0066FF);
+      box-shadow: 0 14px 28px rgba(10,132,255,.35);
+    }
+    /* Active thumb: clean white background under selected option */
+    #t-login:checked ~ .seg-wrap .segments .thumb{ background:#ffffff; border:1px solid rgba(52,199,89,.5); box-shadow: 0 2px 8px rgba(0,0,0,.08), 0 4px 12px rgba(52,199,89,.20) }
+    #t-register:checked ~ .seg-wrap .segments .thumb{ background:#ffffff; border:1px solid rgba(10,132,255,.5); box-shadow: 0 2px 8px rgba(0,0,0,.08), 0 4px 12px rgba(10,132,255,.20) }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card" role="region" aria-label="Acceso y registro">
+      <div class="header">
+        <h1 class="nav-title">Accede a tu cuenta</h1>
+        <p class="subtitle">Guarda recetas, listas y preferencias culinarias.</p>
+      </div>
+
+      <!-- Radios that control panels -->
+      <input id="t-login" type="radio" name="tab" checked aria-hidden="true" />
+      <input id="t-register" type="radio" name="tab" aria-hidden="true" />
+
+      <!-- Segmented control (iOS style) -->
+      <div class="seg-wrap">
+        <div class="segments">
+          <label for="t-login" role="tab" aria-controls="p-login" aria-selected="true">Iniciar sesión</label>
+          <label for="t-register" role="tab" aria-controls="p-register" aria-selected="false">Crear cuenta</label>
+          <span class="thumb" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <!-- Panels -->
+      <div class="panels">
+        <!-- LOGIN -->
+        <div id="p-login" class="panel" role="tabpanel" aria-labelledby="t-login">
+          <form action="/login" method="POST" novalidate>
+            <div class="field">
+              <label for="login-email">Correo electrónico</label>
+              <div class="control">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.2"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.2"/></svg>
+                <input id="login-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="tu@correo.com" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="login-pass">Contraseña</label>
+              <div class="control">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M8 11V8a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.2"/></svg>
+                <input id="login-pass" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+              </div>
+            </div>
+            <div class="row">
+              <label class="switch-wrap" for="remember">
+                <input id="remember" class="switch-input" type="checkbox" name="remember" />
+                <span class="switch" aria-hidden="true"></span>
+                <span>Recuérdame</span>
+              </label>
+              <a class="link" href="/recuperar">¿Olvidaste tu contraseña?</a>
+            </div>
+            <button class="btn" type="submit" aria-label="Iniciar sesión">Iniciar sesión</button></form>
+        </div>
+
+        <!-- REGISTER -->
+        <div id="p-register" class="panel" role="tabpanel" aria-labelledby="t-register">
+          <form action="/registro" method="POST" novalidate>
+            <div class="field">
+              <label for="reg-name">Nombre</label>
+              <div class="control">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.2"/><path d="M4 20a8 8 0 0 1 16 0" stroke="currentColor" stroke-width="1.2"/></svg>
+                <input id="reg-name" name="name" type="text" autocomplete="name" placeholder="Tu nombre" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="reg-email">Correo electrónico</label>
+              <div class="control">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.2"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.2"/></svg>
+                <input id="reg-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="tu@correo.com" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="reg-pass">Contraseña</label>
+              <div class="control">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M8 11V8a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.2"/></svg>
+                <input id="reg-pass" name="password" type="password" autocomplete="new-password" placeholder="Mín. 8 caracteres" minlength="8" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="reg-pass2">Confirmar contraseña</label>
+              <div class="control">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M8 11V8a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.2"/></svg>
+                <input id="reg-pass2" name="password_confirm" type="password" autocomplete="new-password" placeholder="Repite la contraseña" minlength="8" required />
+              </div>
+            </div>
+            <label class="switch-wrap" for="terms">
+              <input id="terms" class="switch-input" type="checkbox" name="terms" required />
+              <span class="switch" aria-hidden="true"></span>
+              <span>Acepto los <a class="link" href="/terminos">Términos</a> y la <a class="link" href="/privacidad">Privacidad</a></span>
+            </label>
+            <button class="btn" type="submit" aria-label="Crear cuenta">Crear cuenta</button>
+            <p class="note">Recibirás recomendaciones personalizadas según tus gustos.</p>
+          </form>
+        </div>
+      </div>
+
+      <div class="foot" aria-hidden="true">
+        <span class="badge">Diseño One UI / iOS</span>
+        <span class="badge">HTML + CSS • Sin JS</span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
