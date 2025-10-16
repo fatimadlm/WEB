@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cooking UAH - Registro</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script defer src="js/registro.js"></script>
+</head>
+<body>
+  <div class="login-container">
+    <header class="logo">
+      <img src="C:\Users\domij\OneDrive\Desktop\25-26\WEB\Imagenes\logo.png" alt="Logo Cooking UAH" class="logo-img" />
+      <h1>Cooking UAH</h1>
+    </header>
+
+    <main class="login-box">
+      <h2>Crear cuenta</h2>
+
+      <form id="registerForm">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Introduce tu nombre" required />
+
+        <label for="username">Nombre de usuario</label>
+        <input type="text" id="username" name="username" placeholder="Ej: cocinero123" required />
+
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required />
+
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" placeholder="Crea una contraseña" required />
+
+        <label for="confirmPassword">Confirmar contraseña</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repite la contraseña" required />
+
+        <button type="submit" class="btn-primary">Registrarse</button>
+
+        <p class="register-text">
+          ¿Ya tienes cuenta?
+          <a href="index.html">Inicia sesión</a>
+        </p>
+      </form>
+    </main>
+  </div>
+</body>
+</html>

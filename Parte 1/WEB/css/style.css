@@ -1,0 +1,104 @@
+/* ---------- RESET ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ---------- BODY ---------- */
+body {
+  background-color: #fcefdc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* ---------- CONTAINER ---------- */
+.login-container {
+  background-color: #fff8f0;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 350px;
+}
+
+/* ---------- LOGO ---------- */
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.logo-img {
+  width: 60px;
+  margin-bottom: 0.5rem;
+}
+.logo h1 {
+  color: #6b2b00;
+  font-size: 1.8rem;
+}
+
+/* ---------- FORM ---------- */
+.login-box h2 {
+  color: #6b2b00;
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #5a2500;
+}
+
+input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #d6b58e;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  background-color: #fffaf5;
+}
+
+/* ---------- BUTTON ---------- */
+.btn-primary {
+  background-color: #cc5500;
+  color: white;
+  border: none;
+  padding: 0.7rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.btn-primary:hover {
+  background-color: #b24900;
+}
+
+/* ---------- REGISTER LINK ---------- */
+.register-text {
+  margin-top: 1rem;
+  color: #5a2500;
+  font-size: 0.9rem;
+}
+.register-text a {
+  color: #cc5500;
+  font-weight: 600;
+  text-decoration: none;
+}
+.register-text a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- REGISTER FORM ---------- */
+#registerForm {
+  margin-top: 0.5rem;
+}
+#registerForm input {
+  margin-bottom: 0.9rem;
+}
