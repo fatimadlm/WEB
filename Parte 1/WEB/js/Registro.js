@@ -33,7 +33,7 @@ registerForm.addEventListener('submit', function (e) {
     nombre,
     username,
     email,
-    password // Nota: en producción, nunca se guarda la contraseña en texto plano
+    password //Esto esta de prueba , porque esta en texto plan y es inseguro. Importante
   };
 
   // Guardamos el nuevo usuario en el arreglo y lo almacenamos

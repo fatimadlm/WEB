@@ -102,3 +102,24 @@ input {
 #registerForm input {
   margin-bottom: 0.9rem;
 }
+/* Botón naranja secundario */
+.btn-secondary {
+  background-color: #FFA500; /* naranja */
+  color: white; /* texto blanco */
+  border: none; /* sin borde */
+  border-radius: 8px; /* esquinas redondeadas */
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease; /* animación suave */
+  margin-top: 15px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* sombra sutil */
+}
+
+/* Efecto hover */
+.btn-secondary:hover {
+  background-color: #FF8C00; /* naranja más oscuro al pasar el mouse */
+  box-shadow: 0 6px 10px rgba(0,0,0,0.3); /* sombra más marcada */
+  transform: translateY(-2px); /* ligero levantamiento */
+}
