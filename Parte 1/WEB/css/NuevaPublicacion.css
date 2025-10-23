@@ -1,0 +1,145 @@
+/* ---------- RESET ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ---------- BODY ---------- */
+body {
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+  color: #4a2c0a;
+}
+
+/* ---------- ESTRUCTURA ---------- */
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #ffb74d, #ff9800);
+  color: white;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 4px solid #e67e22;
+}
+
+.logo-img {
+  width: 90px;
+  margin-bottom: 10px;
+}
+
+.sidebar h1 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.nav-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.btn-secondary {
+  text-decoration: none;
+  background-color: #fff3e0;
+  color: #d35400;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.btn-secondary:hover {
+  background-color: #ffcc80;
+  border-color: #ef6c00;
+  color: #4a2c0a;
+}
+
+/* ---------- CONTENIDO PRINCIPAL ---------- */
+.main-content {
+  flex: 1;
+  padding: 40px 60px;
+  background-color: #fffaf3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+h2 {
+  color: #e67e22;
+  margin-bottom: 25px;
+  font-size: 1.8em;
+  font-weight: 700;
+}
+
+/* ---------- FORMULARIO ---------- */
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff3e0;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(230, 126, 34, 0.2);
+}
+
+.post-form label {
+  font-weight: 600;
+  color: #bf360c;
+}
+
+.post-form input,
+.post-form textarea {
+  padding: 12px;
+  border: 2px solid #ffb74d;
+  border-radius: 10px;
+  font-size: 1em;
+  outline: none;
+  transition: 0.2s;
+}
+
+.post-form input:focus,
+.post-form textarea:focus {
+  border-color: #ef6c00;
+  box-shadow: 0 0 6px rgba(239, 108, 0, 0.5);
+}
+
+/* ---------- BOTÓN PUBLICAR ---------- */
+.btn-publicar {
+  background: linear-gradient(90deg, #f57c00, #ef6c00);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.3s;
+}
+
+.btn-publicar:hover {
+  background: linear-gradient(90deg, #ff9800, #f57c00);
+  transform: scale(1.03);
+}
+
+/* ---------- FOOTER ---------- */
+.footer {
+  background-color: #ffb74d;
+  text-align: center;
+  padding: 12px;
+  font-weight: 500;
+  border-top: 4px solid #e67e22;
+  color: #4a2c0a;
+}

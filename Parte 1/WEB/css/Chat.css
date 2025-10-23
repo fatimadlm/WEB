@@ -1,0 +1,150 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff8f0;
+  color: #5a2500;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar igual que Mensajes.css */
+.sidebar {
+  width: 220px;
+  background-color: #ffb74d;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 2px solid #e67e22;
+}
+
+.logo-img {
+  width: 70px;
+  margin-bottom: 10px;
+}
+
+.sidebar h1 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.nav-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.btn-secondary, .btn-logout {
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  display: block;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary { background-color: #fff3e0; color: #d35400; }
+.btn-secondary:hover { background-color: #ffe0b2; color: #4a2c0a; }
+.btn-logout { background-color: #ff7043; color: white; margin-top: 15px; }
+.btn-logout:hover { background-color: #e64a19; transform: translateY(-2px); }
+
+/* Chat principal */
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 50px;
+  background-color: #fffaf5;
+}
+
+h2 {
+  color: #e67e22;
+  margin-bottom: 25px;
+}
+
+/* Chat box */
+.chat-box {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff3e0;
+  border-radius: 10px;
+  overflow-y: auto;
+  max-height: 70vh;
+  margin-bottom: 20px;
+}
+
+.message {
+  margin-bottom: 15px;
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 12px;
+  position: relative;
+  line-height: 1.4;
+}
+
+.message p {
+  margin: 0;
+}
+
+.message span {
+  font-size: 0.7em;
+  color: #4a2c0a;
+  display: block;
+  text-align: right;
+  margin-top: 5px;
+}
+
+/* Mensajes recibidos y enviados */
+.received {
+  background-color: #ffcc80;
+  align-self: flex-start;
+}
+
+.sent {
+  background-color: #ffb74d;
+  align-self: flex-end;
+  color: #fff;
+}
+
+/* Formulario de envío */
+.chat-form {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-form input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d6b58e;
+}
+
+.chat-form button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #d35400;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.chat-form button:hover {
+  background-color: #e67e22;
+}
+
+/* Footer */
+.footer {
+  background-color: #ffcc80;
+  text-align: center;
+  padding: 12px;
+  font-weight: 500;
+  border-top: 2px solid #e67e22;
+  color: #5a2500;
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat - CookingUAH</title>
+  <link rel="stylesheet" href="../css/Chat.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img">
+        <h1>CookingUAH</h1>
+      </div>
+
+      <nav class="nav-buttons">
+        <a href="Home.html" class="btn-secondary">🏠 Inicio</a>
+        <a href="Mensajes.html" class="btn-secondary">💬 Mensajes</a>
+        <a href="MiPerfil.html" class="btn-secondary">👤 Mi Perfil</a>
+        <a href="login.html" class="btn-logout">🚪 Cerrar sesión</a>
+      </nav>
+    </aside>
+
+    <!-- CHAT -->
+    <main class="chat-main">
+      <h2>Chat con @ChefJuan</h2>
+
+      <div class="chat-box">
+        <div class="message received">
+          <p>Hola! ¿Cómo te quedó la lasaña?</p>
+          <span>10:15 AM</span>
+        </div>
+        <div class="message sent">
+          <p>¡Quedó deliciosa! Gracias por la receta 😍</p>
+          <span>10:17 AM</span>
+        </div>
+        <div class="message received">
+          <p>Me alegra! Próxima vez prueba con pollo.</p>
+          <span>10:20 AM</span>
+        </div>
+      </div>
+
+      <form class="chat-form">
+        <input type="text" placeholder="Escribe un mensaje..." required>
+        <button type="submit">Enviar</button>
+      </form>
+    </main>
+
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2025 CookingUAH</p>
+  </footer>
+
+  <script>
+    const form = document.querySelector('.chat-form');
+    const chatBox = document.querySelector('.chat-box');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = form.querySelector('input');
+      const message = document.createElement('div');
+      message.classList.add('message', 'sent');
+      message.innerHTML = `<p>${input.value}</p><span>Ahora</span>`;
+      chatBox.appendChild(message);
+      input.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+    });
+  </script>
+</body>
+</html>
