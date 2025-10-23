@@ -43,6 +43,6 @@ loginForm.addEventListener('submit', function(e) {
   } else {
     // Login exitoso
     localStorage.setItem('currentUser', JSON.stringify(user)); // Guardamos usuario actual
-    window.location.href = 'home.html'; // Redirigimos a la página principal
+    window.location.href = 'Home.html'; // Redirigimos a la página principal
   }
 });
