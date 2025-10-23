@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cooking UAH - Feed</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+  <!-- CABECERA -->
+  <header class="main-header">
+    <div class="header-left">
+      <img src="../Imagenes/logo.png" alt="Logo Cooking UAH" class="logo-img" />
+      <h1>Cooking UAH</h1>
+    </div>
+
+    <nav class="nav-bar">
+      <a href="Feed.html" class="active">Inicio</a>
+      <a href="Perfil.html">Perfil</a>
+      <a href="Explorar.html">Explorar</a>
+      <a href="../index.html">Cerrar sesión</a>
+    </nav>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="feed-container">
+
+    <!-- SECCIÓN NUEVA PUBLICACIÓN -->
+    <section class="new-post">
+      <h2>Comparte tu receta</h2>
+      <form id="postForm">
+        <textarea id="postText" placeholder="Escribe tu receta o comentario..." required></textarea>
+        <input type="file" id="postImage" accept="image/*" />
+        <button type="submit" class="btn-primary">Publicar</button>
+      </form>
+    </section>
+
+    <!-- FEED DE PUBLICACIONES -->
+    <section class="posts">
+
+      <article class="post">
+        <div class="post-header">
+          <img src="../Imagenes/user1.jpg" alt="Usuario" class="avatar" />
+          <div class="user-info">
+            <h3>@mariaChef</h3>
+            <span class="time">Hace 2 horas</span>
+          </div>
+        </div>
+        <p class="post-text">Probando una nueva receta de lasaña casera 😋🍝</p>
+        <img src="../Imagenes/lasagna.jpg" alt="Lasaña casera" class="post-img" />
+        <div class="post-actions">
+          <button class="like-btn">❤️ 45</button>
+          <button class="comment-btn">💬 6</button>
+          <button class="share-btn">🔁</button>
+        </div>
+      </article>
+
+      <article class="post">
+        <div class="post-header">
+          <img src="../Imagenes/user2.jpg" alt="Usuario" class="avatar" />
+          <div class="user-info">
+            <h3>@juanCocina</h3>
+            <span class="time">Hace 5 horas</span>
+          </div>
+        </div>
+        <p class="post-text">Mi versión rápida del tiramisú ☕🍰</p>
+        <img src="../Imagenes/tiramisu.jpg" alt="Tiramisú casero" class="post-img" />
+        <div class="post-actions">
+          <button class="like-btn"> 32</button>
+          <button class="comment-btn">4</button>
+          <button class="share-btn"></button>
+        </div>
+      </article>
+
+    </section>
+  </main>
+</body>
+</html>
