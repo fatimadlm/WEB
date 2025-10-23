@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro</title>
+  <style>
+    body { font-family: Arial; display:flex; justify-content:center; align-items:center; height:100vh; background:#f0f8ff; }
+    form { background:#fff; padding:20px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); }
+    input { display:block; margin:10px 0; padding:8px; width:250px; }
+    button { padding:10px; width:100%; background:#4682b4; color:white; border:none; border-radius:5px; cursor:pointer; }
+    #error { color:red; margin-top:10px; }
+  </style>
+</head>
+<body>
+  <form id="registerForm">
+    <h2>Crear cuenta</h2>
+    <input type="text" id="username" placeholder="Usuario" required>
+    <input type="password" id="password" placeholder="Contraseña" required>
+    <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" required>
+    <button type="submit">Registrarse</button>
+    <div id="error"></div>
+    <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+  </form>
+
+  <script src="register.js"></script>
+</body>
+</html>
