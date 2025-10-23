@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Perfil - CookingUAH</title>
+  <link rel="stylesheet" href="../css/MiPerfil.css" />
+</head>
+<body>
+  <div class="perfil-container">
+
+    <!-- BARRA LATERAL -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
+        <h1>CookingUAH</h1>
+      </div>
+
+      <nav class="nav-buttons">
+        <a href="Home.html" class="btn-secondary">Inicio</a>
+        <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
+      </nav>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="perfil-content">
+
+      <!-- INFORMACIÓN DEL USUARIO -->
+      <section class="perfil-info">
+        <img src="../Imagenes/Avatar1.jpg" alt="Foto de perfil" class="perfil-img" />
+        <div class="perfil-datos">
+          <h2>Juan Pérez</h2>
+          <p class="usuario">@ChefJuan</p>
+          <p class="comida-fav"><strong>Comida favorita:</strong> Lasaña 🍝</p>
+          <p class="bio">Apasionado por la cocina italiana y los postres caseros. ¡Compartiendo mis mejores recetas!</p>
+
+          <!-- BOTÓN EDITAR PERFIL -->
+          <a href="editar_perfil.html" class="btn-editar">Editar perfil</a>
+        </div>
+      </section>
+
+      <!-- PUBLICACIONES DEL USUARIO -->
+      <section class="perfil-posts">
+        <h3>Mis publicaciones</h3>
+
+        <!-- Publicación 1 -->
+        <div class="post">
+          <div class="post-header">
+            <img src="../Imagenes/Avatar1.jpg" alt="Usuario" class="user-img" />
+            <div>
+              <h4>@ChefJuan</h4>
+              <span>Hace 1 día</span>
+            </div>
+          </div>
+
+          <div class="post-content">
+            <p>Mi nueva receta: pasta carbonara cremosa </p>
+            <img src="../Imagenes/carbonara.jpg" alt="Pasta carbonara" class="post-img" />
+          </div>
+
+          <div class="post-actions">
+            <button class="like-btn">❤️ Me gusta</button>
+            <button class="comment-btn">💬 Comentar</button>
+          </div>
+        </div>
+
+        <!-- Publicación 2 -->
+        <div class="post">
+          <div class="post-header">
+            <img src="../Imagenes/Avatar1.jpg" alt="Usuario" class="user-img" />
+            <div>
+              <h4>@ChefJuan</h4>
+              <span>Hace 3 días</span>
+            </div>
+          </div>
+
+          <div class="post-content">
+            <p>Brownies caseros recién hechos 🍫 ¡Receta en los comentarios!</p>
+            <img src="../Imagenes/brownies.jpg" alt="Brownies" class="post-img" />
+          </div>
+
+          <div class="post-actions">
+            <button class="like-btn">❤️ Me gusta</button>
+            <button class="comment-btn">💬 Comentar</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2025 CookingUAH</p>
+  </footer>
+
+  <script>
+    // Simula el botón "Me gusta"
+    document.querySelectorAll(".like-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        btn.classList.toggle("liked");
+        btn.textContent = btn.classList.contains("liked") ? "💖 Te gusta" : "❤️ Me gusta";
+      });
+    });
+  </script>
+</body>
+</html>

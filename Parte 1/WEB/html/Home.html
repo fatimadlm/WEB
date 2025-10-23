@@ -17,14 +17,19 @@
       </div>
 
       <nav class="nav-buttons">
-        <a href="buscador.html" class="btn-secondary">Buscador</a>
-        <a href="mensajes.html" class="btn-secondary">Mensajes</a>
-        <a href="perfil.html" class="btn-secondary">Mi Perfil</a>
+        <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
+        <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
       </nav>
     </aside>
 
     <!-- CONTENIDO PRINCIPAL -->
     <main class="feed">
+      <!-- Barra de búsqueda -->
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="🔍 Buscar perfiles o recetas..." />
+        <button id="searchBtn">Buscar</button>
+      </div>
+
       <h2>Recetas de tus amigos</h2>
 
       <!-- Publicación 1 -->
@@ -81,12 +86,20 @@
   </footer>
 
   <script>
-    // Pequeña lógica para simular "me gusta"
+    // Simulación del "me gusta"
     document.querySelectorAll(".like-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         btn.classList.toggle("liked");
         btn.textContent = btn.classList.contains("liked") ? "💖 Te gusta" : "❤️ Me gusta";
       });
+    });
+
+    // Simulación del buscador
+    document.getElementById("searchBtn").addEventListener("click", () => {
+      const query = document.getElementById("searchInput").value.trim();
+      if (query) {
+        alert(`Buscando "${query}"...`);
+      }
     });
   </script>
 </body>
