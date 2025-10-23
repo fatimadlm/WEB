@@ -6,7 +6,7 @@ const currentUser = "@TuUsuario";
 //ARRAY DE JSON DE POSTS 
 let posts = [
   {
-    username: "@ChefJuan",
+    username: "@Juan",
     avatar: "../Imagenes/Avatar1.jpg",
     time: "Hace 2 horas",
     content: "Hoy preparé una lasaña casera con salsa bechamel 🤤. ¡Aquí mi receta!",
@@ -17,7 +17,7 @@ let posts = [
     ]
   },
   {
-    username: "@SaborNatural",
+    username: "@Ana",
     avatar: "../Imagenes/Avatar3.jpg",
     time: "Hace 5 horas",
     content: "Pan casero con masa madre 😍 recién salido del horno.",

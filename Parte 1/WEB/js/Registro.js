@@ -36,7 +36,7 @@ registerForm.addEventListener('submit', function (e) {
     password //Esto esta de prueba , porque esta en texto plan y es inseguro. Importante
   };
 
-  // Guardamos el nuevo usuario en el arreglo y lo almacenamos
+  // Guardamos el nuevo usuario en el array y lo guardamos
   users.push(newUser);
   localStorage.setItem('users', JSON.stringify(users));
 
