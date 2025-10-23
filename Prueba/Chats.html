@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cooking UAH - Chat</title>
+  <link rel="stylesheet" href="Chats.css">
+</head>
+<body>
+  <div class="chat-container">
+    <header class="chat-header">
+      <img src="../Imagenes/logo.png" alt="Logo Cooking UAH" class="logo-img">
+      <h1>Cooking UAH - Chat</h1>
+    </header>
+
+    <main class="chat-main">
+      <div class="chat-messages" id="chatMessages">
+        <!-- Los mensajes se mostrarán aquí -->
+        <div class="message bot">
+          <p>¡Bienvenido al chat de Cooking UAH! 🍲</p>
+        </div>
+      </div>
+
+      <form id="chatForm" class="chat-form">
+        <input type="text" id="chatInput" placeholder="Escribe un mensaje..." required>
+        <button type="submit" class="btn-send">Enviar</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="../js/chat.js"></script>
+</body>
+</html>
