@@ -3,31 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cooking UAH - Chat</title>
+  <title>Cooking UAH - Chats</title>
   <link rel="stylesheet" href="Chats.css">
 </head>
 <body>
-  <div class="chat-container">
+  <div class="chat-list-container">
     <header class="chat-header">
       <img src="../Imagenes/logo.png" alt="Logo Cooking UAH" class="logo-img">
-      <h1>Cooking UAH - Chat</h1>
+      <h1>Mis Chats</h1>
     </header>
 
-    <main class="chat-main">
-      <div class="chat-messages" id="chatMessages">
-        <!-- Los mensajes se mostrarán aquí -->
-        <div class="message bot">
-          <p>¡Bienvenido al chat de Cooking UAH! 🍲</p>
-        </div>
-      </div>
-
-      <form id="chatForm" class="chat-form">
-        <input type="text" id="chatInput" placeholder="Escribe un mensaje..." required>
-        <button type="submit" class="btn-send">Enviar</button>
-      </form>
+    <main class="chat-list-main" id="chatList">
+      <!-- Los chats con usuarios se generan dinámicamente desde JS -->
     </main>
   </div>
 
-  <script src="../js/chat.js"></script>
+  <script>
+    // Ejemplo de usuarios en la red social
+    const users = [
+      { username: 'cocinero123', nombre: 'Ana', avatar: '../Imagenes/user1.jpg' },
+      { username: 'postresfan', nombre: 'Luis', avatar: '../Imagenes/user2.jpg' },
+      { username: 'chefPro', nombre: 'María', avatar: '../Imagenes/user3.jpg' }
+    ];
+
+    const chatList = document.getElementById('chatList');
+
+    users.forEach(user => {
+      const chatItem = document.createElement('div');
+      chatItem.classList.add('chat-item');
+      chatItem.innerHTML = `
+        <img src="${user.avatar}" alt="${user.nombre}" class="chat-avatar">
+        <div class="chat-info">
+          <h3>${user.nombre}</h3>
+          <p>@${user.username}</p>
+        </div>
+      `;
+      chatItem.addEventListener('click', () => {
+        // Redirigir al chat con el usuario
+        // Por ejemplo: chat.html?user=cocinero123
+        window.location.href = `chat.html?user=${user.username}`;
+      });
+      chatList.appendChild(chatItem);
+    });
+  </script>
 </body>
 </html>
