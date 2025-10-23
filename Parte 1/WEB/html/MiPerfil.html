@@ -4,8 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mi Perfil - CookingUAH</title>
+
+  <!-- Hoja del perfil -->
   <link rel="stylesheet" href="../css/MiPerfil.css" />
+  <!-- Hoja de estilos del modal/drawer -->
+  <link rel="stylesheet" href="../css/PerfilModal.css" />
 </head>
+
+<script src="../js/PerfilModal.js" defer></script>
+
 <body>
   <div class="perfil-container">
 
@@ -34,8 +41,8 @@
           <p class="comida-fav"><strong>Comida favorita:</strong> Lasaña 🍝</p>
           <p class="bio">Apasionado por la cocina italiana y los postres caseros. ¡Compartiendo mis mejores recetas!</p>
 
-          <!-- BOTÓN EDITAR PERFIL -->
-          <a href="EditarPerfil.html" class="btn-editar">Editar perfil</a>
+          <!-- BOTÓN EDITAR PERFIL -> abre el drawer con :target -->
+          <a href="#editar" class="btn-editar" aria-haspopup="dialog" aria-controls="editar">Editar perfil</a>
         </div>
       </section>
 
@@ -93,8 +100,33 @@
     <p>&copy; 2025 CookingUAH</p>
   </footer>
 
+  <!-- ========= DRAWER EDITAR PERFIL (sin JS, con :target) ========= -->
+  <!-- Backdrop + contenedor del panel -->
+  <section id="editar" class="modal" aria-labelledby="editar-title" role="dialog" aria-modal="true">
+    <!-- Cerrar -->
+    <a href="#" class="modal__backdrop" aria-label="Cerrar editor"></a>
+
+    <!-- Panel deslizante (derecha) -->
+    <div class="modal__panel" role="document">
+      <header class="modal__header">
+        <h2 id="editar-title">Editar perfil</h2>
+        <a href="#" class="modal__close" aria-label="Cerrar">✕</a>
+      </header>
+
+      <!-- Contenido: cargamos la página EditarPerfil.html en un iframe -->
+      <div class="modal__body">
+        <iframe
+          src="EditarPerfil.html"
+          title="Formulario de edición de perfil"
+          loading="lazy"
+          class="modal__iframe">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
   <script>
-    // Simula el botón "Me gusta"
+    // Simula el botón "Me gusta" (igual que antes)
     document.querySelectorAll(".like-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         btn.classList.toggle("liked");

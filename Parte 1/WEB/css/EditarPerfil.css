@@ -40,7 +40,7 @@ body.profile-edit { overflow: hidden; }
   margin: 8px 0 12px 0;
 }
 
-/* Campos */
+/* Labels y campos base */
 .profile-edit label {
   display: block;
   margin-top: 10px;
@@ -54,9 +54,35 @@ body.profile-edit { overflow: hidden; }
   padding: 10px 12px;
   font-size: 15px;
   line-height: 20px;
+  border: 1px solid #ecd7bd;
+  border-radius: 10px;
+  background: #fff;
+  color: #2b1a10;
 }
 
-/* Fieldset */
+/* --- BIO / DESCRIPCIÓN --- */
+.profile-edit textarea {
+  width: 100%;
+  min-height: 96px;        /* cómodo para 3–4 líneas */
+  max-height: 180px;
+  resize: vertical;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 18px;
+  border: 1px solid #ecd7bd;
+  border-radius: 10px;
+  background: #fff;
+  color: #2b1a10;
+  margin-top: 8px;         /* pequeño respiro tras el label */
+}
+.profile-edit .field-hint {
+  font-size: 12px;
+  line-height: 16px;
+  color: #7a5b45;
+  margin: 6px 0 0 0;
+}
+
+/* Fieldset (contraseña) */
 .profile-edit fieldset {
   border: 1px solid #ecd7bd;
   border-radius: 8px;

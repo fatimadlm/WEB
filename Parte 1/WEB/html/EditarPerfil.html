@@ -7,13 +7,16 @@
 
   <!-- Hoja global del sitio -->
   <link rel="stylesheet" href="../css/style.css" />
-  <!-- Hoja específica de esta página -->
+  <!-- Hoja específica -->
   <link rel="stylesheet" href="../css/EditarPerfil.css" />
 
-  <meta name="description" content="Edita tu perfil en Cooking UAH: foto, nombre, correo y contraseña." />
+  <meta name="description" content="Edita tu perfil en Cooking UAH: foto, nombre, correo, biografía y contraseña." />
   <meta property="og:title" content="Editar perfil — Cooking UAH" />
-  <meta property="og:description" content="Actualiza tu foto, nombre, correo y contraseña." />
+  <meta property="og:description" content="Actualiza tu foto, nombre, correo, biografía y contraseña." />
 </head>
+
+<script src="../js/EditarPerfil.js" defer></script>
+
 
 <body class="profile-edit">
   <div class="login-container" role="main">
@@ -25,16 +28,16 @@
     <main class="login-box">
       <h2>Editar perfil</h2>
 
-      <!-- Ajusta action/method según tu backend -->
+      <!-- Región viva para anuncios accesibles -->
+      <p id="status" class="visually-hidden" aria-live="polite"></p>
+
+      <!-- Formulario -->
       <form id="editProfile" action="#" method="post" enctype="multipart/form-data" novalidate>
         <!-- Avatar con botón overlay -->
         <div class="avatar">
-          <!-- Si tienes foto actual, descomenta y pon su ruta -->
           <!-- <img src="../Imagenes/usuarios/mi-avatar.jpg" alt="Tu foto de perfil"> -->
-
           <input class="visually-hidden" type="file" id="avatar" name="avatar" accept="image/*">
           <label for="avatar" class="avatar-trigger" aria-label="Cambiar foto de perfil">
-            <!-- Icono cámara (SVG inline para heredar colores) -->
             <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path d="M9.5 6.5L11 5h2l1.5 1.5H18a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8.5a2 2 0 0 1 2-2h3.5zM12 16.5a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-1.8a2.2 2.2 0 1 1 0-4.4 2.2 2.2 0 0 1 0 4.4z" fill="currentColor"/>
             </svg>
@@ -48,12 +51,15 @@
         <label for="email">Correo electrónico</label>
         <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" autocomplete="email" required>
 
+        <!-- Biografía -->
+        <label for="bio">Biografía</label>
+        <textarea id="bio" name="bio" rows="4" maxlength="160" aria-describedby="bioHint" placeholder="Cuenta algo sobre ti (máx. 160 caracteres)"></textarea>
+        <p id="bioHint" class="field-hint">Ej.: “Amante de la repostería. Team canela. Sin gluten.”</p>
+
         <!-- Contraseña -->
         <fieldset>
           <legend>Contraseña</legend>
-          <p class="register-text" style="margin:0 0 .5rem">
-            Déjalo en blanco si no quieres cambiarla.
-          </p>
+          <p class="register-text" style="margin:0 0 10px">Déjalo en blanco si no quieres cambiarla.</p>
 
           <label for="passwordActual">Contraseña actual</label>
           <input type="password" id="passwordActual" name="passwordActual" placeholder="••••••••" autocomplete="current-password">
@@ -65,13 +71,33 @@
           <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Repite la nueva contraseña" autocomplete="new-password">
         </fieldset>
 
-        <!-- Acciones -->
+        <!-- Acciones: solo guardar -->
         <div class="actions">
           <button type="submit" class="btn-primary">Guardar cambios</button>
-          <a class="link-quiet" href="MiPerfil.html">Cancelar y volver</a>
         </div>
       </form>
     </main>
   </div>
+
+  <!-- JS: evitar pantalla en blanco, simular guardado y cerrar el modal del padre -->
+  <script>
+    (function () {
+      const form = document.getElementById('editProfile');
+      const status = document.getElementById('status');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();             // evita navegación del iframe (pantalla en blanco)
+        // Simulación rápida de guardado
+        status.textContent = 'Guardando…';
+        setTimeout(function () {
+          status.textContent = '¡Cambios guardados!';
+          // Notifica al padre para cerrar el modal
+          try {
+            parent.postMessage({ type: 'perfil:saved' }, '*');
+          } catch (err) { /* no-op */ }
+        }, 300);
+      });
+    })();
+  </script>
 </body>
 </html>
