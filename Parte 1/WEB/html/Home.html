@@ -37,76 +37,11 @@
       </div>
 
       <h2>Recetas de tus amigos</h2>
-
-      <!-- Publicación 1 -->
-      <div class="post">
-        <div class="post-header">
-          <img src="../Imagenes/Avatar1.jpg" alt="Usuario" class="user-img" />
-          <div>
-            <h3>@ChefJuan</h3>
-            <span>Hace 2 horas</span>
-          </div>
-        </div>
-
-        <div class="post-content">
-          <p>Hoy preparé una lasaña casera con salsa bechamel 🤤. ¡Aquí mi receta!</p>
-          <img src="../Imagenes/Lasanna.png" alt="Receta de lasaña" class="post-img" />
-        </div>
-
-        <div class="post-actions">
-          <button class="like-btn">❤️ Me gusta</button>
-          <button class="comment-btn">💬 Comentar</button>
-        </div>
-
-        <div class="comments">
-          <p><strong>@CocineraAna:</strong> ¡Se ve deliciosa!</p>
-        </div>
-      </div>
-
-      <!-- Publicación 2 -->
-      <div class="post">
-        <div class="post-header">
-          <img src="../Imagenes/Avatar3.jpg" alt="Usuario" class="user-img" />
-          <div>
-            <h3>@SaborNatural</h3>
-            <span>Hace 5 horas</span>
-          </div>
-        </div>
-
-        <div class="post-content">
-          <p>Pan casero con masa madre 😍 recién salido del horno.</p>
-          <img src="../Imagenes/Pan.jpg" alt="Pan casero" class="post-img" />
-        </div>
-
-        <div class="post-actions">
-          <button class="like-btn">❤️ Me gusta</button>
-          <button class="comment-btn">💬 Comentar</button>
-        </div>
-      </div>
+      <div id="postsContainer"></div>
     </main>
 
   </div>
 
-  <footer class="footer">
-    <p>&copy; 2025 CookingUAH</p>
-  </footer>
-
-  <script>
-    // Simulación del "me gusta"
-    document.querySelectorAll(".like-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        btn.classList.toggle("liked");
-        btn.textContent = btn.classList.contains("liked") ? "💖 Te gusta" : "❤️ Me gusta";
-      });
-    });
-
-    // Simulación del buscador
-    document.getElementById("searchBtn").addEventListener("click", () => {
-      const query = document.getElementById("searchInput").value.trim();
-      if (query) {
-        alert(`Buscando "${query}"...`);
-      }
-    });
-  </script>
+  <script src="../js/Home.js"></script>
 </body>
 </html>
