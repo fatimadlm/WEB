@@ -4,29 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mensajes - CookingUAH</title>
-  <link rel="stylesheet" href="../css/Mensajes.css">
+  <link rel="stylesheet" href="../css/Mensajes.css"> 
 </head>
 <body>
-  <div class="container">
+  <div class="home-container">
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
-      <div class="logo">
-        <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img">
-        <h1>CookingUAH</h1>
+      <div> 
+        <div class="logo">
+          <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
+          <h1>CookingUAH</h1>
+        </div>
+        <nav class="nav-buttons">
+          <a href="Home.html" class="btn-secondary">🏠 Inicio</a> 
+          <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
+          <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
+          <button id="openModalBtn" class="btn-primary">Crear publicación</button>
+        </nav>
       </div>
-
-      <nav class="nav-buttons">
-        <a href="Home.html" class="btn-secondary">Inicio</a>
-        <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
-        <a href="NuevaPublicacion.html" class="btn-secondary">Publicar</a>
-        <a href="../index.html" class="btn-logout">Cerrar sesión</a>
-      </nav>
+      <a href="../index.html" class="btn-logout">Cerrar sesión</a>
     </aside>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="main-content">
+    <main class="feed">
       <h2>Mensajes</h2>
+
+      <div class="search-bar-container">
+        <input type="text" id="userSearch" placeholder="Buscar o empezar un chat nuevo...">
+        <button id="userSearchBtn">Buscar</button>
+      </div>
       <ul class="chat-list">
         <li>
           <a href="Chat.html">
@@ -59,9 +64,6 @@
     </main>
 
   </div>
-
-  <footer class="footer">
-    <p>&copy; 2025 CookingUAH</p>
-  </footer>
-</body>
+  
+  </body>
 </html>

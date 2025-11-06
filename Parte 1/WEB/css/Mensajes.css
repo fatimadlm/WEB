@@ -1,105 +1,184 @@
-body {
+/* ---------- RESET ---------- */
+* {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #fff8f0;
-  color: #5a2500;
 }
 
-.container {
+/* ---------- FONDO ---------- */
+body {
+  background-image: url('../Imagenes/Comida.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(252, 239, 220, 0.7);
+  z-index: -1; 
+}
+
+.home-container {
   display: flex;
-  min-height: 100vh;
+  position: relative;
 }
 
-/* Sidebar */
+/* ---------- SIDEBAR (Idéntica a Home.css) ---------- */
 .sidebar {
-  width: 220px;
-  background-color: #ffb74d;
-  padding: 20px;
+  width: 250px;
+  flex-shrink: 0; 
+  background-color: rgba(255, 248, 240, 0.95);
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+  padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-right: 2px solid #e67e22;
+  justify-content: space-between; 
+  height: 100vh; 
+  position: sticky; 
+  top: 0; 
 }
-
+/* ... (Pega aquí todos los estilos de la sidebar de Home.css: .logo, .btn-primary, .nav-buttons, etc.) ... */
+.logo {
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
 .logo-img {
   width: 70px;
-  margin-bottom: 10px;
+  margin-bottom: 0.5rem;
 }
-
-.sidebar h1 {
+.logo h1 {
+  color: #6b2b00;
+  font-size: 1.5rem;
+}
+.btn-primary {
+  background-color: #FFA500;
+  color: white;
+  text-decoration: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   text-align: center;
-  margin-bottom: 25px;
+  width: 100%;
+  border: none; 
+  cursor: pointer; 
+  font-size: 1em; 
 }
-
+.btn-primary:hover {
+  background-color: #ff8c00;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
+}
 .nav-buttons {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 1rem; 
   width: 100%;
 }
-
-.btn-secondary, .btn-logout {
+.btn-secondary {
+  background-color: #cc5500;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem;
+  text-align: center;
+  font-weight: bold;
   text-decoration: none;
+  transition: 0.3s;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+.btn-secondary:hover {
+  background-color: #b24900;
+  transform: translateY(-2px);
+}
+.btn-logout {
+  text-decoration: none;
+  background-color: #ff7043;
+  color: white;
   padding: 10px;
   border-radius: 8px;
   text-align: center;
   font-weight: 600;
-  display: block;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  width: 100%; 
 }
-
-.btn-secondary {
-  background-color: #fff3e0;
-  color: #d35400;
-}
-
-.btn-secondary:hover {
-  background-color: #ffe0b2;
-  color: #4a2c0a;
-}
-
-.btn-logout {
-  background-color: #ff7043;
-  color: white;
-  margin-top: 15px;
-}
-
 .btn-logout:hover {
   background-color: #e64a19;
   transform: translateY(-2px);
 }
 
-/* Contenido principal */
-.main-content {
-  flex: 1;
-  padding: 40px 50px;
+
+/* ---------- CONTENIDO PRINCIPAL (Feed) ---------- */
+.feed {
+  flex: 1; 
+  padding: 2rem;
+  max-width: 1000px; 
+  margin: 0 auto; 
+}
+.feed h2 {
+  color: #5a2500;
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- AÑADIDO: Barra de búsqueda de usuarios ---------- */
+.search-bar-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 2rem; /* Espacio antes de la lista de chats */
+}
+.search-bar-container input {
+  flex: 1; /* Ocupa todo el espacio posible */
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d6b58e;
   background-color: #fffaf5;
+  font-size: 1rem;
+}
+.search-bar-container input:focus {
+  outline: none;
+  border-color: #ef6c00;
+}
+.search-bar-container button {
+  background-color: #cc5500;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.search-bar-container button:hover {
+  background-color: #b24900;
 }
 
-h2 {
-  color: #e67e22;
-  margin-bottom: 25px;
-}
 
-/* Lista de chats */
+/* ---------- LISTA DE CHATS (Mejorada) ---------- */
 .chat-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 1rem;
 }
 
 .chat-list li {
-  background-color: #fff3e0;
-  border-radius: 10px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
+  background-color: #fff8f0;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   transition: all 0.2s ease;
 }
-
 .chat-list li:hover {
-  background-color: #ffe0b2;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
 }
 
 .chat-list a {
@@ -108,6 +187,7 @@ h2 {
   display: flex;
   align-items: center;
   width: 100%;
+  padding: 1.5rem;
 }
 
 .chat-avatar {
@@ -119,20 +199,11 @@ h2 {
 
 .chat-info h3 {
   margin-bottom: 5px;
-  font-size: 1em;
+  font-size: 1.1em;
+  color: #6b2b00;
 }
 
 .chat-info p {
   font-size: 0.9em;
   color: #4a2c0a;
-}
-
-/* Footer */
-.footer {
-  background-color: #ffcc80;
-  text-align: center;
-  padding: 12px;
-  font-weight: 500;
-  border-top: 2px solid #e67e22;
-  color: #5a2500;
 }
