@@ -292,6 +292,21 @@ body::before {
 .post-header h3 {
   color: #6b2b00;
 }
+/* ... (Al final de la sección .post-header) ... */
+
+.post-header h3 {
+  color: #6b2b00;
+}
+
+/* AÑADIDO: Estilo para el enlace del nombre de usuario */
+.post-username-link {
+  text-decoration: none; /* Quita el subrayado */
+  color: inherit; /* Hereda el color de .post-header h3 */
+}
+.post-username-link:hover h3 {
+  text-decoration: underline; /* Subraya solo al pasar el ratón */
+}
+
 .post-header span {
   color: #8b5e34;
   font-size: 0.9rem;

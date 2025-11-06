@@ -5,34 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mi Perfil - CookingUAH</title>
 
-  <!-- Hoja del perfil -->
   <link rel="stylesheet" href="../css/MiPerfil.css" />
-  <!-- Hoja de estilos del modal/drawer -->
   <link rel="stylesheet" href="../css/PerfilModal.css" />
 </head>
 
-<script src="../js/PerfilModal.js" defer></script>
-
 <body>
-  <div class="perfil-container">
+  <div class="home-container">
 
-    <!-- BARRA LATERAL -->
     <aside class="sidebar">
-      <div class="logo">
-        <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
-        <h1>CookingUAH</h1>
+      <div> 
+        <div class="logo">
+          <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
+          <h1>CookingUAH</h1>
+        </div>
+        <nav class="nav-buttons">
+          <a href="Home.html" class="btn-secondary">Inicio</a> 
+          <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
+          <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
+          <button id="openModalBtn" class="btn-primary">Crear publicación</button>
+        </nav>
       </div>
-
-      <nav class="nav-buttons">
-        <a href="Home.html" class="btn-secondary">Inicio</a>
-        <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
-      </nav>
+      <a href="../index.html" class="btn-logout">Cerrar sesión</a>
     </aside>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="perfil-content">
+    <main class="feed perfil-page">
 
-      <!-- INFORMACIÓN DEL USUARIO -->
       <section class="perfil-info">
         <img src="../Imagenes/Avatar1.jpg" alt="Foto de perfil" class="perfil-img" />
         <div class="perfil-datos">
@@ -40,17 +37,13 @@
           <p class="usuario">@ChefJuan</p>
           <p class="comida-fav"><strong>Comida favorita:</strong> Lasaña 🍝</p>
           <p class="bio">Apasionado por la cocina italiana y los postres caseros. ¡Compartiendo mis mejores recetas!</p>
-
-          <!-- BOTÓN EDITAR PERFIL -> abre el drawer con :target -->
           <a href="#editar" class="btn-editar" aria-haspopup="dialog" aria-controls="editar">Editar perfil</a>
         </div>
       </section>
 
-      <!-- PUBLICACIONES DEL USUARIO -->
       <section class="perfil-posts">
         <h3>Mis publicaciones</h3>
 
-        <!-- Publicación 1 -->
         <div class="post">
           <div class="post-header">
             <img src="../Imagenes/Avatar1.jpg" alt="Usuario" class="user-img" />
@@ -59,19 +52,18 @@
               <span>Hace 1 día</span>
             </div>
           </div>
-
           <div class="post-content">
             <p>Mi nueva receta: pasta carbonara cremosa </p>
             <img src="../Imagenes/carbonara.jpg" alt="Pasta carbonara" class="post-img" />
           </div>
-
           <div class="post-actions">
-            <button class="like-btn">Me gusta</button>
-            <button class="comment-btn">Comentar</button>
+            <button class="like-btn" data-likes-start="12">
+              <span class="like-text">❤️ Me gusta</span> (<span class="like-count">12</span>)
+            </button>
+            <button class="comment-btn">💬 Comentar</button>
           </div>
         </div>
 
-        <!-- Publicación 2 -->
         <div class="post">
           <div class="post-header">
             <img src="../Imagenes/Avatar1.jpg" alt="Usuario" class="user-img" />
@@ -80,14 +72,14 @@
               <span>Hace 3 días</span>
             </div>
           </div>
-
           <div class="post-content">
             <p>Brownies caseros recién hechos 🍫 ¡Receta en los comentarios!</p>
             <img src="../Imagenes/brownies.jpg" alt="Brownies" class="post-img" />
           </div>
-
           <div class="post-actions">
-            <button class="like-btn">❤️ Me gusta</button>
+            <button class="like-btn" data-likes-start="42">
+              <span class="like-text">❤️ Me gusta</span> (<span class="like-count">42</span>)
+            </button>
             <button class="comment-btn">💬 Comentar</button>
           </div>
         </div>
@@ -96,24 +88,13 @@
     </main>
   </div>
 
-  <footer class="footer">
-    <p>&copy; 2025 CookingUAH</p>
-  </footer>
-
-  <!-- ========= DRAWER EDITAR PERFIL (sin JS, con :target) ========= -->
-  <!-- Backdrop + contenedor del panel -->
   <section id="editar" class="modal" aria-labelledby="editar-title" role="dialog" aria-modal="true">
-    <!-- Cerrar -->
     <a href="#" class="modal__backdrop" aria-label="Cerrar editor"></a>
-
-    <!-- Panel deslizante (derecha) -->
     <div class="modal__panel" role="document">
       <header class="modal__header">
         <h2 id="editar-title">Editar perfil</h2>
         <a href="#" class="modal__close" aria-label="Cerrar">✕</a>
       </header>
-
-      <!-- Contenido: cargamos la página EditarPerfil.html en un iframe -->
       <div class="modal__body">
         <iframe
           src="EditarPerfil.html"
@@ -124,15 +105,38 @@
       </div>
     </div>
   </section>
-
+  
+  <script src="../js/PerfilModal.js" defer></script>
+  <script src="../js/Home.js" defer></script>
+  
   <script>
-    // Simula el botón "Me gusta" (igual que antes)
-    document.querySelectorAll(".like-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        btn.classList.toggle("liked");
-        btn.textContent = btn.classList.contains("liked") ? "💖 Te gusta" : "❤️ Me gusta";
+    document.addEventListener('DOMContentLoaded', () => {
+      // Lógica de "Me Gusta" SÓLO para los botones de esta página
+      document.querySelectorAll(".perfil-posts .like-btn").forEach(btn => {
+        
+        let countElement = btn.querySelector('.like-count');
+        // El textElement ya no se necesita
+        
+        let isLiked = false;
+        let count = parseInt(btn.dataset.likesStart) || 0;
+        
+        btn.addEventListener("click", () => {
+          isLiked = !isLiked;
+          
+          if (isLiked) {
+            count++;
+            btn.classList.add("liked");
+          } else {
+            count--;
+            btn.classList.remove("liked");
+          }
+          
+          // Actualiza solo el contador
+          countElement.textContent = count;
+        });
       });
     });
   </script>
-</body>
+
+  </body>
 </html>

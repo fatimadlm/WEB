@@ -10,7 +10,8 @@ let posts = [
     time: "Hace 2 horas",
     content: "Hoy preparé una lasaña casera con salsa bechamel 🤤. ¡Aquí mi receta!",
     img: "../Imagenes/Lasanna.png",
-    likes: 0,
+    likes: 12,
+    liked: false, // Controla si el usuario le ha dado like
     comments: [
       { username: "@CocineraAna", text: "¡Se ve deliciosa!" }
     ]
@@ -21,36 +22,48 @@ let posts = [
     time: "Hace 5 horas",
     content: "Pan casero con masa madre 😍 recién salido del horno.",
     img: "../Imagenes/Pan.jpg",
-    likes: 0,
+    likes: 42,
+    liked: false,
     comments: []
   }
 ];
 
-// === FUNCIÓN PARA RENDERIZAR POSTS ===
+// === FUNCIÓN PARA RENDERIZAR POSTS (MODIFICADA) ===
 function renderPosts(postsArray) {
   const container = document.getElementById("postsContainer");
+  if (!container) return; // Evita errores si no está en la página
   container.innerHTML = ""; 
 
   postsArray.forEach((post, index) => {
     const postDiv = document.createElement("div");
     postDiv.classList.add("post");
-    // Usamos innerHTML para interpretar el <br>
+    
+    const usernameParam = post.username.replace('@', '');
+    
+    // --- Lógica para el botón de Like ---
+    const likedClass = post.liked ? 'liked' : '';
+    const likedText = '❤️ Me gusta'; // MODIFICADO: El texto ya no cambia
+
     postDiv.innerHTML = `
       <div class="post-header">
         <img src="${post.avatar}" alt="Usuario" class="user-img" />
         <div>
-          <h3>${post.username}</h3>
+          <a href="MiPerfil.html?usuario=${usernameParam}" class="post-username-link">
+            <h3>${post.username}</h3>
+          </a>
           <span>${post.time}</span>
         </div>
       </div>
 
       <div class="post-content">
-        <p>${post.content}</p> 
+        <p>${post.content.replace(/\n/g, '<br>')}</p> 
         ${post.img ? `<img src="${post.img}" alt="Imagen de receta" class="post-img" />` : ""}
       </div>
 
       <div class="post-actions">
-        <button class="like-btn" data-index="${index}">❤️ Me gusta (${post.likes})</button>
+        <button class="like-btn ${likedClass}" data-index="${index}">
+          ${likedText} (${post.likes})
+        </button>
         <button class="comment-btn" data-index="${index}">💬 Comentar</button>
       </div>
 
@@ -66,14 +79,27 @@ function renderPosts(postsArray) {
 
 // === FUNCIÓN PARA AÑADIR EVENT LISTENERS (Likes y Comentarios) ===
 function addEventListeners() {
-  document.querySelectorAll(".like-btn").forEach(btn => {
+  
+  // Lógica de "Me Gusta" (Toggle)
+  document.querySelectorAll(".like-btn[data-index]").forEach(btn => {
     btn.addEventListener("click", () => {
       const index = btn.dataset.index;
-      posts[index].likes++;
-      renderPosts(posts); 
+      
+      // Invierte el estado de "liked"
+      posts[index].liked = !posts[index].liked;
+      
+      // Ajusta el contador
+      if (posts[index].liked) {
+        posts[index].likes++;
+      } else {
+        posts[index].likes--;
+      }
+      
+      renderPosts(posts); // Re-renderiza para mostrar los cambios
     });
   });
 
+  // Lógica de Comentar
   document.querySelectorAll(".comment-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const index = btn.dataset.index;
@@ -120,10 +146,10 @@ function handleNewPost() {
     username: currentUser,
     avatar: currentUserAvatar, 
     time: "Ahora mismo",
-    // MODIFICADO: Añadido .replace() para los saltos de línea
     content: postContent.replace(/\n/g, '<br>'), 
     img: imageUrl, 
     likes: 0,
+    liked: false, // Añadido para consistencia
     comments: []
   };
 
@@ -207,10 +233,10 @@ function handleModalNewPost() {
     username: currentUser,
     avatar: currentUserAvatar, 
     time: "Ahora mismo",
-    // MODIFICADO: Añadido .replace() para los saltos de línea
     content: postContent.replace(/\n/g, '<br>'), 
     img: imageUrl, 
     likes: 0,
+    liked: false, // Añadido para consistencia
     comments: []
   };
 
@@ -280,9 +306,16 @@ function setupModalImageUpload() {
 document.addEventListener('DOMContentLoaded', () => {
     
     // --- Lógica del Publicador Rápido (Feed) ---
-    document.getElementById("searchBtn").addEventListener("click", handleSearch);
-    document.getElementById("newPostBtn").addEventListener("click", handleNewPost);
-    setupImageUpload(); 
+    const searchBtn = document.getElementById("searchBtn");
+    const newPostBtn = document.getElementById("newPostBtn");
+    
+    if(searchBtn) searchBtn.addEventListener("click", handleSearch);
+    if(newPostBtn) newPostBtn.addEventListener("click", handleNewPost);
+    
+    // Solo ejecutar setupImageUpload si estamos en una página que lo tiene
+    if (document.getElementById("addImgBtn")) {
+        setupImageUpload();
+    } 
 
     // --- Renderizado inicial ---
     renderPosts(posts);
@@ -291,19 +324,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const openModalBtn = document.getElementById("openModalBtn");
     const postModal = document.getElementById("postModal");
     const closeModalBtn = document.querySelector(".modal-close");
+    const modalNewPostBtn = document.getElementById("modalNewPostBtn");
 
-    openModalBtn.addEventListener('click', () => { postModal.style.display = 'flex'; });
-    closeModalBtn.addEventListener('click', () => { postModal.style.display = 'none'; });
-    postModal.addEventListener('click', (e) => {
-      if (e.target === postModal) { postModal.style.display = 'none'; }
-    });
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && postModal.style.display === 'flex') {
-        postModal.style.display = 'none';
-      }
-    });
+    // Solo ejecutar si los elementos del modal existen en esta página
+    if (openModalBtn && postModal && closeModalBtn && modalNewPostBtn) {
+        openModalBtn.addEventListener('click', () => { postModal.style.display = 'flex'; });
+        closeModalBtn.addEventListener('click', () => { postModal.style.display = 'none'; });
+        postModal.addEventListener('click', (e) => {
+          if (e.target === postModal) { postModal.style.display = 'none'; }
+        });
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && postModal.style.display === 'flex') {
+            postModal.style.display = 'none';
+          }
+        });
 
-    // Conectar lógica al modal
-    setupModalImageUpload();
-    document.getElementById("modalNewPostBtn").addEventListener("click", handleModalNewPost);
+        // Conectar lógica al modal
+        setupModalImageUpload();
+        modalNewPostBtn.addEventListener("click", handleModalNewPost);
+    }
 });
