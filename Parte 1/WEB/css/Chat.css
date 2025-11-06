@@ -123,22 +123,29 @@ body::before {
   flex: 1; 
   max-width: 1000px; 
   margin: 0 auto; 
-  
   display: flex;
   flex-direction: column;
   height: 100vh; 
-  
-  /* Ajustado el padding para que el input quede bien */
   padding: 2rem; 
 }
 
 .chat-header {
   display: flex;
   align-items: center;
+  justify-content: space-between; /* MODIFICADO: Para centrar el título */
   gap: 1rem;
   color: #5a2500;
-  /* MODIFICADO: Aumentado el margen para bajar el chat-box */
   margin-bottom: 2.5rem; 
+}
+
+/*Estilos para el enlace del título */
+.chat-header h2 a {
+  color: inherit; /* Hereda el color marrón */
+  text-decoration: none;
+  transition: text-decoration 0.2s;
+}
+.chat-header h2 a:hover {
+  text-decoration: underline; /* Subrayado al pasar el ratón */
 }
 
 .btn-volver {
@@ -152,6 +159,15 @@ body::before {
 }
 .btn-volver:hover {
   background-color: #ffe0b2;
+}
+
+/* AÑADIDO: Estilo para el espaciador invisible */
+.header-spacer {
+  /* Hacemos que tenga el mismo ancho que el botón "Volver" */
+  /* (El padding del botón es 0.5rem 1rem) */
+  display: block;
+  width: 90px; /* Ancho aproximado del botón "Volver" */
+  visibility: hidden; /* Lo hace invisible */
 }
 
 /* Contenedor de burbujas */
