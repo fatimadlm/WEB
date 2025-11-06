@@ -45,7 +45,6 @@ body::before {
   position: sticky; 
   top: 0; 
 }
-
 .logo {
   text-align: center;
   margin-bottom: 2rem;
@@ -59,7 +58,6 @@ body::before {
   color: #6b2b00;
   font-size: 1.5rem;
 }
-
 .btn-primary {
   background-color: #FFA500;
   color: white;
@@ -80,14 +78,12 @@ body::before {
   transform: translateY(-2px);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
 }
-
 .nav-buttons {
   display: flex;
   flex-direction: column;
   gap: 1rem; 
   width: 100%;
 }
-
 .btn-secondary {
   background-color: #cc5500;
   color: white;
@@ -104,7 +100,6 @@ body::before {
   background-color: #b24900;
   transform: translateY(-2px);
 }
-
 .btn-logout {
   text-decoration: none;
   background-color: #ff7043;
@@ -127,7 +122,7 @@ body::before {
   padding: 2rem;
   max-width: 1000px; 
   margin: 0 auto; 
-  background-color: rgba(255, 250, 245, 0.9); /* Fondo más opaco para legibilidad */
+  background-color: rgba(255, 250, 245, 0.9);
   border-radius: 1rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -143,7 +138,6 @@ body::before {
   padding-bottom: 20px;
   color: #5a2500;
 }
-
 .perfil-img {
   width: 120px;
   height: 120px;
@@ -151,7 +145,6 @@ body::before {
   border: 4px solid #f1b24a;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-
 .perfil-datos h2 {
   font-size: 24px;
 }
@@ -167,8 +160,6 @@ body::before {
   margin-top: 5px;
   font-size: 15px;
 }
-
-/* Tus estilos de .btn-editar */
 .btn-editar {
   display: inline-block;
   margin-top: 15px;
@@ -184,21 +175,19 @@ body::before {
   background-color: #e69b2e;
 }
 
+
 /* Tus estilos de .perfil-posts */
 .perfil-posts {
   margin-top: 30px;
   color: #5a2500;
 }
-
-/* Tus estilos de .post (adaptados) */
 .post {
-  background: #fff8f0; /* Fondo como el de Home */
+  background: #fff8f0;
   border-radius: 1rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   padding: 1.5rem;
   margin-bottom: 20px;
 }
-
 .post-header {
   display: flex;
   align-items: center;
@@ -209,7 +198,6 @@ body::before {
   height: 45px;
   border-radius: 50%;
 }
-
 .post-content {
   margin-top: 10px;
 }
@@ -218,8 +206,6 @@ body::before {
   border-radius: 10px;
   margin-top: 10px;
 }
-
-/* Estilos de botones de post (copiados de Home.css) */
 .post-actions {
   display: flex;
   gap: 1rem;
@@ -241,4 +227,191 @@ body::before {
 .like-btn.liked {
   background-color: #ff7043 !important;
   color: white;
+}
+
+
+.comments {
+  margin-top: 1rem;
+  background-color: #fff1e0;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  color: #5a2500;
+  max-height: 150px;
+  overflow-y: auto;
+}
+.comments p {
+  margin-top: 0.5rem;
+  padding-right: 5px;
+}
+.comments p:first-child {
+  margin-top: 0;
+}
+
+
+/* ==================================================== */
+/* AÑADIDO: ESTILOS PARA EL MODAL DE PUBLICACIÓN */
+/* (Copiados de Home.css) */
+/* ==================================================== */
+
+.modal-backdrop {
+  position: fixed; 
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); 
+  display: flex; /* Esto es importante para que el JS lo muestre */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fffaf3; 
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(230, 126, 34, 0.2);
+  width: 100%;
+  max-width: 600px; 
+  position: relative;
+  animation: modal-fade-in 0.3s ease-out;
+}
+
+.modal-content h2 {
+  color: #e67e22;
+  margin-bottom: 25px;
+  font-size: 1.8em;
+  font-weight: 700;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #aaa;
+  font-size: 2.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.modal-close:hover {
+  color: #777;
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Estilos para la caja de publicación DENTRO DEL MODAL */
+.modal-post-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-post-box textarea {
+  width: 100%;
+  min-height: 120px; 
+  border: 2px solid #ffb74d; 
+  border-radius: 8px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+.modal-post-box textarea:focus {
+  border-color: #ef6c00;
+  box-shadow: 0 0 6px rgba(239, 108, 0, 0.5);
+  outline: none;
+}
+
+/* Botón de publicar (del modal) */
+#modalNewPostBtn {
+  background: linear-gradient(90deg, #f57c00, #ef6c00); 
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.3s;
+}
+#modalNewPostBtn:hover {
+  background: linear-gradient(90deg, #ff9800, #f57c00);
+  transform: scale(1.03);
+}
+
+/* Previsualización de imagen en el modal */
+.modal-post-box .image-preview-container {
+  border-color: #ffb74d; 
+  max-height: 250px;
+}
+.modal-post-box .image-preview {
+  max-height: 230px; 
+}
+
+/* (Estilos de .image-preview-container, .remove-image-btn, .post-controls, etc.) */
+.image-preview-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    min-height: 50px; 
+    overflow: hidden; 
+    border: 1px dashed #d6b58e; 
+}
+.image-preview {
+    max-width: 100%;
+    max-height: 200px; 
+    border-radius: 8px;
+    object-fit: contain; 
+}
+.remove-image-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+.remove-image-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.post-controls {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+}
+.post-options {
+  display: flex;
+  gap: 0.8rem; 
+}
+.option-btn {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%; 
+  padding: 0.5rem;
+  font-size: 1.2rem; 
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: #cc5500; 
+}
+.option-btn:hover {
+  background-color: #fff1e0; 
 }

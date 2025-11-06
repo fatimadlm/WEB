@@ -16,8 +16,7 @@
           <h1>CookingUAH</h1>
         </div>
         <nav class="nav-buttons">
-          <a href="Home.html" class="btn-secondary">Inicio</a> 
-          <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
+          <a href="Home.html" class="btn-secondary">Inicio</a> <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
           <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
           <button id="openModalBtn" class="btn-primary">Crear publicación</button>
         </nav>
@@ -65,5 +64,28 @@
 
   </div>
   
-  </body>
+  <div id="postModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2>Crear una nueva publicación</h2>
+      <div id="modalPostBox" class="modal-post-box">
+        <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea>
+        <div id="modalImagePreviewContainer" class="image-preview-container" style="display: none;">
+            <img id="modalImagePreview" src="#" alt="Previsualización de imagen" class="image-preview" style="display: none;">
+            <button id="modalRemoveImageBtn" class="remove-image-btn" style="display: none;">✖</button>
+        </div>
+        <div class="post-controls">
+          <div class="post-options">
+            <input type="file" id="modalImageUpload" accept="image/*" style="display: none;">
+            <button class="option-btn" id="modalAddImgBtn" title="Añadir Imagen">📸</button>
+          </div>
+          <button id="modalNewPostBtn">Publicar Receta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../js/Home.js"></script>
+
+</body>
 </html>

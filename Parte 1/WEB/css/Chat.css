@@ -255,6 +255,11 @@ body::before {
 
 /* ... (Estilos del MODAL de Home.css) ... */
 /* (Pega aquí todos los estilos del modal de Home.css) */
+/* ==================================================== */
+/* AÑADIDO: ESTILOS PARA EL MODAL DE PUBLICACIÓN */
+/* (Copiados de Home.css) */
+/* ==================================================== */
+
 .modal-backdrop {
   position: fixed; 
   z-index: 100;
@@ -263,10 +268,11 @@ body::before {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6); 
-  display: flex; 
+  display: flex; /* Esto es importante para que el JS lo muestre */
   justify-content: center;
   align-items: center;
 }
+
 .modal-content {
   background-color: #fffaf3; 
   border-radius: 15px;
@@ -277,12 +283,14 @@ body::before {
   position: relative;
   animation: modal-fade-in 0.3s ease-out;
 }
+
 .modal-content h2 {
   color: #e67e22;
   margin-bottom: 25px;
   font-size: 1.8em;
   font-weight: 700;
 }
+
 .modal-close {
   position: absolute;
   top: 10px;
@@ -296,14 +304,18 @@ body::before {
 .modal-close:hover {
   color: #777;
 }
+
 @keyframes modal-fade-in {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Estilos para la caja de publicación DENTRO DEL MODAL */
 .modal-post-box {
   display: flex;
   flex-direction: column;
 }
+
 .modal-post-box textarea {
   width: 100%;
   min-height: 120px; 
@@ -320,6 +332,8 @@ body::before {
   box-shadow: 0 0 6px rgba(239, 108, 0, 0.5);
   outline: none;
 }
+
+/* Botón de publicar (del modal) */
 #modalNewPostBtn {
   background: linear-gradient(90deg, #f57c00, #ef6c00); 
   color: white;
@@ -335,10 +349,75 @@ body::before {
   background: linear-gradient(90deg, #ff9800, #f57c00);
   transform: scale(1.03);
 }
+
+/* Previsualización de imagen en el modal */
 .modal-post-box .image-preview-container {
   border-color: #ffb74d; 
   max-height: 250px;
 }
 .modal-post-box .image-preview {
   max-height: 230px; 
+}
+
+/* (Estilos de .image-preview-container, .remove-image-btn, .post-controls, etc.) */
+.image-preview-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    min-height: 50px; 
+    overflow: hidden; 
+    border: 1px dashed #d6b58e; 
+}
+.image-preview {
+    max-width: 100%;
+    max-height: 200px; 
+    border-radius: 8px;
+    object-fit: contain; 
+}
+.remove-image-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+.remove-image-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.post-controls {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+}
+.post-options {
+  display: flex;
+  gap: 0.8rem; 
+}
+.option-btn {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%; 
+  padding: 0.5rem;
+  font-size: 1.2rem; 
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: #cc5500; 
+}
+.option-btn:hover {
+  background-color: #fff1e0; 
 }

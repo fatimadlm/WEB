@@ -350,8 +350,18 @@ body::before {
   padding: 0.5rem 1rem;
   font-size: 0.95rem;
   color: #5a2500;
+  
+  /* AÑADIDO: Scroll para muchos comentarios */
+  max-height: 150px; /* Altura máxima */
+  overflow-y: auto;   /* Scroll vertical */
 }
-
+.comments p {
+  margin-top: 0.5rem;
+  padding-right: 5px; 
+}
+.comments p:first-child {
+  margin-top: 0;
+}
 
 /* ==================================================== */
 /* ESTILOS PARA EL MODAL DE PUBLICACIÓN */

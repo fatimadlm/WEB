@@ -62,6 +62,7 @@
             </button>
             <button class="comment-btn">💬 Comentar</button>
           </div>
+          <div class="comments"></div>
         </div>
 
         <div class="post">
@@ -82,6 +83,7 @@
             </button>
             <button class="comment-btn">💬 Comentar</button>
           </div>
+          <div class="comments"></div>
         </div>
       </section>
 
@@ -111,18 +113,15 @@
   
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Lógica de "Me Gusta" SÓLO para los botones de esta página
+      
+      // Lógica de "Me Gusta" de esta página
       document.querySelectorAll(".perfil-posts .like-btn").forEach(btn => {
-        
         let countElement = btn.querySelector('.like-count');
-        // El textElement ya no se necesita
-        
         let isLiked = false;
         let count = parseInt(btn.dataset.likesStart) || 0;
         
         btn.addEventListener("click", () => {
           isLiked = !isLiked;
-          
           if (isLiked) {
             count++;
             btn.classList.add("liked");
@@ -130,13 +129,48 @@
             count--;
             btn.classList.remove("liked");
           }
-          
-          // Actualiza solo el contador
           countElement.textContent = count;
+        });
+      });
+
+      // Lógica de "Comentar" de esta página
+      document.querySelectorAll(".perfil-posts .comment-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const commentText = prompt("Escribe tu comentario:");
+          
+          if (commentText && commentText.trim() !== "") {
+            const postElement = btn.closest('.post');
+            const commentsContainer = postElement.querySelector('.comments');
+            const newComment = document.createElement('p');
+            newComment.innerHTML = `<strong>@TuUsuario:</strong> ${commentText}`; 
+            commentsContainer.appendChild(newComment);
+            commentsContainer.scrollTop = commentsContainer.scrollHeight;
+          }
         });
       });
     });
   </script>
 
-  </body>
+  <div id="postModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2>Crear una nueva publicación</h2>
+      <div id="modalPostBox" class="modal-post-box">
+        <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea>
+        <div id="modalImagePreviewContainer" class="image-preview-container" style="display: none;">
+            <img id="modalImagePreview" src="#" alt="Previsualización de imagen" class="image-preview" style="display: none;">
+            <button id="modalRemoveImageBtn" class="remove-image-btn" style="display: none;">✖</button>
+        </div>
+        <div class="post-controls">
+          <div class="post-options">
+            <input type="file" id="modalImageUpload" accept="image/*" style="display: none;">
+            <button class="option-btn" id="modalAddImgBtn" title="Añadir Imagen">📸</button>
+          </div>
+          <button id="modalNewPostBtn">Publicar Receta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
 </html>
