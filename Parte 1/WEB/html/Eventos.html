@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CookingUAH - Eventos</title>
+  <link rel="stylesheet" href="../css/Eventos.css" />
+</head>
+<body>
+  <div class="eventos-container">
+    
+    <aside class="sidebar">
+      <div>
+        <div class="logo">
+          <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
+          <h1>CookingUAH</h1>
+        </div>
+
+        <!-- Navegación -->
+        <nav class="nav-buttons">
+          <a href="Home.html" class="btn-secondary">Inicio</a> 
+          <a href="Eventos.html" class="btn-secondary active">Eventos</a>
+          <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
+          <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
+          <!-- formulario de crear evento -->
+          <button id="openModalBtn" class="btn-primary">Crear publicación</button>
+        </nav>
+      </div>
+
+      <!-- cierre de sesión -->
+      <a href="../index.html" class="btn-logout">Cerrar sesión</a>
+    </aside>
+
+    <main class="eventos-feed">
+      <h2>Calendario de eventos</h2>
+
+      <!--Calendario-->
+      <div class="calendar">
+        <!-- Encabezado del calendario -->
+        <div class="calendar-header">
+          <button id="prevMonth">←</button>
+          <h3 id="monthYear">Noviembre 2025</h3>
+          <button id="nextMonth">→</button>
+        </div>
+
+        <!--cuadricula del calendario -->
+        <div class="calendar-grid" id="calendarGrid"></div>
+      </div>
+
+      <!-- Ver eventos-->
+      <div class="event-details" id="eventDetails">
+        <h3>Eventos seleccionados</h3>
+        <ul id="eventList">
+          <li>Selecciona un día del calendario para ver los eventos.</li>
+        </ul>
+      </div>
+
+      <!-- Para crear eventos-->
+      <section class="crear-evento">
+        <h3>Crear un nuevo evento</h3>
+        <form id="addEventForm" class="form-evento">
+          <label for="eventDate">Fecha:</label>
+          <input type="date" id="eventDate" required />
+
+          <label for="eventTitle">Título:</label>
+          <input type="text" id="eventTitle" placeholder="Ej: Clase de sushi" required />
+
+          <label for="eventTime">Hora:</label>
+          <input type="time" id="eventTime" required />
+
+          <!-- El creador se obtiene automáticamente desde localStorage en JS -->
+          <button type="submit" class="btn-primary">Añadir evento</button>
+        </form>
+      </section>
+    </main>
+  </div>
+<!-- aqui manejamos los eventos y el calendario-->
+  <script src="../js/Eventos.js"></script>
+</body>
+</html>
