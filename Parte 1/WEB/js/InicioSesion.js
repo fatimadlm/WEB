@@ -1,48 +1,75 @@
-// Seleccionamos el formulario y el contenedor de mensajes
+// === InicioSesion.js ===
+
+// Seleccionamos el formulario
 const loginForm = document.getElementById('loginForm');
 
-// Creamos un div para mostrar errores dentro del formulario
+// Contenedor de errores (debajo del formulario)
 const errorDiv = document.createElement('div');
 errorDiv.style.color = 'red';
 errorDiv.style.marginTop = '10px';
 loginForm.appendChild(errorDiv);
 
-
-
-//Usuarios de prueba
+// --- Semilla de usuarios de prueba (si no existían) ---
 if (!localStorage.getItem('users')) {
   const testUsers = [
-    { username: 'usuario1', password: '1234' },
-    { username: 'usuario2', password: '1234' },
-    { username: 'usuario3', password: '1234' }
+    { username: 'usuario1', password: '1234', role: 'user', active: true },
+    { username: 'usuario2', password: '1234', role: 'user', active: true },
+    { username: 'usuario3', password: '1234', role: 'user', active: true }
   ];
   localStorage.setItem('users', JSON.stringify(testUsers));
 }
 
+// --- ADMIN fijo: crea o corrige siempre el usuario admin ---
+(function ensureAdmin() {
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+  const i = users.findIndex(u => (u.username || '').toLowerCase() === 'admin');
 
-// Escuchamos el submit del formulario
-loginForm.addEventListener('submit', function(e) {
-  e.preventDefault(); // Evitamos recargar la página
+  const adminData = {
+    username: 'admin',
+    password: 'admin',   // clave de prueba
+    role: 'admin',
+    active: true
+  };
 
-  // Obtenemos los valores de los inputs y hacemos trim
+  if (i === -1) {
+    users.push(adminData);
+  } else {
+    users[i] = { ...users[i], ...adminData };
+  }
+
+  localStorage.setItem('users', JSON.stringify(users));
+})();
+
+// --- Manejar envío del formulario ---
+loginForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+
   const username = document.getElementById('username').value.trim();
   const password = document.getElementById('password').value.trim();
 
-  // Obtenemos los usuarios registrados desde localStorage
-  const users = JSON.parse(localStorage.getItem('users')) || [];
-
-  // Buscamos un usuario que coincida con el username
-  const user = users.find(user => user.username === username);
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+  const user = users.find(u => u.username === username);
 
   if (!user) {
-    // Usuario no existe
     errorDiv.textContent = 'No se encuentra este usuario';
-  } else if (user.password !== password) {
-    // Contraseña incorrecta
+    return;
+  }
+  if (user.password !== password) {
     errorDiv.textContent = 'Contraseña incorrecta';
+    return;
+  }
+  if (user.active === false) {
+    errorDiv.textContent = 'Este usuario está bloqueado.';
+    return;
+  }
+
+  // Login OK
+  localStorage.setItem('currentUser', JSON.stringify(user));
+
+  // Redirige según rol
+  if (user.role === 'admin') {
+    window.location.href = 'Admin.html';
   } else {
-    // Login exitoso
-    localStorage.setItem('currentUser', JSON.stringify(user)); // Guardamos usuario actual
-    window.location.href = 'Home.html'; // Redirigimos a la página principal
+    window.location.href = 'Home.html';
   }
 });
