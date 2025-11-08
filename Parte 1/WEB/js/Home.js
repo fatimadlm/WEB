@@ -39,7 +39,7 @@ let posts = [
     avatar: "../Imagenes/Avatar4.jpg",
     time: "Hace 3 horas",
     content: "Brownies de chocolate 🍫 con nueces, recién horneados.",
-    img: "../Imagenes/Brownies.jpg",
+    img: "../Imagenes/Brownie.jpg",
     likes: 28,
     liked: false,
     comments: []
