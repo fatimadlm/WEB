@@ -3,10 +3,10 @@ const currentUser = "@TuUsuario";
 const currentUserAvatar = "../Imagenes/Avatar_TuUsuario.jpg"; // <--- CAMBIA ESTO por una imagen real
 
 // Array de posts
-let posts = [
+let posts =[
   {
     username: "@Juan",
-    avatar: "../Imagenes/Avatar1.jpg",
+    avatar: "../Imagenes/Avatar4.jpeg",
     time: "Hace 2 horas",
     content: "Hoy preparé una lasaña casera con salsa bechamel 🤤. ¡Aquí mi receta!",
     img: "../Imagenes/Lasanna.png",
@@ -16,7 +16,7 @@ let posts = [
   },
   {
     username: "@Ana",
-    avatar: "../Imagenes/Avatar3.jpg",
+    avatar: "../Imagenes/Avatar1.jpg",
     time: "Hace 5 horas",
     content: "Pan casero con masa madre 😍 recién salido del horno.",
     img: "../Imagenes/Pan.jpg",
@@ -26,7 +26,7 @@ let posts = [
   },
   {
     username: "@Mario",
-    avatar: "../Imagenes/Avatar2.jpg",
+    avatar: "../Imagenes/Avatar3.jpg",
     time: "Hace 1 hora",
     content: "Tacos al pastor 🌮, ¡los mejores de la ciudad!",
     img: "../Imagenes/Tacos.jpg",
@@ -36,7 +36,7 @@ let posts = [
   },
   {
     username: "@Laura",
-    avatar: "../Imagenes/Avatar4.jpg",
+    avatar: "../Imagenes/Avatar5.jpeg",
     time: "Hace 3 horas",
     content: "Brownies de chocolate 🍫 con nueces, recién horneados.",
     img: "../Imagenes/Brownie.jpg",
@@ -46,7 +46,7 @@ let posts = [
   },
   {
     username: "@Caro",
-    avatar: "../Imagenes/Avatar5.jpg",
+    avatar: "../Imagenes/Avatar6.jpeg",
     time: "Hace 6 horas",
     content: "Ensalada fresca de quinoa y aguacate 🥗, ideal para el verano.",
     img: "../Imagenes/Ensalada.jpg",

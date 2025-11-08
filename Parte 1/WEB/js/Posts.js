@@ -1,5 +1,5 @@
-// Array de posts
-let posts = [
+// js/posts.js
+export let posts = [
   {
     username: "@Juan",
     avatar: "../Imagenes/Avatar4.jpeg",
@@ -51,33 +51,3 @@ let posts = [
     comments: []
   }
 ];
-
-// Ordenar posts por likes descendente y obtener top 3
-let topPosts = posts.sort((a,b) => b.likes - a.likes).slice(0,3);
-
-const podio = document.getElementById('podio');
-const clasesPodio = ["second","first","third"]; // Izquierda-Centro-Derecha
-const coloresPodio = ["#c0c0c0", "#ffd700", "#cd7f32"]; // Plata, Oro, Bronce
-
-topPosts.forEach((post, index) => {
-  const div = document.createElement('div');
-  div.classList.add('podio-post', clasesPodio[index]);
-
-  // Fondo tipo plataforma
-  div.style.backgroundColor = "#fff8f0";
-  div.style.borderTop = `15px solid ${coloresPodio[index]}`;
-
-  div.innerHTML = `
-    <div class="post-header">
-      <img src="${post.avatar}" alt="${post.username}" class="avatar">
-      <div>
-        <strong>${post.username}</strong><br>
-        <small>${post.time}</small>
-      </div>
-    </div>
-    <p>${post.content}</p>
-    <img src="${post.img}" alt="Post Image" class="post-img">
-    <div class="likes">❤️ ${post.likes} Likes</div>
-  `;
-  podio.appendChild(div);
-});
