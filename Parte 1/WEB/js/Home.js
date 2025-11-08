@@ -2,7 +2,7 @@
 const currentUser = "@TuUsuario";
 const currentUserAvatar = "../Imagenes/Avatar_TuUsuario.jpg"; // <--- CAMBIA ESTO por una imagen real
 
-//ARRAY DE JSON DE POSTS 
+// Array de posts
 let posts = [
   {
     username: "@Juan",
@@ -11,10 +11,8 @@ let posts = [
     content: "Hoy preparé una lasaña casera con salsa bechamel 🤤. ¡Aquí mi receta!",
     img: "../Imagenes/Lasanna.png",
     likes: 12,
-    liked: false, // Controla si el usuario le ha dado like
-    comments: [
-      { username: "@CocineraAna", text: "¡Se ve deliciosa!" }
-    ]
+    liked: false,
+    comments: [{ username: "@CocineraAna", text: "¡Se ve deliciosa!" }]
   },
   {
     username: "@Ana",
@@ -25,8 +23,39 @@ let posts = [
     likes: 42,
     liked: false,
     comments: []
+  },
+  {
+    username: "@Mario",
+    avatar: "../Imagenes/Avatar2.jpg",
+    time: "Hace 1 hora",
+    content: "Tacos al pastor 🌮, ¡los mejores de la ciudad!",
+    img: "../Imagenes/Tacos.jpg",
+    likes: 35,
+    liked: false,
+    comments: [{ username: "@Laura", text: "¡Quiero probarlos!" }]
+  },
+  {
+    username: "@Laura",
+    avatar: "../Imagenes/Avatar4.jpg",
+    time: "Hace 3 horas",
+    content: "Brownies de chocolate 🍫 con nueces, recién horneados.",
+    img: "../Imagenes/Brownies.jpg",
+    likes: 28,
+    liked: false,
+    comments: []
+  },
+  {
+    username: "@Caro",
+    avatar: "../Imagenes/Avatar5.jpg",
+    time: "Hace 6 horas",
+    content: "Ensalada fresca de quinoa y aguacate 🥗, ideal para el verano.",
+    img: "../Imagenes/Ensalada.jpg",
+    likes: 18,
+    liked: false,
+    comments: []
   }
 ];
+
 
 // === FUNCIÓN PARA RENDERIZAR POSTS (Para Home.html) ===
 function renderPosts(postsArray) {
