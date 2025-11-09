@@ -1,57 +1,61 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ajuste para móviles -->
   <title>Nueva Publicación - CookingUAH</title>
-  <link rel="stylesheet" href="../css/NuevaPublicacion.css" />
+  <link rel="stylesheet" href="../css/NuevaPublicacion.css"> <!-- Estilos de la página -->
 </head>
 <body>
   <div class="container">
 
-    <!-- BARRA LATERAL -->
+    <!-- Barra lateral -->
     <aside class="sidebar">
       <div class="logo">
-        <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
+        <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img"> <!-- Logo -->
         <h1>CookingUAH</h1>
       </div>
 
+      <!-- Navegación lateral -->
       <nav class="nav-buttons">
         <a href="Home.html" class="btn-secondary">Inicio</a>
       </nav>
     </aside>
 
-    <!-- CONTENIDO PRINCIPAL -->
+    <!-- Contenido principal -->
     <main class="main-content">
       <h2>Crear una nueva publicación</h2>
 
+      <!-- Formulario para nueva publicación -->
       <form class="post-form">
         <label for="titulo">Título de la receta:</label>
-        <input type="text" id="titulo" placeholder="Ejemplo: Lasaña casera de pollo" required>
+        <input type="text" id="titulo" placeholder="Ejemplo: Lasaña casera de pollo" required> <!-- Título -->
 
         <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" rows="5" placeholder="Escribe tu receta, ingredientes o historia detrás del plato..." required></textarea>
+        <textarea id="descripcion" rows="5" placeholder="Escribe tu receta, ingredientes o historia detrás del plato..." required></textarea> <!-- Descripción -->
 
         <label for="imagen">Subir imagen:</label>
-        <input type="file" id="imagen" accept="image/*">
+        <input type="file" id="imagen" accept="image/*"> <!-- Imagen opcional -->
 
-        <button type="submit" class="btn-publicar">Publicar</button>
+        <button type="submit" class="btn-publicar">Publicar</button> <!-- Botón publicar -->
       </form>
     </main>
 
   </div>
 
+  <!-- Pie de página -->
   <footer class="footer">
     <p>&copy; 2025 CookingUAH</p>
   </footer>
 
+  <!-- Script de envío de la publicación -->
   <script>
-    // Simulación del envío de la publicación
+    // Evita recargar la página y simula publicación
     document.querySelector(".post-form").addEventListener("submit", (e) => {
       e.preventDefault();
       const titulo = document.getElementById("titulo").value;
-      alert(`Tu receta "${titulo}" ha sido publicada 🍲`);
-      window.location.href = "Home.html";
+      alert(`Tu receta "${titulo}" ha sido publicada 🍲`); // Mensaje de confirmación
+      window.location.href = "Home.html"; // Redirige al inicio
     });
   </script>
 </body>

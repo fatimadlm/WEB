@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cooking UAH — Admin</title>
   <link rel="stylesheet" href="../css/Admin.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="page">
@@ -15,18 +14,19 @@
       <p class="brand__subtitle">Menú de administrador</p>
     </header>
 
-    <!-- Menú -->
+    <!-- Menú principal de administración -->
     <section class="card card--menu">
       <button class="menu-btn" data-target="#users">Gestionar usuarios</button>
       <button class="menu-btn" data-target="#posts">Gestionar publicaciones</button>
       <button class="menu-btn" data-target="#comments">Gestionar comentarios</button>
 
+      <!-- Buscador general -->
       <div class="search">
         <input id="adminSearch" type="search" placeholder="Buscar en usuarios, publicaciones y comentarios" aria-label="Buscar">
       </div>
     </section>
 
-    <!-- Bloque USUARIOS -->
+    <!-- Tabla de usuarios -->
     <section id="users" class="card">
       <div class="card__header">
         <h2>Usuarios</h2>
@@ -47,12 +47,12 @@
               <th style="width:200px">Acciones</th>
             </tr>
           </thead>
-          <tbody><!-- JS --></tbody>
+          <tbody><!-- Contenido cargado por JS --></tbody>
         </table>
       </div>
     </section>
 
-    <!-- Bloque PUBLICACIONES -->
+    <!-- Tabla de publicaciones -->
     <section id="posts" class="card">
       <div class="card__header">
         <h2>Publicaciones</h2>
@@ -68,12 +68,12 @@
               <th style="width:220px">Acciones</th>
             </tr>
           </thead>
-          <tbody><!-- JS --></tbody>
+          <tbody><!-- Contenido cargado por JS --></tbody>
         </table>
       </div>
     </section>
 
-    <!-- Bloque COMENTARIOS -->
+    <!-- Tabla de comentarios -->
     <section id="comments" class="card">
       <div class="card__header">
         <h2>Comentarios</h2>
@@ -89,11 +89,12 @@
               <th style="width:160px">Acciones</th>
             </tr>
           </thead>
-          <tbody><!-- JS --></tbody>
+          <tbody><!-- Contenido cargado por JS --></tbody>
         </table>
       </div>
     </section>
 
+    <!-- Pie de página -->
     <footer class="footer">
       <a class="link" href="Home.html">← Volver a Inicio</a>
       <a class="link" href="../index.html">Cerrar sesión</a>

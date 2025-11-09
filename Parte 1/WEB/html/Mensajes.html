@@ -2,42 +2,50 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ajuste para móviles -->
   <title>Mensajes - CookingUAH</title>
-  <link rel="stylesheet" href="../css/Mensajes.css"> 
+  <link rel="stylesheet" href="../css/Mensajes.css"> <!-- Estilos de la página -->
 </head>
 <body>
   <div class="home-container">
 
+    <!-- Barra lateral / menú -->
     <aside class="sidebar">
       <div> 
         <div class="logo">
-          <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
+          <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" /> <!-- Logo -->
           <h1>CookingUAH</h1>
         </div>
+
+        <!-- Navegación -->
         <nav class="nav-buttons">
           <a href="Home.html" class="btn-secondary">Inicio</a> 
           <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
-           <a href="Eventos.html" class="btn-secondary">Eventos</a>
+          <a href="Eventos.html" class="btn-secondary">Eventos</a>
           <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
           <a href="Podio.html" class="btn-secondary">Recetas TOP</a>
-          <button id="openModalBtn" class="btn-primary">Crear publicación</button>
+          <button id="openModalBtn" class="btn-primary">Crear publicación</button> <!-- Abrir modal de nueva publicación -->
         </nav>
       </div>
-      <a href="../index.html" class="btn-logout">Cerrar sesión</a>
+
+      <a href="../index.html" class="btn-logout">Cerrar sesión</a> <!-- Botón cerrar sesión -->
     </aside>
 
+    <!-- Área principal -->
     <main class="feed">
       <h2>Mensajes</h2>
 
+      <!-- Buscador de chats -->
       <div class="search-bar-container">
         <input type="text" id="userSearch" placeholder="Buscar o empezar un chat nuevo...">
         <button id="userSearchBtn">Buscar</button>
       </div>
+
+      <!-- Lista de chats -->
       <ul class="chat-list">
         <li>
           <a href="./Chats/ChatJuan.html">
-            <img src="../Imagenes/Avatar4.jpeg" alt="Usuario" class="chat-avatar">
+            <img src="../Imagenes/Avatar4.jpeg" alt="Usuario" class="chat-avatar"> <!-- Avatar del usuario -->
             <div class="chat-info">
               <h3>@Juan</h3>
               <p>Último mensaje: "El truco es tamizar la harina y añadir la leche poco a poco, sin dejar de remover con varillas. ¡Y la leche templada!"</p>
@@ -67,28 +75,29 @@
 
   </div>
   
+  <!-- Modal para crear nueva publicación -->
   <div id="postModal" class="modal-backdrop" style="display: none;">
     <div class="modal-content">
-      <span class="modal-close">&times;</span>
+      <span class="modal-close">&times;</span> <!-- Cerrar modal -->
       <h2>Crear una nueva publicación</h2>
       <div id="modalPostBox" class="modal-post-box">
-        <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea>
+        <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea> <!-- Texto de la publicación -->
         <div id="modalImagePreviewContainer" class="image-preview-container" style="display: none;">
-            <img id="modalImagePreview" src="#" alt="Previsualización de imagen" class="image-preview" style="display: none;">
-            <button id="modalRemoveImageBtn" class="remove-image-btn" style="display: none;">✖</button>
+            <img id="modalImagePreview" src="#" alt="Previsualización de imagen" class="image-preview" style="display: none;"> <!-- Vista previa imagen -->
+            <button id="modalRemoveImageBtn" class="remove-image-btn" style="display: none;">✖</button> <!-- Quitar imagen -->
         </div>
         <div class="post-controls">
           <div class="post-options">
-            <input type="file" id="modalImageUpload" accept="image/*" style="display: none;">
+            <input type="file" id="modalImageUpload" accept="image/*" style="display: none;"> <!-- Subir imagen -->
             <button class="option-btn" id="modalAddImgBtn" title="Añadir Imagen">📸</button>
           </div>
-          <button id="modalNewPostBtn">Publicar Receta</button>
+          <button id="modalNewPostBtn">Publicar Receta</button> <!-- Botón publicar -->
         </div>
       </div>
     </div>
   </div>
   
-  <script src="../js/Home.js"></script>
+  <script src="../js/Home.js"></script> <!-- Lógica de la página -->
 
 </body>
 </html>

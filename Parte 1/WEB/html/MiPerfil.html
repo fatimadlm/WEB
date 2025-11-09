@@ -1,54 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ajuste para móviles -->
   <title>Mi Perfil - CookingUAH</title>
 
-  <link rel="stylesheet" href="../css/MiPerfil.css" />
-  <link rel="stylesheet" href="../css/PerfilModal.css" />
+  <link rel="stylesheet" href="../css/MiPerfil.css"> <!-- Estilos del perfil -->
+  <link rel="stylesheet" href="../css/PerfilModal.css"> <!-- Estilos del modal -->
 </head>
 
 <body>
   <div class="home-container">
 
+    <!-- Barra lateral / menú -->
     <aside class="sidebar">
-      <div> 
+      <div>
         <div class="logo">
-          <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
+          <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img"> <!-- Logo -->
           <h1>CookingUAH</h1>
         </div>
+
+        <!-- Navegación -->
         <nav class="nav-buttons">
-          <a href="Home.html" class="btn-secondary">Inicio</a> 
+          <a href="Home.html" class="btn-secondary">Inicio</a>
           <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
-           <a href="Eventos.html" class="btn-secondary">Eventos</a>
+          <a href="Eventos.html" class="btn-secondary">Eventos</a>
           <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
-        <a href="Podio.html" class="btn-secondary">Recetas TOP</a>
-          <button id="openModalBtn" class="btn-primary">Crear publicación</button>
+          <a href="Podio.html" class="btn-secondary">Recetas TOP</a>
+          <button id="openModalBtn" class="btn-primary">Crear publicación</button> <!-- Abrir modal publicación -->
         </nav>
       </div>
-      <a href="../index.html" class="btn-logout">Cerrar sesión</a>
+      <a href="../index.html" class="btn-logout">Cerrar sesión</a> <!-- Cerrar sesión -->
     </aside>
 
+    <!-- Contenido principal del perfil -->
     <main class="feed perfil-page">
 
+      <!-- Información del perfil -->
       <section class="perfil-info">
-        <img src="../Imagenes/MiAvatar.jpg" alt="Foto de perfil" class="perfil-img" />
+        <img src="../Imagenes/MiAvatar.jpg" alt="Foto de perfil" class="perfil-img"> <!-- Avatar -->
         <div class="perfil-datos">
           <h2>TuUsuario</h2>
           <p class="usuario">@TuUsuario</p>
           <p class="comida-fav"><strong>Comida favorita:</strong> Paella</p>
           <p class="bio">Apasionado por la cocina mediterranea y los postres caseros. ¡Compartiendo mis mejores recetas!</p>
-          <a href="#editar" class="btn-editar" aria-haspopup="dialog" aria-controls="editar">Editar perfil</a>
+          <a href="#editar" class="btn-editar" aria-haspopup="dialog" aria-controls="editar">Editar perfil</a> <!-- Abrir modal editar -->
         </div>
       </section>
 
+      <!-- Publicaciones del usuario -->
       <section class="perfil-posts">
         <h3>Mis publicaciones</h3>
 
         <div class="post">
           <div class="post-header">
-            <img src="../Imagenes/MiAvatar.jpg" alt="Usuario" class="user-img" />
+            <img src="../Imagenes/MiAvatar.jpg" alt="Usuario" class="user-img"> <!-- Avatar del autor -->
             <div>
               <h4>@TuUsuario</h4>
               <span>Hace 1 día</span>
@@ -56,15 +62,15 @@
           </div>
           <div class="post-content">
             <p>Mi nueva receta: pasta carbonara cremosa </p>
-            <img src="../Imagenes/carbonara.jpg" alt="Pasta carbonara" class="post-img" />
+            <img src="../Imagenes/carbonara.jpg" alt="Pasta carbonara" class="post-img"> <!-- Imagen receta -->
           </div>
           <div class="post-actions">
             <button class="like-btn" data-likes-start="12">
               <span class="like-text">❤️ Me gusta</span> (<span class="like-count">12</span>)
-            </button>
-            <button class="comment-btn">💬 Comentar</button>
+            </button> <!-- Botón Me gusta -->
+            <button class="comment-btn">💬 Comentar</button> <!-- Botón comentar -->
           </div>
-          <div class="comments"></div>
+          <div class="comments"></div> <!-- Contenedor de comentarios -->
         </div>
 
       </section>
@@ -72,12 +78,13 @@
     </main>
   </div>
 
+  <!-- Modal para editar perfil -->
   <section id="editar" class="modal" aria-labelledby="editar-title" role="dialog" aria-modal="true">
-    <a href="#" class="modal__backdrop" aria-label="Cerrar editor"></a>
+    <a href="#" class="modal__backdrop" aria-label="Cerrar editor"></a> <!-- Fondo modal -->
     <div class="modal__panel" role="document">
       <header class="modal__header">
         <h2 id="editar-title">Editar perfil</h2>
-        <a href="#" class="modal__close" aria-label="Cerrar">✕</a>
+        <a href="#" class="modal__close" aria-label="Cerrar">✕</a> <!-- Cerrar modal -->
       </header>
       <div class="modal__body">
         <iframe
@@ -85,23 +92,24 @@
           title="Formulario de edición de perfil"
           loading="lazy"
           class="modal__iframe">
-        </iframe>
+        </iframe> <!-- Formulario dentro del modal -->
       </div>
     </div>
   </section>
-  
-  <script src="../js/PerfilModal.js" defer></script>
-  <script src="../js/Home.js" defer></script>
-  
+
+  <!-- Scripts -->
+  <script src="../js/PerfilModal.js" defer></script> <!-- Lógica del modal -->
+  <script src="../js/Home.js" defer></script> <!-- Funcionalidades generales -->
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      
-      // Lógica de "Me Gusta" de esta página
+
+      // Lógica de "Me Gusta"
       document.querySelectorAll(".perfil-posts .like-btn").forEach(btn => {
         let countElement = btn.querySelector('.like-count');
         let isLiked = false;
         let count = parseInt(btn.dataset.likesStart) || 0;
-        
+
         btn.addEventListener("click", () => {
           isLiked = !isLiked;
           if (isLiked) {
@@ -115,40 +123,42 @@
         });
       });
 
-      // Lógica de "Comentar" de esta página
+      // Lógica de comentarios
       document.querySelectorAll(".perfil-posts .comment-btn").forEach(btn => {
         btn.addEventListener("click", () => {
           const commentText = prompt("Escribe tu comentario:");
-          
+
           if (commentText && commentText.trim() !== "") {
             const postElement = btn.closest('.post');
             const commentsContainer = postElement.querySelector('.comments');
             const newComment = document.createElement('p');
-            newComment.innerHTML = `<strong>@TuUsuario:</strong> ${commentText}`; 
+            newComment.innerHTML = `<strong>@TuUsuario:</strong> ${commentText}`;
             commentsContainer.appendChild(newComment);
             commentsContainer.scrollTop = commentsContainer.scrollHeight;
           }
         });
       });
+
     });
   </script>
 
+  <!-- Modal para crear publicación -->
   <div id="postModal" class="modal-backdrop" style="display: none;">
     <div class="modal-content">
-      <span class="modal-close">&times;</span>
+      <span class="modal-close">&times;</span> <!-- Cerrar modal -->
       <h2>Crear una nueva publicación</h2>
       <div id="modalPostBox" class="modal-post-box">
-        <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea>
+        <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea> <!-- Texto publicación -->
         <div id="modalImagePreviewContainer" class="image-preview-container" style="display: none;">
-            <img id="modalImagePreview" src="#" alt="Previsualización de imagen" class="image-preview" style="display: none;">
-            <button id="modalRemoveImageBtn" class="remove-image-btn" style="display: none;">✖</button>
+            <img id="modalImagePreview" src="#" alt="Previsualización de imagen" class="image-preview" style="display: none;"> <!-- Previsualización -->
+            <button id="modalRemoveImageBtn" class="remove-image-btn" style="display: none;">✖</button> <!-- Quitar imagen -->
         </div>
         <div class="post-controls">
           <div class="post-options">
-            <input type="file" id="modalImageUpload" accept="image/*" style="display: none;">
+            <input type="file" id="modalImageUpload" accept="image/*" style="display: none;"> <!-- Subir imagen -->
             <button class="option-btn" id="modalAddImgBtn" title="Añadir Imagen">📸</button>
           </div>
-          <button id="modalNewPostBtn">Publicar Receta</button>
+          <button id="modalNewPostBtn">Publicar Receta</button> <!-- Botón publicar -->
         </div>
       </div>
     </div>
