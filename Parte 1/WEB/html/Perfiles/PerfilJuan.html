@@ -1,39 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Juan - Perfil</title>
-  <link rel="stylesheet" href="../../css/Perfil.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil de Juan - CookingUAH</title>
+
+  <link rel="stylesheet" href="../../css/Perfil.css" />
 </head>
+
 <body>
-  <div class="perfil-container">
-    <div class="perfil-header">
-      <img src="../../Imagenes/Avatar4.jpeg" alt="@Juan" class="perfil-avatar">
-      <h2 class="perfil-nombre">Juan Pérez</h2>
-      <p class="perfil-usuario">@Juan</p>
-    </div>
+  <div class="home-container">
 
-    <div class="perfil-info">
-      <ul>
-        <li><strong>Especialidad:</strong> Cocina italiana</li>
-        <li><strong>Ubicación:</strong> Madrid, España</li>
-      </ul>
-    </div>
+    <aside class="sidebar">
+      <div> 
+        <div class="logo">
+          <img src="../../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
+          <h1>CookingUAH</h1>
+        </div>
+        <nav class="nav-buttons">
+          <a href="../Home.html" class="btn-secondary">Inicio</a> 
+          <a href="../Mensajes.html" class="btn-secondary">Mensajes</a>
+          <a href="../Eventos.html" class="btn-secondary">Eventos</a>
+          <a href="../MiPerfil.html" class="btn-secondary">Mi Perfil</a>
+          <a href="../Podio.html" class="btn-secondary">Recetas TOP</a>
+          <button id="openModalBtn" class="btn-primary">Crear publicación</button>
+        </nav>
+      </div>
+      <a href="../../index.html" class="btn-logout">Cerrar sesión</a>
+    </aside>
 
-    <div class="perfil-bio">
-      <h2>Biografía</h2>
-      <p>Apasionado por la comida casera, sobre todo por lasañas y pastas con salsa bechamel. ¡La cocina es mi felicidad!</p>
-    </div>
+    <main class="feed perfil-page">
 
-    <div class="perfil-bio">
-      <h2>Publicación destacada</h2>
-      <p>Hoy preparé una lasaña casera con salsa bechamel 🤤. ¡Aquí mi receta!</p>
-      <img src="../../Imagenes/Lasanna.png" alt="Lasaña" style="width:100%;border-radius:10px;">
-      <p><strong>❤️ 12 Me gusta</strong></p>
-    </div>
+      <!-- Información de Juan -->
+      <section class="perfil-info">
+        <img src="../../Imagenes/Avatar4.jpeg" alt="Foto de perfil" class="perfil-img" />
+        <div class="perfil-datos">
+          <h2>Juan Hoyos</h2>
+          <p class="usuario">@Caro</p>
+          <p class="comida-fav"><strong>Comida favorita:</strong> Lasaña</p>
+          <p class="bio">Probando la cocina italiana.</p>
+        </div>
+      </section>
 
-    <a href="../Chats/ChatJuan.html" style="display:block;text-align:center;margin-top:15px;color:#007bff;">💬 Enviar mensaje</a>
+      <!-- Publicaciones de Juan -->
+      <section class="perfil-posts">
+        <h3>Publicaciones</h3>
+
+        <div class="post">
+          <div class="post-header">
+            <img src="../../Imagenes/Avatar4.jpeg" alt="Usuario" class="user-img" />
+            <div>
+              <h4>@Juan</h4>
+              <span>Hace 2 horas</span>
+            </div>
+          </div>
+          <div class="post-content">
+            <p>Hoy preparé una lasaña casera con salsa bechamel 🤤. ¡Aquí mi receta!</p>
+            <img src="../../Imagenes/Lasanna.png" alt="Ensalada" class="post-img" />
+          </div>
+          <div class="post-actions">
+            <button class="like-btn" data-likes-start="15">
+              <span class="like-text">❤️ Me gusta</span> (<span class="like-count">15</span>)
+            </button>
+            <button class="comment-btn">💬 Comentar</button>
+          </div>
+          <div class="comments"></div>
+        </div>
+      </section>
+
+    </main>
   </div>
+
+  <script src="../../js/Home.js" defer></script>
+  <script src="../../js/PerfilOtro.js" defer></script>
+
 </body>
 </html>

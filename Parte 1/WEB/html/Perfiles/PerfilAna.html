@@ -1,107 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Perfil de Ana - CookingUAH</title>
-  <link rel="stylesheet" href="../css/MiPerfil.css">
+
+  <link rel="stylesheet" href="../../css/Perfil.css" />
 </head>
+
 <body>
   <div class="home-container">
 
     <aside class="sidebar">
       <div> 
         <div class="logo">
-          <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img">
+          <img src="../../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
           <h1>CookingUAH</h1>
         </div>
         <nav class="nav-buttons">
-          <a href="Home.html" class="btn-secondary">Inicio</a> 
-          <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
-          <a href="Eventos.html" class="btn-secondary">Eventos</a>
-          <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
-          <a href="Podio.html" class="btn-secondary">Recetas TOP</a>
+          <a href="../Home.html" class="btn-secondary">Inicio</a> 
+          <a href="../Mensajes.html" class="btn-secondary">Mensajes</a>
+          <a href="../Eventos.html" class="btn-secondary">Eventos</a>
+          <a href="../MiPerfil.html" class="btn-secondary">Mi Perfil</a>
+          <a href="../Podio.html" class="btn-secondary">Recetas TOP</a>
           <button id="openModalBtn" class="btn-primary">Crear publicación</button>
         </nav>
       </div>
-      <a href="../index.html" class="btn-logout">Cerrar sesión</a>
+      <a href="../../index.html" class="btn-logout">Cerrar sesión</a>
     </aside>
 
     <main class="feed perfil-page">
+
+      <!-- Información de Ana -->
       <section class="perfil-info">
-        <img src="../Imagenes/AvatarAna.jpg" alt="Foto de Ana" class="perfil-img">
+        <img src="../../Imagenes/Avatar1.jpg" alt="Foto de perfil" class="perfil-img" />
         <div class="perfil-datos">
           <h2>Ana López</h2>
-          <p class="usuario">@ChefAna</p>
-          <p class="comida-fav"><strong>Comida favorita:</strong> Sushi 🍣</p>
-          <p class="bio">Amante de la cocina japonesa y repostería saludable. ¡Compartiendo mis secretos culinarios!</p>
-          <a href="#editar" class="btn-editar" aria-haspopup="dialog" aria-controls="editar">Editar perfil</a>
+          <p class="usuario">@Ana</p>
+          <p class="comida-fav"><strong>Comida favorita:</strong> Sushi</p>
+          <p class="bio">Diseñadora UX/UI y amante del arte digital.</p>
         </div>
       </section>
 
+      <!-- Publicaciones de Ana -->
       <section class="perfil-posts">
-        <h3>Mis publicaciones</h3>
+        <h3>Publicaciones</h3>
 
         <div class="post">
           <div class="post-header">
-            <img src="../Imagenes/AvatarAna.jpg" alt="Ana" class="user-img">
+            <img src="../../Imagenes/Avatar1.jpg" alt="Usuario" class="user-img" />
             <div>
-              <h4>@ChefAna</h4>
-              <span>Hace 2 días</span>
+              <h4>@Ana</h4>
+              <span>Hace 5 horas</span>
             </div>
           </div>
           <div class="post-content">
-            <p>Preparando mi sushi favorito 🍣 ¡Miren el resultado!</p>
-            <img src="../Imagenes/sushi.jpg" alt="Sushi casero" class="post-img">
+            <p>Pan casero con masa madre 😍 recién salido del horno.</p>
+            <img src="../../Imagenes/Pan.jpg" alt="Pan Masa madre" class="post-img" />
           </div>
           <div class="post-actions">
-            <button class="like-btn" data-likes-start="35">
-              <span class="like-text">❤️ Me gusta</span> (<span class="like-count">35</span>)
+            <button class="like-btn" data-likes-start="15">
+              <span class="like-text">❤️ Me gusta</span> (<span class="like-count">15</span>)
             </button>
             <button class="comment-btn">💬 Comentar</button>
           </div>
           <div class="comments"></div>
         </div>
-
       </section>
+
     </main>
   </div>
 
-  <!-- Modal de edición y nueva publicación -->
-  <section id="editar" class="modal" aria-labelledby="editar-title" role="dialog" aria-modal="true">
-    <a href="#" class="modal__backdrop" aria-label="Cerrar editor"></a>
-    <div class="modal__panel" role="document">
-      <header class="modal__header">
-        <h2 id="editar-title">Editar perfil</h2>
-        <a href="#" class="modal__close" aria-label="Cerrar">✕</a>
-      </header>
-      <div class="modal__body">
-        <iframe src="EditarPerfil.html" title="Formulario de edición de perfil" loading="lazy" class="modal__iframe"></iframe>
-      </div>
-    </div>
-  </section>
+  <script src="../../js/Home.js" defer></script>
+  <script src="../../js/PerfilOtro.js" defer></script>
 
-  <div id="postModal" class="modal-backdrop" style="display:none;">
-    <div class="modal-content">
-      <span class="modal-close">&times;</span>
-      <h2>Crear una nueva publicación</h2>
-      <div id="modalPostBox" class="modal-post-box">
-        <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea>
-        <div id="modalImagePreviewContainer" class="image-preview-container" style="display:none;">
-          <img id="modalImagePreview" src="#" alt="Previsualización" class="image-preview" style="display:none;">
-          <button id="modalRemoveImageBtn" class="remove-image-btn" style="display:none;">✖</button>
-        </div>
-        <div class="post-controls">
-          <div class="post-options">
-            <input type="file" id="modalImageUpload" accept="image/*" style="display:none;">
-            <button class="option-btn" id="modalAddImgBtn" title="Añadir Imagen">📸</button>
-          </div>
-          <button id="modalNewPostBtn">Publicar Receta</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="../js/perfil.js" defer></script>
 </body>
 </html>

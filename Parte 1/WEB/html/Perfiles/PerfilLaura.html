@@ -1,39 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@Laura - Perfil</title>
-  <link rel="stylesheet" href="../../css/Perfil.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil de Laura - CookingUAH</title>
+
+  <link rel="stylesheet" href="../../css/Perfil.css" />
 </head>
+
 <body>
-  <div class="perfil-container">
-    <div class="perfil-header">
-      <img src="../../Imagenes/Avatar5.jpeg" alt="@Laura" class="perfil-avatar">
-      <h2 class="perfil-nombre">Laura Fernández</h2>
-      <p class="perfil-usuario">@Laura</p>
-    </div>
+  <div class="home-container">
 
-    <div class="perfil-info">
-      <ul>
-        <li><strong>Especialidad:</strong> Repostería</li>
-        <li><strong>Ubicación:</strong> Sevilla, España</li>
-      </ul>
-    </div>
+    <aside class="sidebar">
+      <div> 
+        <div class="logo">
+          <img src="../../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
+          <h1>CookingUAH</h1>
+        </div>
+        <nav class="nav-buttons">
+          <a href="../Home.html" class="btn-secondary">Inicio</a> 
+          <a href="../Mensajes.html" class="btn-secondary">Mensajes</a>
+          <a href="../Eventos.html" class="btn-secondary">Eventos</a>
+          <a href="../MiPerfil.html" class="btn-secondary">Mi Perfil</a>
+          <a href="../Podio.html" class="btn-secondary">Recetas TOP</a>
+          <button id="openModalBtn" class="btn-primary">Crear publicación</button>
+        </nav>
+      </div>
+      <a href="../../index.html" class="btn-logout">Cerrar sesión</a>
+    </aside>
 
-    <div class="perfil-bio">
-      <h2>Biografía</h2>
-      <p>Amante del chocolate y los postres caseros. Mis brownies son mi carta de presentación.</p>
-    </div>
+    <main class="feed perfil-page">
 
-    <div class="perfil-bio">
-      <h2>Publicación destacada</h2>
-      <p>Brownies de chocolate 🍫 con nueces, recién horneados.</p>
-      <img src="../../Imagenes/Brownie.jpg" alt="Brownies" style="width:100%;border-radius:10px;">
-      <p><strong>❤️ 28 Me gusta</strong></p>
-    </div>
+      <!-- Información de Laura -->
+      <section class="perfil-info">
+        <img src="../../Imagenes/Avatar5.jpeg" alt="Foto de perfil" class="perfil-img" />
+        <div class="perfil-datos">
+          <h2>Laura Vaquero</h2>
+          <p class="usuario">@Laura</p>
+          <p class="comida-fav"><strong>Comida favorita:</strong> Chocolate</p>
+          <p class="bio">Me encanta la reposteria</p>
+        </div>
+      </section>
 
-    <a href="../Chats/ChatLaura.html" style="display:block;text-align:center;margin-top:15px;color:#007bff;">💬 Enviar mensaje</a>
+      <!-- Publicaciones de Laura -->
+      <section class="perfil-posts">
+        <h3>Publicaciones</h3>
+
+        <div class="post">
+          <div class="post-header">
+            <img src="../../Imagenes/Avatar5.jpeg" alt="Usuario" class="user-img" />
+            <div>
+              <h4>@Laura</h4>
+              <span>Hace 3 horas</span>
+            </div>
+          </div>
+          <div class="post-content">
+            <p>Brownies de chocolate 🍫 con nueces, recién horneados.</p>
+            <img src="../../Imagenes/Brownie.jpg" alt="Brownie" class="post-img" />
+          </div>
+          <div class="post-actions">
+            <button class="like-btn" data-likes-start="15">
+              <span class="like-text">❤️ Me gusta</span> (<span class="like-count">15</span>)
+            </button>
+            <button class="comment-btn">💬 Comentar</button>
+          </div>
+          <div class="comments"></div>
+        </div>
+      </section>
+
+    </main>
   </div>
+
+  <script src="../../js/Home.js" defer></script>
+  <script src="../../js/PerfilOtro.js" defer></script>
+
 </body>
 </html>
