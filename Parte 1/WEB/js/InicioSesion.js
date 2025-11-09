@@ -14,7 +14,12 @@ if (!localStorage.getItem('users')) {
   const testUsers = [
     { username: 'usuario1', password: '1234', role: 'user', active: true },
     { username: 'usuario2', password: '1234', role: 'user', active: true },
-    { username: 'usuario3', password: '1234', role: 'user', active: true }
+    { username: 'usuario3', password: '1234', role: 'user', active: true },
+    { username:'Juan', password:'1234', role:'user', active:true },
+      { username:'Ana',  password:'1234', role:'user', active:true },
+       { username: 'Caro', password: '1234', role: 'user', active: true },
+    { username: 'Mario', password: '1234', role: 'user', active: true },
+    { username: 'Laura', password: '1234', role: 'user', active: true }
   ];
   localStorage.setItem('users', JSON.stringify(testUsers));
 }
