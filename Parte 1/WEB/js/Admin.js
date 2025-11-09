@@ -1,4 +1,4 @@
-// --- Solo admin ---
+//  Solo admin 
 (function guard() {
   const current = safeParse(localStorage.getItem('currentUser')) || {};
   if (current.role !== 'admin') {
@@ -7,30 +7,20 @@
   }
 })();
 
-// --- Shortcuts ---
+// Shortcuts 
 const $ = s => document.querySelector(s);
 
-// --- Estado ---
+// Estado 
 let users = safeParse(localStorage.getItem('users')) || [];
 let posts = safeParse(localStorage.getItem('posts')) || [];
 
-// --- Elementos ---
+// Elementos 
 const usersTbody = $('#usersTable tbody');
 const postsTbody = $('#postsTable tbody');
 const commentsTbody = $('#commentsTable tbody');
 const searchInput = $('#adminSearch');
 
-// --- Reseteo demo (solo desarrollo) ---
-if ($('#adminResetDemo')) {
-  $('#adminResetDemo').addEventListener('click', () => {
-    localStorage.clear();
-    seedDemo();
-    renderAll('');
-    alert('Datos demo reinicializados');
-  });
-}
-
-// --- Inicialización robusta ---
+// Inicialización robusta 
 if (!Array.isArray(users) || !Array.isArray(posts) || !users.length || !posts.length || needsMigration(users, posts)) {
   localStorage.clear();
   seedDemo();
@@ -38,13 +28,18 @@ if (!Array.isArray(users) || !Array.isArray(posts) || !users.length || !posts.le
   posts = safeParse(localStorage.getItem('posts')) || [];
 }
 
-// --- Buscador global ---
+// Buscador global 
 searchInput?.addEventListener('input', () => renderAll(searchInput.value.trim().toLowerCase()));
 
-// --- Render inicial ---
+// Render inicial 
+localStorage.removeItem('users');
+localStorage.removeItem('posts');
+localStorage.removeItem('currentUser');
+seedDemo();
 renderAll('');
 
-// --- Render principal ---
+
+// Render principal 
 function renderAll(q = '') {
   users = safeParse(localStorage.getItem('users')) || [];
   posts = safeParse(localStorage.getItem('posts')) || [];
@@ -58,9 +53,13 @@ function renderUsers(q) {
   users
     .filter(u => matchAny([u.username, u.role, u.active ? 'activo' : 'bloqueado'], q))
     .forEach(u => {
+      const avatarURL = u.avatar || '../Imagenes/avatarDefault.png'; // Ruta por defecto si no hay avatar
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td>@${escapeTxt(u.username)}</td>
+        <td>
+          <img src="${avatarURL}" alt="@${escapeTxt(u.username)}" style="width:30px; height:30px; border-radius:50%; margin-right:8px; vertical-align:middle;">
+          @${escapeTxt(u.username)}
+        </td>
         <td><span class="badge neutral">${u.role || 'user'}</span></td>
         <td><span class="badge ${u.active === false ? 'warn' : 'success'}">${u.active === false ? 'bloqueado' : 'activo'}</span></td>
         <td class="actions">
@@ -85,10 +84,15 @@ function renderPosts(q) {
   posts
     .filter(p => matchAny([p.title, userName(p.authorId), fmtDate(p.createdAt)], q))
     .forEach(p => {
+      const userAvatar = userAvatarURL(p.authorId);
+      const thumb = p.img ? `<img src="${p.img}" alt="Foto publicación" style="width:40px; height:40px; object-fit:cover; border-radius:5px; margin-right:8px; vertical-align:middle;">` : '';
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td>${escapeTxt(p.title || '(Sin título)')}</td>
-        <td>@${escapeTxt(userName(p.authorId))}</td>
+        <td>${thumb} ${escapeTxt(p.title || '(Sin título)')}</td>
+        <td>
+          <img src="${userAvatar}" alt="@${escapeTxt(userName(p.authorId))}" style="width:30px; height:30px; border-radius:50%; margin-right:5px; vertical-align:middle;">
+          @${escapeTxt(userName(p.authorId))}
+        </td>
         <td>${fmtDate(p.createdAt)}</td>
         <td>${(p.comments?.length || 0)}</td>
         <td class="actions">
@@ -134,7 +138,7 @@ function renderComments(q) {
   });
 }
 
-// --- Acciones ---
+// Acciones 
 function toggleUser(id) {
   const i = users.findIndex(u => u.id === id);
   if (i < 0) return;
@@ -184,10 +188,11 @@ function scrollToCommentsOf(postId) {
   document.querySelector('#comments')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// --- Utilidades ---
+//Utilidades 
 function save(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
 function safeParse(s) { try { return JSON.parse(s); } catch (e) { return null; } }
 function userName(id) { return users.find(u => u.id === id)?.username || 'desconocido'; }
+function userAvatarURL(id) { return users.find(u => u.id === id)?.avatar || '../Imagenes/avatarDefault.png'; }
 function fmtDate(ts) { if (!ts) return '-'; try { return new Date(ts).toLocaleString(); } catch (_) { return '-'; } }
 function matchAny(parts, q) { if (!q) return true; return parts.filter(Boolean).some(v => String(v).toLowerCase().includes(q)); }
 function escapeTxt(s) { return String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m])); }
@@ -196,18 +201,18 @@ function needsMigration(u, p) {
   return u.some(x => !x.id) || (Array.isArray(p) && p.some(post => !post.id));
 }
 
-// --- Datos demo en la estructura correcta ---
+// Datos simulados
 function seedDemo() {
   users = [
-    { id: 'u_admin', username: 'admin', password: 'admin', role: 'admin', active: true },
-    { id: 'u1', username: 'usuario1', password: '1234', role: 'user', active: true },
-    { id: 'u2', username: 'usuario2', password: '1234', role: 'user', active: true },
-    { id: 'u3', username: 'usuario3', password: '1234', role: 'user', active: true },
-    { id: 'u4', username: 'Juan',    password: '1234', role: 'user', active: true },
-    { id: 'u5', username: 'Ana',     password: '1234', role: 'user', active: true },
-    { id: 'u6', username: 'Caro',    password: '1234', role: 'user', active: true },
-    { id: 'u7', username: 'Mario',   password: '1234', role: 'user', active: true },
-    { id: 'u8', username: 'Laura',   password: '1234', role: 'user', active: true }
+    { id: 'u_admin', username: 'admin', password: 'admin', role: 'admin', active: true, avatar: '../Imagenes/AvatarAdmin.jpg' },
+    { id: 'u1', username: 'usuario1', password: '1234', role: 'user', active: true, avatar: '../Imagenes/AvatarPorDefecto.webp' },
+    { id: 'u2', username: 'usuario2', password: '1234', role: 'user', active: true, avatar: '../Imagenes/AvatarPorDefecto.webp' },
+    { id: 'u3', username: 'usuario3', password: '1234', role: 'user', active: true, avatar: '../Imagenes/AvatarPorDefecto.webp' },
+    { id: 'u4', username: 'Juan', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar4.jpeg' },
+    { id: 'u5', username: 'Ana', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar1.jpg' },
+    { id: 'u6', username: 'Caro', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar6.jpeg' },
+    { id: 'u7', username: 'Mario', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar3.jpg' },
+    { id: 'u8', username: 'Laura', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar5.jpeg' }
   ];
   save('users', users);
   save('currentUser', users[0]);
@@ -217,6 +222,7 @@ function seedDemo() {
       title: 'Hoy preparé una lasaña casera con salsa bechamel 🤤',
       authorId: 'u4',
       createdAt: Date.now() - 2 * 60 * 60 * 1000,
+      img: '../Imagenes/Lasanna.png',
       comments: [
         { id: 'c1', authorId: 'u5', content: '¡Se ve deliciosa!', createdAt: Date.now() - 1.9 * 60 * 60 * 1000 }
       ]
@@ -226,6 +232,7 @@ function seedDemo() {
       title: 'Pan casero con masa madre 😍 recién salido del horno',
       authorId: 'u5',
       createdAt: Date.now() - 5 * 60 * 60 * 1000,
+      img: '../Imagenes/Pan.jpg',
       comments: []
     },
     {
@@ -233,6 +240,7 @@ function seedDemo() {
       title: 'Tacos al pastor 🌮, ¡los mejores de la ciudad!',
       authorId: 'u7',
       createdAt: Date.now() - 1 * 60 * 60 * 1000,
+      img: '../Imagenes/Tacos.jpg',
       comments: [
         { id: 'c2', authorId: 'u8', content: '¡Quiero probarlos!', createdAt: Date.now() - 0.9 * 60 * 60 * 1000 }
       ]
@@ -242,6 +250,7 @@ function seedDemo() {
       title: 'Brownies de chocolate 🍫 con nueces, recién horneados',
       authorId: 'u8',
       createdAt: Date.now() - 3 * 60 * 60 * 1000,
+      img: '../Imagenes/Brownie.jpg',
       comments: []
     },
     {
@@ -249,6 +258,7 @@ function seedDemo() {
       title: 'Ensalada fresca de quinoa y aguacate 🥗, ideal para el verano',
       authorId: 'u6',
       createdAt: Date.now() - 6 * 60 * 60 * 1000,
+      img: '../Imagenes/Ensalada.jpg',
       comments: []
     },
     {
@@ -256,6 +266,7 @@ function seedDemo() {
       title: 'Mi nueva receta: pasta carbonara cremosa',
       authorId: 'u1',
       createdAt: Date.now() - 24 * 60 * 60 * 1000,
+      img: '../Imagenes/Carbonara.jpg',
       comments: []
     }
   ];
