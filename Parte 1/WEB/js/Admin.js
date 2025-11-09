@@ -1,59 +1,62 @@
-//  Solo admin 
+// === Comprobación de administrador ===
+// Función inmediata que bloquea el acceso si el usuario no es admin
 (function guard() {
-  const current = safeParse(localStorage.getItem('currentUser')) || {};
-  if (current.role !== 'admin') {
+  const current = safeParse(localStorage.getItem('currentUser')) || {}; // Obtener usuario actual del localStorage
+  if (current.role !== 'admin') { // Si no es admin
     alert('Acceso restringido. Debes ser administrador.');
-    window.location.href = 'IniciarSesion.html';
+    window.location.href = 'IniciarSesion.html'; // Redirigir a login
   }
 })();
 
-// Shortcuts 
+// === Atajo para querySelector ===
 const $ = s => document.querySelector(s);
 
-// Estado 
-let users = safeParse(localStorage.getItem('users')) || [];
-let posts = safeParse(localStorage.getItem('posts')) || [];
+// === Estado inicial ===
+let users = safeParse(localStorage.getItem('users')) || []; // Lista de usuarios
+let posts = safeParse(localStorage.getItem('posts')) || []; // Lista de publicaciones
 
-// Elementos 
-const usersTbody = $('#usersTable tbody');
-const postsTbody = $('#postsTable tbody');
-const commentsTbody = $('#commentsTable tbody');
-const searchInput = $('#adminSearch');
+// === Elementos del DOM ===
+const usersTbody = $('#usersTable tbody');       // Tabla de usuarios
+const postsTbody = $('#postsTable tbody');       // Tabla de posts
+const commentsTbody = $('#commentsTable tbody'); // Tabla de comentarios
+const searchInput = $('#adminSearch');           // Input de búsqueda global
 
-// Inicialización robusta 
+// === Inicialización robusta ===
+// Si no hay datos válidos o necesitan migración, limpiar y cargar demo
 if (!Array.isArray(users) || !Array.isArray(posts) || !users.length || !posts.length || needsMigration(users, posts)) {
   localStorage.clear();
-  seedDemo();
+  seedDemo(); // Cargar datos de ejemplo
   users = safeParse(localStorage.getItem('users')) || [];
   posts = safeParse(localStorage.getItem('posts')) || [];
 }
 
-// Buscador global 
+// === Buscador global ===
 searchInput?.addEventListener('input', () => renderAll(searchInput.value.trim().toLowerCase()));
 
-// Render inicial 
+// === Render inicial ===
+// Limpiamos y cargamos demo nuevamente
 localStorage.removeItem('users');
 localStorage.removeItem('posts');
 localStorage.removeItem('currentUser');
 seedDemo();
-renderAll('');
+renderAll(''); // Renderiza todas las tablas
 
-
-// Render principal 
+// === Función principal de render ===
 function renderAll(q = '') {
   users = safeParse(localStorage.getItem('users')) || [];
   posts = safeParse(localStorage.getItem('posts')) || [];
-  renderUsers(q);
-  renderPosts(q);
-  renderComments(q);
+  renderUsers(q);    // Renderiza usuarios filtrados
+  renderPosts(q);    // Renderiza publicaciones filtradas
+  renderComments(q); // Renderiza comentarios filtrados
 }
 
+// === Render de usuarios ===
 function renderUsers(q) {
-  usersTbody.innerHTML = '';
+  usersTbody.innerHTML = ''; // Limpiar tabla
   users
-    .filter(u => matchAny([u.username, u.role, u.active ? 'activo' : 'bloqueado'], q))
+    .filter(u => matchAny([u.username, u.role, u.active ? 'activo' : 'bloqueado'], q)) // Filtrar por búsqueda
     .forEach(u => {
-      const avatarURL = u.avatar || '../Imagenes/avatarDefault.png'; // Ruta por defecto si no hay avatar
+      const avatarURL = u.avatar || '../Imagenes/avatarDefault.png'; // Avatar por defecto
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>
@@ -67,24 +70,27 @@ function renderUsers(q) {
           <button class="btn danger" data-act="deleteUser" data-id="${u.id}">Eliminar</button>
         </td>
       `;
-      usersTbody.appendChild(tr);
+      usersTbody.appendChild(tr); // Agregar fila a la tabla
     });
+  
+  // Asignar eventos a los botones
   usersTbody.querySelectorAll('button').forEach(btn => {
     const id = btn.getAttribute('data-id');
     const act = btn.getAttribute('data-act');
     btn.addEventListener('click', () => {
-      if (act === 'toggle') toggleUser(id);
-      if (act === 'deleteUser') deleteUser(id);
+      if (act === 'toggle') toggleUser(id);       // Bloquear/desbloquear usuario
+      if (act === 'deleteUser') deleteUser(id);   // Eliminar usuario
     });
   });
 }
 
+// === Render de publicaciones ===
 function renderPosts(q) {
-  postsTbody.innerHTML = '';
+  postsTbody.innerHTML = ''; // Limpiar tabla
   posts
-    .filter(p => matchAny([p.title, userName(p.authorId), fmtDate(p.createdAt)], q))
+    .filter(p => matchAny([p.title, userName(p.authorId), fmtDate(p.createdAt)], q)) // Filtrar por búsqueda
     .forEach(p => {
-      const userAvatar = userAvatarURL(p.authorId);
+      const userAvatar = userAvatarURL(p.authorId); // Avatar del autor
       const thumb = p.img ? `<img src="${p.img}" alt="Foto publicación" style="width:40px; height:40px; object-fit:cover; border-radius:5px; margin-right:8px; vertical-align:middle;">` : '';
       const tr = document.createElement('tr');
       tr.innerHTML = `
@@ -100,23 +106,26 @@ function renderPosts(q) {
           <button class="btn danger" data-act="deletePost" data-id="${p.id}">Borrar publicación</button>
         </td>
       `;
-      postsTbody.appendChild(tr);
+      postsTbody.appendChild(tr); // Agregar fila
     });
+
+  // Eventos botones
   postsTbody.querySelectorAll('button').forEach(btn => {
     const id = btn.getAttribute('data-id');
     const act = btn.getAttribute('data-act');
     btn.addEventListener('click', () => {
-      if (act === 'viewComments') scrollToCommentsOf(id);
-      if (act === 'deletePost') deletePost(id);
+      if (act === 'viewComments') scrollToCommentsOf(id); // Ver comentarios
+      if (act === 'deletePost') deletePost(id);           // Eliminar post
     });
   });
 }
 
+// === Render de comentarios ===
 function renderComments(q) {
-  commentsTbody.innerHTML = '';
+  commentsTbody.innerHTML = ''; // Limpiar tabla
   posts.forEach(p => {
     (p.comments || [])
-      .filter(c => matchAny([p.title, userName(c.authorId), c.content, fmtDate(c.createdAt)], q))
+      .filter(c => matchAny([p.title, userName(c.authorId), c.content, fmtDate(c.createdAt)], q)) // Filtrar
       .forEach(c => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -131,6 +140,8 @@ function renderComments(q) {
         commentsTbody.appendChild(tr);
       });
   });
+
+  // Asignar eventos de borrado
   commentsTbody.querySelectorAll('[data-act="deleteComment"]').forEach(btn => {
     const pid = btn.getAttribute('data-pid');
     const cid = btn.getAttribute('data-cid');
@@ -138,11 +149,11 @@ function renderComments(q) {
   });
 }
 
-// Acciones 
+// === Funciones de acción ===
 function toggleUser(id) {
   const i = users.findIndex(u => u.id === id);
   if (i < 0) return;
-  users[i].active = users[i].active === false ? true : false;
+  users[i].active = !users[i].active; // Cambia estado activo/bloqueado
   save('users', users);
   renderAll(searchInput.value.trim().toLowerCase());
 }
@@ -151,9 +162,12 @@ function deleteUser(id) {
   const u = users.find(x => x.id === id);
   if (!u) return;
   if (!confirm(`¿Eliminar al usuario @${u.username}? También se eliminarán sus publicaciones y comentarios.`)) return;
+
+  // Eliminar posts y comentarios del usuario
   posts = posts
     .filter(p => p.authorId !== id)
     .map(p => ({ ...p, comments: (p.comments || []).filter(c => c.authorId !== id) }));
+  
   users = users.filter(x => x.id !== id);
   save('users', users);
   save('posts', posts);
@@ -180,6 +194,7 @@ function deleteComment(postId, commentId) {
   renderAll(searchInput.value.trim().toLowerCase());
 }
 
+// Scroll a los comentarios de un post
 function scrollToCommentsOf(postId) {
   const post = posts.find(p => p.id === postId);
   if (!post) return;
@@ -188,7 +203,7 @@ function scrollToCommentsOf(postId) {
   document.querySelector('#comments')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-//Utilidades 
+// === Funciones utilitarias ===
 function save(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
 function safeParse(s) { try { return JSON.parse(s); } catch (e) { return null; } }
 function userName(id) { return users.find(u => u.id === id)?.username || 'desconocido'; }
@@ -197,9 +212,7 @@ function fmtDate(ts) { if (!ts) return '-'; try { return new Date(ts).toLocaleSt
 function matchAny(parts, q) { if (!q) return true; return parts.filter(Boolean).some(v => String(v).toLowerCase().includes(q)); }
 function escapeTxt(s) { return String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m])); }
 function uid(p = 'id') { return p + Math.random().toString(36).slice(2, 9) + Date.now().toString(36); }
-function needsMigration(u, p) {
-  return u.some(x => !x.id) || (Array.isArray(p) && p.some(post => !post.id));
-}
+function needsMigration(u, p) { return u.some(x => !x.id) || (Array.isArray(p) && p.some(post => !post.id)); }
 
 // Datos simulados
 function seedDemo() {

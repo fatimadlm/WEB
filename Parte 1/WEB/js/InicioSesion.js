@@ -1,5 +1,3 @@
-// === InicioSesion.js ===
-
 // Seleccionamos el formulario
 const loginForm = document.getElementById('loginForm');
 
@@ -9,7 +7,7 @@ errorDiv.style.color = 'red';
 errorDiv.style.marginTop = '10px';
 loginForm.appendChild(errorDiv);
 
-// --- Semilla de usuarios de prueba (si no existían) ---
+// Usuarios de prueba
 if (!localStorage.getItem('users')) {
   const testUsers = [
     { username: 'usuario1', password: '1234', role: 'user', active: true },
@@ -24,14 +22,14 @@ if (!localStorage.getItem('users')) {
   localStorage.setItem('users', JSON.stringify(testUsers));
 }
 
-// --- ADMIN fijo: crea o corrige siempre el usuario admin ---
+// ADMIN : crea o corrige siempre el usuario admin 
 (function ensureAdmin() {
   const users = JSON.parse(localStorage.getItem('users') || '[]');
   const i = users.findIndex(u => (u.username || '').toLowerCase() === 'admin');
 
   const adminData = {
     username: 'admin',
-    password: 'admin',   // clave de prueba
+    password: 'admin',   
     role: 'admin',
     active: true
   };
@@ -45,7 +43,7 @@ if (!localStorage.getItem('users')) {
   localStorage.setItem('users', JSON.stringify(users));
 })();
 
-// --- Manejar envío del formulario ---
+// Manejar envío del formulario 
 loginForm.addEventListener('submit', function (e) {
   e.preventDefault();
 

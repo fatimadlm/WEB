@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     e.target.reset();
     renderCalendar(new Date(fecha));
-    alert(`✅ Evento añadido por ${creador}`);
+    alert(`Evento añadido por ${creador}`);
   });
 });
 

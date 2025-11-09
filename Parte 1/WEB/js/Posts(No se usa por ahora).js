@@ -1,4 +1,3 @@
-// js/posts.js
 export let posts = [
   {
     username: "@Juan",
