@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat con @ChefJuan - CookingUAH</title>
-<link rel="stylesheet" href="../../css/Chat.css">
+  <title>Chat con @ChefMario - CookingUAH</title>
+  <link rel="stylesheet" href="../../css/Chat.css">
 </head>
 <body>
   <div class="home-container">
@@ -12,13 +12,13 @@
     <aside class="sidebar">
       <div> 
         <div class="logo">
-          <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
+          <img src="../../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
           <h1>CookingUAH</h1>
         </div>
         <nav class="nav-buttons">
           <a href="../Home.html" class="btn-secondary">Inicio</a> 
           <a href="../Mensajes.html" class="btn-secondary">Mensajes</a>
-           <a href="../Eventos.html" class="btn-secondary">Eventos</a>
+          <a href="../Eventos.html" class="btn-secondary">Eventos</a>
           <a href="../MiPerfil.html" class="btn-secondary">Mi Perfil</a>
           <a href="../Podio.html" class="btn-secondary">Recetas TOP</a>
           
@@ -30,38 +30,13 @@
 
     <main class="feed chat-page">
       <div class="chat-header">
-        <a href="../../html/Mensajes.html" class="btn-volver">&larr; Volver</a>
-        <h2>Chat con <a href="MiPerfil.html?usuario=ChefJuan">@Juan</a></h2>
+        <a href="../Mensajes.html" class="btn-volver">&larr; Volver</a>
+        <h2>Chat con <a href="../MiPerfil.html?usuario=ChefMario">@Mario</a></h2>
         <span class="header-spacer"></span>
       </div>
 
       <div class="chat-box" id="chatBox">
-        
-        <div class="chat-bubble received">
-          <p>¡Hola! Vi tu receta de lasaña y tuve que probarla.</p>
-          <span>Ayer - 10:30 AM</span>
-        </div>
-
-        <div class="chat-bubble received">
-          <p>Gracias por la receta de lasaña 😍</p>
-          <span>Ayer - 10:31 AM</span>
-        </div>
-
-        <div class="chat-bubble sent">
-          <p>¡Me alegro mucho de que te haya gustado, @TuUsuario!</p>
-          <span>Ayer - 11:00 AM</span>
-        </div>
-        
-        <div class="chat-bubble received">
-          <p>¿Algún truco para la bechamel? A veces me salen grumos.</p>
-          <span>Hoy - 9:15 AM</span>
-        </div>
-        
-        <div class="chat-bubble sent">
-          <p>El truco es tamizar la harina y añadir la leche poco a poco, sin dejar de remover con varillas. ¡Y la leche mejor si está templada!</p>
-          <span>Hoy - 9:20 AM</span>
-        </div>
-
+        <p class="loading">Cargando mensajes...</p>
       </div>
 
       <div class="chat-input-area">
@@ -71,30 +46,8 @@
     </main>
 
   </div>
-  
-  <div id="postModal" class="modal-backdrop" style="display: none;">
-    <div class="modal-content">
-      <span class="modal-close">&times;</span>
-      <h2>Crear una nueva publicación</h2>
-      <div id="modalPostBox" class="modal-post-box">
-        <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea>
-        <div id="modalImagePreviewContainer" class="image-preview-container" style="display: none;">
-            <img id="modalImagePreview" src="#" alt="Previsualización de imagen" class="image-preview" style="display: none;">
-            <button id="modalRemoveImageBtn" class="remove-image-btn" style="display: none;">✖</button>
-        </div>
-        <div class="post-controls">
-          <div class="post-options">
-            <input type="file" id="modalImageUpload" accept="image/*" style="display: none;">
-            <button class="option-btn" id="modalAddImgBtn" title="Añadir Imagen">📸</button>
-          </div>
-          <button id="modalNewPostBtn">Publicar Receta</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <script src="../js/Home.js"></script>
-  <script src="../js/Chat.js"></script>
-  
+
+  <script src="../../js/Home.js"></script>
+  <script src="../../js/Chat.js"></script>
 </body>
 </html>
