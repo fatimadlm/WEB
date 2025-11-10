@@ -2,102 +2,117 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ajuste para móviles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mensajes - CookingUAH</title>
-  <link rel="stylesheet" href="../css/Mensajes.css"> <!-- Estilos de la página -->
+  <link rel="stylesheet" href="../css/Mensajes.css"> 
 </head>
 <body>
   <div class="home-container">
 
-    <!-- Barra lateral / menú -->
     <aside class="sidebar">
       <div> 
         <div class="logo">
-          <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" /> <!-- Logo -->
+          <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
           <h1>CookingUAH</h1>
         </div>
-
-        <!-- Navegación -->
         <nav class="nav-buttons">
           <a href="Home.html" class="btn-secondary">Inicio</a> 
-          <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
+          <a href="Mensajes.html" class="btn-secondary active">Mensajes</a> 
           <a href="Eventos.html" class="btn-secondary">Eventos</a>
           <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
           <a href="Podio.html" class="btn-secondary">Recetas TOP</a>
-          <button id="openModalBtn" class="btn-primary">Crear publicación</button> <!-- Abrir modal de nueva publicación -->
+          <button id="openModalBtn" class="btn-primary">Crear publicación</button>
         </nav>
       </div>
-
-      <a href="../index.html" class="btn-logout">Cerrar sesión</a> <!-- Botón cerrar sesión -->
+      <a href="../index.html" class="btn-logout">Cerrar sesión</a>
     </aside>
 
-    <!-- Área principal -->
-    <main class="feed">
-      <h2>Mensajes</h2>
-
-      <!-- Buscador de chats -->
-      <div class="search-bar-container">
-        <input type="text" id="userSearch" placeholder="Buscar o empezar un chat nuevo...">
-        <button id="userSearchBtn">Buscar</button>
+    <main class="feed chat-page">
+      
+      <div class="chat-list-container">
+        <h2>Mensajes</h2>
+        <div class="search-bar-container">
+          <input type="text" id="userSearch" placeholder="Buscar o empezar un chat nuevo...">
+          <button id="userSearchBtn">Buscar</button>
+        </div>
+        
+        <ul class="chat-list">
+          <li>
+            <button class="chat-list-item" data-user="Juan" data-avatar="../Imagenes/Avatar4.jpeg">
+              <img src="../Imagenes/Avatar4.jpeg" alt="Usuario" class="chat-avatar">
+              <div class="chat-info">
+                <h3>@Juan</h3>
+                <p>Último mensaje: "¡Y la leche templada!"</p>
+              </div>
+            </button>
+          </li>
+          <li>
+            <button class="chat-list-item" data-user="Ana" data-avatar="../Imagenes/Avatar1.jpg">
+              <img src="../Imagenes/Avatar1.jpg" alt="Usuario" class="chat-avatar">
+              <div class="chat-info">
+                <h3>@Ana</h3>
+                <p>Último mensaje: "¡Gracias por compartir!"</p>
+              </div>
+            </button>
+          </li>
+          <li>
+            <button class="chat-list-item" data-user="Mario" data-avatar="../Imagenes/Avatar3.jpg">
+              <img src="../Imagenes/Avatar3.jpg" alt="Usuario" class="chat-avatar">
+              <div class="chat-info">
+                <h3>@Mario</h3>
+                <p>Último mensaje: "¡Gracias por el tip!"</p>
+              </div>
+            </button>
+          </li>
+        </ul>
       </div>
 
-      <!-- Lista de chats -->
-      <ul class="chat-list">
-        <li>
-          <a href="./Chats/ChatJuan.html">
-            <img src="../Imagenes/Avatar4.jpeg" alt="Usuario" class="chat-avatar"> <!-- Avatar del usuario -->
-            <div class="chat-info">
-              <h3>@Juan</h3>
-              <p>Último mensaje: "El truco es tamizar la harina y añadir la leche poco a poco, sin dejar de remover con varillas. ¡Y la leche templada!"</p>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="./Chats/ChatAna.html">
-            <img src="../Imagenes/Avatar1.jpg" alt="Usuario" class="chat-avatar">
-            <div class="chat-info">
-              <h3>@Ana</h3>
-              <p>Último mensaje: "Perfecto, lo intentaré esta tarde. ¡Gracias por compartir!"</p>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="./Chats/ChatMario.html">
-            <img src="../Imagenes/Avatar3.jpg" alt="Usuario" class="chat-avatar">
-            <div class="chat-info">
-              <h3>@Mario</h3>
-              <p>Último mensaje: "Genial, voy a probarlo este fin de semana. ¡Gracias por el tip!"</p>
-            </div>
-          </a>
-        </li>
-      </ul>
+      <div class="chat-conversation-container">
+        
+        <div class="chat-placeholder" id="chatPlaceholder">
+          <img src="../Imagenes/logo.png" alt="Logo" class="logo-placeholder" />
+          <h3>Tus mensajes</h3>
+          <p>Selecciona un chat de la izquierda para ver la conversación.</p>
+        </div>
+
+        <div class="chat-active-window" id="chatActiveWindow" style="display: none;">
+          <div class="chat-header">
+            <h2 id="chatUserName"></h2>
+          </div>
+          <div class="chat-box" id="chatBox"></div>
+          <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Escribe tu mensaje...">
+            <button id="sendChatBtn">Enviar</button>
+          </div>
+        </div>
+
+      </div>
     </main>
 
   </div>
   
-  <!-- Modal para crear nueva publicación -->
   <div id="postModal" class="modal-backdrop" style="display: none;">
     <div class="modal-content">
-      <span class="modal-close">&times;</span> <!-- Cerrar modal -->
+      <span class="modal-close">&times;</span>
       <h2>Crear una nueva publicación</h2>
       <div id="modalPostBox" class="modal-post-box">
-        <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea> <!-- Texto de la publicación -->
+        <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea>
         <div id="modalImagePreviewContainer" class="image-preview-container" style="display: none;">
-            <img id="modalImagePreview" src="#" alt="Previsualización de imagen" class="image-preview" style="display: none;"> <!-- Vista previa imagen -->
-            <button id="modalRemoveImageBtn" class="remove-image-btn" style="display: none;">✖</button> <!-- Quitar imagen -->
+            <img id="modalImagePreview" src="#" alt="Previsualización de imagen" class="image-preview" style="display: none;">
+            <button id="modalRemoveImageBtn" class="remove-image-btn" style="display: none;">✖</button>
         </div>
         <div class="post-controls">
           <div class="post-options">
-            <input type="file" id="modalImageUpload" accept="image/*" style="display: none;"> <!-- Subir imagen -->
+            <input type="file" id="modalImageUpload" accept="image/*" style="display: none;">
             <button class="option-btn" id="modalAddImgBtn" title="Añadir Imagen">📸</button>
           </div>
-          <button id="modalNewPostBtn">Publicar Receta</button> <!-- Botón publicar -->
+          <button id="modalNewPostBtn">Publicar Receta</button>
         </div>
       </div>
     </div>
   </div>
   
-  <script src="../js/Home.js"></script> <!-- Lógica de la página -->
-
+  <script src="../js/Home.js"></script> 
+  <script src="../js/Mensajes.js"></script> 
 </body>
 </html>

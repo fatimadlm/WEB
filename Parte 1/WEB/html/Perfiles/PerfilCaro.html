@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Perfil de Caro - CookingUAH</title>
-
   <link rel="stylesheet" href="../../css/Perfil.css" />
 </head>
 
@@ -31,18 +30,25 @@
 
     <main class="feed perfil-page">
 
-      <!-- Información de Caro -->
       <section class="perfil-info">
         <img src="../../Imagenes/Avatar6.jpeg" alt="Foto de perfil" class="perfil-img" />
         <div class="perfil-datos">
           <h2>Carolina Hernandez</h2>
           <p class="usuario">@Caro</p>
-          <p class="comida-fav"><strong>Comida favorita:</strong> Pizza</p>
           <p class="bio">Aprendiendo a cocinar.</p>
+          
+          <div class="perfil-stats">
+              <a href="#" id="showFollowers" class="stat-link">
+                <strong><span id="followersCount">18</span></strong> Seguidores
+              </a>
+              <a href="#" id="showFollowing" class="stat-link">
+                <strong>30</strong> Siguiendo
+              </a>
+          </div>
+          <button id="profileFollowBtn" class="follow-btn">Seguir</button>
         </div>
       </section>
 
-      <!-- Publicaciones de Caro -->
       <section class="perfil-posts">
         <h3>Publicaciones</h3>
 
@@ -59,8 +65,8 @@
             <img src="../../Imagenes/Ensalada.jpg" alt="Ensalada" class="post-img" />
           </div>
           <div class="post-actions">
-            <button class="like-btn" data-likes-start="15">
-              <span class="like-text">❤️ Me gusta</span> (<span class="like-count">15</span>)
+            <button class="like-btn" data-likes-start="18">
+              <span class="like-text">❤️ Me gusta</span> (<span class="like-count">18</span>)
             </button>
             <button class="comment-btn">💬 Comentar</button>
           </div>
@@ -71,8 +77,172 @@
     </main>
   </div>
 
+  <div id="postModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2>Crear una nueva publicación</h2>
+      <div id="modalPostBox" class="modal-post-box">
+        <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea>
+        <div id="modalImagePreviewContainer" class="image-preview-container" style="display: none;">
+            <img id="modalImagePreview" src="#" alt="Previsualización de imagen" class="image-preview" style="display: none;">
+            <button id="modalRemoveImageBtn" class="remove-image-btn" style="display: none;">✖</button>
+        </div>
+        <div class="post-controls">
+          <div class="post-options">
+            <input type="file" id="modalImageUpload" accept="image/*" style="display: none;">
+            <button class="option-btn" id="modalAddImgBtn" title="Añadir Imagen">📸</button>
+          </div>
+          <button id="modalNewPostBtn">Publicar Receta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="userListModal" class="user-list-modal" style="display: none;">
+    <div class="modal-backdrop" id="userListBackdrop"></div>
+    <div class="modal-panel">
+      <header class="modal-header">
+        <h2 id="userListTitle"></h2>
+        <button id="userListClose" class="modal-close-btn">✕</button>
+      </header>
+      <div class="modal-body">
+        <ul id="userList" class="user-list"></ul>
+      </div>
+    </div>
+  </div>
+
   <script src="../../js/Home.js" defer></script>
-  <script src="../../js/PerfilOtro.js" defer></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // Lógica de "Me Gusta"
+      document.querySelectorAll(".perfil-posts .like-btn").forEach(btn => {
+        let countElement = btn.querySelector('.like-count');
+        let isLiked = false;
+        let count = parseInt(btn.dataset.likesStart) || 0;
+        btn.addEventListener("click", () => {
+          isLiked = !isLiked;
+          if (isLiked) { count++; btn.classList.add("liked"); }
+          else { count--; btn.classList.remove("liked"); }
+          countElement.textContent = count;
+        });
+      });
+
+      // Lógica de "Comentar"
+      document.querySelectorAll(".perfil-posts .comment-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const commentText = prompt("Escribe tu comentario:");
+          if (commentText && commentText.trim() !== "") {
+            const postElement = btn.closest('.post');
+            const commentsContainer = postElement.querySelector('.comments');
+            const newComment = document.createElement('p');
+            newComment.innerHTML = `<strong>@TuUsuario:</strong> ${commentText}`; 
+            commentsContainer.appendChild(newComment);
+            commentsContainer.scrollTop = commentsContainer.scrollHeight;
+          }
+        });
+      });
+
+      // ====================================================
+      // Lógica del Modal de Seguidores/Siguiendo (DATOS DE CARO)
+      // ====================================================
+      const followersData = [
+        { username: "@Laura", name: "Laura Vaquero", avatar: "../../Imagenes/Avatar5.jpeg" }
+      ];
+      const followingData = [
+        { username: "@Ana", name: "Ana López", avatar: "../Imagenes/Avatar1.jpg" }
+      ];
+
+      const modal = document.getElementById('userListModal');
+      const backdrop = document.getElementById('userListBackdrop');
+      const closeBtn = document.getElementById('userListClose');
+      const title = document.getElementById('userListTitle');
+      const list = document.getElementById('userList');
+      const showFollowersBtn = document.getElementById('showFollowers');
+      const showFollowingBtn = document.getElementById('showFollowing');
+
+      const openUserListModal = (titleText, users) => {
+        title.textContent = titleText;
+        list.innerHTML = ''; 
+
+        if (users.length === 0) {
+          list.innerHTML = '<li class="empty-list">No hay usuarios que mostrar.</li>';
+        }
+
+        users.forEach(user => {
+          const li = document.createElement('li');
+          li.className = 'user-list-item';
+
+          let isFollowing = false; // Simulación
+
+          const btnText = isFollowing ? 'Siguiendo' : 'Seguir';
+          const btnClass = isFollowing ? 'follow-btn following' : 'follow-btn';
+
+          li.innerHTML = `
+            <img src="${user.avatar}" alt="${user.username}" class="user-list-avatar">
+            <div class="user-list-info">
+              <strong>${user.name}</strong>
+              <span>${user.username}</span>
+            </div>
+            <button class="${btnClass}">${btnText}</button>
+          `;
+          
+          const followBtn = li.querySelector('.follow-btn');
+          followBtn.addEventListener('click', () => {
+              isFollowing = !isFollowing;
+              if (isFollowing) {
+                  followBtn.textContent = 'Siguiendo';
+                  followBtn.classList.add('following');
+              } else {
+                  followBtn.textContent = 'Seguir';
+                  followBtn.classList.remove('following');
+              }
+          });
+          list.appendChild(li);
+        });
+        modal.style.display = 'flex';
+      };
+
+      const closeUserListModal = () => {
+        modal.style.display = 'none';
+      };
+
+      showFollowersBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openUserListModal('Seguidores', followersData);
+      });
+
+      showFollowingBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openUserListModal('Siguiendo', followingData);
+      });
+
+      closeBtn.addEventListener('click', closeUserListModal);
+      backdrop.addEventListener('click', closeUserListModal);
+
+      // Lógica del botón principal "Seguir"
+      const mainFollowBtn = document.getElementById('profileFollowBtn');
+      const followersCountSpan = document.getElementById('followersCount');
+      
+      let isFollowingProfile = false; // Estado inicial (simulado)
+      let followersCount = parseInt(followersCountSpan.textContent);
+
+      mainFollowBtn.addEventListener('click', () => {
+          isFollowingProfile = !isFollowingProfile;
+          if (isFollowingProfile) {
+              followersCount++;
+              mainFollowBtn.textContent = 'Siguiendo';
+              mainFollowBtn.classList.add('following');
+          } else {
+              followersCount--;
+              mainFollowBtn.textContent = 'Seguir';
+              mainFollowBtn.classList.remove('following');
+          }
+          followersCountSpan.textContent = followersCount;
+      });
+    });
+  </script>
 
 </body>
 </html>

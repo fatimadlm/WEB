@@ -15,7 +15,6 @@ body {
   background-attachment: fixed;
   position: relative;
 }
-
 body::before {
   content: "";
   position: absolute;
@@ -44,7 +43,6 @@ body::before {
   position: sticky; 
   top: 0; 
 }
-/* ... (Pega aquí todos los estilos de la sidebar de Home.css: .logo, .btn-primary, .nav-buttons, etc.) ... */
 .logo {
   text-align: center;
   margin-bottom: 2rem;
@@ -96,7 +94,7 @@ body::before {
   transition: 0.3s;
   box-shadow: 0 3px 6px rgba(0,0,0,0.2);
 }
-.btn-secondary:hover {
+.btn-secondary:hover, .btn-secondary.active {
   background-color: #b24900;
   transform: translateY(-2px);
 }
@@ -117,35 +115,39 @@ body::before {
 }
 
 
-/* ---------- CONTENIDO PRINCIPAL (Feed) ---------- */
-.feed {
+/* ---------- CONTENIDO PRINCIPAL (MODIFICADO) ---------- */
+.feed.chat-page {
   flex: 1; 
-  padding: 2rem;
-  max-width: 1000px; 
-  margin: 0 auto; 
+  padding: 0;
+  display: flex;
+  height: 100vh;
 }
-.feed h2 {
+
+/* ---------- COLUMNA IZQUIERDA (Lista de chats) ---------- */
+.chat-list-container {
+  width: 350px; 
+  flex-shrink: 0;
+  background-color: rgba(255, 250, 245, 0.9);
+  border-right: 1px solid #d6b58e;
+  padding: 2rem;
+  overflow-y: auto;
+}
+.chat-list-container h2 {
   color: #5a2500;
   margin-bottom: 1.5rem;
 }
-
-/* ---------- AÑADIDO: Barra de búsqueda de usuarios ---------- */
 .search-bar-container {
   display: flex;
   gap: 10px;
-  margin-bottom: 2rem; /* Espacio antes de la lista de chats */
+  margin-bottom: 2rem;
 }
 .search-bar-container input {
-  flex: 1; /* Ocupa todo el espacio posible */
+  flex: 1;
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #d6b58e;
   background-color: #fffaf5;
   font-size: 1rem;
-}
-.search-bar-container input:focus {
-  outline: none;
-  border-color: #ef6c00;
 }
 .search-bar-container button {
   background-color: #cc5500;
@@ -154,63 +156,170 @@ body::before {
   padding: 10px 15px;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-}
-.search-bar-container button:hover {
-  background-color: #b24900;
 }
 
-
-/* ---------- LISTA DE CHATS (Mejorada) ---------- */
 .chat-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
 }
-
 .chat-list li {
+  border-radius: 1rem;
+}
+.chat-list-item {
   background-color: #fff8f0;
   border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   transition: all 0.2s ease;
-}
-.chat-list li:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
-}
-
-.chat-list a {
-  text-decoration: none;
-  color: inherit;
+  width: 100%;
   display: flex;
   align-items: center;
-  width: 100%;
-  padding: 1.5rem;
+  padding: 1rem;
+  text-align: left;
+  border: 2px solid transparent;
+  cursor: pointer;
 }
-
+.chat-list-item:hover {
+  background-color: #fff1e0;
+}
+.chat-list-item.selected { 
+  background-color: #ffe0b2;
+  border-color: #f57c00;
+}
 .chat-avatar {
   width: 50px;
   height: 50px;
   border-radius: 50%;
   margin-right: 15px;
 }
-
 .chat-info h3 {
   margin-bottom: 5px;
   font-size: 1.1em;
   color: #6b2b00;
 }
-
 .chat-info p {
   font-size: 0.9em;
-  color: #4a2c0a;
+  color: #4a2a0a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+/* ---------- COLUMNA DERECHA (Conversación) ---------- */
+.chat-conversation-container {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #5a2500;
+}
+.logo-placeholder {
+  width: 100px;
+  opacity: 0.5;
+  margin-bottom: 1rem;
+}
+.chat-placeholder h3 {
+  font-size: 1.5rem;
+}
+
+/* Estilos de la ventana de chat (de Chat.css) */
+.chat-active-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  padding-bottom: 90px; 
+  position: relative;
+  height: 100%;
+}
+.chat-header {
+  color: #5a2500;
+  margin-bottom: 2rem; 
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #ffb74d;
+}
+.chat-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto; 
+  padding-right: 10px;
+}
+.chat-bubble {
+  max-width: 70%;
+  padding: 0.8rem 1.2rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+.chat-bubble p {
+  margin: 0;
+  font-size: 1rem;
+  word-wrap: break-word; 
+  white-space: pre-wrap;
+}
+.chat-bubble span {
+  font-size: 0.75rem;
+  color: #5a2500;
+  opacity: 0.7;
+  display: block;
+  margin-top: 5px;
+}
+.chat-bubble.received {
+  align-self: flex-start;
+  background-color: #fff8f0; 
+  color: #4a2a0a;
+  border-bottom-left-radius: 0.5rem;
+}
+.chat-bubble.sent {
+  align-self: flex-end;
+  background-color: #ffb347; 
+  color: #5a2500;
+  border-bottom-right-radius: 0.5rem;
+}
+.chat-input-area {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem; 
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+}
+.chat-input-area input {
+  flex: 1;
+  padding: 1rem;
+  border: 2px solid #ffb74d;
+  border-radius: 12px;
+  font-size: 1rem;
+}
+.chat-input-area input:focus {
+  outline: none;
+  border-color: #ef6c00;
+}
+.chat-input-area button {
+  background: linear-gradient(90deg, #f57c00, #ef6c00);
+  color: white;
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 /* ==================================================== */
 /* AÑADIDO: ESTILOS PARA EL MODAL DE PUBLICACIÓN */
-/* (Copiados de Home.css) */
 /* ==================================================== */
 
 .modal-backdrop {
@@ -221,7 +330,7 @@ body::before {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6); 
-  display: flex; /* Esto es importante para que el JS lo muestre */
+  display: none; /* JS lo cambia */
   justify-content: center;
   align-items: center;
 }

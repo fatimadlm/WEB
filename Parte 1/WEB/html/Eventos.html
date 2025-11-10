@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CookingUAH - Eventos</title>
   <link rel="stylesheet" href="../css/Eventos.css" />
-</head>
+  </head>
 <body>
-  <div class="eventos-container">
+  <div class="home-container">
     
     <aside class="sidebar">
       <div>
@@ -16,39 +16,31 @@
           <h1>CookingUAH</h1>
         </div>
 
-        <!-- Botones de navegación -->
         <nav class="nav-buttons">
           <a href="Home.html" class="btn-secondary">Inicio</a> 
-          <a href="Eventos.html" class="btn-secondary active">Eventos</a>
           <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
+          <a href="Eventos.html" class="btn-secondary active">Eventos</a> <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
           <a href="Podio.html" class="btn-secondary">Recetas TOP</a>
-          <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
-          <!-- formulario de crear evento -->
           <button id="openModalBtn" class="btn-primary">Crear publicación</button>
         </nav>
       </div>
 
-      <!-- cierre de sesión -->
       <a href="../index.html" class="btn-logout">Cerrar sesión</a>
     </aside>
 
-    <main class="eventos-feed">
+    <main class="feed eventos-feed">
       <h2>Calendario de eventos</h2>
 
-      <!--Calendario-->
       <div class="calendar">
-        <!-- Encabezado del calendario -->
         <div class="calendar-header">
           <button id="prevMonth">←</button>
           <h3 id="monthYear">Noviembre 2025</h3>
           <button id="nextMonth">→</button>
         </div>
 
-        <!--cuadricula del calendario -->
         <div class="calendar-grid" id="calendarGrid"></div>
       </div>
 
-      <!-- Ver eventos-->
       <div class="event-details" id="eventDetails">
         <h3>Eventos seleccionados</h3>
         <ul id="eventList">
@@ -56,7 +48,6 @@
         </ul>
       </div>
 
-      <!-- Para crear eventos-->
       <section class="crear-evento">
         <h3>Crear un nuevo evento</h3>
         <form id="addEventForm" class="form-evento">
@@ -69,13 +60,34 @@
           <label for="eventTime">Hora:</label>
           <input type="time" id="eventTime" required />
 
-          <!-- El creador se obtiene automáticamente desde localStorage en JS -->
           <button type="submit" class="btn-primary">Añadir evento</button>
         </form>
       </section>
     </main>
   </div>
-<!-- aqui manejamos los eventos y el calendario-->
+
+  <div id="postModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2>Crear una nueva publicación</h2>
+      <div id="modalPostBox" class="modal-post-box">
+        <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea>
+        <div id="modalImagePreviewContainer" class="image-preview-container" style="display: none;">
+            <img id="modalImagePreview" src="#" alt="Previsualización de imagen" class="image-preview" style="display: none;">
+            <button id="modalRemoveImageBtn" class="remove-image-btn" style="display: none;">✖</button>
+        </div>
+        <div class="post-controls">
+          <div class="post-options">
+            <input type="file" id="modalImageUpload" accept="image/*" style="display: none;">
+            <button class="option-btn" id="modalAddImgBtn" title="Añadir Imagen">📸</button>
+          </div>
+          <button id="modalNewPostBtn">Publicar Receta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/Home.js"></script>
   <script src="../js/Eventos.js"></script>
 </body>
 </html>
