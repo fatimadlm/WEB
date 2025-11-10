@@ -160,7 +160,7 @@ body::before {
   font-size: 15px;
 }
 
-/* AÑADIDO: Estilos para los contadores */
+/* Estilos para los contadores */
 .perfil-stats {
   display: flex;
   gap: 1.5rem; 
@@ -211,6 +211,11 @@ body::before {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.post-header span {
+  color: #8b5e34;
+  font-size: 0.9rem; 
 }
 .user-img {
   width: 45px;
@@ -266,9 +271,7 @@ body::before {
 }
 
 
-/* ==================================================== */
-/* AÑADIDO: Estilos para el Modal de Seguidores/Siguiendo */
-/* ==================================================== */
+/* Estilos para el Modal de Seguidores/Siguiendo */
 .user-list-modal {
   position: fixed;
   inset: 0;
@@ -368,38 +371,159 @@ body::before {
 .follow-btn:hover {
   background-color: #b24900;
 }
-.empty-list {
-  text-align: center;
-  color: #8b5e34;
-  padding: 2rem;
-}
-
-.follow-btn {
-  background-color: #cc5500;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.follow-btn:hover {
-  background-color: #b24900;
-}
-
-/* --- AÑADIDO: Estilo para el botón "Siguiendo" --- */
 .follow-btn.following {
-  background-color: #fff8f0; /* Fondo claro */
-  color: #cc5500; /* Texto naranja */
-  border: 1px solid #cc5500; /* Borde naranja */
+  background-color: #fff8f0; 
+  color: #cc5500; 
+  border: 1px solid #cc5500; 
 }
 .follow-btn.following:hover {
-  background-color: #fff1e0; /* Un hover un poco más oscuro */
+  background-color: #fff1e0; 
 }
-
 .empty-list {
   text-align: center;
   color: #8b5e34;
   padding: 2rem;
+}
+
+
+/* ==================================================== */
+/* AÑADIDO: ESTILOS PARA EL MODAL DE "CREAR PUBLICACIÓN" */
+/* ==================================================== */
+
+#postModal.modal-backdrop {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none; /* JS lo pone en flex */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenido del modal de publicación */
+#postModal .modal-content {
+  background-color: #fffaf3;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(230, 126, 34, 0.2);
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  animation: mip-modal-fade-in 0.3s ease-out;
+}
+
+#postModal .modal-content h2 {
+  color: #e67e22;
+  margin-bottom: 25px;
+  font-size: 1.8em;
+  font-weight: 700;
+}
+
+#postModal .modal-close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #aaa;
+  font-size: 2.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+#postModal .modal-close:hover { color: #777; }
+
+/* Caja de publicación dentro del modal */
+#postModal .modal-post-box { display: flex; flex-direction: column; }
+
+#postModal textarea#modalNewPostContent {
+  width: 100%;
+  min-height: 120px;
+  border: 2px solid #ffb74d;
+  border-radius: 8px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+#postModal textarea#modalNewPostContent:focus {
+  border-color: #ef6c00;
+  box-shadow: 0 0 6px rgba(239,108,0,0.5);
+  outline: none;
+}
+
+/* Previsualización de imagen */
+#postModal .image-preview-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  padding: 10px;
+  display: none; /* se muestra con JS */
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+  overflow: hidden;
+  border: 1px dashed #d6b58e;
+}
+#postModal .image-preview {
+  max-width: 100%;
+  max-height: 230px;
+  border-radius: 8px;
+  object-fit: contain;
+  display: none; /* se muestra con JS */
+}
+#postModal .remove-image-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: none; /* se muestra con JS */
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+#postModal .remove-image-btn:hover { background-color: rgba(0,0,0,0.8); }
+
+/* Controles del post */
+#postModal .post-controls { display: flex; justify-content: space-between; align-items: center; }
+#postModal .post-options { display: flex; gap: 0.8rem; }
+#postModal .option-btn {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: #cc5500;
+}
+#postModal .option-btn:hover { background-color: #fff1e0; }
+
+/* Botón Publicar */
+#postModal #modalNewPostBtn {
+  background: linear-gradient(90deg, #f57c00, #ef6c00);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.3s;
+}
+#postModal #modalNewPostBtn:hover {
+  background: linear-gradient(90deg, #ff9800, #f57c00);
+  transform: scale(1.03);
+}
+
+@keyframes mip-modal-fade-in {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

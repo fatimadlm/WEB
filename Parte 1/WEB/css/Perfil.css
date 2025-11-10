@@ -207,6 +207,11 @@ body::before {
   align-items: center;
   gap: 10px;
 }
+
+.post-header span {
+  color: #8b5e34;
+  font-size: 0.9rem;
+}
 .user-img {
   width: 45px;
   height: 45px;

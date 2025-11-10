@@ -129,8 +129,7 @@
     </div>
   </div>
 
-  <script src="../js/PerfilModal.js" defer></script>
-  <script src="../js/Home.js" defer></script>
+  <script src="../js/PerfilModal.js" defer=""></script>
   
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -170,9 +169,7 @@
         });
       });
 
-      // ====================================================
-      // Lógica del Modal de Seguidores/Siguiendo (DATOS RELLENADOS)
-      // ====================================================
+      // Lógica del Modal de Seguidores/Siguiendo
       const followersData = [
         { username: "@Juan", name: "Juan Pérez", avatar: "../Imagenes/Avatar4.jpeg" },
         { username: "@Ana", name: "Ana López", avatar: "../Imagenes/Avatar1.jpg" },
@@ -183,20 +180,20 @@
         { username: "@Caro", name: "Carolina Hernandez", avatar: "../Imagenes/Avatar6.jpeg", isFollowing: true } 
       ];
 
-      const modal = document.getElementById('userListModal');
-      const backdrop = document.getElementById('userListBackdrop');
-      const closeBtn = document.getElementById('userListClose');
-      const title = document.getElementById('userListTitle');
-      const list = document.getElementById('userList');
+      const userListModal = document.getElementById('userListModal');
+      const userListBackdrop = document.getElementById('userListBackdrop');
+      const userListCloseBtn = document.getElementById('userListClose');
+      const userListTitle = document.getElementById('userListTitle');
+      const userList = document.getElementById('userList');
       const showFollowersBtn = document.getElementById('showFollowers');
       const showFollowingBtn = document.getElementById('showFollowing');
 
       const openUserListModal = (titleText, users) => {
-        title.textContent = titleText;
-        list.innerHTML = ''; 
+        userListTitle.textContent = titleText;
+        userList.innerHTML = ''; 
 
         if (users.length === 0) {
-          list.innerHTML = '<li class="empty-list">No hay usuarios que mostrar.</li>';
+          userList.innerHTML = '<li class="empty-list">No hay usuarios que mostrar.</li>';
         }
 
         users.forEach(user => {
@@ -233,28 +230,170 @@
                   followBtn.classList.remove('following');
               }
           });
-          list.appendChild(li);
+          userList.appendChild(li);
         });
         
-        modal.style.display = 'flex';
+        userListModal.style.display = 'flex';
       };
 
       const closeUserListModal = () => {
-        modal.style.display = 'none';
+        userListModal.style.display = 'none';
       };
 
-      showFollowersBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        openUserListModal('Seguidores', followersData);
-      });
+      if(showFollowersBtn) { // Previene error si no existe
+        showFollowersBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          openUserListModal('Seguidores', followersData);
+        });
+      }
+      
+      if(showFollowingBtn) {
+        showFollowingBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          openUserListModal('Siguiendo', followingData);
+        });
+      }
 
-      showFollowingBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        openUserListModal('Siguiendo', followingData);
-      });
+      if(userListCloseBtn) userListCloseBtn.addEventListener('click', closeUserListModal);
+      if(userListBackdrop) userListBackdrop.addEventListener('click', closeUserListModal);
 
-      closeBtn.addEventListener('click', closeUserListModal);
-      backdrop.addEventListener('click', closeUserListModal);
+
+      // ====================================================
+      // AÑADIDO: Lógica del Modal "Crear Publicación"
+      // (Copiada de Home.js para evitar conflictos)
+      // ====================================================
+      const openModalBtn = document.getElementById("openModalBtn");
+      const postModal = document.getElementById("postModal");
+      const closeModalBtn = postModal.querySelector(".modal-close"); // Selector específico
+      const modalNewPostBtn = document.getElementById("modalNewPostBtn");
+      let modalSelectedImageFile = null;
+
+      if (openModalBtn && postModal && closeModalBtn && modalNewPostBtn) {
+        
+        openModalBtn.addEventListener('click', () => { postModal.style.display = 'flex'; });
+        closeModalBtn.addEventListener('click', () => { postModal.style.display = 'none'; });
+        postModal.addEventListener('click', (e) => {
+          if (e.target === postModal) { postModal.style.display = 'none'; }
+        });
+        window.addEventListener('keydown', (e) => {
+          // Previene conflicto con el keydown de PerfilModal.js
+          if (e.key === 'Escape' && postModal.style.display === 'flex') {
+            postModal.style.display = 'none';
+          }
+        });
+
+        // Lógica de subida de imagen del modal
+        const modalAddImgBtn = document.getElementById("modalAddImgBtn");
+        const modalImageUploadInput = document.getElementById("modalImageUpload");
+        const modalImagePreview = document.getElementById("modalImagePreview");
+        const modalRemoveImageBtn = document.getElementById("modalRemoveImageBtn");
+        const modalImagePreviewContainer = document.getElementById("modalImagePreviewContainer");
+
+        modalAddImgBtn.addEventListener('click', () => { modalImageUploadInput.click(); });
+        modalImageUploadInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                modalSelectedImageFile = file; 
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    modalImagePreview.src = e.target.result;
+                    modalImagePreview.style.display = 'block';
+                    modalRemoveImageBtn.style.display = 'block';
+                    modalImagePreviewContainer.style.display = 'flex'; 
+                };
+                reader.readAsDataURL(file);
+            } else { 
+              modalSelectedImageFile = null;
+              modalImagePreview.style.display = 'none';
+              modalRemoveImageBtn.style.display = 'none';
+              modalImagePreviewContainer.style.display = 'none';
+            }
+        });
+        modalRemoveImageBtn.addEventListener('click', () => {
+            modalSelectedImageFile = null;
+            modalImageUploadInput.value = ''; 
+            modalImagePreview.style.display = 'none';
+            modalRemoveImageBtn.style.display = 'none';
+            modalImagePreviewContainer.style.display = 'none';
+        });
+
+        // Lógica de publicar del modal
+        modalNewPostBtn.addEventListener("click", () => {
+            const contentInput = document.getElementById("modalNewPostContent");
+            const postContent = contentInput.value.trim(); 
+            if (postContent === "" && !modalSelectedImageFile) {
+              alert("No puedes publicar una receta vacía.");
+              return;
+            }
+            let imageUrl = null;
+            if (modalSelectedImageFile) {
+                imageUrl = URL.createObjectURL(modalSelectedImageFile);
+            }
+            
+            const newPost = {
+              username: "@TuUsuario",
+              avatar: "../Imagenes/MiAvatar.jpg", 
+              time: "Ahora mismo",
+              content: postContent.replace(/\n/g, '<br>'), 
+              img: imageUrl, 
+              likes: 0,
+              liked: false, 
+              comments: []
+            };
+
+            const miPerfilMain = document.getElementById("mi-perfil-main");
+            const perfilPostsContainer = miPerfilMain.querySelector(".perfil-posts");
+            if (perfilPostsContainer) {
+                const newPostElement = createMyPostElement(newPost);
+                perfilPostsContainer.insertBefore(newPostElement, perfilPostsContainer.children[1]);
+            }
+            
+            // Limpiar y cerrar
+            contentInput.value = "";
+            modalSelectedImageFile = null;
+            modalImageUploadInput.value = ''; 
+            modalImagePreview.style.display = 'none';
+            modalRemoveImageBtn.style.display = 'none';
+            modalImagePreviewContainer.style.display = 'none';
+            postModal.style.display = 'none'; 
+        });
+
+        // Función para crear el HTML del post
+        function createMyPostElement(post) {
+            const postDiv = document.createElement("div");
+            postDiv.classList.add("post");
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+
+            postDiv.innerHTML = `
+              <div class="post-header">
+                <img src="${post.avatar}" alt="Usuario" class="user-img" />
+                <div>
+                  <h4>${post.username}</h4>
+                  <span>${timeString}</span> 
+                </div>
+              </div>
+              <div class="post-content">
+                <p>${post.content.replace(/\n/g, '<br>')}</p>
+                ${post.img ? `<img src="${post.img}" alt="Imagen de receta" class="post-img" />` : ""}
+              </div>
+              <div class="post-actions">
+                <button class="like-btn" data-likes-start="0">
+                  <span class="like-text">❤️ Me gusta</span> (<span class="like-count">0</span>)
+                </button>
+                <button class="comment-btn">💬 Comentar</button>
+              </div>
+              <div class="comments"></div>
+            `;
+
+            // Añadir listeners a los nuevos botones
+            const likeBtn = postDiv.querySelector(".like-btn");
+            // ... (Aquí puedes añadir la misma lógica de like/comment de arriba si quieres) ...
+            return postDiv;
+        }
+
+      } // Fin de if(openModalBtn...)
+
     });
   </script>
 
