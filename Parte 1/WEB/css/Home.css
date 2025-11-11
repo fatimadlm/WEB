@@ -269,7 +269,30 @@ body::before {
 .create-post #newPostBtn:hover {
   background-color: #b24900;
 }
+/* ---------- BOTÓN REFRESCAR DEMO ---------- */
+.btn-refresh {
+  background-color: #ffb347;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: center;
+  margin-left: auto;
+}
 
+.btn-refresh:hover {
+  background-color: #ff9800;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
 /* ---------- POST ---------- */
 .post {
   background-color: #fff8f0;

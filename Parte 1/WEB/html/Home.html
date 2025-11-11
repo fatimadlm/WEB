@@ -24,6 +24,7 @@
           <a href="Home.html" class="btn-secondary">Inicio</a> 
           <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
           <a href="Eventos.html" class="btn-secondary">Eventos</a>
+          <a href="Notificaciones.html" class="btn-secondary">Notificaciones</a>
           <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
           <a href="Podio.html" class="btn-secondary">Recetas TOP</a>
           <button id="openModalBtn" class="btn-primary">Crear publicación</button>
@@ -36,12 +37,14 @@
 
     <!-- Contenido principal -->
     <main class="feed">
+                <button id="refreshDemoBtn" class="btn-refresh">Recargar </button> <!--boton de recargar-->
       <!-- Barra de búsqueda -->
       <div class="top-bar">
         <div class="search-bar">
           <input type="text" id="searchInput" placeholder="Buscar recetas..." />
           <button id="searchBtn">Buscar</button>
         </div>
+
       </div>
 
       <!-- Crear publicación -->
@@ -94,9 +97,10 @@
           <button id="modalNewPostBtn">Publicar Receta</button>
         </div>
       </div>
+      
     </div>
   </div>
 
-  <script src="../js/Home.js"></script>
+<script type="module" src="../js/Home.js"></script>
 </body>
 </html>
