@@ -24,6 +24,15 @@ export function getPosts() {
 export function savePosts(posts) {
   save('posts', posts);
 }
+//  Notificaciones
+export function getNotificaciones() {
+  return safeParse(localStorage.getItem('notificaciones')) || [];
+}
+
+export function saveNotificaciones(notifs) {
+  save('notificaciones', notifs);
+}
+
 
 // Usuario actual 
 export function getCurrentUser() {
@@ -116,6 +125,15 @@ const posts = [
 ];
 
   savePosts(posts);
+
+    const notificaciones = [
+    { id: uid('n_'), texto: "@Ana le dio me gusta a tu receta de Mi primera receta: pasta carbonara cremosa.", tiempo: "Hace 10 minutos" },
+    { id: uid('n_'), texto: "@Juan le dio me gusta a tu receta de Mi primera receta: pasta carbonara cremosa.", tiempo: "Hace 30 minutos" },
+    { id: uid('n_'), texto: "@Juan te ha seguido.", tiempo: "Hace 1 hora" }
+  ];
+
+  save('notificaciones', notificaciones);
+
 }
 
 // --- Generar ID único ---

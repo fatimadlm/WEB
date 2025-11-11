@@ -1,21 +1,15 @@
-// ---------- Datos de ejemplo ----------
-const demoData = [
-  { texto: "@Ana comentó tu receta de Paella.", tiempo: "Hace 10 minutos" },
-  { texto: "@Juan le dio 'me gusta' a tu receta de Croquetas.", tiempo: "Hace 30 minutos" },
-  { texto: "@Caro te ha seguido.", tiempo: "Hace 1 hora" },
-  { texto: "@Pedro ha publicado una nueva receta: Gazpacho.", tiempo: "Hace 2 horas" }
-];
+import { getNotificaciones, saveNotificaciones, seedDemo, uid } from './BBDD.js';
 
-const STORAGE_KEY = "cookingUAH_notif_v1";
 const container = document.getElementById("notificationsContainer");
+const refreshBtn = document.getElementById("refreshDemoBtn");
 
 // ---------- Mostrar notificaciones ----------
 function mostrarNotificaciones() {
-  const notificaciones = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  const notificaciones = getNotificaciones();
   container.innerHTML = "";
 
   if (notificaciones.length === 0) {
-    container.innerHTML = "<p>No tienes notificaciones por ahora 🍰</p>";
+    container.innerHTML = "<p>No tienes notificaciones por ahora :( </p>";
     return;
   }
 
@@ -42,24 +36,25 @@ function mostrarNotificaciones() {
 
 // ---------- Eliminar una notificación ----------
 function eliminarNotificacion(index) {
-  const notificaciones = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  const notificaciones = getNotificaciones();
   notificaciones.splice(index, 1);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(notificaciones));
+  saveNotificaciones(notificaciones);
   mostrarNotificaciones();
 }
 
-// ---------- Recargar datos de prueba ----------
-document.getElementById("refreshDemoBtn").addEventListener("click", () => {
-  localStorage.removeItem(STORAGE_KEY);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(demoData));
-  mostrarNotificaciones();
-  alert("🔄 Datos de prueba recargados.");
+// ---------- Recargar datos demo ----------
+refreshBtn?.addEventListener("click", () => {
+  if (confirm("¿Quieres recargar las notificaciones de prueba?")) {
+    seedDemo();
+    mostrarNotificaciones();
+    alert("Notificaciones  recargadas.");
+  }
 });
 
 // ---------- Inicializar ----------
 (function init() {
-  if (!localStorage.getItem(STORAGE_KEY)) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(demoData));
+  if (!getNotificaciones().length) {
+    seedDemo(); // Si no existen, crear demo
   }
   mostrarNotificaciones();
 })();
