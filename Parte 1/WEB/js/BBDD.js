@@ -1,4 +1,3 @@
-// BBDD.js
 export function safeParse(s) {
   try { return JSON.parse(s); } catch { return null; }
 }
@@ -31,6 +30,14 @@ export function getNotificaciones() {
 
 export function saveNotificaciones(notifs) {
   save('notificaciones', notifs);
+}
+// Eventos 
+export function getEventos() {
+  return safeParse(localStorage.getItem('eventos')) || [];
+}
+
+export function saveEventos(eventos) {
+  save('eventos', eventos);
 }
 
 
@@ -133,6 +140,14 @@ const posts = [
   ];
 
   save('notificaciones', notificaciones);
+  const eventos = [
+  { fecha: '2025-11-10', titulo: 'Clase: Repostería artesanal', hora: '17:00', creador: 'Juan' },
+  { fecha: '2025-11-15', titulo: 'Cata de vinos y quesos', hora: '19:00', creador: 'Mario' },
+  { fecha: '2025-11-22', titulo: 'Taller: Cocina internacional', hora: '11:00', creador: 'Laura' },
+  { fecha: '2025-11-25', titulo: 'Masterclass: Panes caseros', hora: '18:30', creador: 'Ana' }
+];
+saveEventos(eventos);
+
 
 }
 
@@ -140,3 +155,4 @@ const posts = [
 export function uid(prefix = '') {
   return prefix + Math.random().toString(36).slice(2, 9) + Date.now().toString(36);
 }
+
