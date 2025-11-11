@@ -1,4 +1,3 @@
-// /js/PerfilModal.js
 (function () {
   const modal = document.getElementById('editar');
   if (!modal) return;
