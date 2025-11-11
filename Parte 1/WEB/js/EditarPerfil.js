@@ -1,4 +1,3 @@
-// /js/EditarPerfil.js
 (function () {
     const form = document.getElementById('editProfile');
     const status = document.getElementById('status');
