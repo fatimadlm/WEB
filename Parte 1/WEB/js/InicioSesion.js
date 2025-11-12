@@ -1,58 +1,38 @@
-// Seleccionamos el formulario
+// 1. Importar funciones de BBDD.js
+// (Esto solo funciona si se carga desde un servidor, ej: Live Server)
+import { getUsers, seedDemo, saveCurrentUser } from './BBDD.js';
+
+// 2. Cargar datos de prueba si no existen
+(function initData() {
+  const users = getUsers(); //
+  // Esta es la comprobación que mencionaste. ¡Ya está aquí!
+  if (!users || users.length === 0) { 
+    seedDemo(); //
+    console.log('Datos demo cargados.');
+  }
+})();
+
+// 3. Configurar el formulario de login
 const loginForm = document.getElementById('loginForm');
 
-// Contenedor de errores (debajo del formulario)
+// Crear un espacio para mostrar errores
 const errorDiv = document.createElement('div');
 errorDiv.style.color = 'red';
 errorDiv.style.marginTop = '10px';
 loginForm.appendChild(errorDiv);
 
-// Usuarios de prueba
-if (!localStorage.getItem('users')) {
-  const testUsers = [
-    { username: 'usuario1', password: '1234', role: 'user', active: true },
-    { username: 'usuario2', password: '1234', role: 'user', active: true },
-    { username: 'usuario3', password: '1234', role: 'user', active: true },
-    { username:'Juan', password:'1234', role:'user', active:true },
-      { username:'Ana',  password:'1234', role:'user', active:true },
-       { username: 'Caro', password: '1234', role: 'user', active: true },
-    { username: 'Mario', password: '1234', role: 'user', active: true },
-    { username: 'Laura', password: '1234', role: 'user', active: true }
-  ];
-  localStorage.setItem('users', JSON.stringify(testUsers));
-}
-
-// ADMIN : crea o corrige siempre el usuario admin 
-(function ensureAdmin() {
-  const users = JSON.parse(localStorage.getItem('users') || '[]');
-  const i = users.findIndex(u => (u.username || '').toLowerCase() === 'admin');
-
-  const adminData = {
-    username: 'admin',
-    password: 'admin',   
-    role: 'admin',
-    active: true
-  };
-
-  if (i === -1) {
-    users.push(adminData);
-  } else {
-    users[i] = { ...users[i], ...adminData };
-  }
-
-  localStorage.setItem('users', JSON.stringify(users));
-})();
-
-// Manejar envío del formulario 
+// 4. Manejar el envío del formulario
 loginForm.addEventListener('submit', function (e) {
-  e.preventDefault();
+  e.preventDefault(); // Evitar que la página se recargue
 
   const username = document.getElementById('username').value.trim();
   const password = document.getElementById('password').value.trim();
 
-  const users = JSON.parse(localStorage.getItem('users') || '[]');
+  // Buscar al usuario en la BBDD
+  const users = getUsers(); //
   const user = users.find(u => u.username === username);
 
+  // --- Comprobaciones ---
   if (!user) {
     errorDiv.textContent = 'No se encuentra este usuario';
     return;
@@ -61,16 +41,16 @@ loginForm.addEventListener('submit', function (e) {
     errorDiv.textContent = 'Contraseña incorrecta';
     return;
   }
-  if (user.active === false) {
+  if (user.active === false) { //
     errorDiv.textContent = 'Este usuario está bloqueado.';
     return;
   }
 
-  // Login OK
-  localStorage.setItem('currentUser', JSON.stringify(user));
+  // --- Login Correcto ---
+  saveCurrentUser(user); //
 
-  // Redirige según rol
-  if (user.role === 'admin') {
+  // Redirigir según el rol del usuario
+  if (user.role === 'admin') { //
     window.location.href = 'Admin.html';
   } else {
     window.location.href = 'Home.html';

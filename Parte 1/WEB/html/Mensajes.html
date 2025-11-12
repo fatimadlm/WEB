@@ -20,11 +20,13 @@
           <a href="Mensajes.html" class="btn-secondary active">Mensajes</a> 
           <a href="Eventos.html" class="btn-secondary">Eventos</a>
           <a href="Notificaciones.html" class="btn-secondary">Notificaciones</a>
-
           <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
-        
           <a href="Podio.html" class="btn-secondary">Recetas TOP</a>
           <button id="openModalBtn" class="btn-primary">Crear publicación</button>
+          
+          <button id="refreshDemoBtn" class="btn-secondary" style="color: tomato; margin-top: 15px;">
+            Recargar Datos
+          </button>
         </nav>
       </div>
       <a href="../index.html" class="btn-logout">Cerrar sesión</a>
@@ -41,29 +43,38 @@
         
         <ul class="chat-list">
           <li>
-            <button class="chat-list-item" data-user="Juan" data-avatar="../Imagenes/Avatar4.jpeg">
+            <button class="chat-list-item" 
+                    data-user-id="u4" 
+                    data-user-name="Juan" 
+                    data-avatar="../Imagenes/Avatar4.jpeg">
               <img src="../Imagenes/Avatar4.jpeg" alt="Usuario" class="chat-avatar">
               <div class="chat-info">
                 <h3>@Juan</h3>
-                <p>Último mensaje: "El truco es tamizar la harina y añadir la leche poco a poco, sin dejar de remover con varillas. ¡Y la leche templada!"</p>
+                <p class="chat-last-message">Cargando...</p>
               </div>
             </button>
           </li>
           <li>
-            <button class="chat-list-item" data-user="Ana" data-avatar="../Imagenes/Avatar1.jpg">
+            <button class="chat-list-item" 
+                    data-user-id="u5" 
+                    data-user-name="Ana" 
+                    data-avatar="../Imagenes/Avatar1.jpg">
               <img src="../Imagenes/Avatar1.jpg" alt="Usuario" class="chat-avatar">
               <div class="chat-info">
                 <h3>@Ana</h3>
-                <p>Último mensaje: "Perfecto, lo intentaré esta tarde. ¡Gracias por compartir!"</p>
+                <p class="chat-last-message">Cargando...</p>
               </div>
             </button>
           </li>
           <li>
-            <button class="chat-list-item" data-user="Mario" data-avatar="../Imagenes/Avatar3.jpg">
+            <button class="chat-list-item" 
+                    data-user-id="u7" 
+                    data-user-name="Mario" 
+                    data-avatar="../Imagenes/Avatar3.jpg">
               <img src="../Imagenes/Avatar3.jpg" alt="Usuario" class="chat-avatar">
               <div class="chat-info">
                 <h3>@Mario</h3>
-                <p>Último mensaje: "Genial, voy a probarlo este fin de semana. ¡Gracias por el tip!"</p>
+                <p class="chat-last-message">Cargando...</p>
               </div>
             </button>
           </li>
@@ -80,13 +91,14 @@
 
         <div class="chat-active-window" id="chatActiveWindow" style="display: none;">
           <div class="chat-header">
-            <h2 id="chatUserName"></h2>
+            <h2 id="chatUserName"></h2> </div>
+          <div class="chat-box" id="chatBox">
           </div>
-          <div class="chat-box" id="chatBox"></div>
           <div class="chat-input-area">
             <input type="text" id="chatInput" placeholder="Escribe tu mensaje...">
             <button id="sendChatBtn">Enviar</button>
           </div>
+
         </div>
 
       </div>
@@ -95,27 +107,9 @@
   </div>
   
   <div id="postModal" class="modal-backdrop" style="display: none;">
-    <div class="modal-content">
-      <span class="modal-close">&times;</span>
-      <h2>Crear una nueva publicación</h2>
-      <div id="modalPostBox" class="modal-post-box">
-        <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea>
-        <div id="modalImagePreviewContainer" class="image-preview-container" style="display: none;">
-            <img id="modalImagePreview" src="#" alt="Previsualización de imagen" class="image-preview" style="display: none;">
-            <button id="modalRemoveImageBtn" class="remove-image-btn" style="display: none;">✖</button>
-        </div>
-        <div class="post-controls">
-          <div class="post-options">
-            <input type="file" id="modalImageUpload" accept="image/*" style="display: none;">
-            <button class="option-btn" id="modalAddImgBtn" title="Añadir Imagen">📸</button>
-          </div>
-          <button id="modalNewPostBtn">Publicar Receta</button>
-        </div>
-      </div>
     </div>
-  </div>
   
-  <script src="../js/Home.js"></script> 
-  <script src="../js/Mensajes.js"></script> 
+  <script type="module" src="../js/Home.js"></script> 
+  <script type="module" src="../js/Mensajes.js"></script> 
 </body>
 </html>
