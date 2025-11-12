@@ -20,20 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Debes iniciar sesión para acceder a esta página.');
       window.location.href = 'IniciarSesion.html';
       throw new Error('Usuario no autenticado');
-    }
-    // Si estamos en login, no hacemos nada.
-    // Si Home.js se carga en Mensajes.html, el guardián de Mensajes.js actuará.
-    // Esta lógica es principalmente para Home.html en sí.
-    
-    // NOTA: Si este script (Home.js) se carga en Mensajes.html,
-    // el guardián de Mensajes.js (que es más estricto) se encargará.
-    // Dejamos que el script de la PÁGINA ACTUAL (Mensajes.js) decida.
-  }
-
-  // 4. Todas las variables y funciones van AQUÍ DENTRO
-  
-  // (Estas variables son para Home.html, serán null en Mensajes.html, 
-  // por eso usamos '?' para evitar errores)
+    }}
   const postsContainer = document.getElementById('postsContainer');
   const searchInput = document.getElementById('searchInput'); //
   const newPostBtn = document.getElementById('newPostBtn');

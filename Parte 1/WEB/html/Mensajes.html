@@ -23,19 +23,22 @@
           <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
           <a href="Podio.html" class="btn-secondary">Recetas TOP</a>
           <button id="openModalBtn" class="btn-primary">Crear publicación</button>
-          
-          <button id="refreshDemoBtn" class="btn-secondary" style="color: tomato; margin-top: 15px;">
-            Recargar Datos
-          </button>
         </nav>
       </div>
-      <a href="../index.html" class="btn-logout">Cerrar sesión</a>
+      
+      <div class="sidebar-footer">
+        <a href="../index.html" class="btn-logout">Cerrar sesión</a>
+      </div>
     </aside>
 
     <main class="feed chat-page">
       
       <div class="chat-list-container">
-        <h2>Mensajes</h2>
+        <div class="chat-list-header">
+          <h2>Mensajes</h2>
+          <button id="refreshDemoBtn" title="Recargar Datos Demo" class="btn-refresh">🔄</button>
+        </div>
+
         <div class="search-bar-container">
           <input type="text" id="userSearch" placeholder="Buscar o empezar un chat nuevo...">
           <button id="userSearchBtn">Buscar</button>
@@ -107,7 +110,7 @@
   </div>
   
   <div id="postModal" class="modal-backdrop" style="display: none;">
-    </div>
+  </div>
   
   <script type="module" src="../js/Home.js"></script> 
   <script type="module" src="../js/Mensajes.js"></script> 
