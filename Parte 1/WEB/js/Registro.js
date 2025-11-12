@@ -1,46 +1,55 @@
-// Seleccionamos el formulario de registro
-const registerForm = document.getElementById('registerForm');
+import { getUsers, saveUsers, uid } from './BBDD.js'
 
-// Escuchamos el evento submit del formulario
-registerForm.addEventListener('submit', function (e) {
-  e.preventDefault(); // Evitamos que el formulario recargue la página
+// seleccionamos el formulario de registro
+const registerForm = document.getElementById('registerForm')
 
-  // Obtenemos los valores de los inputs
-  const nombre = document.getElementById('nombre').value.trim();
-  const username = document.getElementById('username').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-  const confirmPassword = document.getElementById('confirmPassword').value;
+// escuchamos el envio del formulario
+registerForm.addEventListener('submit', function(e) {
+  e.preventDefault()
 
-  // Validamos que las contraseñas coincidan
+  // obtenemos los valores de los campos
+  const nombre = document.getElementById('nombre').value.trim()
+  const username = document.getElementById('username').value.trim()
+  const email = document.getElementById('email').value.trim()
+  const password = document.getElementById('password').value
+  const confirmPassword = document.getElementById('confirmPassword').value
+
+  // comprobamos que las contraseñas sean iguales
   if (password !== confirmPassword) {
-    alert('Las contraseñas no coinciden');
-    return;
+    alert('Las contraseñas no coinciden')
+    return
   }
 
-  // Obtenemos los usuarios guardados en localStorage
-  const users = JSON.parse(localStorage.getItem('users')) || [];
+  // obtenemos los usuarios actuales
+  const users = getUsers()
 
-  // Verificamos si el username o email ya existen
-  const userExists = users.some(user => user.username === username || user.email === email);
+  // verificamos que el username o email no existan
+  const userExists = users.some(user => user.username === username || user.email === email)
   if (userExists) {
-    alert('El usuario o correo ya están registrados');
-    return;
+    alert('El usuario o correo ya estan registrados')
+    return
   }
 
-  // Creamos un nuevo objeto de usuario
+  // creamos el objeto del nuevo usuario
   const newUser = {
+    id: uid('u_'),
     nombre,
     username,
     email,
-    password //Esto esta de prueba , porque esta en texto plan y es inseguro. Importante
-  };
+    password,
+    role: 'user',
+    active: true,
+    avatar: '../Imagenes/AvatarPorDefecto.webp'
+  }
 
-  // Guardamos el nuevo usuario en el array y lo guardamos
-  users.push(newUser);
-  localStorage.setItem('users', JSON.stringify(users));
+  // agregamos el nuevo usuario al array
+  users.push(newUser)
 
-  alert('Usuario registrado correctamente');
-  registerForm.reset(); // Limpiamos el formulario
-  window.location.href = 'IniciarSesion.html'; // Redirigimos al login
-});
+  // guardamos los usuarios en la base de datos
+  saveUsers(users)
+
+  // notificamos y redirigimos al login
+  alert('Usuario registrado correctamente')
+  registerForm.reset()
+  window.location.href = 'IniciarSesion.html'
+})
