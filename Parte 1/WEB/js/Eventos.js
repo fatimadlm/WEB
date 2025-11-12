@@ -1,6 +1,7 @@
 import { getCurrentUser, getEventos, saveEventos, seedDemo } from './BBDD.js';
 //obtenemos al usuario actual
 const currentUser = getCurrentUser();
+
 if (!currentUser.id) {
   //Si no esta logueado
   alert('Debes iniciar sesión para acceder a esta página.');
@@ -15,6 +16,9 @@ let eventos = getEventos();
 
 //Esperar a que la página cargue 
 document.addEventListener('DOMContentLoaded', () => {
+
+
+  
   renderCalendar(new Date());
 
   // Botones de navegación de mes
@@ -42,15 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
       return alert("Completa todos los campos para añadir un evento.");
     }
 
-    const nuevoEvento = { fecha, titulo, hora, creador: currentUser };
-
+const nuevoEvento = { fecha, titulo, hora, creador: currentUser.username };
     eventos.push(nuevoEvento);
     saveEventos(eventos); // Guardar en BBDD.js
 
     e.target.reset();
     renderCalendar(new Date(fecha));
-    alert(`Evento añadido por ${currentUser}`);
-  });
+alert(`Evento añadido por ${currentUser.username}`);  });
 
   // Botón para recargar datos de prueba
   const refreshBtn = document.getElementById('refreshDemoBtn');

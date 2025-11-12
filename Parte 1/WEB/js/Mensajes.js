@@ -7,15 +7,11 @@ import {
 // Esperar a que el HTML esté completamente cargado
 document.addEventListener('DOMContentLoaded', () => {
     
-    // ==========================================================
-    //  BLOQUE DE INICIALIZACIÓN (CORREGIDO)
-    // ==========================================================
-    // (Home.js ya ha corrido esto, pero por si acaso)
+
     if (!(getUsers() && getUsers().length) || !(getPosts() && getPosts().length)) {
       seedDemo(); //
       console.log('Datos demo cargados desde Mensajes.js');
     }
-    // ==========================================================
 
     // Obtenemos el usuario que ha iniciado sesión
     const currentUser = getCurrentUser(); //

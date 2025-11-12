@@ -3,8 +3,7 @@ import { getPosts, savePosts, getCurrentUser, getUsers, seedDemo, uid } from './
 // Toda la lógica DEBE ir dentro de este bloque
 document.addEventListener('DOMContentLoaded', () => {
   
-  // 1. Comprobar si los datos existen. Si no, crearlos.
-  // (Este es el bloque que tenías mal)
+  // Comprobar si los datos existen. Si no, crearlos.
   if (!(getUsers() && getUsers().length) || !(getPosts() && getPosts().length)) {
     seedDemo(); //
     console.log('Datos demo cargados desde Home.js');
