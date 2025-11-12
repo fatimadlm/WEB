@@ -1,7 +1,14 @@
 import { getCurrentUser, getEventos, saveEventos, seedDemo } from './BBDD.js';
-
-// Obtener usuario actual 
-let currentUser = getCurrentUser().username || 'Invitado';
+//obtenemos al usuario actual
+const currentUser = getCurrentUser();
+if (!currentUser.id) {
+  //Si no esta logueado
+  alert('Debes iniciar sesión para acceder a esta página.');
+  // Redirigimos al usuario a la página de login
+  window.location.href = 'IniciarSesion.html';
+  //Error
+  throw new Error('Usuario no autenticado');
+}
 
 //Obtener eventos desde BBDD
 let eventos = getEventos();

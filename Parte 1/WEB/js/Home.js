@@ -1,5 +1,14 @@
 import { getPosts, savePosts, getCurrentUser, getUsers, seedDemo, uid } from './BBDD.js';
 
+const currentUser = getCurrentUser();
+if (!currentUser.id) {
+  alert('Debes iniciar sesión para acceder a esta página.');
+  // Redirigimos al usuario a la página de login
+  window.location.href = 'IniciarSesion.html';
+  //Error
+  throw new Error('Usuario no autenticado');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   if (!(getUsers() && getUsers().length) || !(getPosts() && getPosts().length)) {
     seedDemo();
@@ -14,7 +23,6 @@ const searchInput = document.getElementById('searchInput');
 const newPostBtn = document.getElementById('newPostBtn');
 const newPostContent = document.getElementById('newPostContent');
 const imageUpload = document.getElementById('imageUpload'); // input type="file"
-const currentUser = getCurrentUser();
 
 let imageDataUrl = null; // Guardará la imagen subida como data URL para mostrar
 

@@ -1,3 +1,7 @@
+
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // AÑADIDO: Definimos el usuario actual (igual que en Home.js)
