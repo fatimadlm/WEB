@@ -1,77 +1,78 @@
 import { getPosts, savePosts, getCurrentUser, getUsers, seedDemo, uid } from './BBDD.js';
 
-// Toda la lógica DEBE ir dentro de este bloque
 document.addEventListener('DOMContentLoaded', () => {
   
-  // Comprobar si los datos existen. Si no, crearlos.
+  // Si no hay usuarios o publicaciones guardadas en localStorage, se crean datos de ejemplo
   if (!(getUsers() && getUsers().length) || !(getPosts() && getPosts().length)) {
-    seedDemo(); //
+    seedDemo();
     console.log('Datos demo cargados desde Home.js');
   }
 
-  // 2. Obtener el usuario (DESPUÉS de cargar datos)
-  const currentUser = getCurrentUser(); //
+  // Se obtiene el usuario que ha iniciado sesión
+  const currentUser = getCurrentUser();
 
-  // 3. Guardián de seguridad
+  // Si no hay usuario logueado, se redirige automáticamente a la página de inicio de sesión
   if (!currentUser || !currentUser.id) {
-    // Comprobamos si estamos en la página de login para evitar un bucle
     if (!window.location.pathname.endsWith('IniciarSesion.html')) {
       alert('Debes iniciar sesión para acceder a esta página.');
       window.location.href = 'IniciarSesion.html';
       throw new Error('Usuario no autenticado');
-    }}
-  const postsContainer = document.getElementById('postsContainer');
-  const searchInput = document.getElementById('searchInput'); //
-  const newPostBtn = document.getElementById('newPostBtn');
-  const newPostContent = document.getElementById('newPostContent');
-  const imageUpload = document.getElementById('imageUpload');
+    }
+  }
 
-  let imageDataUrl = null; 
+  // Se guardan las referencias a los elementos HTML que se van a usar
+  const postsContainer = document.getElementById('postsContainer'); // contenedor donde se muestran los posts
+  const searchInput = document.getElementById('searchInput'); // campo de búsqueda
+  const newPostBtn = document.getElementById('newPostBtn'); // botón para publicar
+  const newPostContent = document.getElementById('newPostContent'); // texto del nuevo post
+  const imageUpload = document.getElementById('imageUpload'); // input para subir imagen
 
-  // --- Lógica del Modal (que se usa en Mensajes.html) ---
+  let imageDataUrl = null; // aquí se guardará la imagen convertida a base64
+
+  // Referencias para el modal (ventana emergente)
   const modal = document.getElementById('postModal');
   const openBtn = document.getElementById('openModalBtn');
   
-  // (El resto del código del modal que tengas...)
+  // Si existe el botón de abrir modal, al hacer clic se muestra la ventana
   openBtn?.addEventListener('click', () => {
      if(modal) modal.style.display = 'block';
   });
-  // (Añade aquí tu lógica para cerrar el modal)
+  // Aquí puedes agregar el botón o función para cerrar el modal
 
-
-  // --- Lógica específica de Home.js ---
-  
-  // Manejar carga de imagen
-  imageUpload?.addEventListener('change', (e) => { //
+  // Cuando el usuario sube una imagen, se convierte a formato base64 para poder guardarla
+  imageUpload?.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) {
-      imageDataUrl = null;
+      imageDataUrl = null; // si no selecciona nada, no se guarda imagen
       return;
     }
-    const reader = new FileReader();
+    const reader = new FileReader(); // objeto para leer archivos
     reader.onload = function(event) {
-      imageDataUrl = event.target.result;
+      imageDataUrl = event.target.result; // guardamos la imagen convertida
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file); // convierte el archivo a base64
   });
 
-  // Función para dibujar los posts
-  function renderPosts(postsArray) { //
-    if (!postsContainer) return; // No hacer nada si no estamos en Home.html
-    postsContainer.innerHTML = '';
+  // Dibuja las publicaciones en pantalla
+  function renderPosts(postsArray) {
+    if (!postsContainer) return; // si no estamos en Home.html, no hace nada
+    postsContainer.innerHTML = ''; // limpia el contenedor
 
+    // Si no hay publicaciones, muestra un mensaje
     if (!postsArray || postsArray.length === 0) {
       postsContainer.innerHTML = '<p>No hay publicaciones.</p>';
       return;
     }
 
-    const users = getUsers(); //
+    const users = getUsers(); // se obtienen todos los usuarios para mostrar nombre y foto
 
+    // Recorre todas las publicaciones y las agrega al HTML
     postsArray.forEach(post => {
-      const author = users.find(u => u.id === post.authorId);
+      const author = users.find(u => u.id === post.authorId); // busca el autor del post
       const postDiv = document.createElement('div');
       postDiv.className = 'post';
 
+      // estructura visual del post
       postDiv.innerHTML = `
         <div class="post-header">
           <img src="${author?.avatar || '../Imagenes/avatarDefault.png'}" alt="Imagen de usuario" class="user-img" />
@@ -86,32 +87,37 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
 
-      postsContainer.appendChild(postDiv);
+      postsContainer.appendChild(postDiv); // lo muestra en la página
     });
   }
 
-  // Función para filtrar posts
-  function renderFiltered() { //
-    if (!searchInput) return; // No hacer nada si no estamos en Home.html
+  // Filtra las publicaciones según el texto que el usuario escriba en el buscador
+  function renderFiltered() {
+    if (!searchInput) return;
     
-    const posts = getPosts() || []; //
-    const q = (searchInput?.value || '').trim().toLowerCase();
+    const posts = getPosts() || [];
+    const q = (searchInput?.value || '').trim().toLowerCase(); // texto buscado
     let filtered = posts;
+
+    // Si hay texto, se filtran los posts que lo contengan (en el título o nombre del autor)
     if (q.length > 0) {
       filtered = posts.filter(p => {
-        const author = getUsers().find(u => u.id === p.authorId); //
+        const author = getUsers().find(u => u.id === p.authorId);
         return p.title.toLowerCase().includes(q) ||
                (author?.username && author.username.toLowerCase().includes(q));
       });
     }
+
+    // Se muestran solo los resultados filtrados
     renderPosts(filtered);
   }
 
-  // --- Asignar Eventos ---
-  
-  searchInput?.addEventListener('input', renderFiltered); //
+  // Cuando se escribe en el buscador, se actualizan los resultados en tiempo real
+  searchInput?.addEventListener('input', renderFiltered);
 
-  newPostBtn?.addEventListener('click', () => { //
+  // Permite crear una nueva publicación
+  newPostBtn?.addEventListener('click', () => {
+    // Si no hay usuario logueado, no puede publicar
     if (!currentUser?.id) return alert('Debes iniciar sesión para publicar.');
     
     const title = newPostContent.value.trim();
@@ -119,46 +125,49 @@ document.addEventListener('DOMContentLoaded', () => {
       return alert('No puedes publicar vacío.');
     }
 
-    const posts = getPosts() || []; //
+    const posts = getPosts() || [];
     const newPost = {
-      id: uid(), //
+      id: uid(), // se genera un ID único
       title,
       authorId: currentUser.id,
-      createdAt: Date.now(),
-      img: imageDataUrl, 
-      comments: []
+      createdAt: Date.now(), // guarda la fecha actual
+      img: imageDataUrl, // guarda la imagen subida
+      comments: [] // inicia sin comentarios
     };
 
-    posts.unshift(newPost);
-    savePosts(posts); //
+    posts.unshift(newPost); // agrega el nuevo post al inicio
+    savePosts(posts); // lo guarda en localStorage
 
+    // Limpia los campos después de publicar
     newPostContent.value = '';
     imageUpload.value = '';
     imageDataUrl = null;
 
-    renderFiltered();
+    renderFiltered(); // actualiza la lista mostrada
   });
 
-  window.addEventListener('storage', e => { //
+  // Si se cambian los datos en otra pestaña del navegador, se actualiza la vista automáticamente
+  window.addEventListener('storage', e => {
     if (e.key === 'posts' || e.key === 'users') {
       renderFiltered();
     }
   });
 
-  const refreshBtn = document.getElementById('refreshDemoBtn'); //
-  refreshBtn?.addEventListener('click', () => { //
+  // Botón para recargar los datos de prueba
+  const refreshBtn = document.getElementById('refreshDemoBtn');
+  refreshBtn?.addEventListener('click', () => {
     if (confirm("¿Quieres recargar los datos de prueba? Se borrarán tus publicaciones actuales.")) {
-      localStorage.clear(); 
-      seedDemo(); //
-      renderFiltered(); 
+      localStorage.clear(); // borra todos los datos actuales
+      seedDemo(); // vuelve a generar los datos de ejemplo
+      renderFiltered(); // actualiza la pantalla
       alert("Datos de prueba recargados correctamente.");
     }
   });
 
-  // --- Carga inicial (solo si estamos en Home.html) ---
-  if(searchInput) {
+  // Cuando se carga la página, se limpia el buscador y se muestran todas las publicaciones
+  if (searchInput) {
     searchInput.value = '';
     renderFiltered();
   }
 
-}); // Fin de DOMContentLoaded
+}); // Fin del evento DOMContentLoaded
