@@ -1,93 +1,50 @@
-//  Array de posts 
-let posts = [
-  { 
-    username: "@Juan", 
-    avatar: "../Imagenes/Avatar4.jpeg", 
-    time: "Hace 2 horas", 
-    content: "Hoy preparé una lasaña casera con salsa bechamel 🤤. ¡Aquí mi receta!", 
-    img: "../Imagenes/Lasanna.png", 
-    likes: 12, 
-    liked: false, 
-    comments: [{ username: "@CocineraAna", text: "¡Se ve deliciosa!" }] 
-  },
-  { 
-    username: "@Ana", 
-    avatar: "../Imagenes/Avatar1.jpg", 
-    time: "Hace 5 horas", 
-    content: "Pan casero con masa madre 😍 recién salido del horno.", 
-    img: "../Imagenes/Pan.jpg", 
-    likes: 42, 
-    liked: false, 
-    comments: [] 
-  },
-  { 
-    username: "@Mario", 
-    avatar: "../Imagenes/Avatar3.jpg", 
-    time: "Hace 1 hora", 
-    content: "Tacos al pastor 🌮, ¡los mejores de la ciudad!", 
-    img: "../Imagenes/Tacos.jpg", 
-    likes: 35, 
-    liked: false, 
-    comments: [{ username: "@Laura", text: "¡Quiero probarlos!" }] 
-  },
-  { 
-    username: "@Laura", 
-    avatar: "../Imagenes/Avatar5.jpeg", 
-    time: "Hace 3 horas", 
-    content: "Brownies de chocolate 🍫 con nueces, recién horneados.", 
-    img: "../Imagenes/Brownie.jpg", 
-    likes: 28, 
-    liked: false, 
-    comments: [] 
-  },
-  { 
-    username: "@Caro", 
-    avatar: "../Imagenes/Avatar6.jpeg", 
-    time: "Hace 6 horas", 
-    content: "Ensalada fresca de quinoa y aguacate 🥗, ideal para el verano.", 
-    img: "../Imagenes/Ensalada.jpg", 
-    likes: 18, 
-    liked: false, 
-    comments: [] 
-  },
-  { 
-    username: "@TuUsuario", 
-    avatar: "../Imagenes/Avatar1.jpg", 
-    time: "Hace 1 día", 
-    content: "Mi nueva receta: pasta carbonara cremosa", 
-    img: "../Imagenes/Carbonara.jpg", 
-    likes: 12, 
-    liked: false, 
-    comments: [] 
+import { getPosts, getUsers, seedDemo } from './BBDD.js'
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  // si no hay usuarios o posts se cargan datos de prueba
+  if (!(getUsers() && getUsers().length) || !(getPosts() && getPosts().length)) {
+    seedDemo()
+    console.log('Datos demo cargados desde Podio.js')
   }
-];
 
-// Ordenar posts por likes descendente y obtener top 3
-let topPosts = posts.sort((a,b) => b.likes - a.likes).slice(0,3);
+  // obtener todos los posts y usuarios
+  const posts = getPosts()
+  const users = getUsers()
 
-const podio = document.getElementById('podio');
-const clasesPodio = ["second","first","third"]; // Izquierda-Centro-Derecha
-const coloresPodio = ["#c0c0c0", "#ffd700", "#cd7f32"]; // Plata, Oro, Bronce
+  // ordenar posts por likes y tomar los tres primeros
+  let topPosts = posts.sort((a, b) => b.likes - a.likes).slice(0, 3)
 
-topPosts.forEach((post, index) => {
-  const div = document.createElement('div');
-  div.classList.add('podio-post', clasesPodio[index]);
+  // obtener contenedor del podio
+  const podio = document.getElementById('podio')
+  
+  // clases y colores para cada posicion del podio
+  const clasesPodio = ["first", "second", "third"]
+  const coloresPodio = ["#ffd700", "#c0c0c0", "#cd7f32"]
 
-  // Fondo tipo plataforma
-  div.style.backgroundColor = "#fff8f0";
-  div.style.borderTop = `15px solid ${coloresPodio[index]}`;
+  // recorrer los top posts y agregarlos al podio
+  topPosts.forEach((post, index) => {
+    const author = users.find(u => u.id === post.authorId) || { username: 'Desconocido', avatar: '../Imagenes/avatarDefault.png' }
 
-  div.innerHTML = `
-    <div class="post-header">
-      <img src="${post.avatar}" alt="${post.username}" class="avatar">
-      <div>
-        <strong>${post.username}</strong><br>
-        <small>${post.time}</small>
+    const div = document.createElement('div')
+    div.classList.add('podio-post', clasesPodio[index])
+    div.style.backgroundColor = "#fff8f0"
+    div.style.borderTop = `15px solid ${coloresPodio[index]}`
+
+    // contenido del post
+    div.innerHTML = `
+      <div class="post-header">
+        <img src="${author.avatar}" alt="${author.username}" class="avatar">
+        <div>
+          <strong>@${author.username}</strong><br>
+          <small>${new Date(post.createdAt).toLocaleString()}</small>
+        </div>
       </div>
-    </div>
-    <p>${post.content}</p>
-    <img src="${post.img}" alt="Post Image" class="post-img">
-    <div class="likes">❤️ ${post.likes} Likes</div>
-  `;
-  podio.appendChild(div);
-});
+      <p>${post.title}</p>
+      <img src="${post.img}" alt="Post Image" class="post-img">
+      <div class="likes"> ${post.likes} Likes</div>
+    `
+    podio.appendChild(div)
+  })
+
+})

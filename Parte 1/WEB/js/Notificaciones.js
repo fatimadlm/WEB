@@ -1,18 +1,20 @@
 import { getNotificaciones, saveNotificaciones, seedDemo, uid } from './BBDD.js';
 
+// Obtener el contenedor de notificaciones y el boton de recarga
 const container = document.getElementById("notificationsContainer");
 const refreshBtn = document.getElementById("refreshDemoBtn");
 
-// ---------- Mostrar notificaciones ----------
+// Mostrar todas las notificaciones
 function mostrarNotificaciones() {
   const notificaciones = getNotificaciones();
   container.innerHTML = "";
 
   if (notificaciones.length === 0) {
-    container.innerHTML = "<p>No tienes notificaciones por ahora :( </p>";
+    container.innerHTML = "<p>No tienes notificaciones por ahora</p>";
     return;
   }
 
+  // Crear un elemento para cada notificacion
   notificaciones.forEach((n, index) => {
     const div = document.createElement("div");
     div.classList.add("notification-item");
@@ -26,6 +28,7 @@ function mostrarNotificaciones() {
     container.appendChild(div);
   });
 
+  // Conectar los botones de eliminar a su funcion
   document.querySelectorAll(".delete-btn").forEach(btn => {
     btn.addEventListener("click", e => {
       const idx = e.target.dataset.index;
@@ -34,7 +37,7 @@ function mostrarNotificaciones() {
   });
 }
 
-// ---------- Eliminar una notificación ----------
+// Eliminar una notificacion y actualizar la vista
 function eliminarNotificacion(index) {
   const notificaciones = getNotificaciones();
   notificaciones.splice(index, 1);
@@ -42,19 +45,19 @@ function eliminarNotificacion(index) {
   mostrarNotificaciones();
 }
 
-// ---------- Recargar datos demo ----------
+// Recargar las notificaciones de prueba
 refreshBtn?.addEventListener("click", () => {
-  if (confirm("¿Quieres recargar las notificaciones de prueba?")) {
+  if (confirm("Quieres recargar las notificaciones de prueba")) {
     seedDemo();
     mostrarNotificaciones();
-    alert("Notificaciones  recargadas.");
+    alert("Notificaciones recargadas");
   }
 });
 
-// ---------- Inicializar ----------
+// Inicializar al cargar la pagina
 (function init() {
   if (!getNotificaciones().length) {
-    seedDemo(); // Si no existen, crear demo
+    seedDemo();
   }
   mostrarNotificaciones();
 })();

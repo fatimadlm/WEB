@@ -1,189 +1,186 @@
-// Importar funciones de BBDD.js
-import { 
-  getMessages, saveMessages, getCurrentUser, uid, 
-  getUsers, getPosts, seedDemo 
-} from './BBDD.js';
+import { getMessages, saveMessages, getCurrentUser, uid, getUsers, getPosts, seedDemo } from './BBDD.js';
 
-// Esperar a que el HTML esté completamente cargado
+// Esperamos a que el HTML esté completamente cargado
 document.addEventListener('DOMContentLoaded', () => {
-    
 
+    // Si no hay usuarios o publicaciones, cargamos los datos de ejemplo
     if (!(getUsers() && getUsers().length) || !(getPosts() && getPosts().length)) {
-      seedDemo(); //
-      console.log('Datos demo cargados desde Mensajes.js');
+      seedDemo()
+      console.log('Datos demo cargados desde Mensajes.js')
     }
 
     // Obtenemos el usuario que ha iniciado sesión
-    const currentUser = getCurrentUser(); //
+    const currentUser = getCurrentUser()
 
-    // --- Protección de la página (MUY IMPORTANTE) ---
-    if (!currentUser.id) { //
-        alert('Debes iniciar sesión para acceder a esta página.');
-        window.location.href = 'IniciarSesion.html';
-        throw new Error('Usuario no autenticado'); 
+    // Si no hay usuario, redirigimos al login
+    if (!currentUser.id) {
+        alert('Debes iniciar sesión para acceder a esta página.')
+        window.location.href = 'IniciarSesion.html'
+        throw new Error('Usuario no autenticado')
     }
 
-    // Seleccionar los elementos del DOM
-    const chatList = document.querySelector('.chat-list');
-    const chatPlaceholder = document.getElementById('chatPlaceholder');
-    const chatActiveWindow = document.getElementById('chatActiveWindow');
-    const chatBox = document.getElementById('chatBox');
-    const chatUserName = document.getElementById('chatUserName');
-    const chatInput = document.getElementById('chatInput');
-    const sendChatBtn = document.getElementById('sendChatBtn');
-    
-    // Conectar el botón de recarga
-    const refreshBtn = document.getElementById('refreshDemoBtn');
+    // Seleccionamos los elementos del DOM
+    const chatList = document.querySelector('.chat-list')
+    const chatPlaceholder = document.getElementById('chatPlaceholder')
+    const chatActiveWindow = document.getElementById('chatActiveWindow')
+    const chatBox = document.getElementById('chatBox')
+    const chatUserName = document.getElementById('chatUserName')
+    const chatInput = document.getElementById('chatInput')
+    const sendChatBtn = document.getElementById('sendChatBtn')
+    const refreshBtn = document.getElementById('refreshDemoBtn')
 
-    // --- Variable para guardar el ID del chat abierto ---
-    let currentChatPartnerId = null; 
+    // Guardamos el id del chat que está abierto
+    let currentChatPartnerId = null
 
-    // --- Lógica para el botón de recarga ---
-    refreshBtn?.addEventListener('click', () => { //
+    // Botón para recargar los datos de prueba
+    refreshBtn?.addEventListener('click', () => {
       if (confirm("¿Quieres recargar los datos de prueba? Se borrará todo tu progreso.")) {
-        localStorage.clear(); //
-        seedDemo();           //
+        localStorage.clear()
+        seedDemo()
         
-        loadChatPreviews();
-        chatPlaceholder.style.display = 'flex';
-        chatActiveWindow.style.display = 'none';
+        loadChatPreviews()
+        chatPlaceholder.style.display = 'flex'
+        chatActiveWindow.style.display = 'none'
         
-        alert("Datos de prueba recargados correctamente.");
+        alert("Datos de prueba recargados correctamente.")
       }
-    });
+    })
 
-    // --- Función para cargar los últimos mensajes en la lista ---
+    // Cargar la vista previa de los últimos mensajes
     function loadChatPreviews() {
-        const allMessages = getMessages(); //
-        const lastMessageMap = new Map(); 
+        const allMessages = getMessages()
+        const lastMessageMap = new Map()
 
         allMessages.forEach(msg => {
-            let partnerId = null;
-            if (msg.senderId === currentUser.id) partnerId = msg.receiverId;
-            else if (msg.receiverId === currentUser.id) partnerId = msg.senderId;
-            else return; 
+            let partnerId = null
+            if (msg.senderId === currentUser.id) partnerId = msg.receiverId
+            else if (msg.receiverId === currentUser.id) partnerId = msg.senderId
+            else return
 
-            const existing = lastMessageMap.get(partnerId);
+            const existing = lastMessageMap.get(partnerId)
             if (!existing || msg.timestamp > existing.timestamp) {
-                lastMessageMap.set(partnerId, msg);
+                lastMessageMap.set(partnerId, msg)
             }
-        });
+        })
 
+        // Actualiza los textos en la lista de chats
         document.querySelectorAll('.chat-list-item').forEach(item => {
-            const partnerId = item.dataset.userId; //
-            const p = item.querySelector('.chat-last-message');
-            if (!p) return;
+            const partnerId = item.dataset.userId
+            const p = item.querySelector('.chat-last-message')
+            if (!p) return
 
-            const lastMessage = lastMessageMap.get(partnerId);
+            const lastMessage = lastMessageMap.get(partnerId)
             if (lastMessage) {
-                const prefix = lastMessage.senderId === currentUser.id ? "Tú: " : "";
-                p.textContent = prefix + lastMessage.content;
+                const prefix = lastMessage.senderId === currentUser.id ? "Tú: " : ""
+                p.textContent = prefix + lastMessage.content
             } else {
-                p.textContent = "No hay mensajes todavía.";
+                p.textContent = "No hay mensajes todavía."
             }
-        });
+        })
     }
 
-    // --- Cargar las vistas previas al iniciar la página ---
-    loadChatPreviews();
+    // Cargamos las vistas previas al entrar a la página
+    loadChatPreviews()
 
-    // --- Evento: Al hacer clic en un chat de la lista ---
-    chatList.addEventListener('click', (e) => { //
-        const chatButton = e.target.closest('.chat-list-item');
-        if (!chatButton) return;
+    // Al hacer clic en un chat de la lista
+    chatList.addEventListener('click', (e) => {
+        const chatButton = e.target.closest('.chat-list-item')
+        if (!chatButton) return
 
-        document.querySelectorAll('.chat-list-item').forEach(btn => btn.classList.remove('selected'));
-        chatButton.classList.add('selected');
+        document.querySelectorAll('.chat-list-item').forEach(btn => btn.classList.remove('selected'))
+        chatButton.classList.add('selected')
         
-        const partnerId = chatButton.dataset.userId; //
-        const partnerName = chatButton.dataset.userName; //
+        const partnerId = chatButton.dataset.userId
+        const partnerName = chatButton.dataset.userName
         
         if (!partnerId || !partnerName) {
-            return console.error("Error: El chat no tiene 'data-user-id' o 'data-user-name'.");
+            return console.error("Error: Falta data-user-id o data-user-name.")
         }
 
-        currentChatPartnerId = partnerId; 
-        chatPlaceholder.style.display = 'none';
-        chatActiveWindow.style.display = 'flex';
+        currentChatPartnerId = partnerId
+        chatPlaceholder.style.display = 'none'
+        chatActiveWindow.style.display = 'flex'
 
-        const profilePage = (partnerId === currentUser.id) ? "MiPerfil.html" : `Perfiles/Perfil${partnerName}.html`; //
-        chatUserName.innerHTML = `Chat con <a href="${profilePage}">@${partnerName}</a>`;
+        const profilePage = (partnerId === currentUser.id) ? "MiPerfil.html" : `Perfiles/Perfil${partnerName}.html`
+        chatUserName.innerHTML = `Chat con <a href="${profilePage}">@${partnerName}</a>`
 
-        loadChatMessages(currentUser.id, partnerId);
-    });
+        loadChatMessages(currentUser.id, partnerId)
+    })
 
-    // --- Función que carga la conversación completa ---
-    function loadChatMessages(currentUserId, partnerId) { //
-        chatBox.innerHTML = ''; 
+    // Cargar todos los mensajes de una conversación
+    function loadChatMessages(currentUserId, partnerId) {
+        chatBox.innerHTML = ''
         
-        const allMessages = getMessages(); //
+        const allMessages = getMessages()
         const conversation = allMessages
             .filter(msg => 
                 (msg.senderId === currentUserId && msg.receiverId === partnerId) ||
                 (msg.senderId === partnerId && msg.receiverId === currentUserId)
             )
-            .sort((a, b) => a.timestamp - b.timestamp); 
+            .sort((a, b) => a.timestamp - b.timestamp)
         
         if (conversation.length === 0) {
-            chatBox.innerHTML = '<p class="info">No hay mensajes. ¡Di hola!</p>';
-            return;
+            chatBox.innerHTML = '<p class="info">No hay mensajes. Di hola!</p>'
+            return
         }
 
+        // Crear una burbuja por cada mensaje
         conversation.forEach(msg => {
-            const type = msg.senderId === currentUserId ? 'sent' : 'received';
-            const newBubble = document.createElement('div');
-            newBubble.classList.add('chat-bubble', type);
-            const timeString = new Date(msg.timestamp).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+            const type = msg.senderId === currentUserId ? 'sent' : 'received'
+            const newBubble = document.createElement('div')
+            newBubble.classList.add('chat-bubble', type)
+            const timeString = new Date(msg.timestamp).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
 
             newBubble.innerHTML = `
                 <p>${msg.content.replace(/\n/g, '<br>')}</p>
                 <span>${timeString}</span>
-            `;
-            chatBox.appendChild(newBubble);
-        });
+            `
+            chatBox.appendChild(newBubble)
+        })
         
-        chatBox.scrollTop = chatBox.scrollHeight;
+        chatBox.scrollTop = chatBox.scrollHeight
     }
 
-    // --- Función para enviar un mensaje nuevo ---
-    const sendMessage = () => { //
-        const text = chatInput.value.trim();
-        if (text === '' || !currentChatPartnerId) return; 
+    // Enviar un nuevo mensaje
+    const sendMessage = () => {
+        const text = chatInput.value.trim()
+        if (text === '' || !currentChatPartnerId) return
 
-        const now = Date.now();
+        const now = Date.now()
         const newMessage = {
-            id: uid('m_'), //
+            id: uid('m_'),
             senderId: currentUser.id,
             receiverId: currentChatPartnerId,
             content: text,
             timestamp: now
-        };
-
-        const allMessages = getMessages(); //
-        allMessages.push(newMessage);
-        saveMessages(allMessages); //
-
-        const newBubble = document.createElement('div');
-        newBubble.classList.add('chat-bubble', 'sent');
-        const timeString = new Date(now).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-        newBubble.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p><span>${timeString}</span>`;
-        chatBox.appendChild(newBubble);
-        
-        chatInput.value = ''; 
-        chatBox.scrollTop = chatBox.scrollHeight; 
-        chatInput.focus();
-
-        loadChatPreviews();
-    };
-
-    // --- Asignar la función 'sendMessage' a los botones ---
-    sendChatBtn.addEventListener('click', sendMessage);
-    
-    chatInput.addEventListener('keydown', (e) => { //
-        if (e.key === 'Enter' && !e.shiftKey) { 
-            e.preventDefault(); 
-            sendMessage();
         }
-    });
 
-}); // Fin de DOMContentLoaded
+        const allMessages = getMessages()
+        allMessages.push(newMessage)
+        saveMessages(allMessages)
+
+        // Mostrar el mensaje en pantalla
+        const newBubble = document.createElement('div')
+        newBubble.classList.add('chat-bubble', 'sent')
+        const timeString = new Date(now).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
+        newBubble.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p><span>${timeString}</span>`
+        chatBox.appendChild(newBubble)
+        
+        chatInput.value = ''
+        chatBox.scrollTop = chatBox.scrollHeight
+        chatInput.focus()
+
+        loadChatPreviews()
+    }
+
+    // Botón de enviar mensaje
+    sendChatBtn.addEventListener('click', sendMessage)
+    
+    // Enviar con Enter (sin Shift)
+    chatInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) { 
+            e.preventDefault()
+            sendMessage()
+        }
+    })
+})
