@@ -1,154 +1,132 @@
-import { getCurrentUser, getEventos, saveEventos, seedDemo } from './BBDD.js';
+import { getCurrentUser, getEventos, saveEventos, seedDemo } from './BBDD.js'; 
+const currentUser = getCurrentUser(); // obtiene el usuario actual
 
-// Obtener el usuario actualmente logueado
-const currentUser = getCurrentUser();
-
-// Verificar si hay un usuario autenticado
-if (!currentUser.id) {
-  // Si no hay sesión iniciada, mostrar mensaje y redirigir al login
-  alert('Debes iniciar sesión para acceder a esta página.');
-  window.location.href = 'IniciarSesion.html';
-  // Lanzar un error para detener la ejecución del código
-  throw new Error('Usuario no autenticado');
+if (!currentUser.id) { // verifica si hay usuario logueado
+  alert('Debes iniciar sesion para acceder a esta pagina.'); // muestra alerta si no hay sesion
+  window.location.href = 'IniciarSesion.html'; // redirige al login
+  throw new Error('Usuario no autenticado'); // detiene el codigo
 }
 
-// Obtener la lista de eventos almacenados
-let eventos = getEventos();
+let eventos = getEventos(); // obtiene los eventos guardados
 
-// Esperar a que el contenido de la página esté completamente cargado
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => { // espera a que el DOM cargue completamente
 
-  // Mostrar el calendario del mes actual al cargar la página
-  renderCalendar(new Date());
+  const hoy = new Date(); // obtiene la fecha actual
+  const year = hoy.getFullYear(); // obtiene el año actual
+  const month = (hoy.getMonth() + 1).toString().padStart(2, '0'); // obtiene el mes actual con dos digitos
+  const day = hoy.getDate().toString().padStart(2, '0'); // obtiene el dia actual con dos digitos
+  const hoyString = `${year}-${month}-${day}`; // crea la fecha en formato AAAA-MM-DD
 
-  // Botón para ir al mes anterior
-  document.getElementById('prevMonth').addEventListener('click', () => {
-    let currentDate = new Date(document.getElementById('monthYear').dataset.date);
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    renderCalendar(currentDate);
+  const eventDateInput = document.getElementById('eventDate'); // obtiene el input de fecha
+  if (eventDateInput) { // si existe el input
+    eventDateInput.min = hoyString; // establece la fecha minima como hoy
+  }
+
+  renderCalendar(new Date()); // muestra el calendario del mes actual
+
+  document.getElementById('prevMonth').addEventListener('click', () => { // boton para mes anterior
+    let currentDate = new Date(document.getElementById('monthYear').dataset.date); // obtiene fecha actual mostrada
+    currentDate.setMonth(currentDate.getMonth() - 1); // resta un mes
+    renderCalendar(currentDate); // renderiza el nuevo mes
   });
 
-  // Botón para ir al mes siguiente
-  document.getElementById('nextMonth').addEventListener('click', () => {
-    let currentDate = new Date(document.getElementById('monthYear').dataset.date);
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    renderCalendar(currentDate);
+  document.getElementById('nextMonth').addEventListener('click', () => { // boton para mes siguiente
+    let currentDate = new Date(document.getElementById('monthYear').dataset.date); // obtiene fecha actual mostrada
+    currentDate.setMonth(currentDate.getMonth() + 1); // suma un mes
+    renderCalendar(currentDate); // renderiza el nuevo mes
   });
 
-  // Evento que maneja el formulario de agregar un nuevo evento
-  document.getElementById('addEventForm').addEventListener('submit', (e) => {
-    e.preventDefault(); // Evita que se recargue la página
+  document.getElementById('addEventForm').addEventListener('submit', (e) => { // evento para enviar formulario
+    e.preventDefault(); // evita que se recargue la pagina
 
-    // Obtener los valores del formulario
-    const fecha = document.getElementById('eventDate').value;
-    const titulo = document.getElementById('eventTitle').value;
-    const hora = document.getElementById('eventTime').value;
+    const fecha = document.getElementById('eventDate').value; // obtiene la fecha del formulario
+    const titulo = document.getElementById('eventTitle').value; // obtiene el titulo del evento
+    const hora = document.getElementById('eventTime').value; // obtiene la hora del evento
 
-    // Verificar que todos los campos estén completos
-    if (!fecha || !titulo || !hora) {
-      return alert("Completa todos los campos para añadir un evento.");
+    if (!fecha || !titulo || !hora) { // verifica que todos los campos esten completos
+      return alert('Completa todos los campos para anadir un evento.'); // muestra alerta si falta algo
     }
 
-    // Crear un nuevo objeto evento
-    const nuevoEvento = { fecha, titulo, hora, creador: currentUser.username };
+    const hoy = new Date(); // obtiene la fecha actual nuevamente
+    const year = hoy.getFullYear(); // obtiene el año actual
+    const month = (hoy.getMonth() + 1).toString().padStart(2, '0'); // obtiene el mes actual con dos digitos
+    const day = hoy.getDate().toString().padStart(2, '0'); // obtiene el dia actual con dos digitos
+    const hoyString = `${year}-${month}-${day}`; // crea la fecha en formato AAAA-MM-DD
 
-    // Agregarlo al arreglo de eventos
-    eventos.push(nuevoEvento);
+    if (fecha < hoyString) { // valida que la fecha no sea anterior a hoy
+      return alert('No puedes crear un evento en una fecha anterior al dia actual.'); // muestra alerta
+    }
 
-    // Guardar los cambios en la base de datos (localStorage)
-    saveEventos(eventos);
+    const nuevoEvento = { fecha, titulo, hora, creador: currentUser.username }; // crea el nuevo evento
 
-    // Limpiar el formulario
-    e.target.reset();
+    eventos.push(nuevoEvento); // agrega el evento a la lista
 
-    // Volver a renderizar el calendario para reflejar el nuevo evento
-    renderCalendar(new Date(fecha));
+    saveEventos(eventos); // guarda los eventos actualizados
 
-    // Confirmar al usuario que el evento fue añadido
-    alert(`Evento añadido por ${currentUser.username}`);
+    e.target.reset(); // limpia el formulario
+
+    renderCalendar(new Date(fecha)); // actualiza el calendario
+
+    alert(`Evento anadido por ${currentUser.username}`); // confirma al usuario
   });
 
-  // Botón para recargar los datos de demostración
-  const refreshBtn = document.getElementById('refreshDemoBtn');
-  refreshBtn?.addEventListener('click', () => {
-    if (confirm("¿Quieres recargar los datos de prueba de eventos? Se borrarán los actuales.")) {
-      // Recargar los datos demo desde BBDD.js
-      seedDemo();
-
-      // Actualizar la lista local de eventos
-      eventos = getEventos();
-
-      // Volver a mostrar el calendario
-      renderCalendar(new Date());
-
-      // Notificar al usuario
-      alert("Datos demo recargados correctamente.");
+  const refreshBtn = document.getElementById('refreshDemoBtn'); // obtiene el boton de recarga
+  refreshBtn?.addEventListener('click', () => { // evento para recargar datos demo
+    if (confirm('Quieres recargar los datos de prueba de eventos Se borraran los actuales')) { // pide confirmacion
+      seedDemo(); // recarga los datos demo
+      eventos = getEventos(); // actualiza la lista local
+      renderCalendar(new Date()); // vuelve a renderizar el calendario
+      alert('Datos demo recargados correctamente.'); // confirma la accion
     }
   });
 });
 
-// Funcion que genera el calendario en pantalla
-function renderCalendar(date) {
-  // Cargar siempre la version mas reciente de los eventos
-  eventos = getEventos();
+function renderCalendar(date) { // funcion que muestra el calendario
+  eventos = getEventos(); // obtiene la lista actualizada de eventos
 
-  // Obtener elementos del DOM relacionados con el calendario
-  const monthYear = document.getElementById('monthYear');
-  const grid = document.getElementById('calendarGrid');
-  const eventList = document.getElementById('eventList');
+  const monthYear = document.getElementById('monthYear'); // obtiene el elemento del mes y año
+  const grid = document.getElementById('calendarGrid'); // obtiene la cuadricula del calendario
+  const eventList = document.getElementById('eventList'); // obtiene la lista de eventos
 
-  // Obtener el año y el mes actual a partir del objeto Date
-  const year = date.getFullYear();
-  const month = date.getMonth();
+  const year = date.getFullYear(); // obtiene el año
+  const month = date.getMonth(); // obtiene el mes
 
-  // Nombres de los meses para mostrar en pantalla
-  const monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio',
-                      'Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']; // nombres de los meses
 
-  // Mostrar el mes y año actual en el encabezado
-  monthYear.textContent = `${monthNames[month]} ${year}`;
-  monthYear.dataset.date = date.toISOString(); // Guardar la fecha actual
+  monthYear.textContent = `${monthNames[month]} ${year}`; // muestra mes y año
+  monthYear.dataset.date = date.toISOString(); // guarda la fecha actual en dataset
 
-  // Limpiar el contenido anterior del calendario y la lista de eventos
-  grid.innerHTML = '';
-  eventList.innerHTML = '<li>Selecciona un día del calendario para ver los eventos.</li>';
+  grid.innerHTML = ''; // limpia la cuadricula del calendario
+  eventList.innerHTML = '<li>Selecciona un dia del calendario para ver los eventos.</li>'; // limpia la lista
 
-  // Calcular el primer y último día del mes actual
-  const firstDay = new Date(year, month, 1);
-  const lastDay = new Date(year, month + 1, 0);
+  const firstDay = new Date(year, month, 1); // obtiene el primer dia del mes
+  const lastDay = new Date(year, month + 1, 0); // obtiene el ultimo dia del mes
 
-  // Determinar el día de la semana en que empieza el mes (0 = lunes)
-  const startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
+  const startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1; // calcula el dia de inicio del mes
 
-  // Crear los espacios vacíos antes del primer día del mes
-  for (let i = 0; i < startDay; i++) grid.appendChild(document.createElement('div'));
+  for (let i = 0; i < startDay; i++) grid.appendChild(document.createElement('div')); // crea espacios vacios al inicio
 
-  // Crear los elementos de cada día del mes
-  for (let d = 1; d <= lastDay.getDate(); d++) {
-    const dayDiv = document.createElement('div');
-    dayDiv.classList.add('calendar-day');
-    dayDiv.textContent = d;
+  for (let d = 1; d <= lastDay.getDate(); d++) { // recorre todos los dias del mes
+    const dayDiv = document.createElement('div'); // crea un div para el dia
+    dayDiv.classList.add('calendar-day'); // agrega clase
+    dayDiv.textContent = d; // muestra el numero del dia
 
-    // Formatear la fecha en formato AAAA-MM-DD
-    const dateStr = `${year}-${(month+1).toString().padStart(2,'0')}-${d.toString().padStart(2,'0')}`;
+    const dateStr = `${year}-${(month + 1).toString().padStart(2,'0')}-${d.toString().padStart(2,'0')}`; // crea cadena de fecha
 
-    // Filtrar los eventos que coinciden con ese día
-    const dayEvents = eventos.filter(e => e.fecha === dateStr);
+    const dayEvents = eventos.filter(e => e.fecha === dateStr); // filtra los eventos del dia
 
-    // Si hay eventos, marcar el día y permitir ver la lista
-    if (dayEvents.length > 0) {
-      dayDiv.classList.add('has-event');
-      dayDiv.addEventListener('click', () => {
-        eventList.innerHTML = '';
-        dayEvents.forEach(ev => {
-          const li = document.createElement('li');
-          li.textContent = `${ev.titulo} — ${ev.hora} (por ${ev.creador})`;
-          eventList.appendChild(li);
+    if (dayEvents.length > 0) { // si hay eventos ese dia
+      dayDiv.classList.add('has-event'); // marca el dia con evento
+      dayDiv.addEventListener('click', () => { // evento para mostrar los eventos del dia
+        eventList.innerHTML = ''; // limpia la lista
+        dayEvents.forEach(ev => { // recorre los eventos del dia
+          const li = document.createElement('li'); // crea un elemento de lista
+          li.textContent = `${ev.titulo} - ${ev.hora} (por ${ev.creador})`; // agrega texto con la informacion
+          eventList.appendChild(li); // lo agrega a la lista
         });
       });
     }
 
-    // Añadir el día al calendario
-    grid.appendChild(dayDiv);
+    grid.appendChild(dayDiv); // agrega el dia al calendario
   }
 }
