@@ -73,6 +73,8 @@ export function seedDemo() {
     { id: 'u6', username: 'Caro', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar6.jpeg' },
     { id: 'u7', username: 'Mario', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar3.jpg' },
     { id: 'u8', username: 'Laura', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar5.jpeg' }
+    ,{ id: 'u10', username: 'TuUsuario', password: '1234', role: 'user', active: true, avatar: '../Imagenes/MiAvatar.jpg' }
+
   ];
   saveUsers(users);
   saveCurrentUser(users[1]);

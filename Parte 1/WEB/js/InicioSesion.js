@@ -1,67 +1,62 @@
-// 1. Importar funciones necesarias desde el archivo BBDD.js
-// Estas funciones permiten obtener usuarios, crear datos de prueba y guardar el usuario actual
 import { getUsers, seedDemo, saveCurrentUser } from './BBDD.js';
 
-// 2. Comprobar si existen datos iniciales y cargarlos si es necesario
-(function initData() {
-  const users = getUsers(); // Obtener lista de usuarios guardados
+document.addEventListener('DOMContentLoaded', () => {
 
-  // Si no hay usuarios guardados, crear datos de ejemplo
-  if (!users || users.length === 0) { 
-    seedDemo(); // Generar datos de prueba en el almacenamiento local
-    console.log('Datos demo cargados.');
-  }
-})();
+    // 1. Carga inicial de datos si es la primera vez que se abre la web
+    const users = getUsers();
+    if (!users || users.length === 0) { 
+        seedDemo();
+        console.log('Datos demo generados en IniciarSesion.');
+    }
 
-// 3. Obtener el formulario de inicio de sesión desde el documento HTML
-const loginForm = document.getElementById('loginForm');
+    // 2. Referencias al DOM
+    const loginForm = document.getElementById('loginForm');
+    const errorDiv = document.createElement('div');
+    errorDiv.style.color = 'red';
+    errorDiv.style.marginTop = '10px';
+    errorDiv.style.fontWeight = 'bold';
+    if(loginForm) loginForm.appendChild(errorDiv);
 
-// Crear un contenedor para mostrar mensajes de error debajo del formulario
-const errorDiv = document.createElement('div');
-errorDiv.style.color = 'red';
-errorDiv.style.marginTop = '10px';
-loginForm.appendChild(errorDiv); // Agregar el contenedor al formulario
+    // 3. Lógica del Login
+    if(loginForm) {
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Evita la recarga estándar
 
-// 4. Detectar cuando el usuario envía el formulario
-loginForm.addEventListener('submit', function (e) {
-  e.preventDefault(); // Evitar que se recargue la página
+            const usernameInput = document.getElementById('username').value.trim();
+            const passwordInput = document.getElementById('password').value.trim();
 
-  // Leer los valores introducidos por el usuario
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value.trim();
+            // Obtener usuarios actualizados
+            const currentUsers = getUsers();
+            
+            // Buscar coincidencia
+            const user = currentUsers.find(u => u.username === usernameInput);
 
-  // Obtener la lista actual de usuarios desde la base de datos
-  const users = getUsers();
-  // Buscar un usuario que coincida con el nombre ingresado
-  const user = users.find(u => u.username === username);
+            // Validaciones
+            if (!user) {
+                errorDiv.textContent = 'El usuario no existe.';
+                return;
+            }
 
-  // Si el usuario no existe, mostrar mensaje de error
-  if (!user) {
-    errorDiv.textContent = 'No se encuentra este usuario';
-    return;
-  }
+            if (user.password !== passwordInput) {
+                errorDiv.textContent = 'Contraseña incorrecta.';
+                return;
+            }
 
-  // Si la contraseña no coincide, mostrar mensaje de error
-  if (user.password !== password) {
-    errorDiv.textContent = 'Contraseña incorrecta';
-    return;
-  }
+            if (user.active === false) {
+                errorDiv.textContent = 'Tu cuenta está desactivada. Contacta con el admin.';
+                return;
+            }
 
-  // Si el usuario está bloqueado, impedir el acceso
-  if (user.active === false) {
-    errorDiv.textContent = 'Este usuario está bloqueado.';
-    return;
-  }
+            // --- ÉXITO ---
+            // 1. Guardamos al usuario en la sesión (localStorage)
+            saveCurrentUser(user);
 
-  // Si todo está correcto, guardar el usuario actual como logueado
-  saveCurrentUser(user);
-
-  // Redirigir al usuario según su rol
-  // Si es administrador, va a la página de administración
-  // Si es usuario normal, va a la página principal
-  if (user.role === 'admin') {
-    window.location.href = 'Admin.html';
-  } else {
-    window.location.href = 'Home.html';
-  }
+            // 2. Redirigimos según el rol
+            if (user.role === 'admin') {
+                window.location.href = 'Admin.html';
+            } else {
+                window.location.href = 'Home.html';
+            }
+        });
+    }
 });
