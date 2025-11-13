@@ -1,4 +1,4 @@
-/* ---------- RESET ---------- */
+/* reset de margenes y fuentes */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,7 +6,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* ---------- FONDO ---------- */
+/* fondo principal */
 body {
   background-image: url('../Imagenes/Comida.jpg');
   background-size: cover;
@@ -29,7 +29,7 @@ body::before {
   position: relative;
 }
 
-/* ---------- SIDEBAR ---------- */
+/* barra lateral */
 .sidebar {
   width: 250px;
   flex-shrink: 0; 
@@ -59,7 +59,7 @@ body::before {
   font-size: 1.5rem;
 }
 
-/* Botón principal de crear post */
+/* boton principal crear post */
 .btn-primary {
   background-color: #FFA500;
   color: white;
@@ -88,6 +88,7 @@ body::before {
   width: 100%;
 }
 
+/* botones secundarios */
 .btn-secondary {
   background-color: #cc5500;
   color: white;
@@ -105,6 +106,7 @@ body::before {
   transform: translateY(-2px);
 }
 
+/* boton cerrar sesion */
 .btn-logout {
   text-decoration: none;
   background-color: #ff7043;
@@ -121,8 +123,7 @@ body::before {
   transform: translateY(-2px);
 }
 
-
-/* ---------- FEED ---------- */
+/* seccion del feed */
 .feed {
   flex: 1; 
   padding: 2rem;
@@ -134,7 +135,7 @@ body::before {
   margin-bottom: 1.5rem;
 }
 
-/* ---------- BARRA SUPERIOR (buscador) ---------- */
+/* barra superior buscador */
 .top-bar {
   display: flex;
   justify-content: flex-end; 
@@ -167,7 +168,7 @@ body::before {
   background-color: #b24900;
 }
 
-/* ---------- PUBLICADOR RÁPIDO (En el Feed) ---------- */
+/* publicador rapido en feed */
 .create-post {
   background-color: #fffaf5;
   border-radius: 1rem;
@@ -189,7 +190,7 @@ body::before {
   margin-bottom: 1rem;
 }
 
-/* Contenedor de previsualización de imagen (Genérico) */
+/* contenedor de previsualizacion de imagen */
 .image-preview-container {
     position: relative;
     width: 100%;
@@ -230,8 +231,7 @@ body::before {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-
-/* Controles de publicación (Genérico) */
+/* controles de publicacion */
 .post-controls {
   display: flex;
   justify-content: space-between; 
@@ -255,7 +255,7 @@ body::before {
   background-color: #fff1e0; 
 }
 
-/* Botón de publicar (del feed) */
+/* boton publicar del feed */
 .create-post #newPostBtn {
   background-color: #cc5500;
   color: white;
@@ -269,7 +269,8 @@ body::before {
 .create-post #newPostBtn:hover {
   background-color: #b24900;
 }
-/* ---------- BOTÓN REFRESCAR DEMO ---------- */
+
+/* boton recargar datos demo */
 .btn-refresh {
   background-color: #ffb347;
   color: white;
@@ -282,7 +283,6 @@ body::before {
   align-self: center;
   margin-left: auto;
 }
-
 .btn-refresh:hover {
   background-color: #ff9800;
 }
@@ -293,7 +293,8 @@ body::before {
   align-items: center;
   margin-bottom: 1rem;
 }
-/* ---------- POST ---------- */
+
+/* post */
 .post {
   background-color: #fff8f0;
   border-radius: 1rem;
@@ -315,19 +316,14 @@ body::before {
 .post-header h3 {
   color: #6b2b00;
 }
-/* ... (Al final de la sección .post-header) ... */
 
-.post-header h3 {
-  color: #6b2b00;
-}
-
-/* AÑADIDO: Estilo para el enlace del nombre de usuario */
+/* enlace nombre usuario en post */
 .post-username-link {
-  text-decoration: none; /* Quita el subrayado */
-  color: inherit; /* Hereda el color de .post-header h3 */
+  text-decoration: none;
+  color: inherit;
 }
 .post-username-link:hover h3 {
-  text-decoration: underline; /* Subraya solo al pasar el ratón */
+  text-decoration: underline;
 }
 
 .post-header span {
@@ -337,7 +333,6 @@ body::before {
 .post-content p {
   color: #4a2a0a;
   margin-bottom: 1rem;
-  /* El JS se encarga de los saltos de línea, pero esto ayuda con el wrapping */
   white-space: normal; 
   word-wrap: break-word;
 }
@@ -373,10 +368,8 @@ body::before {
   padding: 0.5rem 1rem;
   font-size: 0.95rem;
   color: #5a2500;
-  
-  /* AÑADIDO: Scroll para muchos comentarios */
-  max-height: 150px; /* Altura máxima */
-  overflow-y: auto;   /* Scroll vertical */
+  max-height: 150px; 
+  overflow-y: auto; 
 }
 .comments p {
   margin-top: 0.5rem;
@@ -386,10 +379,7 @@ body::before {
   margin-top: 0;
 }
 
-/* ==================================================== */
-/* ESTILOS PARA EL MODAL DE PUBLICACIÓN */
-/* ==================================================== */
-
+/* modal publicacion */
 .modal-backdrop {
   position: fixed; 
   z-index: 100;
@@ -440,7 +430,7 @@ body::before {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Estilos para la caja de publicación DENTRO DEL MODAL */
+/* caja de publicacion en modal */
 .modal-post-box {
   display: flex;
   flex-direction: column;
@@ -463,7 +453,7 @@ body::before {
   outline: none;
 }
 
-/* Botón de publicar (del modal) */
+/* boton publicar modal */
 #modalNewPostBtn {
   background: linear-gradient(90deg, #f57c00, #ef6c00); 
   color: white;
@@ -480,11 +470,24 @@ body::before {
   transform: scale(1.03);
 }
 
-/* Previsualización de imagen en el modal */
+/* previsualizacion de imagen en modal */
 .modal-post-box .image-preview-container {
   border-color: #ffb74d; 
   max-height: 250px;
 }
 .modal-post-box .image-preview {
   max-height: 230px; 
+}
+
+/* enlace autor en post */
+.post-author-link {
+  text-decoration: none; 
+  color: inherit;       
+}
+
+.post-author-link:hover {
+  text-decoration: underline; 
+}
+.post-header a {
+  text-decoration: none; 
 }

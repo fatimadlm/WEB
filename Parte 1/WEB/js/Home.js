@@ -1,19 +1,18 @@
 import { getPosts, savePosts, getCurrentUser, saveCurrentUser, getUsers, seedDemo, uid } from './BBDD.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  
-  // --- 1. SEGURIDAD Y DATOS ---
 
-  // Si no hay datos, cargar demo
+  // 1 SEGURIDAD Y DATOS
+  // cargar demo si no hay datos
   if (!(getUsers() && getUsers().length) || !(getPosts() && getPosts().length)) {
     seedDemo();
     console.log('Datos demo cargados desde Home.js');
   }
 
-  // Obtener usuario actual
+  // obtener usuario actual
   const currentUser = getCurrentUser();
 
-  // PROTECCIÓN: Si no tiene ID, fuera.
+  // proteccion si no tiene id salir
   if (!currentUser || !currentUser.id) {
     if (!window.location.pathname.endsWith('IniciarSesion.html')) {
       alert('Debes iniciar sesión para acceder a esta página.');
@@ -22,9 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- 2. CABECERA: USUARIO Y LOGOUT (NUEVO) ---
-  
-  // Actualizar nombre y foto en el Navbar (Asegúrate de tener estos IDs en tu HTML)
+  // 2 CABECERA USUARIO Y LOGOUT
+  // referencias del nav para nombre y avatar
   const navUsername = document.getElementById('navUsername'); 
   const navAvatar = document.getElementById('navAvatar');     
 
@@ -33,21 +31,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (navAvatar) navAvatar.src = currentUser.avatar || '../Imagenes/avatarDefault.png';
   }
 
-  // Botón de Cerrar Sesión
+  // boton cerrar sesion
   const btnLogout = document.getElementById('btnLogout');
   if (btnLogout) {
       btnLogout.addEventListener('click', (e) => {
           e.preventDefault();
           if (confirm("¿Seguro que quieres cerrar sesión?")) {
-              saveCurrentUser(null); // Borramos la sesión
+              saveCurrentUser(null); // Borramos la sesion
               window.location.href = 'IniciarSesion.html';
           }
       });
   }
 
 
-  // --- 3. REFERENCIAS DEL FEED ---
-  
+  // 3 REFERENCIAS DEL FEED
+  // referencias DOM para el feed y el modal
   const postsContainer = document.getElementById('postsContainer');
   const searchInput = document.getElementById('searchInput');
   const newPostBtn = document.getElementById('newPostBtn');
@@ -60,12 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
   
   let imageDataUrl = null; 
 
-  // Referencias del modal
+  // referencias del modal
   const modal = document.getElementById('postModal');
   const openBtn = document.getElementById('openModalBtn');
   const closeModalBtn = document.querySelector('.modal-close'); 
   
-  // Referencias del publicador del modal
+  // referencias del publicador del modal
   const modalNewPostContent = document.getElementById('modalNewPostContent');
   const modalImageUpload = document.getElementById('modalImageUpload');
   const modalAddImgBtn = document.getElementById('modalAddImgBtn');
@@ -76,13 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
   
   let modalImageDataUrl = null;
 
-  // --- 4. LÓGICA DEL MODAL ---
-  
+  // 4 LOGICA DEL MODAL
+  // abrir cerrar modal y cerrar al clicar fuera
   openBtn?.addEventListener('click', () => { if(modal) modal.style.display = 'flex'; });
   closeModalBtn?.addEventListener('click', () => { if(modal) modal.style.display = 'none'; });
   modal?.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
 
-  // Imagen Modal
+  // accion para añadir imagen en modal
   modalAddImgBtn?.addEventListener('click', () => { modalImageUpload?.click(); });
 
   modalImageUpload?.addEventListener('change', (e) => {
@@ -107,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.readAsDataURL(file);
   });
 
+  // quitar imagen modal
   modalRemoveImageBtn?.addEventListener('click', () => {
       modalImageDataUrl = null;
       if(modalImageUpload) modalImageUpload.value = '';
@@ -115,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if(modalImagePreviewContainer) modalImagePreviewContainer.style.display = 'none';
   });
 
-  // Publicar desde Modal
+  // publicar desde modal
   modalNewPostBtn?.addEventListener('click', () => {
     if (!currentUser?.id) return alert('Debes iniciar sesión para publicar.');
     
@@ -137,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     posts.unshift(newPost);
     savePosts(posts);
 
-    // Limpiar Modal
+    // limpiar modal despues de publicar
     modalNewPostContent.value = '';
     modalImageDataUrl = null;
     if(modalImageUpload) modalImageUpload.value = '';
@@ -150,8 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  // --- 5. LÓGICA DEL FEED RÁPIDO ---
-
+  // 5 LOGICA DEL FEED RAPIDO
+  // boton para abrir selector de imagen rapido
   addImgBtn?.addEventListener('click', () => { imageUpload?.click(); });
 
   imageUpload?.addEventListener('change', (e) => {
@@ -176,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.readAsDataURL(file);
   });
 
+  // quitar imagen rapido
   removeImageBtn?.addEventListener('click', () => {
       imageDataUrl = null;
       if(imageUpload) imageUpload.value = '';
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if(imagePreviewContainer) imagePreviewContainer.style.display = 'none';
   });
 
-  // Publicar Feed Rápido
+  // publicar feed rapido
   newPostBtn?.addEventListener('click', () => {
     if (!currentUser?.id) return alert('Debes iniciar sesión para publicar.');
     
@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
     posts.unshift(newPost);
     savePosts(posts);
 
-    // Limpiar Feed
+    // limpiar feed rapido despues de publicar
     newPostContent.value = '';
     imageDataUrl = null;
     if(imageUpload) imageUpload.value = '';
@@ -218,8 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  // --- 6. RENDERIZADO ---
-
+  // 6 RENDERIZADO
+  // funcion para renderizar posts
   function renderPosts(postsArray) {
     if (!postsContainer) return;
     postsContainer.innerHTML = '';
@@ -238,11 +238,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const likedClass = post.liked ? 'liked' : '';
 
+      // crear avatar y nombre con enlace si existe autor
+      const authorAvatar = author
+        ? `<a href="PerfilOtro.html?id=${author.id}">
+            <img src="${author.avatar || '../Imagenes/avatarDefault.png'}" alt="Usuario" class="user-img" />
+          </a>`
+        : `<img src="../Imagenes/avatarDefault.png" alt="Usuario" class="user-img" />`;
+
+      const authorName = author
+        ? `<a href="PerfilOtro.html?id=${author.id}" class="post-author-link">
+            <h3>${author.username}</h3>
+          </a>`
+        : `<h3>Desconocido</h3>`;
+
       postDiv.innerHTML = `
         <div class="post-header">
-          <img src="${author?.avatar || '../Imagenes/avatarDefault.png'}" alt="Usuario" class="user-img" />
+          ${authorAvatar} 
           <div>
-            <h3>${author?.username || 'Desconocido'}</h3>
+            ${authorName} 
             <span>${new Date(post.createdAt).toLocaleString()}</span>
           </div>
         </div>
@@ -272,8 +285,9 @@ document.addEventListener('DOMContentLoaded', () => {
     addEventListeners();
   }
 
+  // agregar listeners para likes y comentarios
   function addEventListeners() {
-    // Likes
+    // likes
     document.querySelectorAll(".like-btn[data-id]").forEach(btn => {
       btn.addEventListener("click", () => {
         const postId = btn.dataset.id;
@@ -289,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Comentarios
+    // comentarios
     document.querySelectorAll(".comment-btn[data-id]").forEach(btn => {
       btn.addEventListener("click", () => {
         const postId = btn.dataset.id;
@@ -317,6 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // filtrar posts segun input de busqueda
   function renderFiltered() {
     if (!searchInput) return;
     const posts = getPosts() || [];
@@ -333,14 +348,17 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPosts(filtered);
   }
 
+  // listener para input de busqueda
   searchInput?.addEventListener('input', renderFiltered);
 
+  // actualizar vista si cambia almacenamiento desde otra pestaña
   window.addEventListener('storage', e => {
     if (e.key === 'posts' || e.key === 'users') {
       renderFiltered();
     }
   });
 
+  // boton para recargar datos demo
   const refreshBtn = document.getElementById('refreshDemoBtn');
   refreshBtn?.addEventListener('click', () => {
     if (confirm("¿Recargar datos demo? Se borrarán tus posts.")) {
@@ -348,10 +366,11 @@ document.addEventListener('DOMContentLoaded', () => {
       seedDemo();
       renderFiltered();
       alert("Datos recargados.");
-      window.location.reload(); // Recargar para asegurar sesión limpia
+      window.location.reload(); // Recargar para asegurar sesion limpia
     }
   });
 
+  // inicializar busqueda y render
   if (searchInput) {
     searchInput.value = '';
     renderFiltered();

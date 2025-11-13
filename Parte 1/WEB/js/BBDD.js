@@ -52,7 +52,13 @@ export function getEventos() {
 export function saveEventos(eventos) {
   save('eventos', eventos);
 }
-
+// Seguidores 
+export function getFollows() {
+  return safeParse(localStorage.getItem('follows')) || [];
+}
+export function saveFollows(follows) {
+  save('follows', follows);
+}
 
 // Usuario actual 
 export function getCurrentUser() {
@@ -65,19 +71,28 @@ export function saveCurrentUser(user) {
 //Simulacion de datos iniciales
 export function seedDemo() {
   const users = [
-    { id: 'u_admin', username: 'admin', password: 'admin', role: 'admin', active: true, avatar: '../Imagenes/AvatarAdmin.jpg' },
-    { id: 'u1', username: 'usuario1', password: '1234', role: 'user', active: true, avatar: '../Imagenes/AvatarPorDefecto.webp' },
-    { id: 'u2', username: 'usuario2', password: '1234', role: 'user', active: true, avatar: '../Imagenes/AvatarPorDefecto.webp' },
-    { id: 'u4', username: 'Juan', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar4.jpeg' },
-    { id: 'u5', username: 'Ana', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar1.jpg' },
-    { id: 'u6', username: 'Caro', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar6.jpeg' },
-    { id: 'u7', username: 'Mario', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar3.jpg' },
-    { id: 'u8', username: 'Laura', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar5.jpeg' }
-    ,{ id: 'u9', username: 'TuUsuario', password: '1234', role: 'user', active: true, avatar: '../Imagenes/MiAvatar.jpg' }
-
+    { id: 'u_admin', username: 'admin', password: 'admin', role: 'admin', active: true, avatar: '../Imagenes/AvatarAdmin.jpg', bio: 'Administrador del sistema' },
+    { id: 'u10', username: 'TuUsuario', password: '1234', role: 'user', active: true, avatar: '../Imagenes/MiAvatar.jpg', bio: 'Amante de la cocina casera.' },
+    { id: 'u4', username: 'Juan', name: 'Juan Pérez', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar4.jpeg', bio: 'Probando la cocina italiana.' },
+    { id: 'u5', username: 'Ana', name: 'Ana López', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar1.jpg', bio: 'Diseñadora UX/UI y amante del arte digital.' },
+    { id: 'u6', username: 'Caro', name: 'Carolina Hernandez', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar6.jpeg', bio: 'Aprendiendo a cocinar.' },
+    { id: 'u7', username: 'Mario', name: 'Mario del Monte', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar3.jpg', bio: 'Fan de la comida mexicana.' },
+    { id: 'u8', username: 'Laura', name: 'Laura Vaquero', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar5.jpeg', bio: 'Me encanta la repostería.' }
   ];
   saveUsers(users);
-  saveCurrentUser(users[1]);
+  saveCurrentUser(users[1]); 
+
+  // Relaciones de seguimiento
+  const follows = [
+    { followerId: 'u4', followedId: 'u5' }, // Juan sigue a Ana
+    { followerId: 'u6', followedId: 'u5' }, // Caro sigue a Ana
+    { followerId: 'u7', followedId: 'u4' }, // Mario sigue a Juan
+    { followerId: 'u4', followedId: 'u7' }, // Juan sigue a Mario
+    { followerId: 'u4', followedId: 'u8' }, // Juan sigue a Laura
+    { followerId: 'u8', followedId: 'u5' }, // Laura sigue a Ana
+    { followerId: 'u5', followedId: 'u6' }  // Ana sigue a Caro
+  ];
+  saveFollows(follows);
 const posts = [
   {
     id: 'p1',
