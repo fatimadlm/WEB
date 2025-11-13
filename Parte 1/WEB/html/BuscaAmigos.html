@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CookingUAH - Buscar Amigos</title>
+  <link rel="stylesheet" href="../css/BuscaAmigos.css" />
+</head>
+<body>
+  <div class="home-container">
+    
+    <aside class="sidebar">
+      <div> 
+        <div class="logo">
+          <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
+          <h1>CookingUAH</h1>
+        </div>
+
+        <nav class="nav-buttons">
+          <a href="Home.html" class="btn-secondary">Inicio</a> 
+          <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
+          <a href="Eventos.html" class="btn-secondary">Eventos</a>
+          <a href="Notificaciones.html" class="btn-secondary">Notificaciones</a>
+          <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
+          <a href="Podio.html" class="btn-secondary">Recetas TOP</a>
+          <a href="Amigos.html" class="btn-primary">Buscar Amigos</a>
+        </nav>
+      </div>
+
+      <a href="../index.html" class="btn-logout">Cerrar sesión</a>
+    </aside>
+
+    <main class="feed">
+      
+      <div class="top-bar">
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Buscar amigos por nombre..." />
+          <button id="searchBtn">Buscar</button>
+        </div>
+      </div>
+
+      <h2>Explorar Usuarios</h2>
+
+      <div id="usersContainer">
+        </div>
+    </main>
+  </div>
+
+  <script type="module" src="../js/BuscaAmigos.js"></script>
+</body>
+</html>
