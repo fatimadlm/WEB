@@ -1,10 +1,9 @@
-// --- 🌟 CAMBIO 1: Importamos 'saveCurrentUser' ---
 import { getUsers, getCurrentUser, saveCurrentUser } from './BBDD.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // 1. SEGURIDAD Y DATOS
-  let currentUser = getCurrentUser(); // Lo declaramos con 'let' para poder actualizarlo
+  // SEGURIDAD Y DATOS
+  let currentUser = getCurrentUser(); 
 
   if (!currentUser || !currentUser.id) {
     alert('Debes iniciar sesión para acceder a esta página.');
@@ -12,12 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
     throw new Error('Usuario no autenticado');
   }
 
-  // 2. REFERENCIAS DEL DOM
+  // REFERENCIAS DEL DOM
   const searchInput = document.getElementById('searchInput');
   const searchBtn = document.getElementById('searchBtn');
   const usersContainer = document.getElementById('usersContainer');
 
-  // 3. FUNCIÓN DE RENDERIZADO (Actualizada)
+  // FUNCIÓN DE RENDERIZADO 
   function renderUsers(usersArray) {
     if (!usersContainer) return;
     usersContainer.innerHTML = ''; 
@@ -39,12 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const profileUrl = `PerfilOtro.html?id=${user.id}`;
       const avatar = user.avatar || '../Imagenes/avatarDefault.png';
 
-      // --- 🌟 CAMBIO 2: Lógica del botón 'Seguir' ---
+//Para seguir a alguien      
       const isFollowing = currentUser.followingIds.includes(user.id);
       const buttonText = isFollowing ? 'Siguiendo' : 'Seguir';
       const buttonClass = isFollowing ? 'following' : '';
-
-      // --- 🌟 CAMBIO 3: Nuevo HTML de la tarjeta con 2 botones ---
+//Dos botones
       userCard.innerHTML = `
         <img src="${avatar}" alt="Avatar de ${user.username}" class="user-card-avatar" />
         <h3 class="user-card-name">${user.username}</h3>
@@ -64,11 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
       usersContainer.appendChild(userCard);
     });
 
-    // --- 🌟 CAMBIO 4: Añadimos los listeners a los nuevos botones ---
     addFollowListeners();
   }
 
-  // 4. FUNCIÓN DE FILTRADO (Sin cambios, pero ahora llama al nuevo render)
+  // FUNCIÓN DE FILTRADO 
   function renderFiltered() {
     const allUsers = getUsers() || [];
     const query = searchInput.value.trim().toLowerCase();
@@ -85,11 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderUsers(filteredUsers);
   }
 
-  // --- 🌟 CAMBIO 5: Nuevas funciones para manejar el 'Seguir' ---
-
-  /**
-   * Asigna el evento 'click' a todos los botones de 'Seguir'
-   */
+//Evento del ciclk al seguir
   function addFollowListeners() {
     document.querySelectorAll('.btn-follow[data-id]').forEach(button => {
       // Removemos el listener anterior para evitar duplicados al re-renderizar
@@ -97,10 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
       button.addEventListener('click', handleFollowClick);
     });
   }
-
-  /**
-   * Lógica que se ejecuta al pulsar 'Seguir' o 'Siguiendo'
-   */
+//Cuando seguimos a alguien
   function handleFollowClick(event) {
     const userIdToFollow = event.target.dataset.id;
     if (!userIdToFollow) return;
@@ -129,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderFiltered(); 
   }
 
-  // 5. EVENT LISTENERS (Sin cambios)
+  //EVENT LISTENERS 
   searchInput?.addEventListener('input', renderFiltered);
   searchBtn?.addEventListener('click', renderFiltered);
 
