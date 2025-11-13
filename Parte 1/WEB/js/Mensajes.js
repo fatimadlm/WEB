@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Si no hay usuarios o publicaciones, cargamos los datos de ejemplo
     if (!(getUsers() && getUsers().length) || !(getPosts() && getPosts().length)) {
       seedDemo()
-      console.log('Datos demo cargados desde Mensajes.js')
+      console.log('Simulación cargada')
     }
 
     // Obtenemos el usuario que ha iniciado sesión
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
      *  Listener para los botones de la clase 'btn-refresh'
      */
     refreshBtn?.addEventListener('click', () => {
-      if (confirm("¿Quieres recargar los datos de prueba? Se borrará todo tu progreso.")) {
+      if (confirm("¿Quieres recargar los datos de prueba?")) {
         localStorage.clear()
         seedDemo()
         
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chatPlaceholder.style.display = 'flex'
         chatActiveWindow.style.display = 'none'
         
-        alert("Datos de prueba recargados correctamente.")
+        alert("Simulación cargada")
       }
     })
 
