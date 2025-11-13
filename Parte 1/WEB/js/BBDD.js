@@ -73,7 +73,7 @@ export function seedDemo() {
     { id: 'u6', username: 'Caro', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar6.jpeg' },
     { id: 'u7', username: 'Mario', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar3.jpg' },
     { id: 'u8', username: 'Laura', password: '1234', role: 'user', active: true, avatar: '../Imagenes/Avatar5.jpeg' }
-    ,{ id: 'u10', username: 'TuUsuario', password: '1234', role: 'user', active: true, avatar: '../Imagenes/MiAvatar.jpg' }
+    ,{ id: 'u9', username: 'TuUsuario', password: '1234', role: 'user', active: true, avatar: '../Imagenes/MiAvatar.jpg' }
 
   ];
   saveUsers(users);
@@ -136,7 +136,7 @@ const posts = [
   {
     id: 'p6',
     title: "Mi nueva receta: pasta carbonara cremosa",
-    authorId: 'u10', // TuUsuario
+    authorId: 'u9', // TuUsuario
     createdAt: Date.now() - 24 * 60 * 60 * 1000,
     img: "../Imagenes/Carbonara.jpg",
     likes: 12,
@@ -163,25 +163,25 @@ const posts = [
 saveEventos(eventos);
 const messages = [
     // Conversación con Juan (u4)
-    { id: uid('m_'), senderId: 'u4', receiverId: 'u10', content: '¡Hola! Vi tu receta de lasaña y tuve que probarla.', timestamp: Date.now() - 36 * 60 * 60 * 1000 },
-    { id: uid('m_'), senderId: 'u4', receiverId: 'u10', content: 'Gracias por la receta de lasaña 😍', timestamp: Date.now() - 35 * 60 * 60 * 1000 },
-    { id: uid('m_'), senderId: 'u10', receiverId: 'u4', content: '¡Me alegro mucho de que te haya gustado, @Juan!', timestamp: Date.now() - 34 * 60 * 60 * 1000 },
-    { id: uid('m_'), senderId: 'u4', receiverId: 'u10', content: '¿Algún truco para la bechamel? A veces me salen grumos.', timestamp: Date.now() - 12 * 60 * 60 * 1000 },
-    { id: uid('m_'), senderId: 'u10', receiverId: 'u4', content: 'El truco es tamizar la harina y añadir la leche poco a poco, sin dejar de remover con varillas. ¡Y la leche templada!', timestamp: Date.now() - 11 * 60 * 60 * 1000 },
+    { id: uid('m_'), senderId: 'u4', receiverId: 'u9', content: '¡Hola! Vi tu receta de lasaña y tuve que probarla.', timestamp: Date.now() - 36 * 60 * 60 * 1000 },
+    { id: uid('m_'), senderId: 'u4', receiverId: 'u9', content: 'Gracias por la receta de lasaña 😍', timestamp: Date.now() - 35 * 60 * 60 * 1000 },
+    { id: uid('m_'), senderId: 'u9', receiverId: 'u4', content: '¡Me alegro mucho de que te haya gustado, @Juan!', timestamp: Date.now() - 34 * 60 * 60 * 1000 },
+    { id: uid('m_'), senderId: 'u4', receiverId: 'u9', content: '¿Algún truco para la bechamel? A veces me salen grumos.', timestamp: Date.now() - 12 * 60 * 60 * 1000 },
+    { id: uid('m_'), senderId: 'u9', receiverId: 'u4', content: 'El truco es tamizar la harina y añadir la leche poco a poco, sin dejar de remover con varillas. ¡Y la leche templada!', timestamp: Date.now() - 11 * 60 * 60 * 1000 },
 
     // Conversación con Mario (u7)
-    { id: uid('m_'), senderId: 'u7', receiverId: 'u10', content: '¡Hola! Tus tacos al pastor se ven increíbles 🔥 ¿Cómo consigues ese color tan bonito en la carne?', timestamp: Date.now() - 28 * 60 * 60 * 1000 },
-    { id: uid('m_'), senderId: 'u10', receiverId: 'u7', content: '¡Gracias, @Mario! Es por el achiote y un poco de chile guajillo. La clave está en la marinada.', timestamp: Date.now() - 27 * 60 * 60 * 1000 },
-    { id: uid('m_'), senderId: 'u7', receiverId: 'u10', content: '¿Cuánto tiempo los dejas marinar?', timestamp: Date.now() - 10 * 60 * 60 * 1000 },
-    { id: uid('m_'), senderId: 'u10', receiverId: 'u7', content: 'Unas 4 horas mínimo, pero si puedes dejarlos toda la noche, quedan mucho más sabrosos.', timestamp: Date.now() - 9 * 60 * 60 * 1000 },
-    { id: uid('m_'), senderId: 'u7', receiverId: 'u10', content: 'Genial, voy a probarlo este fin de semana. ¡Gracias por el tip!', timestamp: Date.now() - 8 * 60 * 60 * 1000 },
+    { id: uid('m_'), senderId: 'u7', receiverId: 'u9', content: '¡Hola! Tus tacos al pastor se ven increíbles 🔥 ¿Cómo consigues ese color tan bonito en la carne?', timestamp: Date.now() - 28 * 60 * 60 * 1000 },
+    { id: uid('m_'), senderId: 'u9', receiverId: 'u7', content: '¡Gracias, @Mario! Es por el achiote y un poco de chile guajillo. La clave está en la marinada.', timestamp: Date.now() - 27 * 60 * 60 * 1000 },
+    { id: uid('m_'), senderId: 'u7', receiverId: 'u9', content: '¿Cuánto tiempo los dejas marinar?', timestamp: Date.now() - 10 * 60 * 60 * 1000 },
+    { id: uid('m_'), senderId: 'u9', receiverId: 'u7', content: 'Unas 4 horas mínimo, pero si puedes dejarlos toda la noche, quedan mucho más sabrosos.', timestamp: Date.now() - 9 * 60 * 60 * 1000 },
+    { id: uid('m_'), senderId: 'u7', receiverId: 'u9', content: 'Genial, voy a probarlo este fin de semana. ¡Gracias por el tip!', timestamp: Date.now() - 8 * 60 * 60 * 1000 },
     
     // Conversación con Ana (u5)
-    { id: uid('m_'), senderId: 'u5', receiverId: 'u10', content: '¡Hola! Vi tu publicación del pan de masa madre, se ve espectacular 😍', timestamp: Date.now() - 27 * 60 * 60 * 1000 },
-    { id: uid('m_'), senderId: 'u10', receiverId: 'u5', content: '¡Gracias, @Ana! Lleva su tiempo, pero vale la pena. ¿Tú también haces pan?', timestamp: Date.now() - 26 * 60 * 60 * 1000 },
-    { id: uid('m_'), senderId: 'u5', receiverId: 'u10', content: 'Sí, pero aún no logro que me quede con esa corteza crujiente. ¿Tienes algún consejo?', timestamp: Date.now() - 12 * 60 * 60 * 1000 },
-    { id: uid('m_'), senderId: 'u10', receiverId: 'u5', content: 'Usa vapor en el horno los primeros 20 minutos y deja fermentar la masa en frío toda la noche. ¡Es la clave!', timestamp: Date.now() - 11 * 60 * 60 * 1000 },
-    { id: uid('m_'), senderId: 'u5', receiverId: 'u10', content: 'Perfecto, lo intentaré esta tarde. ¡Gracias por compartir!', timestamp: Date.now() - 10 * 60 * 60 * 1000 }
+    { id: uid('m_'), senderId: 'u5', receiverId: 'u9', content: '¡Hola! Vi tu publicación del pan de masa madre, se ve espectacular 😍', timestamp: Date.now() - 27 * 60 * 60 * 1000 },
+    { id: uid('m_'), senderId: 'u9', receiverId: 'u5', content: '¡Gracias, @Ana! Lleva su tiempo, pero vale la pena. ¿Tú también haces pan?', timestamp: Date.now() - 26 * 60 * 60 * 1000 },
+    { id: uid('m_'), senderId: 'u5', receiverId: 'u9', content: 'Sí, pero aún no logro que me quede con esa corteza crujiente. ¿Tienes algún consejo?', timestamp: Date.now() - 12 * 60 * 60 * 1000 },
+    { id: uid('m_'), senderId: 'u9', receiverId: 'u5', content: 'Usa vapor en el horno los primeros 20 minutos y deja fermentar la masa en frío toda la noche. ¡Es la clave!', timestamp: Date.now() - 11 * 60 * 60 * 1000 },
+    { id: uid('m_'), senderId: 'u5', receiverId: 'u9', content: 'Perfecto, lo intentaré esta tarde. ¡Gracias por compartir!', timestamp: Date.now() - 10 * 60 * 60 * 1000 }
   ];
   saveMessages(messages);
 }
