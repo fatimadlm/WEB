@@ -1,17 +1,17 @@
 import { getPosts, savePosts, getCurrentUser, getUsers, seedDemo, uid } from './BBDD.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-
-  // Si no hay datos guardados, se cargan datos de prueba
+  
+  // Si no hay usuarios o publicaciones guardadas en localStorage, se crean datos de ejemplo
   if (!(getUsers() && getUsers().length) || !(getPosts() && getPosts().length)) {
     seedDemo();
-    console.log('Datos demo cargados');
+    console.log('Datos demo cargados desde Home.js');
   }
 
-  // Se obtiene el usuario logueado
+  // Se obtiene el usuario que ha iniciado sesión
   const currentUser = getCurrentUser();
 
-  // Si no hay usuario logueado, redirige al login
+  // Si no hay usuario logueado, se redirige automáticamente a la página de inicio de sesión
   if (!currentUser || !currentUser.id) {
     if (!window.location.pathname.endsWith('IniciarSesion.html')) {
       alert('Debes iniciar sesión para acceder a esta página.');
@@ -20,7 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Elementos HTML
+  // --- REFERENCIAS A ELEMENTOS DEL DOM ---
+  
+  // Referencias del feed principal
   const postsContainer = document.getElementById('postsContainer');
   const searchInput = document.getElementById('searchInput');
   const newPostBtn = document.getElementById('newPostBtn');
@@ -30,14 +32,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const imagePreview = document.getElementById("imagePreview");
   const imagePreviewContainer = document.getElementById("imagePreviewContainer");
   const removeImageBtn = document.getElementById("removeImageBtn");
+  
+  let imageDataUrl = null; // Imagen para el feed rápido
 
-  let imageDataUrl = null; // Guarda la imagen seleccionada
-
-  // Referencias al modal
+  // Referencias del modal
   const modal = document.getElementById('postModal');
   const openBtn = document.getElementById('openModalBtn');
-  const closeModalBtn = document.querySelector('.modal-close');
-
+  const closeModalBtn = document.querySelector('.modal-close'); // Boton para cerrar el modal
+  
+  // Referencias del publicador del modal
   const modalNewPostContent = document.getElementById('modalNewPostContent');
   const modalImageUpload = document.getElementById('modalImageUpload');
   const modalAddImgBtn = document.getElementById('modalAddImgBtn');
@@ -45,15 +48,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalImagePreviewContainer = document.getElementById('modalImagePreviewContainer');
   const modalRemoveImageBtn = document.getElementById('modalRemoveImageBtn');
   const modalNewPostBtn = document.getElementById('modalNewPostBtn');
+  
+  let modalImageDataUrl = null; // Variable separada para la imagen del modal
 
-  let modalImageDataUrl = null; // Imagen del modal
-
-  // Abrir el modal
+  // --- LOGICA DEL MODAL (ABRIR Y CERRAR) ---
+  
   openBtn?.addEventListener('click', () => {
-     if(modal) modal.style.display = 'flex';
+     if(modal) modal.style.display = 'flex'; 
   });
 
-  // Cerrar el modal
   closeModalBtn?.addEventListener('click', () => {
      if(modal) modal.style.display = 'none';
   });
@@ -64,7 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Subir imagen en el modal
+  // --- LOGICA DE IMAGEN (MODAL) ---
+  
   modalAddImgBtn?.addEventListener('click', () => {
     modalImageUpload?.click(); 
   });
@@ -92,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.readAsDataURL(file);
   });
 
-  // Quitar imagen del modal
   modalRemoveImageBtn?.addEventListener('click', () => {
       modalImageDataUrl = null;
       if(modalImageUpload) modalImageUpload.value = '';
@@ -104,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if(modalImagePreviewContainer) modalImagePreviewContainer.style.display = 'none';
   });
 
-  // Publicar desde el modal
+  // --- LOGICA DE PUBLICACION (MODAL) ---
   modalNewPostBtn?.addEventListener('click', () => {
     if (!currentUser?.id) return alert('Debes iniciar sesión para publicar.');
     
@@ -120,12 +123,15 @@ document.addEventListener('DOMContentLoaded', () => {
       authorId: currentUser.id,
       createdAt: Date.now(),
       img: modalImageDataUrl,
+      likes: 0,     // Inicializa likes y liked al crear
+      liked: false,
       comments: []
     };
 
     posts.unshift(newPost);
     savePosts(posts);
 
+    // Limpiar campos del MODAL
     modalNewPostContent.value = '';
     modalImageDataUrl = null;
     if(modalImageUpload) modalImageUpload.value = '';
@@ -141,7 +147,9 @@ document.addEventListener('DOMContentLoaded', () => {
     renderFiltered();
   });
 
-  // Añadir imagen en el feed rápido
+
+  // --- LOGICA DEL FEED RAPIDO ---
+
   addImgBtn?.addEventListener('click', () => {
     imageUpload?.click(); 
   });
@@ -169,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.readAsDataURL(file);
   });
 
-  // Quitar imagen en el feed
   removeImageBtn?.addEventListener('click', () => {
       imageDataUrl = null;
       if(imageUpload) imageUpload.value = '';
@@ -181,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if(imagePreviewContainer) imagePreviewContainer.style.display = 'none';
   });
 
-  // Publicar en el feed rápido
+  // --- LOGICA DE PUBLICACION (FEED RAPIDO) ---
   newPostBtn?.addEventListener('click', () => {
     if (!currentUser?.id) return alert('Debes iniciar sesión para publicar.');
     
@@ -197,12 +204,15 @@ document.addEventListener('DOMContentLoaded', () => {
       authorId: currentUser.id,
       createdAt: Date.now(),
       img: imageDataUrl,
+      likes: 0,     // Inicializa likes y liked al crear
+      liked: false,
       comments: []
     };
 
     posts.unshift(newPost);
     savePosts(posts);
 
+    // Limpiar campos del FEED
     newPostContent.value = '';
     imageDataUrl = null;
     if(imageUpload) imageUpload.value = '';
@@ -216,7 +226,10 @@ document.addEventListener('DOMContentLoaded', () => {
     renderFiltered();
   });
 
-  // Funciones para mostrar las publicaciones
+
+  // --- RENDERIZADO E INTERACTIVIDAD ---
+
+  // Dibuja las publicaciones en pantalla
   function renderPosts(postsArray) {
     if (!postsContainer) return;
     postsContainer.innerHTML = '';
@@ -226,12 +239,15 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const users = getUsers();
+    const users = getUsers(); 
 
     postsArray.forEach(post => {
       const author = users.find(u => u.id === post.authorId);
       const postDiv = document.createElement('div');
       postDiv.className = 'post';
+
+      // Comprueba si el post actual tiene 'like'
+      const likedClass = post.liked ? 'liked' : '';
 
       postDiv.innerHTML = `
         <div class="post-header">
@@ -245,13 +261,83 @@ document.addEventListener('DOMContentLoaded', () => {
           <p>${post.title}</p>
           ${post.img ? `<img src="${post.img}" class="post-img" alt="Imagen publicación" />` : ''}
         </div>
-      `;
+        
+        <div class="post-actions">
+          <button class="like-btn ${likedClass}" data-id="${post.id}">
+            ❤️ Me gusta (${post.likes || 0})
+          </button>
+          <button class="comment-btn" data-id="${post.id}">💬 Comentar</button>
+        </div>
+
+        <div class="comments">
+          ${(post.comments || []).map(comment => {
+            const commentAuthor = users.find(u => u.id === comment.authorId);
+            return `<p><strong>${commentAuthor?.username || 'Usuario'}:</strong> ${comment.content}</p>`;
+          }).join("")}
+        </div>
+        `;
 
       postsContainer.appendChild(postDiv);
     });
+    
+    // Despues de dibujar los botones, se les da funcionalidad
+    addEventListeners();
   }
 
-  // Filtrar las publicaciones por búsqueda
+  // Esta función añade los listeners de 'click' a los botones de 
+  // 'Me gusta' y 'Comentar' CADA VEZ que se redibujan los posts.
+  function addEventListeners() {
+    
+    // Logica de Me Gusta
+    document.querySelectorAll(".like-btn[data-id]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const postId = btn.dataset.id;
+        const posts = getPosts();
+        const post = posts.find(p => p.id === postId);
+        
+        if (!post) return;
+
+        // Alternar el 'like'
+        post.liked = !post.liked;
+        // Sumar o restar al contador
+        post.likes = (post.likes || 0) + (post.liked ? 1 : -1);
+        
+        savePosts(posts); // Guardar el cambio
+        renderFiltered(); // Volver a dibujar todo para que se actualice
+      });
+    });
+
+    // Logica de Comentar
+    document.querySelectorAll(".comment-btn[data-id]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const postId = btn.dataset.id;
+        const commentText = prompt("Escribe tu comentario:");
+        
+        if (commentText && commentText.trim() !== "") {
+          const posts = getPosts();
+          const post = posts.find(p => p.id === postId);
+          if (!post) return;
+
+          // Crear el nuevo objeto comentario
+          const newComment = {
+            id: uid('c_'), // ID único para el comentario
+            authorId: currentUser.id,
+            content: commentText.trim(),
+            createdAt: Date.now()
+          };
+          
+          if (!post.comments) post.comments = []; // Asegurarse de que el array exista
+          post.comments.push(newComment);
+          
+          savePosts(posts); // Guardar el nuevo comentario
+          renderFiltered(); // Volver a dibujar todo
+        }
+      });
+    });
+  }
+
+
+  // Filtra las publicaciones
   function renderFiltered() {
     if (!searchInput) return;
     
@@ -266,27 +352,28 @@ document.addEventListener('DOMContentLoaded', () => {
                (author?.username && author.username.toLowerCase().includes(q));
       });
     }
+    // Renderiza los posts filtrados
     renderPosts(filtered);
   }
 
-  // Listener para el buscador
+  // Listener del buscador
   searchInput?.addEventListener('input', renderFiltered);
 
-  // Listener para el almacenamiento
+  // Listener de storage
   window.addEventListener('storage', e => {
     if (e.key === 'posts' || e.key === 'users') {
       renderFiltered();
     }
   });
 
-  // Botón para recargar datos de prueba
+  // Botón Recargar Demo
   const refreshBtn = document.getElementById('refreshDemoBtn');
   refreshBtn?.addEventListener('click', () => {
     if (confirm("¿Quieres recargar los datos de prueba? Se borrarán tus publicaciones actuales.")) {
       localStorage.clear();
       seedDemo();
       renderFiltered();
-      alert("Datos de prueba recargados.");
+      alert("Datos de prueba recargados correctamente.");
     }
   });
 
@@ -296,4 +383,4 @@ document.addEventListener('DOMContentLoaded', () => {
     renderFiltered();
   }
 
-}); 
+}); // Fin del DOMContentLoaded
