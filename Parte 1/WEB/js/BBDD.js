@@ -1,3 +1,8 @@
+///// BBDD.JS
+//  Fichero creado para suplir la carencia de bases de datos en la primera parte de la práctica y
+//  poder simular el funcionamiento de la página web en un entorno lo más parecido a la realidad
+//  posible.
+
 export function safeParse(s) {
   try { return JSON.parse(s); } catch { return null; }
 }

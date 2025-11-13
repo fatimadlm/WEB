@@ -2,7 +2,7 @@ import { getMessages, saveMessages, getCurrentUser, uid, getUsers, getPosts, see
 
 // Esperamos a que el HTML esté completamente cargado
 document.addEventListener('DOMContentLoaded', () => {
-
+    
     // Si no hay usuarios o publicaciones, cargamos los datos de ejemplo
     if (!(getUsers() && getUsers().length) || !(getPosts() && getPosts().length)) {
       seedDemo()
@@ -32,7 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Guardamos el id del chat que está abierto
     let currentChatPartnerId = null
 
-    // Botón para recargar los datos de prueba
+    /**
+     *  Listener para los botones de la clase 'btn-refresh'
+     */
     refreshBtn?.addEventListener('click', () => {
       if (confirm("¿Quieres recargar los datos de prueba? Se borrará todo tu progreso.")) {
         localStorage.clear()
