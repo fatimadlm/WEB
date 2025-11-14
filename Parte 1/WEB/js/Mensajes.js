@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     throw new Error('Usuario no autenticado');
   }
 
-//DOM
+  // Referencias al DOM
   const chatList = document.querySelector('.chat-list');
   const chatPlaceholder = document.getElementById('chatPlaceholder');
   const chatActiveWindow = document.getElementById('chatActiveWindow');
@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let modalImageDataUrl = null;
   let currentChatPartnerId = null;
 
+  // Función para cargar los últimos mensajes en la lista de chats
   function loadChatPreviews() {
     const allMessages = getMessages();
     const lastMessageMap = new Map();
@@ -60,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!existing || msg.timestamp > existing.timestamp) lastMessageMap.set(partnerId, msg);
     });
 
-    // Actualiza los chats visibles
+    // Actualiza los chats visibles con los últimos mensajes
     document.querySelectorAll('.chat-list-item').forEach(item => {
       const partnerId = item.dataset.userId;
       const p = item.querySelector('.chat-last-message');
@@ -72,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Función para cargar mensajes de una conversación
   function loadChatMessages(partnerId) {
     chatBox.innerHTML = '';
     const allMessages = getMessages();
@@ -97,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 
+  // Función para enviar un mensaje
   function sendMessage() {
     const text = chatInput.value.trim();
     if (!text || !currentChatPartnerId) return;
@@ -126,8 +129,35 @@ document.addEventListener('DOMContentLoaded', () => {
     loadChatPreviews();
   }
 
-//Buscador
+  // Función para mostrar resultados de búsqueda
   function renderUserSearchResults(query) {
+    // Si el campo está vacío, restauramos las conversaciones originales
+    if (!query.trim()) {
+      chatList.innerHTML = '';
+      getUsers()
+        .filter(u => u.id !== currentUser.id)
+        .forEach(u => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <div class="chat-list-item" 
+                 data-user-id="${u.id}" 
+                 data-user-name="${u.username}" 
+                 data-avatar="${u.avatar || '../Imagenes/avatarDefault.png'}"
+                 role="button" tabindex="0">
+              <img src="${u.avatar || '../Imagenes/avatarDefault.png'}" alt="Usuario" class="chat-avatar">
+              <div class="chat-info">
+                <h3>@${u.username}</h3>
+                <p class="chat-last-message"></p>
+              </div>
+            </div>
+          `;
+          chatList.appendChild(li);
+        });
+      loadChatPreviews(); // Restauramos últimos mensajes
+      return;
+    }
+
+    // Si hay búsqueda, filtramos y mostramos solo usuarios coincidentes
     const users = getUsers().filter(u =>
       u.username.toLowerCase().includes(query.toLowerCase()) &&
       u.id !== currentUser.id
@@ -158,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Abrir chat al hacer click en un usuario
+  // Evento click sobre un chat
   chatList.addEventListener('click', e => {
     const chatItem = e.target.closest('.chat-list-item');
     if (!chatItem) return;
@@ -179,14 +209,17 @@ document.addEventListener('DOMContentLoaded', () => {
     loadChatMessages(partnerId);
   });
 
+  // Enviar mensaje
   sendChatBtn.addEventListener('click', sendMessage);
   chatInput.addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   });
 
+  // Buscador de usuarios
   userSearch?.addEventListener('input', () => renderUserSearchResults(userSearch.value));
   userSearchBtn?.addEventListener('click', () => renderUserSearchResults(userSearch.value));
 
+  // Botón recargar demo
   refreshBtn?.addEventListener('click', () => {
     if (confirm("¿Quieres recargar los datos de prueba?")) {
       localStorage.clear();
@@ -198,15 +231,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Inicializamos la lista de chats
   loadChatPreviews();
 
-//Crear post
+  // Modal publicar
   openModalBtn?.addEventListener('click', () => postModal.style.display = 'flex');
   closeModalBtn?.addEventListener('click', () => postModal.style.display = 'none');
   postModal?.addEventListener('click', e => { if(e.target === postModal) postModal.style.display = 'none'; });
 
   modalAddImgBtn?.addEventListener('click', () => modalImageUpload.click());
-
   modalImageUpload?.addEventListener('change', e => {
     const file = e.target.files[0];
     if (!file) {
@@ -251,7 +284,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     savePosts(posts);
 
-    // Limpiar modal
     modalNewPostContent.value = '';
     modalImageDataUrl = null;
     modalImageUpload.value = '';
