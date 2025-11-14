@@ -1,195 +1,267 @@
-import { getMessages, saveMessages, getCurrentUser, uid, getUsers, getPosts, seedDemo } from './BBDD.js';
+import { 
+  getMessages, saveMessages, getCurrentUser, uid, 
+  getUsers, getPosts, savePosts, seedDemo 
+} from './BBDD.js';
 
-/**
- *  Esperamos a que el HTML esté completamente cargado
- */
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // Si no hay usuarios o publicaciones, cargamos los datos de ejemplo
-    if (!(getUsers() && getUsers().length) || !(getPosts() && getPosts().length)) {
-      seedDemo()
-      console.log('Simulación cargada')
+
+  // Cargar demo si no hay datos
+  if (!(getUsers() && getUsers().length) || !(getPosts() && getPosts().length)) {
+    seedDemo();
+    console.log('Datos demo cargados');
+  }
+
+  // Usuario actual
+  let currentUser = getCurrentUser();
+  if (!currentUser || !currentUser.id) {
+    alert('Debes iniciar sesión para acceder a esta página.');
+    window.location.href = 'IniciarSesion.html';
+    throw new Error('Usuario no autenticado');
+  }
+
+//DOM
+  const chatList = document.querySelector('.chat-list');
+  const chatPlaceholder = document.getElementById('chatPlaceholder');
+  const chatActiveWindow = document.getElementById('chatActiveWindow');
+  const chatBox = document.getElementById('chatBox');
+  const chatUserName = document.getElementById('chatUserName');
+  const chatInput = document.getElementById('chatInput');
+  const sendChatBtn = document.getElementById('sendChatBtn');
+  const refreshBtn = document.getElementById('refreshDemoBtn');
+  const userSearch = document.getElementById('userSearch');
+  const userSearchBtn = document.getElementById('userSearchBtn');
+
+  // Modal de publicar
+  const postModal = document.getElementById('postModal');
+  const openModalBtn = document.getElementById('openModalBtn');
+  const closeModalBtn = postModal?.querySelector('.modal-close');
+  const modalNewPostContent = document.getElementById('modalNewPostContent');
+  const modalImageUpload = document.getElementById('modalImageUpload');
+  const modalAddImgBtn = document.getElementById('modalAddImgBtn');
+  const modalImagePreview = document.getElementById('modalImagePreview');
+  const modalImagePreviewContainer = document.getElementById('modalImagePreviewContainer');
+  const modalRemoveImageBtn = document.getElementById('modalRemoveImageBtn');
+  const modalNewPostBtn = document.getElementById('modalNewPostBtn');
+
+  let modalImageDataUrl = null;
+  let currentChatPartnerId = null;
+
+  function loadChatPreviews() {
+    const allMessages = getMessages();
+    const lastMessageMap = new Map();
+
+    allMessages.forEach(msg => {
+      let partnerId = null;
+      if (msg.senderId === currentUser.id) partnerId = msg.receiverId;
+      else if (msg.receiverId === currentUser.id) partnerId = msg.senderId;
+      else return;
+
+      const existing = lastMessageMap.get(partnerId);
+      if (!existing || msg.timestamp > existing.timestamp) lastMessageMap.set(partnerId, msg);
+    });
+
+    // Actualiza los chats visibles
+    document.querySelectorAll('.chat-list-item').forEach(item => {
+      const partnerId = item.dataset.userId;
+      const p = item.querySelector('.chat-last-message');
+      if (!p) return;
+      const lastMessage = lastMessageMap.get(partnerId);
+      p.textContent = lastMessage
+        ? (lastMessage.senderId === currentUser.id ? "Tú: " : "") + lastMessage.content
+        : "No hay mensajes todavía.";
+    });
+  }
+
+  function loadChatMessages(partnerId) {
+    chatBox.innerHTML = '';
+    const allMessages = getMessages();
+    const conversation = allMessages
+      .filter(msg => (msg.senderId === currentUser.id && msg.receiverId === partnerId) ||
+                     (msg.senderId === partnerId && msg.receiverId === currentUser.id))
+      .sort((a, b) => a.timestamp - b.timestamp);
+
+    if (!conversation.length) {
+      chatBox.innerHTML = '<p class="info">No hay mensajes. Di hola!</p>';
+      return;
     }
 
-    // Obtenemos el usuario que ha iniciado sesión
-    const currentUser = getCurrentUser()
+    conversation.forEach(msg => {
+      const type = msg.senderId === currentUser.id ? 'sent' : 'received';
+      const bubble = document.createElement('div');
+      bubble.classList.add('chat-bubble', type);
+      const timeString = new Date(msg.timestamp).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+      bubble.innerHTML = `<p>${msg.content.replace(/\n/g, '<br>')}</p><span>${timeString}</span>`;
+      chatBox.appendChild(bubble);
+    });
 
-    // Si no hay usuario, redirigimos al login
-    if (!currentUser.id) {
-        alert('Debes iniciar sesión para acceder a esta página.')
-        window.location.href = 'IniciarSesion.html'
-        throw new Error('Usuario no autenticado')
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function sendMessage() {
+    const text = chatInput.value.trim();
+    if (!text || !currentChatPartnerId) return;
+
+    const now = Date.now();
+    const newMsg = {
+      id: uid('m_'),
+      senderId: currentUser.id,
+      receiverId: currentChatPartnerId,
+      content: text,
+      timestamp: now
+    };
+
+    const allMessages = getMessages();
+    allMessages.push(newMsg);
+    saveMessages(allMessages);
+
+    const bubble = document.createElement('div');
+    bubble.classList.add('chat-bubble', 'sent');
+    const timeString = new Date(now).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+    bubble.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p><span>${timeString}</span>`;
+    chatBox.appendChild(bubble);
+    chatInput.value = '';
+    chatBox.scrollTop = chatBox.scrollHeight;
+    chatInput.focus();
+
+    loadChatPreviews();
+  }
+
+//Buscador
+  function renderUserSearchResults(query) {
+    const users = getUsers().filter(u =>
+      u.username.toLowerCase().includes(query.toLowerCase()) &&
+      u.id !== currentUser.id
+    );
+
+    chatList.innerHTML = '';
+    if (!users.length) {
+      chatList.innerHTML = '<li>No se encontraron usuarios.</li>';
+      return;
     }
 
-    // Seleccionamos los elementos del DOM
-    const chatList = document.querySelector('.chat-list')
-    const chatPlaceholder = document.getElementById('chatPlaceholder')
-    const chatActiveWindow = document.getElementById('chatActiveWindow')
-    const chatBox = document.getElementById('chatBox')
-    const chatUserName = document.getElementById('chatUserName')
-    const chatInput = document.getElementById('chatInput')
-    const sendChatBtn = document.getElementById('sendChatBtn')
-    const refreshBtn = document.getElementById('refreshDemoBtn')
+    users.forEach(u => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <div class="chat-list-item" 
+             data-user-id="${u.id}" 
+             data-user-name="${u.username}" 
+             data-avatar="${u.avatar || '../Imagenes/avatarDefault.png'}"
+             role="button" tabindex="0">
+          <img src="${u.avatar || '../Imagenes/avatarDefault.png'}" alt="Usuario" class="chat-avatar">
+          <div class="chat-info">
+            <h3>@${u.username}</h3>
+            <p class="chat-last-message"></p>
+          </div>
+        </div>
+      `;
+      chatList.appendChild(li);
+    });
+  }
 
-    // Guardamos el id del chat que está abierto
-    let currentChatPartnerId = null
+  // Abrir chat al hacer click en un usuario
+  chatList.addEventListener('click', e => {
+    const chatItem = e.target.closest('.chat-list-item');
+    if (!chatItem) return;
 
-    /**
-     *  Listener para los botones de la clase 'btn-refresh'
-     */
-    refreshBtn?.addEventListener('click', () => {
-        // Se pregunta al usuario si quiere regargar los datos de prueba
-        if (confirm("¿Quieres recargar los datos de prueba?")) {
-        localStorage.clear()
-        seedDemo()
-        
-        // Cargamos la vista previa
-        loadChatPreviews()
-        chatPlaceholder.style.display = 'flex'
-        chatActiveWindow.style.display = 'none'
-        
-        // Avisamos que la carga ha sido completada
-        alert("Simulación cargada")
-      }
-    })
+    document.querySelectorAll('.chat-list-item').forEach(i => i.classList.remove('selected'));
+    chatItem.classList.add('selected');
 
-    /**
-     *  Función que carga la vista previa de los últimos mensajes
-     */
-    function loadChatPreviews() {
-        const allMessages = getMessages()
-        const lastMessageMap = new Map()
+    const partnerId = chatItem.dataset.userId;
+    const partnerName = chatItem.dataset.userName;
+    currentChatPartnerId = partnerId;
 
-        allMessages.forEach(msg => {
-            let partnerId = null
-            if (msg.senderId === currentUser.id) partnerId = msg.receiverId
-            else if (msg.receiverId === currentUser.id) partnerId = msg.senderId
-            else return
+    chatPlaceholder.style.display = 'none';
+    chatActiveWindow.style.display = 'flex';
 
-            const existing = lastMessageMap.get(partnerId)
-            if (!existing || msg.timestamp > existing.timestamp) {
-                lastMessageMap.set(partnerId, msg)
-            }
-        })
+    const profilePage = (partnerId === currentUser.id) ? "MiPerfil.html" : `Perfiles/Perfil${partnerName}.html`;
+    chatUserName.innerHTML = `Chat con <a href="${profilePage}">@${partnerName}</a>`;
 
-        // Actualiza los textos en la lista de chats
-        document.querySelectorAll('.chat-list-item').forEach(item => {
-            const partnerId = item.dataset.userId
-            const p = item.querySelector('.chat-last-message')
-            if (!p) return
+    loadChatMessages(partnerId);
+  });
 
-            const lastMessage = lastMessageMap.get(partnerId)
-            if (lastMessage) {
-                const prefix = lastMessage.senderId === currentUser.id ? "Tú: " : ""
-                p.textContent = prefix + lastMessage.content
-            } else {
-                p.textContent = "No hay mensajes todavía."
-            }
-        })
+  sendChatBtn.addEventListener('click', sendMessage);
+  chatInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+
+  userSearch?.addEventListener('input', () => renderUserSearchResults(userSearch.value));
+  userSearchBtn?.addEventListener('click', () => renderUserSearchResults(userSearch.value));
+
+  refreshBtn?.addEventListener('click', () => {
+    if (confirm("¿Quieres recargar los datos de prueba?")) {
+      localStorage.clear();
+      seedDemo();
+      loadChatPreviews();
+      chatPlaceholder.style.display = 'flex';
+      chatActiveWindow.style.display = 'none';
+      alert("Simulación cargada");
     }
+  });
 
-    // Cargamos las vistas previas al entrar a la página
-    loadChatPreviews()
+  loadChatPreviews();
 
-    // Al hacer clic en un chat de la lista
-    chatList.addEventListener('click', (e) => {
-        const chatButton = e.target.closest('.chat-list-item')
-        if (!chatButton) return
+//Crear post
+  openModalBtn?.addEventListener('click', () => postModal.style.display = 'flex');
+  closeModalBtn?.addEventListener('click', () => postModal.style.display = 'none');
+  postModal?.addEventListener('click', e => { if(e.target === postModal) postModal.style.display = 'none'; });
 
-        document.querySelectorAll('.chat-list-item').forEach(btn => btn.classList.remove('selected'))
-        chatButton.classList.add('selected')
-        
-        const partnerId = chatButton.dataset.userId
-        const partnerName = chatButton.dataset.userName
-        
-        if (!partnerId || !partnerName) {
-            return console.error("Error: Falta data-user-id o data-user-name.")
-        }
+  modalAddImgBtn?.addEventListener('click', () => modalImageUpload.click());
 
-        currentChatPartnerId = partnerId
-        chatPlaceholder.style.display = 'none'
-        chatActiveWindow.style.display = 'flex'
-
-        const profilePage = (partnerId === currentUser.id) ? "MiPerfil.html" : `Perfiles/Perfil${partnerName}.html`
-        chatUserName.innerHTML = `Chat con <a href="${profilePage}">@${partnerName}</a>`
-
-        loadChatMessages(currentUser.id, partnerId)
-    })
-
-    // Cargar todos los mensajes de una conversación
-    function loadChatMessages(currentUserId, partnerId) {
-        chatBox.innerHTML = ''
-        
-        const allMessages = getMessages()
-        const conversation = allMessages
-            .filter(msg => 
-                (msg.senderId === currentUserId && msg.receiverId === partnerId) ||
-                (msg.senderId === partnerId && msg.receiverId === currentUserId)
-            )
-            .sort((a, b) => a.timestamp - b.timestamp)
-        
-        if (conversation.length === 0) {
-            chatBox.innerHTML = '<p class="info">No hay mensajes. Di hola!</p>'
-            return
-        }
-
-        // Crear una burbuja por cada mensaje
-        conversation.forEach(msg => {
-            const type = msg.senderId === currentUserId ? 'sent' : 'received'
-            const newBubble = document.createElement('div')
-            newBubble.classList.add('chat-bubble', type)
-            const timeString = new Date(msg.timestamp).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
-
-            newBubble.innerHTML = `
-                <p>${msg.content.replace(/\n/g, '<br>')}</p>
-                <span>${timeString}</span>
-            `
-            chatBox.appendChild(newBubble)
-        })
-        
-        chatBox.scrollTop = chatBox.scrollHeight
+  modalImageUpload?.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) {
+      modalImageDataUrl = null;
+      modalImagePreviewContainer.style.display = 'none';
+      return;
     }
+    const reader = new FileReader();
+    reader.onload = event => {
+      modalImageDataUrl = event.target.result;
+      modalImagePreview.src = modalImageDataUrl;
+      modalImagePreview.style.display = 'block';
+      modalImagePreviewContainer.style.display = 'flex';
+      modalRemoveImageBtn.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  });
 
-    // Enviar un nuevo mensaje
-    const sendMessage = () => {
-        const text = chatInput.value.trim()
-        if (text === '' || !currentChatPartnerId) return
+  modalRemoveImageBtn?.addEventListener('click', () => {
+    modalImageDataUrl = null;
+    modalImageUpload.value = '';
+    modalImagePreview.src = '#';
+    modalImagePreview.style.display = 'none';
+    modalRemoveImageBtn.style.display = 'none';
+    modalImagePreviewContainer.style.display = 'none';
+  });
 
-        const now = Date.now()
-        const newMessage = {
-            id: uid('m_'),
-            senderId: currentUser.id,
-            receiverId: currentChatPartnerId,
-            content: text,
-            timestamp: now
-        }
+  modalNewPostBtn?.addEventListener('click', () => {
+    const title = modalNewPostContent.value.trim();
+    if (!title && !modalImageDataUrl) return alert('No puedes publicar vacío.');
 
-        const allMessages = getMessages()
-        allMessages.push(newMessage)
-        saveMessages(allMessages)
+    const posts = getPosts() || [];
+    posts.unshift({
+      id: uid(),
+      title,
+      authorId: currentUser.id,
+      createdAt: Date.now(),
+      img: modalImageDataUrl,
+      likes: 0,
+      liked: false,
+      comments: []
+    });
+    savePosts(posts);
 
-        // Mostrar el mensaje en pantalla
-        const newBubble = document.createElement('div')
-        newBubble.classList.add('chat-bubble', 'sent')
-        const timeString = new Date(now).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
-        newBubble.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p><span>${timeString}</span>`
-        chatBox.appendChild(newBubble)
-        
-        chatInput.value = ''
-        chatBox.scrollTop = chatBox.scrollHeight
-        chatInput.focus()
+    // Limpiar modal
+    modalNewPostContent.value = '';
+    modalImageDataUrl = null;
+    modalImageUpload.value = '';
+    modalImagePreview.src = '#';
+    modalImagePreview.style.display = 'none';
+    modalRemoveImageBtn.style.display = 'none';
+    modalImagePreviewContainer.style.display = 'none';
+    postModal.style.display = 'none';
 
-        loadChatPreviews()
-    }
+    alert('Publicación creada con éxito');
+  });
 
-    // Botón de enviar mensaje
-    sendChatBtn.addEventListener('click', sendMessage)
-    
-    // Enviar con Enter (sin Shift)
-    chatInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) { 
-            e.preventDefault()
-            sendMessage()
-        }
-    })
-})
+});
