@@ -2,7 +2,7 @@ import { getNotificaciones, saveNotificaciones, seedDemo, uid } from './BBDD.js'
 
 // Obtener el contenedor de notificaciones y el boton de recarga
 const container = document.getElementById("notificationsContainer");
-const refreshBtn = document.getElementById("refreshDemoBtn");
+const refreshBtn = document.getElementById('notifRefreshBtn')
 
 // Mostrar todas las notificaciones
 function mostrarNotificaciones() {

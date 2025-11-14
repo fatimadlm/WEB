@@ -9,15 +9,19 @@
 <body>
   <div class="home-container">
 
+    <!-- Barra lateral -->
     <aside class="sidebar">
       <div> 
+        <!-- Logo -->
         <div class="logo">
           <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
           <h1>CookingUAH</h1>
         </div>
+
+        <!-- Botones de navegación -->
         <nav class="nav-buttons">
           <a href="Home.html" class="btn-secondary">Inicio</a> 
-          <a href="Mensajes.html" class="btn-secondary active">Mensajes</a> 
+          <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
           <a href="Eventos.html" class="btn-secondary">Eventos</a>
           <a href="Notificaciones.html" class="btn-secondary">Notificaciones</a>
           <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
@@ -25,11 +29,11 @@
           <button id="openModalBtn" class="btn-primary">Crear publicación</button>
         </nav>
       </div>
-      
-      <div class="sidebar-footer">
-        <a href="../index.html" class="btn-logout">Cerrar sesión</a>
-      </div>
+
+      <!-- Botón cerrar sesión -->
+      <a href="../index.html" class="btn-logout">Cerrar sesión</a>
     </aside>
+
 
     <main class="feed-chat-page">
       
@@ -112,7 +116,32 @@
 
   </div>
   
+  <!-- Modal para crear publicación -->
   <div id="postModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2>Crear una nueva publicación</h2>
+
+      <div id="modalPostBox" class="modal-post-box">
+        <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea>
+        
+        <!-- Imagen en el modal -->
+        <div id="modalImagePreviewContainer" class="image-preview-container" style="display: none;">
+            <img id="modalImagePreview" src="#" alt="Previsualización de imagen" class="image-preview" style="display: none;">
+            <button id="modalRemoveImageBtn" class="remove-image-btn" style="display: none;">✖</button>
+        </div>
+
+        <!-- Botones del modal -->
+        <div class="post-controls">
+          <div class="post-options">
+            <input type="file" id="modalImageUpload" accept="image/*" style="display: none;">
+            <button class="option-btn" id="modalAddImgBtn" title="Añadir Imagen">📸</button>
+          </div>
+          <button id="modalNewPostBtn">Publicar Receta</button>
+        </div>
+      </div>
+      
+    </div>
   </div>
   
   <script type="module" src="../js/Home.js"></script> 

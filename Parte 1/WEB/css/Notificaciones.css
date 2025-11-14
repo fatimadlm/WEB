@@ -128,13 +128,16 @@ body::before {
   margin-bottom: 1.5rem;
 }
 
-/* ---------- BOTÓN REFRESCAR ---------- */
+
+/* ---------- BARRA DE ACCIONES ---------- */
 .actions-bar {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-end; /* Mover boton de refrescar a la derecha */
   margin-bottom: 1rem;
 }
-.btn-refresh {
+
+/* ---------- BOTÓN REFRESCAR ---------- */
+.main-content .btn-refresh {
   background-color: #ffb347;
   color: white;
   border: none;
@@ -143,8 +146,14 @@ body::before {
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
+  
+  /* Reseteamos estilos de Home.css que no queremos */
+  width: auto;
+  height: auto;
+  font-size: inherit;
+  line-height: inherit;
 }
-.btn-refresh:hover {
+.main-content .btn-refresh:hover {
   background-color: #ff9800;
 }
 
@@ -175,12 +184,3 @@ body::before {
   font-size: 0.9rem;
 }
 
-/* ---------- RESPONSIVE ---------- */
-@media (max-width: 768px) {
-  .sidebar {
-    display: none;
-  }
-  .main-content {
-    padding: 1rem;
-  }
-}

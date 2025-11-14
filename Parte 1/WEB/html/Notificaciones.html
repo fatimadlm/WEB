@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CookingUAH - Notificaciones</title>
   <link rel="stylesheet" href="../css/Notificaciones.css" />
-</head>
-<body>
+  <link rel="stylesheet" href="../css/Home.css" />
+  
   <div class="notificaciones-container">
 
     <!-- Barra lateral -->
@@ -37,12 +37,42 @@
       <h2>Notificaciones recientes</h2>
 
       <div class="actions-bar">
-        <button id="refreshDemoBtn" class="btn-refresh">Recargar</button>
+        <button id="notifRefreshBtn" class="btn-refresh">Recargar</button>
       </div>
 
       <div id="notificationsContainer" class="notifications-list"></div>
     </main>
   </div>
+
+    <!-- Modal para crear publicación -->
+    <div id="postModal" class="modal-backdrop" style="display: none;">
+      <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Crear una nueva publicación</h2>
+  
+        <div id="modalPostBox" class="modal-post-box">
+          <textarea id="modalNewPostContent" placeholder="¿Qué estás cocinando, @TuUsuario?"></textarea>
+          
+          <!-- Imagen en el modal -->
+          <div id="modalImagePreviewContainer" class="image-preview-container" style="display: none;">
+              <img id="modalImagePreview" src="#" alt="Previsualización de imagen" class="image-preview" style="display: none;">
+              <button id="modalRemoveImageBtn" class="remove-image-btn" style="display: none;">✖</button>
+          </div>
+  
+          <!-- Botones del modal -->
+          <div class="post-controls">
+            <div class="post-options">
+              <input type="file" id="modalImageUpload" accept="image/*" style="display: none;">
+              <button class="option-btn" id="modalAddImgBtn" title="Añadir Imagen">📸</button>
+            </div>
+            <button id="modalNewPostBtn">Publicar Receta</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <script type="module" src="../js/Home.js"></script> 
 
   <script type ="module" src="../js/Notificaciones.js"></script>
 </body>
