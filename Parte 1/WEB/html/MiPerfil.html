@@ -141,9 +141,9 @@
   <script type="module">
     import { getPosts, savePosts, getCurrentUser, getUsers, saveCurrentUser, seedDemo, uid } from '../js/BBDD.js';
     
-    // ====================================================
+
     // 1. Carga de datos y inicialización
-    // ====================================================
+
 
     // Comprobación y carga de datos demo
     if (!(getUsers() && getUsers().length) || !(getPosts() && getPosts().length)) {
@@ -162,9 +162,9 @@
         throw new Error('Usuario no autenticado');
     }
     
-    // ====================================================
+
     // 2. Funciones de ayuda
-    // ====================================================
+
     function findUser(id) {
         return allUsers.find(u => u.id === id);
     }
@@ -183,9 +183,9 @@
         return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
     }
     
-    // ====================================================
+
     // 3. Renderizado del perfil
-    // ====================================================
+
     
     // Función para actualizar la información del perfil en pantalla
     function renderProfileInfo() {
@@ -313,9 +313,9 @@
         });
     }
 
-    // ====================================================
+
     // 4. Lógica de Eliminación de Publicación
-    // ====================================================
+
     
     function deletePost(postId) {
         if (!confirm("¿Estás seguro de que quieres eliminar esta publicación? Esta acción no se puede deshacer.")) {
@@ -330,9 +330,9 @@
         alert("Publicación eliminada.");
     }
 
-    // ====================================================
+
     // 5. Lógica de Edición de Publicación
-    // ====================================================
+
     
     const editPostModal = document.getElementById('editPostModal');
     const editModalContent = document.getElementById('editModalContent');
@@ -430,9 +430,9 @@
         if(targetId) closeModal(targetId);
     });
 
-    // ====================================================
+
     // 6. Inicialización final y modales
-    // ====================================================
+
     
     // Inicialización del perfil y posts
     renderProfileInfo();

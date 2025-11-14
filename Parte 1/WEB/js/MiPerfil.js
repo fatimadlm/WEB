@@ -2,9 +2,7 @@ import { getPosts, savePosts, getCurrentUser, getUsers, saveCurrentUser, seedDem
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ====================================================
-    // 0. Inicialización y Comprobaciones (Lógica Nueva)
-    // ====================================================
+    // 0. Inicialización y Comprobaciones 
     
     // Carga datos demo si está vacío
     if (!(getUsers() && getUsers().length) || !(getPosts() && getPosts().length)) {
@@ -23,9 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error('Usuario no autenticado');
     }
 
-    // ====================================================
     // 1. Funciones de Ayuda
-    // ====================================================
+
     
     function findUser(id) {
         return allUsers.find(u => u.id === id);
@@ -46,9 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
     }
 
-    // ====================================================
+
     // 2. Renderizado del Perfil
-    // ====================================================
+
 
     function renderProfileInfo() {
         const user = getCurrentUser();
@@ -190,9 +187,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ====================================================
-    // 3. Lógica de Edición y Borrado (Funcionalidades Nuevas)
-    // ====================================================
+
+    // 3. Lógica de Edición y Borrado 
+
 
     function deletePost(postId) {
         if (!confirm("¿Estás seguro de eliminar esta receta?")) return;
@@ -285,9 +282,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('#editPostModal .modal-close')?.addEventListener('click', () => closeModal('editPostModal'));
     }
 
-    // ====================================================
+
     // 4. Lógica Crear Publicación (Modal)
-    // ====================================================
+
 
     const openModalBtn = document.getElementById("openModalBtn");
     const postModal = document.getElementById("postModal");
@@ -384,9 +381,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ====================================================
-    // 5. Lógica Seguidores/Siguiendo (Mantenemos la visual de la Vieja)
-    // ====================================================
+    // 5. Lógica Seguidores/Siguiendo 
+
     
     const followersData = [
         { username: "@Juan", name: "Juan Pérez", avatar: "../Imagenes/Avatar4.jpeg" },
@@ -461,9 +457,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('userListBackdrop')?.addEventListener('click', () => userListModal.style.display = 'none');
 
 
-    // ====================================================
+
     // 6. Inicialización Final
-    // ====================================================
+
     
     renderProfileInfo();
     renderMyPosts();
@@ -476,5 +472,6 @@ document.addEventListener('DOMContentLoaded', () => {
             renderMyPosts();
         }
     });
+
 
 });

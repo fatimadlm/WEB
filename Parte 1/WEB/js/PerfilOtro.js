@@ -30,18 +30,18 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // ====================================================
+
     // 2. RENDERIZAR INFORMACIÓN DEL PERFIL
-    // ====================================================
+
     document.getElementById('profileAvatar').src = targetUser.avatar || '../Imagenes/avatarDefault.png';
     document.getElementById('profileName').textContent = targetUser.name || targetUser.username;
     document.getElementById('profileUsername').textContent = '@' + targetUser.username;
     document.getElementById('profileBio').textContent = targetUser.bio || 'Sin biografía.';
     document.title = `Perfil de ${targetUser.username} - CookingUAH`;
 
-    // ====================================================
-    // 3. LÓGICA DE SEGUIDORES (Follow/Unfollow)
-    // ====================================================
+
+    // 3. LÓGICA DE SEGUIDORES 
+    
     const followersCountSpan = document.getElementById('followersCount');
     const followingCountSpan = document.getElementById('followingCount');
     const followBtn = document.getElementById('profileFollowBtn');
@@ -88,9 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
         updateStats();           // Actualizar números
     });
 
-    // ====================================================
+
     // 4. RENDERIZAR PUBLICACIONES DEL USUARIO
-    // ====================================================
+
     const postsContainer = document.getElementById('profilePostsContainer');
     
     // Filtrar posts de ESTE usuario
@@ -175,9 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ====================================================
+
     // 5. MODAL DE LISTA DE USUARIOS (Seguidores/Siguiendo)
-    // ====================================================
+
     const modal = document.getElementById('userListModal');
     const list = document.getElementById('userList');
     const titleElem = document.getElementById('userListTitle');
