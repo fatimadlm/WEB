@@ -22,13 +22,13 @@ body::before {
   z-index: -1;
 }
 
-/* ---------- LAYOUT GENERAL (MODIFICADO) ---------- */
+/* ---------- LAYOUT GENERAL ---------- */
 .home-container { /* Renombrado de .eventos-container */
   display: flex;
   position: relative;
 }
 
-/* ---------- SIDEBAR (MODIFICADO) ---------- */
+/* ---------- SIDEBAR ---------- */
 /* (Estilos consistentes con Home.css) */
 .sidebar {
   width: 250px;
@@ -112,7 +112,7 @@ body::before {
   background-color: #e64a19;
 }
 
-/* ---------- CONTENIDO PRINCIPAL (MODIFICADO) ---------- */
+/* ---------- CONTENIDO PRINCIPAL ---------- */
 .eventos-feed {
   flex: 1;
   padding: 2rem;
@@ -124,7 +124,7 @@ body::before {
   margin-bottom: 2rem;
 }
 
-/* ---------- CALENDARIO (Tus estilos originales) ---------- */
+/* ---------- CALENDARIO ---------- */
 .calendar {
   background-color: #fffaf5;
   border-radius: 1rem;
@@ -184,7 +184,7 @@ body::before {
   color: #cc5500;
 }
 
-/* ---------- DETALLES DE EVENTOS (Tus estilos originales) ---------- */
+/* ---------- DETALLES DE EVENTOS ---------- */
 .event-details {
   background-color: #fffaf5;
   border-radius: 1rem;
@@ -208,7 +208,7 @@ body::before {
   color: #4a2a0a;
 }
 
-/* ---------- CREAR EVENTO (Tus estilos originales) ---------- */
+/* ---------- CREAR EVENTO  ---------- */
 .crear-evento {
   background-color: #fffaf5;
   border-radius: 1rem;
@@ -242,9 +242,8 @@ body::before {
 }
 
 
-/* ==================================================== */
 /* AÑADIDO: ESTILOS PARA EL MODAL DE PUBLICACIÓN */
-/* ==================================================== */
+
 
 .modal-backdrop {
   position: fixed; 
