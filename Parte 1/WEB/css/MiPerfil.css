@@ -29,7 +29,7 @@ body::before {
   position: relative;
 }
 
-/* ---------- SIDEBAR (COMPLETA) ---------- */
+/* ---------- SIDEBAR  ---------- */
 .sidebar {
   width: 250px;
   flex-shrink: 0; 
@@ -128,7 +128,7 @@ body::before {
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
-/* Tus estilos de .perfil-info */
+
 .perfil-info {
   display: flex;
   align-items: center;
@@ -195,7 +195,7 @@ body::before {
 }
 
 
-/* Tus estilos de .perfil-posts */
+
 .perfil-posts {
   margin-top: 30px;
   color: #5a2500;
@@ -230,7 +230,7 @@ body::before {
   border-radius: 10px;
   margin-top: 10px;
 }
-/* MODIFICADO: Añadimos espacio entre los botones */
+/*  Añadimos espacio entre los botones */
 .post-actions {
   display: flex;
   gap: 1rem;
@@ -263,7 +263,7 @@ body::before {
   color: white;
 }
 
-/* NUEVO: Estilos para el botón de Edición */
+/* Estilos para el botón de Edición */
 .btn-edit-post {
   background-color: #3498db; /* Azul suave */
   order: 1; /* Para que aparezca después de los botones de interacción */
@@ -272,7 +272,7 @@ body::before {
   background-color: #2980b9;
 }
 
-/* NUEVO: Estilos para el botón de Eliminación */
+/* Estilos para el botón de Eliminación */
 .btn-delete-post {
   background-color: #e74c3c; /* Rojo de peligro */
   order: 2; /* Para que aparezca al final */
@@ -415,10 +415,8 @@ body::before {
 }
 
 
-/* ==================================================== */
-/* AÑADIDO: ESTILOS PARA EL MODAL DE "CREAR PUBLICACIÓN" */
-/* (Estilos copiados desde Home.css para el modal genérico) */
-/* ==================================================== */
+/* ESTILOS PARA EL MODAL DE "CREAR PUBLICACIÓN" */
+
 
 #postModal.modal-backdrop, #editPostModal.modal-backdrop {
   position: fixed;
