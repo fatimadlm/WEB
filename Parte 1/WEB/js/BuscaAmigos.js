@@ -76,7 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const filteredUsers = allUsers.filter(user => {
       const matchesQuery = user.username.toLowerCase().includes(query);
       const isNotCurrentUser = user.id !== currentUser.id;
-      return matchesQuery && isNotCurrentUser;
+      const isUserRole = user.role === 'user';
+      return matchesQuery && isNotCurrentUser && isUserRole;
     });
 
     renderUsers(filteredUsers);
