@@ -1,4 +1,4 @@
-/* ---------- RESET BÁSICO ---------- */
+/* ---------- RESET ---------- */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -10,13 +10,15 @@
 body.profile-edit-form {
   background-color: #fffaf3;
   color: #5a2500;
-  padding: 2rem; /* Espacio interior */
+  /* Espacio interior */
+  padding: 2rem;
 }
 
 /* El formulario ahora ocupa todo el ancho */
 form {
   width: 100%;
-  max-width: 100%; /* La clave del arreglo */
+  /* La clave del arreglo */
+  max-width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -35,7 +37,8 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 textarea {
-  width: 100%; /* Ocupa todo el ancho disponible */
+  /* Ocupa todo el ancho disponible */
+  width: 100%;
   padding: 12px;
   border: 2px solid #ffb74d;
   border-radius: 10px;
@@ -63,9 +66,11 @@ textarea {
 fieldset {
   border: none;
   margin-top: 1.5rem;
-  padding: 0; /* CORREGIDO: Quita el padding para que se alinee */
+  /* CORREGIDO: Quita el padding para que se alinee */
+  padding: 0;
   border-radius: 10px;
-  background-color: transparent; /* CORREGIDO: Fondo transparente, el estilo del recuadro ya no es necesario aquí */
+  /* CORREGIDO: Fondo transparente, el estilo del recuadro ya no es necesario aquí */
+  background-color: transparent;
 }
 legend {
   font-weight: 600;
@@ -74,7 +79,8 @@ legend {
   /* CORREGIDO: Quita los márgenes del legend */
   padding: 0; 
   margin: 0;
-  margin-top: 1rem; /* Añade un margen superior para separarlo */
+  /* Añade un margen superior para separarlo */
+  margin-top: 1rem;
 }
 
 .actions {
@@ -104,7 +110,8 @@ legend {
   position: relative;
   width: 100px;
   height: 100px;
-  margin: 0 auto 1.5rem auto; /* Centrado */
+  /* Centrado */
+  margin: 0 auto 1.5rem auto;
   border-radius: 50%;
   background-color: #ffe0b2;
   border: 3px dashed #ffb74d;
@@ -112,7 +119,8 @@ legend {
   align-items: center;
   justify-content: center;
   color: #e69b2e;
-  overflow: hidden; /* Para que la imagen de preview no se salga */
+  /* Para que la imagen de preview no se salga */
+  overflow: hidden;
 }
 
 /* Estilo para la imagen de previsualización */

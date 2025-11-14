@@ -1,10 +1,10 @@
 /* === Admin.css  === */
 :root{
-  --bg: #fdf1e2;            /* beige suave */
+  --bg: #fdf1e2;
   --card: #ffffff;
-  --text: #4b2e14;          /* marrón oscuro */
+  --text: #4b2e14;
   --muted: #7a5a3a;
-  --primary: #d76614;       /* naranja cocción */
+  --primary: #d76614;
   --primary-2: #e97d2b;
   --border: #efd6c0;
   --shadow: 0 10px 30px rgba(0,0,0,.07);

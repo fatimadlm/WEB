@@ -1,4 +1,4 @@
-/* reset de margenes y fuentes */
+/* ---------- RESET ---------- */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,7 +6,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* fondo principal */
+/* ---------- FONDO ---------- */
 body {
   background-image: url('../Imagenes/Comida.jpg');
   background-size: cover;
@@ -29,7 +29,7 @@ body::before {
   position: relative;
 }
 
-/* barra lateral */
+/* ---------- SIDEBAR ---------- */
 .sidebar {
   width: 250px;
   flex-shrink: 0; 
@@ -59,7 +59,7 @@ body::before {
   font-size: 1.5rem;
 }
 
-/* boton principal crear post */
+/* ---------- BOTÓN PRIMARIO ---------- */
 .btn-primary {
   background-color: #FFA500;
   color: white;
@@ -88,7 +88,7 @@ body::before {
   width: 100%;
 }
 
-/* botones secundarios */
+/* ---------- BOTÓN SECUNDARIO ---------- */
 .btn-secondary {
   background-color: #cc5500;
   color: white;
@@ -106,7 +106,7 @@ body::before {
   transform: translateY(-2px);
 }
 
-/* boton cerrar sesion */
+/* ---------- BOTÓN CERRAR SESIÓN ---------- */
 .btn-logout {
   text-decoration: none;
   background-color: #ff7043;
@@ -118,12 +118,17 @@ body::before {
   transition: all 0.3s ease;
   width: 100%; 
 }
+/* ---------- EFECTO HOVER ---------- */
 .btn-logout:hover {
+  /* Naranja más oscuro al pasar el mouse */
   background-color: #e64a19;
+  /* Ligero levantamiento */
   transform: translateY(-2px);
 }
 
-/* seccion del feed */
+
+/* -------------------- FEED -------------------- */
+/* ------------- PÁGINA HOME ------------- */
 .feed {
   flex: 1; 
   padding: 2rem;
@@ -134,8 +139,201 @@ body::before {
   color: #5a2500;
   margin-bottom: 1.5rem;
 }
+/* ---------- PÁGINA MENSAJES ---------- */
+.feed-chat-page {
+  flex: 1; 
+  padding: 0;
+  display: flex;
+  height: 100vh;
+}
 
-/* barra superior buscador */
+/* ---------- LISTA DE CHATS (COLUMNA IZQUIERDA) ---------- */
+.chat-list-container {
+  width: 350px; 
+  flex-shrink: 0;
+  background-color: rgba(255, 250, 245, 0.9);
+  border-right: 1px solid #d6b58e;
+  padding: 2rem;
+  overflow-y: auto;
+}
+.chat-list-container h2 {
+  color: #5a2500;
+  margin-bottom: 1.5rem;
+}
+
+.chat-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.chat-list li {
+  border-radius: 1rem;
+}
+.chat-list-item {
+  background-color: #fff8f0;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  text-align: left;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+.chat-list-item:hover {
+  background-color: #fff1e0;
+}
+.chat-list-item.selected { 
+  background-color: #ffe0b2;
+  border-color: #f57c00;
+}
+.chat-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+.chat-info h3 {
+  margin-bottom: 5px;
+  font-size: 1.1em;
+  color: #6b2b00;
+}
+.chat-info p {
+  font-size: 0.9em;
+  color: #4a2a0a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+/* ---------- COLUMNA DERECHA (Conversación) ---------- */
+.chat-conversation-container {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #5a2500;
+}
+.logo-placeholder {
+  width: 100px;
+  opacity: 0.5;
+  margin-bottom: 1rem;
+}
+.chat-placeholder h3 {
+  font-size: 1.5rem;
+}
+
+/* Estilos de la ventana de chat (de Chat.css) */
+.chat-active-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  padding-bottom: 90px; 
+  position: relative;
+  height: 100%;
+}
+.chat-header {
+  color: #5a2500;
+  margin-bottom: 2rem; 
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #ffb74d;
+}
+.chat-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto; 
+  padding-right: 10px;
+}
+.chat-bubble {
+  max-width: 70%;
+  padding: 0.8rem 1.2rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+.chat-bubble p {
+  margin: 0;
+  font-size: 1rem;
+  word-wrap: break-word; 
+  white-space: pre-wrap;
+}
+.chat-bubble span {
+  font-size: 0.75rem;
+  color: #5a2500;
+  opacity: 0.7;
+  display: block;
+  margin-top: 5px;
+}
+.chat-bubble.received {
+  align-self: flex-start;
+  background-color: #fff8f0; 
+  color: #4a2a0a;
+  border-bottom-left-radius: 0.5rem;
+}
+.chat-bubble.sent {
+  align-self: flex-end;
+  background-color: #ffb347; 
+  color: #5a2500;
+  border-bottom-right-radius: 0.5rem;
+}
+.chat-input-area {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem; 
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+}
+.chat-input-area input {
+  flex: 1;
+  padding: 1rem;
+  border: 2px solid #ffb74d;
+  border-radius: 12px;
+  font-size: 1rem;
+}
+.chat-input-area input:focus {
+  outline: none;
+  border-color: #ef6c00;
+}
+.chat-input-area button {
+  background: linear-gradient(90deg, #f57c00, #ef6c00);
+  color: white;
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+.chat-list-header {
+  display: flex;
+  /* Alinea título a la izq. y botón a la der. */
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.chat-list-header h2 {
+  /* Quita el margen por defecto del h2 */
+  margin: 0;
+}
+
+/* BARRA SUPERIOR DE BÚSCADOR */
 .top-bar {
   display: flex;
   justify-content: flex-end; 
@@ -143,6 +341,9 @@ body::before {
   margin-bottom: 20px;
 }
 
+/* ------------- BUSCADOR ------------- */
+/* ------------- PÁGINA HOME ------------- */
+/* ---- BUSCADOR DE RECETAS ---- */
 .search-bar {
   display: flex;
   gap: 10px;
@@ -168,7 +369,31 @@ body::before {
   background-color: #b24900;
 }
 
-/* publicador rapido en feed */
+/* ------------- PÁGINA MENSAJES ------------- */
+/* ---- BUSCADOR DE CHATS ---- */
+.search-bar-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+.search-bar-container input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d6b58e;
+  background-color: #fffaf5;
+  font-size: 1rem;
+}
+.search-bar-container button {
+  background-color: #cc5500;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* PUBLICADOR RÁPIDO EN EL FEED */
 .create-post {
   background-color: #fffaf5;
   border-radius: 1rem;
@@ -190,7 +415,7 @@ body::before {
   margin-bottom: 1rem;
 }
 
-/* contenedor de previsualizacion de imagen */
+/* CONTENEDOR DE PREVISUALIZACIÓN DE IMAGEN */
 .image-preview-container {
     position: relative;
     width: 100%;
@@ -270,21 +495,22 @@ body::before {
   background-color: #b24900;
 }
 
-/* boton recargar datos demo */
+/* BOTÓN RECARGAR DATOS DEMO */
 .btn-refresh {
-  background-color: #ffb347;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 0.6rem 1rem;
-  font-weight: bold;
+  background: none;
+  border: 1px solid #ccc;
+  color: #555;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  align-self: center;
-  margin-left: auto;
+  font-size: 16px;
+  line-height: 1;
 }
+
 .btn-refresh:hover {
-  background-color: #ff9800;
+  background: #f0f0f0;
+  border-color: #aaa;
 }
 
 .top-bar {
@@ -430,7 +656,7 @@ body::before {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* caja de publicacion en modal */
+/* Estilos para la caja de publicación DENTRO DEL MODAL */
 .modal-post-box {
   display: flex;
   flex-direction: column;
@@ -453,7 +679,7 @@ body::before {
   outline: none;
 }
 
-/* boton publicar modal */
+/* Botón de publicar (del modal) */
 #modalNewPostBtn {
   background: linear-gradient(90deg, #f57c00, #ef6c00); 
   color: white;

@@ -1,6 +1,8 @@
 import { getMessages, saveMessages, getCurrentUser, uid, getUsers, getPosts, seedDemo } from './BBDD.js';
 
-// Esperamos a que el HTML esté completamente cargado
+/**
+ *  Esperamos a que el HTML esté completamente cargado
+ */
 document.addEventListener('DOMContentLoaded', () => {
     
     // Si no hay usuarios o publicaciones, cargamos los datos de ejemplo
@@ -36,19 +38,24 @@ document.addEventListener('DOMContentLoaded', () => {
      *  Listener para los botones de la clase 'btn-refresh'
      */
     refreshBtn?.addEventListener('click', () => {
-      if (confirm("¿Quieres recargar los datos de prueba?")) {
+        // Se pregunta al usuario si quiere regargar los datos de prueba
+        if (confirm("¿Quieres recargar los datos de prueba?")) {
         localStorage.clear()
         seedDemo()
         
+        // Cargamos la vista previa
         loadChatPreviews()
         chatPlaceholder.style.display = 'flex'
         chatActiveWindow.style.display = 'none'
         
+        // Avisamos que la carga ha sido completada
         alert("Simulación cargada")
       }
     })
 
-    // Cargar la vista previa de los últimos mensajes
+    /**
+     *  Función que carga la vista previa de los últimos mensajes
+     */
     function loadChatPreviews() {
         const allMessages = getMessages()
         const lastMessageMap = new Map()

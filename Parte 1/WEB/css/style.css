@@ -6,12 +6,17 @@
   font-family: 'Poppins', sans-serif;
 }
 
+/* ---------- ÍNDICE, LOGIN Y REGISTRO ---------------*/
 /* ---------- BODY ---------- */
 body {
-  background-image: url('../Imagenes/Comida.jpg'); /* imagen de fondo */
-  background-size: cover;       /* cubre toda la pantalla */
-  background-position: center;  /* centra la imagen */
-  background-repeat: no-repeat; /* no se repite */
+  /* Imagen de fondo */
+  background-image: url('../Imagenes/Comida.jpg');
+  /* Cubre toda la pantalla */
+  background-size: cover;
+  /* entra la imagen */
+  background-position: center;
+  /* No se repite */
+  background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,6 +24,15 @@ body {
   position: relative;
 }
 
+/* Overlay cálido para mejorar legibilidad */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  /* Capa semi-transparente */
+  background-color: rgba(252, 239, 220, 0.7);
+  z-index: 0;
+}
 
 /* ---------- CONTAINER ---------- */
 .login-container {
@@ -28,6 +42,16 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 350px;
+  /* Sobre el overlay */
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover sutil para el contenedor */
+.login-container:hover {
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
 }
 
 /* ---------- LOGO ---------- */
@@ -69,7 +93,7 @@ input {
   background-color: #fffaf5;
 }
 
-/* ---------- BUTTON ---------- */
+/* ---------- BOTÓN PRIMARIO ---------- */
 .btn-primary {
   background-color: #cc5500;
   color: white;
@@ -107,24 +131,34 @@ input {
 #registerForm input {
   margin-bottom: 0.9rem;
 }
-/* Botón naranja secundario */
+
+/* ---------- BOTÓN SECUNDARIO ---------- */
 .btn-secondary {
-  background-color: #FFA500; /* naranja */
-  color: white; /* texto blanco */
-  border: none; /* sin borde */
-  border-radius: 8px; /* esquinas redondeadas */
+  /* Naranja */
+  background-color: #FFA500;
+  /* Texto blanco */
+  color: white;
+  /* Sin borde */
+  border: none;
+  /* Esquinas redondeadas */
+  border-radius: 8px;
   padding: 10px 20px;
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
-  transition: all 0.3s ease; /* animación suave */
+  /* Animación suave */
+  transition: all 0.3s ease;
   margin-top: 15px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* sombra sutil */
+  /* Sombra sutil */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }
 
-/* Efecto hover */
+/* ---------- EFECTO HOVER ---------- */
 .btn-secondary:hover {
-  background-color: #FF8C00; /* naranja más oscuro al pasar el mouse */
-  box-shadow: 0 6px 10px rgba(0,0,0,0.3); /* sombra más marcada */
-  transform: translateY(-2px); /* ligero levantamiento */
+  /* Naranja más oscuro al pasar el mouse */
+  background-color: #FF8C00;
+  /* Sombra más marcada */
+  box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+  /* Ligero levantamiento */
+  transform: translateY(-2px);
 }
