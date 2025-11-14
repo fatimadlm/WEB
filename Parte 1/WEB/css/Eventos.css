@@ -23,13 +23,13 @@ body::before {
 }
 
 /* ---------- LAYOUT GENERAL ---------- */
-.home-container { /* Renombrado de .eventos-container */
+.home-container {
   display: flex;
   position: relative;
 }
 
 /* ---------- SIDEBAR ---------- */
-/* (Estilos consistentes con Home.css) */
+
 .sidebar {
   width: 250px;
   flex-shrink: 0;
@@ -190,7 +190,7 @@ body::before {
   border-radius: 1rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   padding: 1.5rem;
-  margin-bottom: 2rem; /* Añadido espacio */
+  margin-bottom: 2rem; 
 }
 .event-details h3 {
   color: #6b2b00;
@@ -235,14 +235,14 @@ body::before {
   border-radius: 8px;
   background-color: #fff;
 }
-/* El botón 'Añadir evento' usará el .btn-primary global */
+
 .form-evento button {
-  grid-column: 2 / 3; /* Ocupa la segunda columna */
-  justify-self: end; /* Se alinea a la derecha */
+  grid-column: 2 / 3; 
+  justify-self: end; 
 }
 
 
-/* AÑADIDO: ESTILOS PARA EL MODAL DE PUBLICACIÓN */
+
 
 
 .modal-backdrop {
@@ -253,7 +253,7 @@ body::before {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6); 
-  display: none; /* Oculto por defecto, JS lo cambia */
+  display: none; 
   justify-content: center;
   align-items: center;
 }
@@ -295,7 +295,7 @@ body::before {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Estilos para la caja de publicación DENTRO DEL MODAL */
+
 .modal-post-box {
   display: flex;
   flex-direction: column;
