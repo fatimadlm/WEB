@@ -17,10 +17,12 @@
         </div>
         <nav class="nav-buttons">
           <a href="Home.html" class="btn-secondary">Inicio</a> 
-          <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
+          <a href="Mensajes.html" class="btn-secondary active">Mensajes</a> 
           <a href="Eventos.html" class="btn-secondary">Eventos</a>
+          <a href="Notificaciones.html" class="btn-secondary">Notificaciones</a>
           <a href="MiPerfil.html" class="btn-secondary">Mi Perfil</a>
           <a href="Podio.html" class="btn-secondary">Recetas TOP</a>
+          <button id="openModalBtn" class="btn-primary">Crear publicación</button>
         </nav>
       </div>
       <a href="../index.html" id="btnLogout" class="btn-logout">Cerrar sesión</a>
@@ -28,7 +30,12 @@
 
     <main class="feed perfil-page">
       <section class="perfil-info">
-        <img id="profileAvatar" src="" alt="Foto de perfil" class="perfil-img" />
+        <img
+          id="profileAvatar"
+          src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+          alt="Foto de perfil"
+          class="perfil-img"
+        />
         <div class="perfil-datos">
           <h2 id="profileName">Cargando...</h2>
           <p class="usuario" id="profileUsername">@...</p>
@@ -48,7 +55,7 @@
 
       <section class="perfil-posts" id="profilePostsContainer">
         <h3>Publicaciones</h3>
-        </section>
+      </section>
     </main>
   </div>
 
@@ -56,7 +63,7 @@
     <div class="modal-backdrop" id="userListBackdrop"></div>
     <div class="modal-panel">
       <header class="modal-header">
-        <h2 id="userListTitle"></h2>
+        <h2 id="userListTitle">Usuarios</h2>
         <button id="userListClose" class="modal-close-btn">✕</button>
       </header>
       <div class="modal-body">
