@@ -8,7 +8,7 @@
 
 /* ---------- BODY ---------- */
 body {
-  background-color: #fcefdc; /* Fondo cálido */
+  background-color: #fcefdc; 
   color: #5a2500;
   display: flex;
   flex-direction: column;

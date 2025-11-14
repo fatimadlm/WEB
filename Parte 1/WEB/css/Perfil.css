@@ -45,7 +45,6 @@ body::before {
   position: sticky; 
   top: 0; 
 }
-/* ... (Estilos de .logo, .nav-buttons, .btn-primary, .btn-secondary, .btn-logout) ... */
 .logo {
   text-align: center;
   margin-bottom: 2rem;
@@ -161,7 +160,6 @@ body::before {
   font-size: 15px;
 }
 
-/* AÑADIDO: Estilos para los contadores */
 .perfil-stats {
   display: flex;
   gap: 1.5rem; 
@@ -180,12 +178,11 @@ body::before {
   text-decoration: underline;
 }
 
-/* AÑADIDO: Estilo para el botón "Seguir" principal */
 .perfil-datos .follow-btn {
   display: inline-block;
   margin-top: 15px;
   padding: 8px 15px;
-  width: auto; /* Para que no ocupe el 100% */
+  width: auto;
 }
 
 
@@ -194,7 +191,6 @@ body::before {
   margin-top: 30px;
   color: #5a2500;
 }
-/* ... (Estilos de .post, .post-header, .post-content, .post-actions, .comments) ... */
 .post {
   background: #fff8f0;
   border-radius: 1rem;
@@ -276,9 +272,6 @@ body::before {
   }
 }
 
-/* ==================================================== */
-/* AÑADIDO: ESTILOS PARA EL MODAL DE PUBLICACIÓN */
-/* ==================================================== */
 .modal-backdrop {
   position: fixed; 
   z-index: 100;
@@ -287,7 +280,7 @@ body::before {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6); 
-  display: none; /* JS lo cambia a 'flex' */
+  display: none; 
   justify-content: center;
   align-items: center;
 }
@@ -359,7 +352,6 @@ body::before {
   background: linear-gradient(90deg, #ff9800, #f57c00);
   transform: scale(1.03);
 }
-/* ... (Estilos de .image-preview-container, .post-controls, etc.) ... */
 .image-preview-container {
     position: relative;
     width: 100%;
@@ -423,9 +415,6 @@ body::before {
 }
 
 
-/* ==================================================== */
-/* AÑADIDO: Estilos para el Modal de Seguidores/Siguiendo */
-/* ==================================================== */
 .user-list-modal {
   position: fixed;
   inset: 0;

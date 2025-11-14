@@ -8,8 +8,8 @@
 
 /* ---------- BODY ---------- */
 body {
-  background: #fff8f0; /* color cálido claro de fondo */
-  color: #5a2500;     /* texto marrón oscuro para contraste */
+  background: #fff8f0; 
+  color: #5a2500;     
 }
 
 /* ---------- CONTAINER ---------- */
@@ -21,7 +21,7 @@ body {
 /* ---------- SIDEBAR ---------- */
 .sidebar {
   width: 220px;
-  background-color: #ffb74d; /* naranja suave */
+  background-color: #ffb74d; 
   color: white;
   padding: 20px;
   display: flex;

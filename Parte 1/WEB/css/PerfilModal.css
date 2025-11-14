@@ -1,4 +1,4 @@
-/* ===== Modal centrado para Editar Perfil (con :target) ===== */
+/*Modal centrado para Editar Perfil */
 
 /* Contenedor del modal */
 .modal {
@@ -14,7 +14,7 @@
     padding: 16px;
   }
   
-  /* Backdrop: más oscuro + desenfoque del fondo */
+  /* Backdrop */
   .modal__backdrop {
     position: absolute;
     inset: 0;
@@ -65,7 +65,7 @@
     margin: 0;
   }
   
-  /* Botón Cerrar: MUY visible */
+  /* Botón Cerrar */
   .modal__close {
     display: inline-flex;
     align-items: center;
@@ -76,7 +76,7 @@
     font-weight: 900;
     font-size: 18px;
     color: #fff;
-    background: #cc5500;          /* naranja corporativo */
+    background: #cc5500;          
     border: 2px solid #a63f00;
     box-shadow: 0 2px 6px rgba(0,0,0,.15);
   }
@@ -86,7 +86,7 @@
     outline-offset: 2px;
   }
   
-  /* Cuerpo con iframe (scroll interno si hace falta) */
+  /* Cuerpo con iframe */
   .modal__body {
     flex: 1 1 auto;
     min-height: 0;

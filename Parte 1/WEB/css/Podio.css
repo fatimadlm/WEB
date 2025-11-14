@@ -2,7 +2,7 @@
 .podio-container {
   display: flex;
   justify-content: center;
-  align-items: flex-end; /* Los posts se alinean por la base */
+  align-items: flex-end; 
   gap: 30px;
   margin-top: 30px;
   margin-bottom: 50px;
@@ -25,7 +25,6 @@
   transform: translateY(-5px);
 }
 
-/* Alturas según posición de podio */
 .first { height: 400px; order: 2; }  /* Centro y más alto */
 .second { height: 350px; order: 1; } /* Izquierda, un poco más bajo */
 .third { height: 300px; order: 3; }  /* Derecha, más bajo */
@@ -39,7 +38,7 @@
   object-fit: cover;
 }
 
-/* Header (avatar + usuario) */
+/* Header  */
 .podio-post .post-header {
   display: flex;
   align-items: center;
@@ -69,7 +68,6 @@
   font-size: 1rem;
 }
 
-/* Responsivo: apila posts en móvil */
 @media (max-width: 768px) {
   .podio-container {
     flex-direction: column;
