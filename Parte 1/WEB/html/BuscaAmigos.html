@@ -4,18 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CookingUAH - Buscar Amigos</title>
-  <link rel="stylesheet" href="../css/BuscaAmigos.css" />
+  <link rel="stylesheet" href="../css/Home.css" />
 </head>
 <body>
+  <!-- Contenedor principal -->
   <div class="home-container">
     
+    <!-- Barra lateral -->
     <aside class="sidebar">
       <div> 
+        <!-- Logo -->
         <div class="logo">
           <img src="../Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
           <h1>CookingUAH</h1>
         </div>
 
+        <!-- Botones de navegación -->
         <nav class="nav-buttons">
           <a href="Home.html" class="btn-secondary">Inicio</a> 
           <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
@@ -27,12 +31,14 @@
         </nav>
       </div>
 
+      <!-- Botón cerrar sesión -->
       <a href="../index.html" class="btn-logout">Cerrar sesión</a>
     </aside>
 
+    <!-- Contenido principal -->
     <main class="feed">
-      
-      <div class="top-bar">
+      <!-- Barra de búsqueda -->
+      <div class="top-bar" style="justify-content: center">
         <div class="search-bar">
           <input type="text" id="searchInput" placeholder="Buscar amigos por nombre..." />
           <button id="searchBtn">Buscar</button>

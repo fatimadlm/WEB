@@ -341,6 +341,86 @@ body::before {
   margin-bottom: 20px;
 }
 
+#usersContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.user-card {
+  background-color: #fff8f0;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.user-card-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  border: 3px solid #ffb347;
+}
+
+.user-card-name {
+  color: #6b2b00;
+  font-size: 1.2rem;
+  font-weight: 600;
+  /* El margen inferior se lo daremos al contenedor de botones */
+  margin-bottom: 0; 
+}
+
+/* Contenedor para los dos botones (Perfil y Seguir) */
+.user-card-actions {
+  display: flex;
+  gap: 0.5rem; /* Espacio entre los botones */
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.user-card-actions .btn-perfil,
+.user-card-actions .btn-follow {
+  flex: 1;
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+/* Botón 'Seguir'*/
+.user-card-actions .btn-follow {
+  /* Hereda los estilos de .btn-primary que le daremos en el JS */
+  border: none;
+  cursor: pointer;
+}
+
+.user-card-actions .btn-follow.following {
+  background-color: #ff7043; 
+  font-weight: bold;
+}
+.user-card-actions .btn-follow.following:hover {
+  background-color: #e64a19;
+}
+
+/* Mensaje cuando no se encuentran resultados */
+.no-results {
+  color: #5a2500;
+  font-size: 1.1rem;
+  padding: 2rem;
+  text-align: center;
+  background-color: #fff8f0;
+  border-radius: 1rem;
+}
+
 /* ------------- BUSCADOR ------------- */
 /* ------------- PÁGINA HOME ------------- */
 /* ---- BUSCADOR DE RECETAS ---- */
@@ -717,3 +797,6 @@ body::before {
 .post-header a {
   text-decoration: none; 
 }
+
+/* --------- PÁGINA BUSCAR AMIGOS --------- */
+
