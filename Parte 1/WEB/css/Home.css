@@ -147,7 +147,7 @@ body::before {
   height: 100vh;
 }
 
-/* ---------- LISTA DE CHATS (COLUMNA IZQUIERDA) ---------- */
+/* ---------- LISTA DE CHATS ---------- */
 .chat-list-container {
   width: 350px; 
   flex-shrink: 0;
@@ -210,7 +210,7 @@ body::before {
   max-width: 200px;
 }
 
-/* ---------- COLUMNA DERECHA (Conversación) ---------- */
+/* ---------- COLUMNA DERECHA ---------- */
 .chat-conversation-container {
   flex: 1; 
   display: flex;
@@ -235,7 +235,7 @@ body::before {
   font-size: 1.5rem;
 }
 
-/* Estilos de la ventana de chat (de Chat.css) */
+
 .chat-active-window {
   flex: 1;
   display: flex;
@@ -322,7 +322,7 @@ body::before {
 }
 .chat-list-header {
   display: flex;
-  /* Alinea título a la izq. y botón a la der. */
+  
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
