@@ -12,8 +12,8 @@ CREATE TABLE users (
 
 -- 2. Seguidores (Relación muchos a muchos)
 CREATE TABLE follows (
-    follower_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
-    followed_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
+    siguiendo_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
+    seguido_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
     PRIMARY KEY (follower_id, followed_id)
 );
 
@@ -21,7 +21,7 @@ CREATE TABLE follows (
 CREATE TABLE posts (
     id VARCHAR(50) PRIMARY KEY,
     title TEXT NOT NULL,
-    author_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
+    autor_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
     img VARCHAR(255),
     likes INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -31,7 +31,7 @@ CREATE TABLE posts (
 CREATE TABLE comments (
     id VARCHAR(50) PRIMARY KEY,
     post_id VARCHAR(50) REFERENCES posts(id) ON DELETE CASCADE,
-    author_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
+    autor_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -39,8 +39,8 @@ CREATE TABLE comments (
 -- 5. Mensajes 
 CREATE TABLE messages (
     id VARCHAR(50) PRIMARY KEY,
-    sender_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
-    receiver_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
+    envia_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
+    receptor_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
     content TEXT NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
