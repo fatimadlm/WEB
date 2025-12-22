@@ -1,0 +1,164 @@
+/* ---------- RESET ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ---------- ÍNDICE, LOGIN Y REGISTRO ---------------*/
+/* ---------- BODY ---------- */
+body {
+  /* Imagen de fondo */
+  background-image: url('../Imagenes/Comida.jpg');
+  /* Cubre toda la pantalla */
+  background-size: cover;
+  /* entra la imagen */
+  background-position: center;
+  /* No se repite */
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+}
+
+/* Overlay cálido para mejorar legibilidad */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  /* Capa semi-transparente */
+  background-color: rgba(252, 239, 220, 0.7);
+  z-index: 0;
+}
+
+/* ---------- CONTAINER ---------- */
+.login-container {
+  background-color: #fff8f0;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 350px;
+  /* Sobre el overlay */
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover sutil para el contenedor */
+.login-container:hover {
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* ---------- LOGO ---------- */
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.logo-img {
+  width: 60px;
+  margin-bottom: 0.5rem;
+}
+.logo h1 {
+  color:  #6b2b00;
+  font-size: 1.8rem;
+}
+
+/* ---------- FORM ---------- */
+.login-box h2 {
+  color: #6b2b00;
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #5a2500;
+}
+
+input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #d6b58e;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  background-color: #fffaf5;
+}
+
+/* ---------- BOTÓN PRIMARIO ---------- */
+.btn-primary {
+  background-color: #cc5500;
+  color: white;
+  border: none;
+  padding: 0.7rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.btn-primary:hover {
+  background-color: #b24900;
+}
+
+/* ---------- REGISTER LINK ---------- */
+.register-text {
+  margin-top: 1rem;
+  color: #5a2500;
+  font-size: 0.9rem;
+}
+.register-text a {
+  color: #cc5500;
+  font-weight: 600;
+  text-decoration: none;
+}
+.register-text a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- REGISTER FORM ---------- */
+#registerForm {
+  margin-top: 0.5rem;
+}
+#registerForm input {
+  margin-bottom: 0.9rem;
+}
+
+/* ---------- BOTÓN SECUNDARIO ---------- */
+.btn-secondary {
+  /* Naranja */
+  background-color: #FFA500;
+  /* Texto blanco */
+  color: white;
+  /* Sin borde */
+  border: none;
+  /* Esquinas redondeadas */
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  /* Animación suave */
+  transition: all 0.3s ease;
+  margin-top: 15px;
+  /* Sombra sutil */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+/* ---------- EFECTO HOVER ---------- */
+.btn-secondary:hover {
+  /* Naranja más oscuro al pasar el mouse */
+  background-color: #FF8C00;
+  /* Sombra más marcada */
+  box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+  /* Ligero levantamiento */
+  transform: translateY(-2px);
+}

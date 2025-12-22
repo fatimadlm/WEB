@@ -1,0 +1,165 @@
+/* ---------- RESET ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* El body del iframe coincide con el color del modal */
+body.profile-edit-form {
+  background-color: #fffaf3;
+  color: #5a2500;
+  /* Espacio interior */
+  padding: 2rem;
+}
+
+/* El formulario ahora ocupa todo el ancho */
+form {
+  width: 100%;
+  /* La clave del arreglo */
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Tus estilos de formulario (adaptados) --- */
+
+label {
+  display: block;
+  font-weight: 600;
+  color: #bf360c;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  /* Ocupa todo el ancho disponible */
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ffb74d;
+  border-radius: 10px;
+  font-size: 1em;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
+}
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #ef6c00;
+  box-shadow: 0 0 6px rgba(239, 108, 0, 0.5);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.field-hint {
+  font-size: 0.85rem;
+  color: #8b5e34;
+  margin-top: 4px;
+}
+
+fieldset {
+  border: none;
+  margin-top: 1.5rem;
+  /* CORREGIDO: Quita el padding para que se alinee */
+  padding: 0;
+  border-radius: 10px;
+  /* CORREGIDO: Fondo transparente, el estilo del recuadro ya no es necesario aquí */
+  background-color: transparent;
+}
+legend {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #6b2b00;
+  /* CORREGIDO: Quita los márgenes del legend */
+  padding: 0; 
+  margin: 0;
+  /* Añade un margen superior para separarlo */
+  margin-top: 1rem;
+}
+
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #f57c00, #ef6c00);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.3s;
+}
+.btn-primary:hover {
+  background: linear-gradient(90deg, #ff9800, #f57c00);
+  transform: scale(1.03);
+}
+
+/* --- Tus estilos de Avatar (adaptados) --- */
+.avatar {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  /* Centrado */
+  margin: 0 auto 1.5rem auto;
+  border-radius: 50%;
+  background-color: #ffe0b2;
+  border: 3px dashed #ffb74d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e69b2e;
+  /* Para que la imagen de preview no se salga */
+  overflow: hidden;
+}
+
+/* Estilo para la imagen de previsualización */
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+
+.avatar-trigger {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  background: #cc5500;
+  color: white;
+  border-radius: 50%;
+  border: 2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.avatar-trigger:hover {
+  background: #e06616;
+}
+
+/* Utilidad para ocultar inputs */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
