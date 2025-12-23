@@ -11,6 +11,8 @@
 <img width="1069" height="350" alt="image" src="https://github.com/user-attachments/assets/69c78d02-87fb-45ce-b1ea-cd8fd6d94b97" />
 
 6.- Una vez hecho esto, darle al icono de Run y se te abrirá la página de Registro/Iniciar Sesión en el navegador. Una vez registrado/iniciado sesión podrás navegar por la aplicación tal y como se podía en la PL1
+
+
 <img width="483" height="63" alt="Captura de pantalla 2025-12-23 202157" src="https://github.com/user-attachments/assets/6c2bbccd-ea57-4e5f-9d10-2b3857789660" />
 
 
