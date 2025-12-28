@@ -1,0 +1,82 @@
+/* ---------- PODIO TOP 3 ---------- */
+.podio-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; 
+  gap: 30px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+/* Cada post del podio */
+.podio-post {
+  background-color: #fff8f0;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 220px;
+  text-align: center;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s;
+}
+.podio-post:hover {
+  transform: translateY(-5px);
+}
+
+.first { height: 400px; order: 2; }  /* Centro y más alto */
+.second { height: 350px; order: 1; } /* Izquierda, un poco más bajo */
+.third { height: 300px; order: 3; }  /* Derecha, más bajo */
+
+/* Imagen del post */
+.podio-post .post-img {
+  width: 100%;
+  border-radius: 0.8rem;
+  margin: 10px 0;
+  height: 140px;
+  object-fit: cover;
+}
+
+/* Header  */
+.podio-post .post-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.podio-post .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* Contenido y likes */
+.podio-post p {
+  font-size: 0.9rem;
+  color: #4a2a0a;
+  margin: 5px 0;
+  flex: 1;
+}
+
+.podio-post .likes {
+  margin-top: 8px;
+  font-weight: bold;
+  color: #ff4500;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .podio-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .first, .second, .third {
+    order: initial;
+    height: auto;
+    width: 90%;
+    margin-bottom: 15px;
+  }
+}

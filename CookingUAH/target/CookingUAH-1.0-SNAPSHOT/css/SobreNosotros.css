@@ -1,0 +1,89 @@
+/* ---------- RESET GENERAL ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ---------- BODY ---------- */
+body {
+  background-color: #fcefdc; 
+  color: #5a2500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ---------- HEADER ---------- */
+header {
+  background-color: #cc5500;
+  width: 100%;
+  text-align: center;
+  padding: 1.5rem 0;
+  color: white;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+header h1 {
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+/* ---------- CONTENEDOR PRINCIPAL ---------- */
+.container {
+  background-color: #fff8f0;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  max-width: 800px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------- SECCIONES ---------- */
+section {
+  margin-bottom: 2rem;
+}
+
+section h2 {
+  color: #cc5500;
+  margin-bottom: 0.75rem;
+  font-size: 1.4rem;
+  border-left: 5px solid #cc5500;
+  padding-left: 0.5rem;
+}
+
+section p {
+  font-size: 1rem;
+  color: #5a2500;
+  margin-bottom: 0.6rem;
+}
+
+/* ---------- ENLACES DE EMAIL ---------- */
+.email {
+  color: #b24900;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.email:hover {
+  text-decoration: underline;
+}
+
+/* ---------- RESPONSIVE DESIGN ---------- */
+@media (max-width: 600px) {
+  .container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  section h2 {
+    font-size: 1.2rem;
+  }
+}

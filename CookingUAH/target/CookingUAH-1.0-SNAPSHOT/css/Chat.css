@@ -1,0 +1,318 @@
+/* CHATS.CSS*/
+/* ---------- FONDO ---------- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ---------- CONTENIDO PRINCIPAL DEL CHAT (CORREGIDO) ---------- */
+.feed.chat-page {
+  flex: 1; 
+  max-width: 1000px; 
+  margin: 0 auto; 
+  display: flex;
+  flex-direction: column;
+  height: 100vh; 
+  padding: 2rem; 
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  gap: 1rem;
+  color: #5a2500;
+  margin-bottom: 2.5rem; 
+}
+
+/*Estilos para el enlace del título */
+.chat-header h2 a {
+  color: inherit; 
+  text-decoration: none;
+  transition: text-decoration 0.2s;
+}
+.chat-header h2 a:hover {
+  text-decoration: underline; 
+}
+
+.btn-volver {
+  text-decoration: none;
+  background-color: #fff8f0;
+  color: #cc5500;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+.btn-volver:hover {
+  background-color: #ffe0b2;
+}
+
+/* AÑADIDO: Estilo para el espaciador invisible */
+.header-spacer {
+  /* Hacemos que tenga el mismo ancho que el botón "Volver" */
+  /* (El padding del botón es 0.5rem 1rem) */
+  display: block;
+  width: 90px; /* Ancho aproximado del botón "Volver" */
+  visibility: hidden; /* Lo hace invisible */
+}
+
+/* Contenedor de burbujas */
+.chat-box {
+  flex: 1; /* Ocupa todo el espacio disponible */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto; 
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.5); 
+  border-radius: 1rem;
+}
+
+/* Burbuja de chat genérica */
+.chat-bubble {
+  max-width: 70%;
+  padding: 0.8rem 1.2rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+.chat-bubble p {
+  margin: 0;
+  font-size: 1rem;
+  word-wrap: break-word; 
+  white-space: pre-wrap; /* Respeta los saltos de línea */
+}
+.chat-bubble span {
+  font-size: 0.75rem;
+  color: #5a2500;
+  opacity: 0.7;
+  display: block;
+  margin-top: 5px;
+}
+
+/* Mensajes RECIBIDOS (Izquierda) */
+.chat-bubble.received {
+  align-self: flex-start;
+  background-color: #fff8f0; 
+  color: #4a2a0a;
+  border-bottom-left-radius: 0.5rem;
+}
+
+/* Mensajes ENVIADOS (Derecha) */
+.chat-bubble.sent {
+  align-self: flex-end;
+  background-color: #ffb347; 
+  color: #5a2500;
+  border-bottom-right-radius: 0.5rem;
+}
+
+/* Área de input de texto (MODIFICADA) */
+.chat-input-area {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem; /* Espacio entre el chat-box y el input */
+}
+
+.chat-input-area input {
+  flex: 1;
+  padding: 1rem;
+  border: 2px solid #ffb74d;
+  border-radius: 12px;
+  font-size: 1rem;
+}
+.chat-input-area input:focus {
+  outline: none;
+  border-color: #ef6c00;
+}
+
+.chat-input-area button {
+  background: linear-gradient(90deg, #f57c00, #ef6c00);
+  color: white;
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.chat-input-area button:hover {
+  transform: scale(1.03);
+}
+
+/* ... (Estilos del MODAL de Home.css) ... */
+
+
+.modal-backdrop {
+  position: fixed; 
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); 
+  display: flex; /* Esto es importante para que el JS lo muestre */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fffaf3; 
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(230, 126, 34, 0.2);
+  width: 100%;
+  max-width: 600px; 
+  position: relative;
+  animation: modal-fade-in 0.3s ease-out;
+}
+
+.modal-content h2 {
+  color: #e67e22;
+  margin-bottom: 25px;
+  font-size: 1.8em;
+  font-weight: 700;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #aaa;
+  font-size: 2.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.modal-close:hover {
+  color: #777;
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Estilos para la caja de publicación DENTRO DEL MODAL */
+.modal-post-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-post-box textarea {
+  width: 100%;
+  min-height: 120px; 
+  border: 2px solid #ffb74d; 
+  border-radius: 8px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+.modal-post-box textarea:focus {
+  border-color: #ef6c00;
+  box-shadow: 0 0 6px rgba(239, 108, 0, 0.5);
+  outline: none;
+}
+
+/* Botón de publicar (del modal) */
+#modalNewPostBtn {
+  background: linear-gradient(90deg, #f57c00, #ef6c00); 
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.3s;
+}
+#modalNewPostBtn:hover {
+  background: linear-gradient(90deg, #ff9800, #f57c00);
+  transform: scale(1.03);
+}
+
+/* Previsualización de imagen en el modal */
+.modal-post-box .image-preview-container {
+  border-color: #ffb74d; 
+  max-height: 250px;
+}
+.modal-post-box .image-preview {
+  max-height: 230px; 
+}
+
+/* (Estilos de .image-preview-container, .remove-image-btn, .post-controls, etc.) */
+.image-preview-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    min-height: 50px; 
+    overflow: hidden; 
+    border: 1px dashed #d6b58e; 
+}
+.image-preview {
+    max-width: 100%;
+    max-height: 200px; 
+    border-radius: 8px;
+    object-fit: contain; 
+}
+.remove-image-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+.remove-image-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.post-controls {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+}
+.post-options {
+  display: flex;
+  gap: 0.8rem; 
+}
+.option-btn {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%; 
+  padding: 0.5rem;
+  font-size: 1.2rem; 
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: #cc5500; 
+}
+.option-btn:hover {
+  background-color: #fff1e0; 
+}

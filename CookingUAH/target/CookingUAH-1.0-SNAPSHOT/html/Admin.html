@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cooking UAH — Admin</title>
+  <link rel="stylesheet" href="../css/Admin.css">
+</head>
+<body>
+  <div class="page">
+    <header class="brand">
+      <img class="brand__logo" src="../Imagenes/logo.png" alt="Logo Cooking UAH">
+      <h1 class="brand__title">Cooking UAH</h1>
+      <p class="brand__subtitle">Menú de administrador</p>
+    </header>
+
+    <!-- Menú principal de administración -->
+    <div class="card card--menu">
+      <button class="menu-btn" data-target="#users">Gestionar usuarios</button>
+      <button class="menu-btn" data-target="#posts">Gestionar publicaciones</button>
+      <button class="menu-btn" data-target="#comments">Gestionar comentarios</button>
+
+      <!-- Buscador general -->
+      <div class="search">
+          <input id="adminSearch" type="search"
+                placeholder="Buscar en usuarios, publicaciones y comentarios"
+                aria-label="Buscar">
+      </div>
+    </div>
+
+
+    <!-- Tabla de usuarios -->
+    <section id="users" class="card">
+      <div class="card__header">
+        <h2>Usuarios</h2>
+        <div class="legend">
+          <span class="badge success">Activo</span>
+          <span class="badge warn">Bloqueado</span>
+          <span class="badge neutral">Rol</span>
+        </div>
+      </div>
+
+      <div class="table-wrap" role="region" aria-label="Tabla de usuarios">
+        <table class="table" id="usersTable">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Rol</th>
+              <th>Estado</th>
+              <th style="width:200px">Acciones</th>
+            </tr>
+          </thead>
+          <tbody><!-- Contenido cargado por JS --></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Tabla de publicaciones -->
+    <section id="posts" class="card">
+      <div class="card__header">
+        <h2>Publicaciones</h2>
+      </div>
+      <div class="table-wrap" role="region" aria-label="Tabla de publicaciones">
+        <table class="table" id="postsTable">
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Autor</th>
+              <th>Fecha</th>
+              <th>Comentarios</th>
+              <th style="width:220px">Acciones</th>
+            </tr>
+          </thead>
+          <tbody><!-- Contenido cargado por JS --></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Tabla de comentarios -->
+    <section id="comments" class="card">
+      <div class="card__header">
+        <h2>Comentarios</h2>
+      </div>
+      <div class="table-wrap" role="region" aria-label="Tabla de comentarios">
+        <table class="table" id="commentsTable">
+          <thead>
+            <tr>
+              <th>Publicación</th>
+              <th>Autor</th>
+              <th>Contenido</th>
+              <th>Fecha</th>
+              <th style="width:160px">Acciones</th>
+            </tr>
+          </thead>
+          <tbody><!-- Contenido cargado por JS --></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+      <a class="link" href="Home.html">← Volver a Inicio</a>
+      <a class="link" href="../index.html">Cerrar sesión</a>
+    </footer>
+  </div>
+
+  <script type ="module" src="../js/Admin.js" ></script>
+</body>
+</html>

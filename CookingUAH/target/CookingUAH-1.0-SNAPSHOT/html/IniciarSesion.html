@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Ajuste para móviles -->
+  <title>Cooking UAH - Iniciar sesión</title>
+  <link rel="stylesheet" href="../css/style.css" /> <!-- Estilos de la página -->
+  <script type = "module" src="../js/InicioSesion.js"></script> <!-- Lógica de inicio de sesión -->
+</head>
+<body>
+  <div class="login-container">
+    <header class="logo">
+      <img src="../Imagenes/logo.png" alt="Logo Cooking UAH" class="logo-img" /> <!-- Logo -->
+      <h1>Cooking UAH</h1>
+    </header>
+
+    <main class="login-box">
+      <h2>Inicio de sesión</h2>
+
+      <form id="loginForm">
+        <label for="username">Nombre de usuario</label>
+        <input type="text" id="username" name="username" placeholder="Introduce tu usuario" required /> <!-- Usuario -->
+
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" placeholder="Introduce tu contraseña" required /> <!-- Contraseña -->
+
+        <button type="submit" class="btn-primary">Iniciar sesión</button> <!-- Botón enviar -->
+
+        <p class="register-text">
+          ¿No tienes cuenta?
+          <a href="Registro.html">Registrarse</a> 
+        </p>
+      </form>
+    </main>
+  </div>
+</body>
+</html>

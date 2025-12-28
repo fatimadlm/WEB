@@ -1,0 +1,155 @@
+/* ---------- RESET ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ---------- BODY GENERAL ---------- */
+body {
+  background-color: #fcefdc;
+  color: #4a2000;
+  line-height: 1.6;
+  padding: 2rem;
+}
+
+/* ---------- CONTENEDOR PRINCIPAL ---------- */
+.container {
+  max-width: 900px;
+  background-color: #fff8f0;
+  margin: 2rem auto;
+  padding: 2.5rem 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- CABECERA ---------- */
+header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 2px solid #f3d4b6;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+header .logo-img {
+  width: 70px;
+  height: auto;
+}
+header h1 {
+  font-size: 1.8rem;
+  color: #6b2b00;
+}
+header .meta {
+  font-size: 0.9rem;
+  color: #865f3c;
+  margin-top: 0.2rem;
+}
+
+/* ---------- ÍNDICE  ---------- */
+.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  background-color: #fbead2;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+.toc strong {
+  width: 100%;
+  margin-bottom: 0.3rem;
+  color: #6b2b00;
+}
+.toc a {
+  background-color: #fff;
+  border: 1px solid #e3c4a4;
+  color: #b24900;
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.toc a:hover {
+  background-color: #ffe6c7;
+}
+
+/* ---------- SECCIONES DE TÉRMINOS ---------- */
+section {
+  margin-bottom: 2rem;
+}
+section h2 {
+  color: #6b2b00;
+  font-size: 1.3rem;
+  margin-bottom: 0.6rem;
+  border-left: 4px solid #cc5500;
+  padding-left: 0.5rem;
+}
+section p {
+  margin-bottom: 0.8rem;
+}
+section ul {
+  margin-left: 1.5rem;
+  list-style-type: disc;
+}
+section ul li {
+  margin-bottom: 0.4rem;
+}
+
+/* ---------- ENLACES ---------- */
+a {
+  color: #cc5500;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- BOTÓN VOLVER ---------- */
+.accept-btn {
+  display: inline-block;
+  background-color: #cc5500;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+  margin-top: 1rem;
+}
+.accept-btn:hover {
+  background-color: #b24900;
+}
+
+/* ---------- TEXTO PEQUEÑO ---------- */
+.small {
+  font-size: 0.9rem;
+  color: #5a2500;
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+  border-top: 2px solid #f3d4b6;
+  padding-top: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #865f3c;
+  margin-top: 2rem;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 700px) {
+  .container {
+    padding: 1.5rem;
+  }
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .toc {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

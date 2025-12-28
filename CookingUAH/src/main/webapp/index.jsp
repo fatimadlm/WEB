@@ -1,0 +1,34 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cooking UAH - Bienvenido</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="login-container">
+    <header class="logo">
+      <img src="Imagenes/logo.png" alt="Logo Cooking UAH" class="logo-img">
+      <h1>Cooking UAH</h1>
+    </header>
+    
+    <main class="login-box">
+      <h2>¡Bienvenido a Cooking UAH!</h2>
+      
+      <p>Para los amantes de la cocina y para los que no lo son tanto. Comparte recetas, descubre nuevos sabores y conecta con apasionados de la gastronomía.</p> 
+      
+      <div style="margin-top: 1.5rem;">
+        <a href="login.jsp"><button class="btn-primary" style="margin-bottom: 0.8rem;">Iniciar sesión</button></a>
+        <a href="registro.jsp"><button class="btn-primary">Registrarse</button></a> 
+      </div>
+      
+      <div class="register-text" style="margin-top: 2rem;">
+        <a href="sobreNosotros.jsp">Sobre nosotros</a> | 
+        <a href="terminos.jsp">Términos y condiciones</a>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

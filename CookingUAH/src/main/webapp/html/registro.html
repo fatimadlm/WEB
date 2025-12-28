@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <!-- Ajuste para móviles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cooking UAH - Registro</title>
+  <!-- Estilos de la página -->
+  <link rel="stylesheet" href="../css/style.css">
+  <!-- Lógica del registro -->
+  <script type="module" src="../js/Registro.js"></script>
+</head>
+<body>
+  <!-- Contenedor principal de la página de Registro -->
+  <div class="login-container">
+
+    <!-- Encabezado / Logo -->
+    <header class="logo">
+      <!-- Logo -->
+      <img src="../Imagenes/logo.png" alt="Logo Cooking UAH" class="logo-img"> 
+       <!-- Título de la página -->
+      <h1>Cooking UAH</h1>
+    </header>
+
+    <!-- Caja de registro -->
+    <main class="login-box">
+      <!-- Subtítulo -->
+      <h2>Crear cuenta</h2>
+      
+      <!-- Formulario de registro -->
+      <form id="registerForm">
+        <!-- Casilla para rellenar nombre personal -->
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Introduce tu nombre" required>
+        <!-- Casilla para rellenar nombre de usuario -->
+        <label for="username">Nombre de usuario</label>
+        <input type="text" id="username" name="username" placeholder="Ej: usuario1" required>
+        <!-- Casilla para rellenar correo electrónico-->
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" name="email" placeholder="usuario1@correo.com" required>
+        <!-- Casilla para rellenar contraseaña -->
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" placeholder="Crea una contraseña" required>
+        <!-- Casilla para confirmar contraseña -->
+        <label for="confirmPassword">Confirmar contraseña</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repite la contraseña" required>
+        <!-- Botón para confirmar el registro -->
+        <button type="submit" class="btn-primary">Registrarse</button>
+         <!-- Apartado de 'login' -->
+        <p class="register-text">
+          ¿Ya tienes cuenta?
+          <!-- Enlace a iniciar sesión -->
+          <a href="IniciarSesion.html">Inicia sesión</a>
+        </p>
+      </form>
+      <!-- Botón "Volver al inicio" -->
+      <button onclick="window.location.href='../index.html'" class="btn-secondary" style="margin-top: 10px;">
+        Volver al inicio
+      </button>
+    </main>
+  </div>
+</body>
+</html>

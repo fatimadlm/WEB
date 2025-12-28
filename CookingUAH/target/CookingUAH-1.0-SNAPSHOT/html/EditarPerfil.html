@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cooking UAH — Editar perfil</title>
+
+  <link rel="stylesheet" href="../css/EditarPerfil.css" />
+
+  <meta name="description" content="Edita tu perfil en Cooking UAH: foto, nombre, correo, biografía y contraseña." />
+</head>
+
+<body class="profile-edit-form">
+
+  <p id="status" class="visually-hidden" aria-live="polite"></p>
+
+  <form id="editProfile" action="#" method="post" enctype="multipart/form-data" novalidate>
+    
+    <div class="avatar">
+      <input class="visually-hidden" type="file" id="avatar" name="avatar" accept="image/*">
+      <label for="avatar" class="avatar-trigger" aria-label="Cambiar foto de perfil">
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M9.5 6.5L11 5h2l1.5 1.5H18a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8.5a2 2 0 0 1 2-2h3.5zM12 16.5a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-1.8a2.2 2.2 0 1 1 0-4.4 2.2 2.2 0 0 1 0 4.4z" fill="currentColor"/>
+        </svg>
+      </label>
+      <img id="avatarPreview" src="#" alt="Previsualización de avatar" style="display: none;">
+    </div>
+
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" autocomplete="name" required>
+
+    <label for="email">Correo electrónico</label>
+    <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" autocomplete="email" required>
+
+    <label for="bio">Biografía</label>
+    <textarea id="bio" name="bio" rows="4" maxlength="160" aria-describedby="bioHint" placeholder="Cuenta algo sobre ti (máx. 160 caracteres)"></textarea>
+    <p id="bioHint" class="field-hint">Ej.: “Amante de la repostería. Team canela. Sin gluten.”</p>
+
+    <fieldset>
+      <legend>Contraseña</legend>
+      <p class="field-hint" style="margin:0 0 10px">Déjalo en blanco si no quieres cambiarla.</p>
+
+      <label for="passwordActual">Contraseña actual</label>
+      <input type="password" id="passwordActual" name="passwordActual" placeholder="••••••••" autocomplete="current-password">
+
+      <label for="passwordNueva">Nueva contraseña</label>
+      <input type="password" id="passwordNueva" name="passwordNueva" placeholder="Mín. 8 caracteres" autocomplete="new-password">
+
+      <label for="passwordConfirm">Confirmar nueva contraseña</label>
+      <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Repite la nueva contraseña" autocomplete="new-password">
+    </fieldset>
+
+    <div class="actions">
+      <button type="submit" class="btn-primary">Guardar cambios</button>
+    </div>
+  </form>
+
+<script type="module" src="../js/EditarPerfil.js"></script>
+</body>
+</html>

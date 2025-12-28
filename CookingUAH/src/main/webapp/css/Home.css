@@ -1,0 +1,802 @@
+/* ---------- RESET ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ---------- FONDO ---------- */
+body {
+  background-image: url('../Imagenes/Comida.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(252, 239, 220, 0.7);
+  z-index: -1; 
+}
+
+.home-container {
+  display: flex;
+  position: relative;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar {
+  width: 250px;
+  flex-shrink: 0; 
+  background-color: rgba(255, 248, 240, 0.95);
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; 
+  height: 100vh; 
+  position: sticky; 
+  top: 0; 
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+.logo-img {
+  width: 70px;
+  margin-bottom: 0.5rem;
+}
+.logo h1 {
+  color: #6b2b00;
+  font-size: 1.5rem;
+}
+
+/* ---------- BOTÓN PRIMARIO ---------- */
+.btn-primary {
+  background-color: #FFA500;
+  color: white;
+  text-decoration: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 100%;
+  border: none; 
+  cursor: pointer; 
+  font-size: 1em; 
+}
+.btn-primary:hover {
+  background-color: #ff8c00;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
+}
+
+.nav-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; 
+  width: 100%;
+}
+
+/* ---------- BOTÓN SECUNDARIO ---------- */
+.btn-secondary {
+  background-color: #cc5500;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem;
+  text-align: center;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+.btn-secondary:hover {
+  background-color: #b24900;
+  transform: translateY(-2px);
+}
+
+/* ---------- BOTÓN CERRAR SESIÓN ---------- */
+.btn-logout {
+  text-decoration: none;
+  background-color: #ff7043;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: 100%; 
+}
+/* ---------- EFECTO HOVER ---------- */
+.btn-logout:hover {
+  /* Naranja más oscuro al pasar el mouse */
+  background-color: #e64a19;
+  /* Ligero levantamiento */
+  transform: translateY(-2px);
+}
+
+
+/* -------------------- FEED -------------------- */
+/* ------------- PÁGINA HOME ------------- */
+.feed {
+  flex: 1; 
+  padding: 2rem;
+  max-width: 1000px; 
+  margin: 0 auto; 
+}
+.feed h2 {
+  color: #5a2500;
+  margin-bottom: 1.5rem;
+}
+/* ---------- PÁGINA MENSAJES ---------- */
+.feed-chat-page {
+  flex: 1; 
+  padding: 0;
+  display: flex;
+  height: 100vh;
+}
+
+/* ---------- LISTA DE CHATS ---------- */
+.chat-list-container {
+  width: 350px; 
+  flex-shrink: 0;
+  background-color: rgba(255, 250, 245, 0.9);
+  border-right: 1px solid #d6b58e;
+  padding: 2rem;
+  overflow-y: auto;
+}
+.chat-list-container h2 {
+  color: #5a2500;
+  margin-bottom: 1.5rem;
+}
+
+.chat-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.chat-list li {
+  border-radius: 1rem;
+}
+.chat-list-item {
+  background-color: #fff8f0;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  text-align: left;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+.chat-list-item:hover {
+  background-color: #fff1e0;
+}
+.chat-list-item.selected { 
+  background-color: #ffe0b2;
+  border-color: #f57c00;
+}
+.chat-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+.chat-info h3 {
+  margin-bottom: 5px;
+  font-size: 1.1em;
+  color: #6b2b00;
+}
+.chat-info p {
+  font-size: 0.9em;
+  color: #4a2a0a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+/* ---------- COLUMNA DERECHA ---------- */
+.chat-conversation-container {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #5a2500;
+}
+.logo-placeholder {
+  width: 100px;
+  opacity: 0.5;
+  margin-bottom: 1rem;
+}
+.chat-placeholder h3 {
+  font-size: 1.5rem;
+}
+
+
+.chat-active-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  padding-bottom: 90px; 
+  position: relative;
+  height: 100%;
+}
+.chat-header {
+  color: #5a2500;
+  margin-bottom: 2rem; 
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #ffb74d;
+}
+.chat-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto; 
+  padding-right: 10px;
+}
+.chat-bubble {
+  max-width: 70%;
+  padding: 0.8rem 1.2rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+.chat-bubble p {
+  margin: 0;
+  font-size: 1rem;
+  word-wrap: break-word; 
+  white-space: pre-wrap;
+}
+.chat-bubble span {
+  font-size: 0.75rem;
+  color: #5a2500;
+  opacity: 0.7;
+  display: block;
+  margin-top: 5px;
+}
+.chat-bubble.received {
+  align-self: flex-start;
+  background-color: #fff8f0; 
+  color: #4a2a0a;
+  border-bottom-left-radius: 0.5rem;
+}
+.chat-bubble.sent {
+  align-self: flex-end;
+  background-color: #ffb347; 
+  color: #5a2500;
+  border-bottom-right-radius: 0.5rem;
+}
+.chat-input-area {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem; 
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+}
+.chat-input-area input {
+  flex: 1;
+  padding: 1rem;
+  border: 2px solid #ffb74d;
+  border-radius: 12px;
+  font-size: 1rem;
+}
+.chat-input-area input:focus {
+  outline: none;
+  border-color: #ef6c00;
+}
+.chat-input-area button {
+  background: linear-gradient(90deg, #f57c00, #ef6c00);
+  color: white;
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+.chat-list-header {
+  display: flex;
+  
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.chat-list-header h2 {
+  /* Quita el margen por defecto del h2 */
+  margin: 0;
+}
+
+/* BARRA SUPERIOR DE BÚSCADOR */
+.top-bar {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#usersContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.user-card {
+  background-color: #fff8f0;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.user-card-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  border: 3px solid #ffb347;
+}
+
+.user-card-name {
+  color: #6b2b00;
+  font-size: 1.2rem;
+  font-weight: 600;
+  /* El margen inferior se lo daremos al contenedor de botones */
+  margin-bottom: 0; 
+}
+
+/* Contenedor para los dos botones (Perfil y Seguir) */
+.user-card-actions {
+  display: flex;
+  gap: 0.5rem; /* Espacio entre los botones */
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.user-card-actions .btn-perfil,
+.user-card-actions .btn-follow {
+  flex: 1;
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+/* Botón 'Seguir'*/
+.user-card-actions .btn-follow {
+  /* Hereda los estilos de .btn-primary que le daremos en el JS */
+  border: none;
+  cursor: pointer;
+}
+
+.user-card-actions .btn-follow.following {
+  background-color: #ff7043; 
+  font-weight: bold;
+}
+.user-card-actions .btn-follow.following:hover {
+  background-color: #e64a19;
+}
+
+/* Mensaje cuando no se encuentran resultados */
+.no-results {
+  color: #5a2500;
+  font-size: 1.1rem;
+  padding: 2rem;
+  text-align: center;
+  background-color: #fff8f0;
+  border-radius: 1rem;
+}
+
+/* ------------- BUSCADOR ------------- */
+/* ------------- PÁGINA HOME ------------- */
+/* ---- BUSCADOR DE RECETAS ---- */
+.search-bar {
+  display: flex;
+  gap: 10px;
+}
+.search-bar input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d6b58e;
+  background-color: #fffaf5;
+  width: 250px;
+}
+.search-bar button {
+  background-color: #cc5500;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.search-bar button:hover {
+  background-color: #b24900;
+}
+
+/* ------------- PÁGINA MENSAJES ------------- */
+/* ---- BUSCADOR DE CHATS ---- */
+.search-bar-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+.search-bar-container input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d6b58e;
+  background-color: #fffaf5;
+  font-size: 1rem;
+}
+.search-bar-container button {
+  background-color: #cc5500;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* PUBLICADOR RÁPIDO EN EL FEED */
+.create-post {
+  background-color: #fffaf5;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.create-post textarea {
+  width: 100%;
+  min-height: 80px;
+  border: 1px solid #d6b58e;
+  border-radius: 8px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+/* CONTENEDOR DE PREVISUALIZACIÓN DE IMAGEN */
+.image-preview-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    min-height: 50px; 
+    overflow: hidden; 
+    border: 1px dashed #d6b58e; 
+}
+.image-preview {
+    max-width: 100%;
+    max-height: 200px; 
+    border-radius: 8px;
+    object-fit: contain; 
+}
+.remove-image-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+.remove-image-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* controles de publicacion */
+.post-controls {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+}
+.post-options {
+  display: flex;
+  gap: 0.8rem; 
+}
+.option-btn {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%; 
+  padding: 0.5rem;
+  font-size: 1.2rem; 
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: #cc5500; 
+}
+.option-btn:hover {
+  background-color: #fff1e0; 
+}
+
+/* boton publicar del feed */
+.create-post #newPostBtn {
+  background-color: #cc5500;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.create-post #newPostBtn:hover {
+  background-color: #b24900;
+}
+
+/* BOTÓN RECARGAR DATOS DEMO */
+.btn-refresh {
+  background: none;
+  border: 1px solid #ccc;
+  color: #555;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.btn-refresh:hover {
+  background: #f0f0f0;
+  border-color: #aaa;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* post */
+.post {
+  background-color: #fff8f0;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+}
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+.user-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.post-header h3 {
+  color: #6b2b00;
+}
+
+/* enlace nombre usuario en post */
+.post-username-link {
+  text-decoration: none;
+  color: inherit;
+}
+.post-username-link:hover h3 {
+  text-decoration: underline;
+}
+
+.post-header span {
+  color: #8b5e34;
+  font-size: 0.9rem;
+}
+.post-content p {
+  color: #4a2a0a;
+  margin-bottom: 1rem;
+  white-space: normal; 
+  word-wrap: break-word;
+}
+.post-img {
+  width: 100%;
+  border-radius: 0.8rem;
+}
+.post-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.like-btn, .comment-btn {
+  background-color: #ffb347;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  transition: 0.3s;
+}
+.like-btn:hover, .comment-btn:hover {
+  background-color: #ff9800;
+}
+.liked {
+  background-color: #ff7043 !important;
+}
+.comments {
+  margin-top: 1rem;
+  background-color: #fff1e0;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  color: #5a2500;
+  max-height: 150px; 
+  overflow-y: auto; 
+}
+.comments p {
+  margin-top: 0.5rem;
+  padding-right: 5px; 
+}
+.comments p:first-child {
+  margin-top: 0;
+}
+
+/* modal publicacion */
+.modal-backdrop {
+  position: fixed; 
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); 
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fffaf3; 
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(230, 126, 34, 0.2);
+  width: 100%;
+  max-width: 600px; 
+  position: relative;
+  animation: modal-fade-in 0.3s ease-out;
+}
+
+.modal-content h2 {
+  color: #e67e22;
+  margin-bottom: 25px;
+  font-size: 1.8em;
+  font-weight: 700;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #aaa;
+  font-size: 2.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.modal-close:hover {
+  color: #777;
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Estilos para la caja de publicación DENTRO DEL MODAL */
+.modal-post-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-post-box textarea {
+  width: 100%;
+  min-height: 120px; 
+  border: 2px solid #ffb74d; 
+  border-radius: 8px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+.modal-post-box textarea:focus {
+  border-color: #ef6c00;
+  box-shadow: 0 0 6px rgba(239, 108, 0, 0.5);
+  outline: none;
+}
+
+/* Botón de publicar (del modal) */
+#modalNewPostBtn {
+  background: linear-gradient(90deg, #f57c00, #ef6c00); 
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.3s;
+}
+#modalNewPostBtn:hover {
+  background: linear-gradient(90deg, #ff9800, #f57c00);
+  transform: scale(1.03);
+}
+
+/* previsualizacion de imagen en modal */
+.modal-post-box .image-preview-container {
+  border-color: #ffb74d; 
+  max-height: 250px;
+}
+.modal-post-box .image-preview {
+  max-height: 230px; 
+}
+
+/* enlace autor en post */
+.post-author-link {
+  text-decoration: none; 
+  color: inherit;       
+}
+
+.post-author-link:hover {
+  text-decoration: underline; 
+}
+.post-header a {
+  text-decoration: none; 
+}
+
+/* --------- PÁGINA BUSCAR AMIGOS --------- */
+
