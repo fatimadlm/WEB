@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 servlets\PublicarServlet.class
 modelo\User.class
 servlets\InteraccionServlet.class
@@ -13,3 +14,5 @@ modelo\InstalarDatos.class
 com\mycompany\mavenproject1\JakartaRestConfiguration.class
 modelo\PostDAO.class
 servlets\SetupServlet.class
+=======
+>>>>>>> 0724e1909f79f2d5d7699163b36af5d905e632a2
