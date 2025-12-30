@@ -51,6 +51,7 @@ public class BuscarServlet extends HttpServlet {
         // Guardamos la lista en la "mochila" (request) con la etiqueta "resultadosBusqueda"
         // Esta etiqueta DEBE coincidir con la que pusiste en el JSP: request.getAttribute("resultadosBusqueda")
         request.setAttribute("resultadosBusqueda", listaResultados);
+        request.setAttribute ("terminoBusqueda", textoBusqueda);
 
         // 5. ENVIAR DE VUELTA AL JSP
         request.getRequestDispatcher("BuscaAmigos.jsp").forward(request, response);

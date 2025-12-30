@@ -44,8 +44,8 @@ public class LoginServlet extends HttpServlet {
             if ("admin".equals(usuarioEncontrado.getRole())) {
                 response.sendRedirect("admin.jsp"); // Si tienes panel admin
             } else {
-                // Ir al feed principal ( feed.jsp)
-                response.sendRedirect("feed.jsp"); // O buscarAmigos.jsp para probar
+                // Ir al feed principal
+                response.sendRedirect("FeedServlet"); // ¡Cocinero, dame de comer!
             }
 
         } else {

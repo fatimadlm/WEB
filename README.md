@@ -1,3 +1,8 @@
+# Cooking UAH
+## Aplicación web desarrollada en el marco de la PL2 de la asignatura Arquitectura y Diseño de Sistemas Web y C/S para el curso 2025-26
+![Imagen corporativa Cooking UAH](./CookingUAH/src/main/webapp/Imagenes/logo.png)
+Proyecto *Web Application* Maven desarrollado en Netbeans 28 con **JDK 24**
+
 Validador de html: https://validator.w3.org/
 <br>Avatares:https://www.istockphoto.com/es/ilustraciones/character?page=2
 <br>
