@@ -14,10 +14,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const allUsers = getUsers();
     let currentPosts = getPosts();
 
-    // Redirección de seguridad
+    // INYECCIÓN DE PERFIL
+    const params = new URLSearchParams(window.location.search);
+    const profileId = params.get('id'); // Buscamos ?id=u1 en la URL
+    
+    // Si hay un ID, buscamos ese usuario. Si no, usamos al logueado.
+    const viewedUser = profileId ? allUsers.find(u => u.id === profileId) : currentUser;
+    
+    // Si no se encuentra el usuario solicitado
+    if (!viewedUser || !viewedUser.id) {
+        alert('El perfil solicitado no existe.');
+        window.location.href = 'index.html'; 
+        return;
+    }
+    
+    // Variable booleana para saber si el perfil es del usuario logueado
+    const isOwnProfile = (viewedUser.id === currentUser.id);
+    
+    // Redirección de seguridad (Si nadie está l
     if (!currentUser.id) {
         alert('Debes iniciar sesión para acceder a esta página.');
-        window.location.href = 'IniciarSesion.html';
+        window.location.href = 'IniciarSesion.html';á
         throw new Error('Usuario no autenticado');
     }
 
@@ -38,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!timestamp) return 'Reciente';
         // Si es un string antiguo (ej: "Ahora mismo"), lo devolvemos tal cual
         if (isNaN(timestamp)) return timestamp; 
-        
         const date = new Date(timestamp);
         return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
     }
@@ -48,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function renderProfileInfo() {
-        const user = getCurrentUser();
+        const user = viewedUser();
         if (user) {
             const nameElem = document.getElementById('perfil-username-main');
             const atElem = document.getElementById('perfil-username-at');
@@ -57,6 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if(nameElem) nameElem.textContent = user.username;
             if(atElem) atElem.textContent = '@' + user.username;
             if(bioElem) bioElem.textContent = user.bio || 'Apasionado por la cocina. ¡Compartiendo mis mejores recetas!';
+            
+            const editBtn = document.querySelector('.btn-editar');
+            if (editBtn){
+                editBtn.style.display = isOwnProfile ? 'inline-block' : 'none';
+            }
         }
     }
 
@@ -100,6 +121,12 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="comments">${commentsHtml}</div>
         `;
+        
+        // Si no es mi perfil, eliminamos botones de editar y borrar
+        if (!isOwnProfile){
+            postDiv.querySelector(".btn-edit-post")?.remove();
+            postDiv.querySelector(".btn-delete-post")?.remove();
+        }
 
         // --- Lógica de Listeners dentro del elemento ---
 
@@ -108,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let countElement = likeBtn.querySelector('.like-count');
         let isLiked = post.liked || false;
         let count = parseInt(likeBtn.dataset.likesStart) || 0;
-        
         if (isLiked) likeBtn.classList.add("liked");
 
         likeBtn.addEventListener("click", () => {
@@ -116,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
             count = isLiked ? count + 1 : count - 1;
             countElement.textContent = count;
             likeBtn.classList.toggle("liked", isLiked);
-            
             // Actualizar BBDD
             const p = currentPosts.find(item => item.id === post.id);
             if(p) { 
@@ -135,7 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 newComment.innerHTML = `<strong>@${currentUser.username}:</strong> ${commentText}`; 
                 commentsContainer.appendChild(newComment);
                 commentsContainer.scrollTop = commentsContainer.scrollHeight;
-                
                 // Actualizar BBDD
                 const p = currentPosts.find(item => item.id === post.id);
                 if(p) { 
@@ -153,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 3. Editar
         postDiv.querySelector(".btn-edit-post").addEventListener('click', () => openEditModal(post));
-
         // 4. Eliminar
         postDiv.querySelector(".btn-delete-post").addEventListener('click', () => deletePost(post.id));
 
@@ -167,8 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Filtrar posts del usuario logueado
         // NOTA: Si tus posts viejos no tienen authorId, usamos currentUser.id para que se muestren los nuevos
         const myPosts = currentPosts
-            .filter(p => p.authorId === currentUser.id || (!p.authorId && p.username === '@TuUsuario')) 
-            .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                .filter(p => p.authorId === viewedUser.id)
+                .sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
 
         // Limpieza segura: Elimina solo los elementos con clase .post o mensajes previos, mantiene el título (h3/h4)
         const existingPosts = perfilPostsContainer.querySelectorAll('.post, p.empty-msg');
@@ -177,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (myPosts.length === 0) {
             const p = document.createElement('p');
             p.className = 'empty-msg';
-            p.textContent = "No has publicado ninguna receta todavía.";
+            p.textContent = viewedUser.id === currentUser.id? "No has publicado nada aún.":"Este usuario no tiene publicaciones.";
             perfilPostsContainer.appendChild(p);
             return;
         }
@@ -186,11 +209,8 @@ document.addEventListener('DOMContentLoaded', () => {
             perfilPostsContainer.appendChild(createMyPostElement(post));
         });
     }
-
-
+    
     // 3. Lógica de Edición y Borrado 
-
-
     function deletePost(postId) {
         if (!confirm("¿Estás seguro de eliminar esta receta?")) return;
         currentPosts = currentPosts.filter(p => p.id !== postId);
@@ -284,8 +304,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // 4. Lógica Crear Publicación (Modal)
-
-
     const openModalBtn = document.getElementById("openModalBtn");
     const postModal = document.getElementById("postModal");
     const closeModalBtn = postModal?.querySelector(".modal-close");
@@ -382,8 +400,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 5. Lógica Seguidores/Siguiendo 
-
-    
     const followersData = [
         { username: "@Juan", name: "Juan Pérez", avatar: "../Imagenes/Avatar4.jpeg" },
         { username: "@Ana", name: "Ana López", avatar: "../Imagenes/Avatar1.jpg" },
@@ -456,11 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(userListCloseBtn) userListCloseBtn.addEventListener('click', () => userListModal.style.display = 'none');
     document.getElementById('userListBackdrop')?.addEventListener('click', () => userListModal.style.display = 'none');
 
-
-
     // 6. Inicialización Final
-
-    
     renderProfileInfo();
     renderMyPosts();
     
@@ -472,6 +484,4 @@ document.addEventListener('DOMContentLoaded', () => {
             renderMyPosts();
         }
     });
-
-
 });
