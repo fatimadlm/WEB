@@ -17,8 +17,8 @@ public class SetupServlet extends HttpServlet {
 
     // Configuración de conexión
     private static final String URL = "jdbc:derby://localhost:1527/CookingUAH_DB;create=true";
-    private static final String USER = "app";
-    private static final String PASS = "app";
+    private static final String USER = "root";
+    private static final String PASS = "root";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

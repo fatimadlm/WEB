@@ -8,9 +8,9 @@ import java.sql.SQLException;
 public class InstalarDatos {
 
     // Configuración de conexión
-    private static final String URL = "jdbc:derby://localhost:1527/CookingUAH_DB;create=true";
-    private static final String USER = "app";
-    private static final String PASS = "app";
+    private static final String URL = "jdbc:derby://localhost:1527/CookingUAH;create=true";
+    private static final String USER = "root";
+    private static final String PASS = "root";
 
     public static void main(String[] args) {
         try {

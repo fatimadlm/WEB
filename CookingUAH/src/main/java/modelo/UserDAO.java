@@ -11,9 +11,11 @@ import java.util.List;
 public class UserDAO {
 
     // DATOS DE CONEXIÓN
-    private static final String URL = "jdbc:derby://localhost:1527/CookingUAH_DB"; 
-    private static final String USER = "app";
-    private static final String PASS = "app";
+    // Utilizamos 'create=true' para que, se despliegue donde se despliegue,
+    // se cree la misma bbdd.
+    private static final String URL = "jdbc:derby://localhost:1527/CookingUAH;create=true";
+    private static final String USER = "root";
+    private static final String PASS = "root";
 
     // -----------------------------------------------------------
     // MÉTODO AUXILIAR PARA CONECTARSE
@@ -56,6 +58,9 @@ public class UserDAO {
             }
         } catch (SQLException e) {
             System.err.println("Error en validarLogin: " + e.getMessage());
+            e.printStackTrace();
+            //getMessage no permite identificar dónde está el error. Hay que pelearse con el código
+            // mejor printStackTrace().
         }
         return usuario;
     }
