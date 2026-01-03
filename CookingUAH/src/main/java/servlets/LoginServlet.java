@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
             // A. Comprobar si está activo (por si fue baneado)
             if (!usuarioEncontrado.isActive()) {
                 request.setAttribute("mensajeError", "Tu cuenta está desactivada. Contacta con admin.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
                 return;
             }
 
@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 
             // C. Redirigir según el rol
             if ("admin".equals(usuarioEncontrado.getRole())) {
-                response.sendRedirect("admin.jsp"); // Si tienes panel admin
+                response.sendRedirect("jsp/admin.jsp"); // Si tienes panel admin
             } else {
                 // Ir al feed principal
                 response.sendRedirect("FeedServlet"); // ¡Cocinero, dame de comer!
@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
         } else {
             // --- LOGIN INCORRECTO ---
             request.setAttribute("mensajeError", "Usuario o contraseña incorrectos.");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
         }
     }
 }

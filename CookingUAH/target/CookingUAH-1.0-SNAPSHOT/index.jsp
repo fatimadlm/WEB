@@ -20,8 +20,8 @@
       <p>Para los amantes de la cocina y para los que no lo son tanto. Comparte recetas, descubre nuevos sabores y conecta con apasionados de la gastronomía.</p> 
       
       <div style="margin-top: 1.5rem;">
-        <a href="login.jsp"><button class="btn-primary" style="margin-bottom: 0.8rem;">Iniciar sesión</button></a>
-        <a href="registro.jsp"><button class="btn-primary">Registrarse</button></a> 
+        <a href="jsp/login.jsp"><button class="btn-primary" style="margin-bottom: 0.8rem;">Iniciar sesión</button></a>
+        <a href="jsp/registro.jsp"><button class="btn-primary">Registrarse</button></a> 
       </div>
       
       <div class="register-text" style="margin-top: 2rem;">
