@@ -6,7 +6,7 @@ import java.util.List;
 
 public class PostDAO {
     // Reutilizamos la conexión de UserDAO
-    private static final String URL = "jdbc:derby://localhost:1527/CookingUAH;create=true";
+    private static final String URL = "jdbc:derby://localhost:1527/CookingUAHBBDD;create=true";
     private static final String USER = "root";
     private static final String PASS = "root";
 

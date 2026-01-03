@@ -800,3 +800,44 @@ body::before {
 
 /* --------- PÁGINA BUSCAR AMIGOS --------- */
 
+/* Ajustes para el Publicador */
+#tituloPost {
+    resize: none;
+    border: 2px solid #ffb74d;
+    transition: 0.3s;
+}
+#tituloPost:focus {
+    outline: none;
+    border-color: #ef6c00;
+}
+
+/* Ajustes para la caja de comentarios */
+.comment-box {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+.comment-box input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #d6b58e;
+}
+.comment-box button {
+    background-color: #cc5500;
+    color: white;
+    border: none;
+    padding: 0 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Estilo para autor en post */
+.post-author-link {
+    text-decoration: none;
+    color: inherit;
+}
+.post-author-link:hover h3 {
+    text-decoration: underline;
+    color: #cc5500;
+}

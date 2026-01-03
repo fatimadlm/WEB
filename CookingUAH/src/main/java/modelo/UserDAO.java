@@ -13,7 +13,7 @@ public class UserDAO {
     // DATOS DE CONEXIÓN
     // Utilizamos 'create=true' para que, se despliegue donde se despliegue,
     // se cree la misma bbdd.
-    private static final String URL = "jdbc:derby://localhost:1527/CookingUAHBBDD [root on ROOT];create=true";
+    private static final String URL = "jdbc:derby://localhost:1527/CookingUAHBBDD;create=true";
     private static final String USER = "root";
     private static final String PASS = "root";
 

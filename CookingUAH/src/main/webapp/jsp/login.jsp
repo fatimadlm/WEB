@@ -16,7 +16,6 @@
 
     <main class="login-box">
       <h2>Inicio de sesión</h2>
-        
       <% 
           String error = (String) request.getAttribute("mensajeError");
           String exito = (String) request.getAttribute("mensajeExito");

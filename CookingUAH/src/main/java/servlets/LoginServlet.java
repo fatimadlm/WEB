@@ -17,41 +17,37 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // 1. Recoger datos del formulario (login.jsp)
         String user = request.getParameter("username");
         String pass = request.getParameter("password");
         
-        // 2. Preguntar a la Base de Datos
         UserDAO dao = new UserDAO();
         User usuarioEncontrado = dao.validarLogin(user, pass);
 
-        // 3. Lógica de Redirección
         if (usuarioEncontrado != null) {
-            // --- LOGIN CORRECTO ---
-            
-            // A. Comprobar si está activo (por si fue baneado)
+            // Caso A: Usuario desactivado
             if (!usuarioEncontrado.isActive()) {
-                request.setAttribute("mensajeError", "Tu cuenta está desactivada. Contacta con admin.");
-                request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
+                request.setAttribute("mensajeError", "Tu cuenta está desactivada.");
+                // CORRECCIÓN: Usar "/" para indicar la raíz de webapp
+                request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
                 return;
             }
 
-            // B. Crear la sesión
+            // Caso B: Login exitoso
             HttpSession session = request.getSession();
             session.setAttribute("usuario", usuarioEncontrado);
 
-            // C. Redirigir según el rol
+            // Caso C: Redirección con ContextPath (Correcto)
             if ("admin".equals(usuarioEncontrado.getRole())) {
-                response.sendRedirect("jsp/admin.jsp"); // Si tienes panel admin
+                response.sendRedirect(request.getContextPath() + "/jsp/admin.jsp");
             } else {
-                // Ir al feed principal
-                response.sendRedirect("FeedServlet"); // ¡Cocinero, dame de comer!
+                response.sendRedirect(request.getContextPath() + "/FeedServlet");
             }
 
         } else {
-            // --- LOGIN INCORRECTO ---
+            // Caso D: Login fallido
             request.setAttribute("mensajeError", "Usuario o contraseña incorrectos.");
-            request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
+            // CORRECCIÓN: Añadir la barra "/" inicial
+            request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
         }
     }
 }
