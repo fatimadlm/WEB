@@ -11,12 +11,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cooking UAH - Registro</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
   <div class="login-container">
     <header class="logo">
-      <img src="Imagenes/logo.png" alt="Logo Cooking UAH" class="logo-img">
+      <img src="../Imagenes/logo.png" alt="Logo Cooking UAH" class="logo-img">
       <h1>Cooking UAH</h1>
     </header>
 

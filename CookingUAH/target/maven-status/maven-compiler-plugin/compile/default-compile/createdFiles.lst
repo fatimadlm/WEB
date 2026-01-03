@@ -1,4 +1,5 @@
 servlets\PublicarServlet.class
+modelo\Mensaje.class
 modelo\User.class
 servlets\InteraccionServlet.class
 modelo\Post.class
@@ -9,8 +10,11 @@ servlets\RegistroServlet.class
 servlets\BuscarServlet.class
 com\mycompany\mavenproject1\resources\JakartaEE10Resource.class
 servlets\FeedServlet.class
+modelo\MensajeDAO.class
 modelo\InstalarDatos.class
 com\mycompany\mavenproject1\JakartaRestConfiguration.class
 modelo\PostDAO.class
+servlets\CargarChatServlet.class
 servlets\PerfilServlet.class
 servlets\SetupServlet.class
+servlets\MensajesServlet.class

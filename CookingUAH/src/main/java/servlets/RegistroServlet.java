@@ -16,11 +16,15 @@ public class RegistroServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        // Configurar codificación para evitar errores con tildes o caracteres especiales
+        request.setCharacterEncoding("UTF-8");
+        
         String usuario = request.getParameter("username");
         String email = request.getParameter("email");
         String pass = request.getParameter("password");
         
-        // Creamos el usuario (Avatar por defecto)
+        // CORRECCIÓN: Tu constructor en User.java pide (username, email, password, avatar)
+        // en ese orden exacto.
         User nuevoUsuario = new User(usuario, email, pass, "Imagenes/default.png");
         
         UserDAO dao = new UserDAO();
@@ -28,10 +32,10 @@ public class RegistroServlet extends HttpServlet {
         
         if (exito) {
             request.setAttribute("mensajeExito", "¡Cuenta creada! Inicia sesión.");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
         } else {
             request.setAttribute("mensajeError", "El usuario o email ya existen.");
-            request.getRequestDispatcher("registro.jsp").forward(request, response);
+            request.getRequestDispatcher("/jsp/registro.jsp").forward(request, response);
         }
     }
 }

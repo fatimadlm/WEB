@@ -297,3 +297,74 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+// web/js/Mensajes.js
+
+let partnerIdActual = null;
+// Obtenemos el contexto de la aplicación desde un atributo del body o un input oculto
+const contextPath = document.body.dataset.context; 
+
+function cargarChat(id, nombre) {
+    partnerIdActual = id;
+    
+    // UI Updates
+    document.getElementById('chatPlaceholder').style.display = 'none';
+    const activeWindow = document.getElementById('chatActiveWindow');
+    if (activeWindow) activeWindow.style.display = 'flex';
+    
+    const userNameHeader = document.getElementById('chatUserName');
+    if (userNameHeader) userNameHeader.innerText = "Chat con @" + nombre;
+    
+    console.log("Cargando mensajes con: " + id);
+    refrescarMensajes();
+}
+
+function refrescarMensajes() {
+    if (!partnerIdActual) return;
+    
+    fetch(`${contextPath}/MensajesServlet?accion=listar&conWho=${partnerIdActual}`)
+        .then(response => {
+            if (!response.ok) throw new Error('Error en la red');
+            return response.text();
+        })
+        .then(html => {
+            const box = document.getElementById('chatBox');
+            if (box) {
+                box.innerHTML = html;
+                box.scrollTop = box.scrollHeight;
+            }
+        })
+        .catch(err => console.error('Error en refresco:', err));
+}
+
+function enviarMensaje() {
+    const input = document.getElementById('chatInput');
+    const texto = input.value.trim();
+    if (!texto || !partnerIdActual) return;
+
+    fetch(`${contextPath}/MensajesServlet`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `receptorId=${partnerIdActual}&contenido=${encodeURIComponent(texto)}`
+    })
+    .then(response => {
+        if (response.ok) {
+            input.value = '';
+            refrescarMensajes();
+        }
+    })
+    .catch(err => console.error('Error al enviar:', err));
+}
+
+// Configuración de eventos al cargar el DOM
+document.addEventListener('DOMContentLoaded', () => {
+    // Escuchar tecla Enter en el input
+    const chatInput = document.getElementById('chatInput');
+    if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') enviarMensaje();
+        });
+    }
+
+    // Intervalo de refresco automático cada 5 segundos
+    setInterval(refrescarMensajes, 5000);
+});
