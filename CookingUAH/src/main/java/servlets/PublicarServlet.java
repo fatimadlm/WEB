@@ -13,56 +13,71 @@ import modelo.PostDAO;
 import modelo.User;
 
 @WebServlet(name = "PublicarServlet", urlPatterns = {"/PublicarServlet"})
-@MultipartConfig // ¡OBLIGATORIO!
+@MultipartConfig(
+    fileSizeThreshold = 1024 * 1024, // 1MB
+    maxFileSize = 1024 * 1024 * 5,    // 5MB
+    maxRequestSize = 1024 * 1024 * 10 // 10MB
+)
 public class PublicarServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
         
-        // 1. Seguridad
-        HttpSession session = request.getSession();
-        User usuario = (User) session.getAttribute("usuario");
-        if (usuario == null) { response.sendRedirect("login.jsp"); return; }
+        // 1. SEGURIDAD: Usar false para no crear una sesión nueva si no existe
+        HttpSession session = request.getSession(false);
+        User usuario = (session != null) ? (User) session.getAttribute("usuario") : null;
 
-        // 2. Datos del formulario
+        if (usuario == null) { 
+            // CORRECCIÓN: Usar ContextPath para asegurar que el navegador llegue al login
+            response.sendRedirect(request.getContextPath() + "/jsp/login.jsp"); 
+            return; 
+        }
+
+        // 2. DATOS DEL FORMULARIO
+        // Usamos UTF-8 para evitar problemas con tildes o caracteres especiales
+        request.setCharacterEncoding("UTF-8");
         String titulo = request.getParameter("titulo");
         Part filePart = request.getPart("imagen");
         String rutaImagenBBDD = null;
 
-        // 3. Procesar Imagen (Copia Manual byte a byte)
+        // 3. PROCESAR IMAGEN
         if (filePart != null && filePart.getSize() > 0) {
-            
-            // Ruta real en tu disco duro (carpeta target)
+            // Obtenemos la ruta absoluta de la carpeta 'uploads' dentro de webapp
             String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) uploadDir.mkdir();
 
-            // Nombre único
-            String fileName = "post_" + System.currentTimeMillis() + ".jpg";
+            // Generar nombre único para evitar que fotos con el mismo nombre se sobreescriban
+            String fileName = "post_" + System.currentTimeMillis() + "_" + filePart.getSubmittedFileName();
             String fullPath = uploadPath + File.separator + fileName;
 
-            // --- AQUÍ ESTÁ EL TRUCO PARA EVITAR EL ERROR 500 ---
-            // Usamos InputStream en lugar de filePart.write()
+            // Transferencia de datos segura
             try (InputStream input = filePart.getInputStream();
                  OutputStream output = new FileOutputStream(fullPath)) {
                 
-                byte[] buffer = new byte[1024];
+                byte[] buffer = new byte[4096];
                 int bytesRead;
                 while ((bytesRead = input.read(buffer)) != -1) {
                     output.write(buffer, 0, bytesRead);
                 }
+                // La ruta que guardamos en BBDD es relativa para que el JSP la cargue bien
+                rutaImagenBBDD = "uploads/" + fileName;
             } catch (Exception e) {
-                e.printStackTrace(); // Mira el Output de NetBeans si falla
+                e.printStackTrace();
             }
-            // ----------------------------------------------------
-
-            rutaImagenBBDD = "uploads/" + fileName;
         }
 
-        // 4. Guardar en BBDD
+        // 4. GUARDAR EN BBDD
         PostDAO dao = new PostDAO();
-        dao.crearPost(usuario.getId(), titulo, rutaImagenBBDD);
+        boolean exito = dao.crearPost(usuario.getId(), titulo, rutaImagenBBDD);
 
-        response.sendRedirect("FeedServlet");
+        // 5. REDIRECCIÓN TRAS ÉXITO
+        if (exito) {
+            // CORRECCIÓN: Redirigir al Servlet del Feed con ContextPath
+            response.sendRedirect(request.getContextPath() + "/FeedServlet");
+        } else {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al guardar la publicación.");
+        }
     }
 }

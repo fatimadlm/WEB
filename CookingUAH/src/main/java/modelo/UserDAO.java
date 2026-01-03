@@ -14,8 +14,8 @@ public class UserDAO {
     // Utilizamos 'create=true' para que, se despliegue donde se despliegue,
     // se cree la misma bbdd.
     //Para fatima
-   // private static final String URL = "jdbc:derby://localhost:1527/CookingUAHBBDD;create=true";
-     private static final String URL = "jdbc:derby://localhost:1527/CookingUAH;create=true";
+    private static final String URL = "jdbc:derby://localhost:1527/CookingUAHBBDD;create=true";
+    // private static final String URL = "jdbc:derby://localhost:1527/CookingUAH;create=true";
     private static final String USER = "root";
     private static final String PASS = "root";
 
