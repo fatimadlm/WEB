@@ -22,9 +22,7 @@ public class RegistroServlet extends HttpServlet {
         String usuario = request.getParameter("username");
         String email = request.getParameter("email");
         String pass = request.getParameter("password");
-        
-        // CORRECCIÓN: Tu constructor en User.java pide (username, email, password, avatar)
-        // en ese orden exacto.
+
         User nuevoUsuario = new User(usuario, email, pass, "Imagenes/default.png");
         
         UserDAO dao = new UserDAO();
