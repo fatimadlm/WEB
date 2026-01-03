@@ -27,7 +27,7 @@ public class BuscarServlet extends HttpServlet {
         User usuarioLogueado = (User) session.getAttribute("usuario");
         
         if (usuarioLogueado == null) {
-            response.sendRedirect("login.jsp"); 
+            response.sendRedirect(request.getContextPath() + "/jsp/login.jsp"); 
             return;
         }
 
@@ -54,6 +54,6 @@ public class BuscarServlet extends HttpServlet {
         request.setAttribute ("terminoBusqueda", textoBusqueda);
 
         // 5. ENVIAR DE VUELTA AL JSP
-        request.getRequestDispatcher("BuscaAmigos.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/BuscaAmigos.jsp").forward(request, response);
     }
 }

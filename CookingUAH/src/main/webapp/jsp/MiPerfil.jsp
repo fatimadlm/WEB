@@ -26,14 +26,13 @@
           <h1>CookingUAH</h1>
         </div>
         <nav class="nav-buttons">
-          <a href="Home.html" class="btn-secondary">Inicio</a>
-          <a href="Mensajes.html" class="btn-secondary">Mensajes</a>
-          <a href="Eventos.html" class="btn-secondary">Eventos</a>
-          <a href="Notificaciones.html" class="btn-secondary">Notificaciones</a>
-
-          <a href="MiPerfil.html" class="btn-secondary active">Mi Perfil</a> 
-          <a href="Podio.html" class="btn-secondary">Recetas TOP</a>
-          <button id="openModalBtn" class="btn-primary">Crear publicación</button>
+          <a href="${pageContext.request.contextPath}/FeedServlet" class="btn-secondary">Inicio</a> 
+          <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary">Mensajes</a>          
+          <a href="${pageContext.request.contextPath}/jsp/Eventos.jsp" class="btn-secondary">Eventos</a>
+          <a href="${pageContext.request.contextPath}/jsp/Notificaciones.jsp" class="btn-secondary">Notificaciones</a>
+          <a href="${pageContext.request.contextPath}/jsp/MiPerfil.jsp" class="btn-secondary">Mi Perfil</a> 
+          <a href="${pageContext.request.contextPath}/jsp/Podio.jsp" class="btn-secondary">Recetas TOP</a>
+          <button onclick="document.getElementById('postModal').style.display = 'flex'" class="btn-primary">Crear publicación</button>
         </nav>
       </div>
       <a href="../index.html" class="btn-logout">Cerrar sesión</a>
@@ -139,10 +138,42 @@
       </div>
     </div>
   </div>
+<div id="postModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-content">
+        <span class="modal-close" onclick="cerrarModal()">&times;</span>
+        <h2>Crear una nueva publicación</h2>
+
+        <form action="${pageContext.request.contextPath}/PublicarServlet" method="POST" enctype="multipart/form-data">
+            <div class="modal-post-box">
+                <textarea name="titulo" id="modalNewPostContent" 
+                          placeholder="¿Qué estás cocinando, <%= ((modelo.User)session.getAttribute("usuario")).getUsername() %>?" required></textarea>
+                
+                <div id="modalImagePreviewContainer" style="display: none; align-items: center; gap: 10px; margin-bottom: 15px; background: #fdf2e9; padding: 10px; border-radius: 10px; border: 1px dashed #ffb74d;">
+                    <span style="font-size: 1.2rem;">📄</span>
+                    <span id="modalFileName" style="font-size: 0.9rem; color: #d84315; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80%;"></span>
+
+                    <button type="button" onclick="quitarImagen()" style="background: none; border: none; color: #cc5500; cursor: pointer; font-weight: bold; font-size: 1.2rem; margin-left: auto;">&times;</button>
+                </div>
+
+                <div class="post-controls" style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                    <div class="post-options">
+                        <input type="file" name="imagen" id="modalImageUpload" accept="image/*" style="display: none;" onchange="previsualizarImagen(this)">
+                        <button type="button" class="btn-add-photo" onclick="document.getElementById('modalImageUpload').click()">
+                           📸 Añadir Foto
+                        </button>
+                    </div>
+                    <button type="submit" class="btn-primary" id="modalNewPostBtn" style="padding: 10px 25px; border-radius: 25px; white-space: nowrap;">
+                        Publicar Receta
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
   <script src="../js/BBDD.js" type="module"></script>
   <script src="../js/PerfilModal.js" defer=""></script>
-  
+  <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
   <script type="module">
     import { getPosts, savePosts, getCurrentUser, getUsers, saveCurrentUser, seedDemo, uid } from '../js/BBDD.js';
     

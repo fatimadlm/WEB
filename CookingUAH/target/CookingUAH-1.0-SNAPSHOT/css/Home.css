@@ -687,115 +687,140 @@ body::before {
 
 /* modal publicacion */
 .modal-backdrop {
-  position: fixed; 
-  z-index: 100;
-  left: 0;
+  position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6); 
-  display: flex; 
+  backdrop-filter: blur(5px); /* Efecto desenfoque fondo */
+  display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9999;
 }
 
 .modal-content {
-  background-color: #fffaf3; 
-  border-radius: 15px;
+  background-color: #fffbf5; /* Fondo ligeramente crema */
   padding: 30px;
-  box-shadow: 0 4px 10px rgba(230, 126, 34, 0.2);
-  width: 100%;
-  max-width: 600px; 
+  border-radius: 20px;
+  width: 95%;
+  max-width: 600px; /* Ancho ampliado para que quepa en una línea */
   position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   animation: modal-fade-in 0.3s ease-out;
 }
 
 .modal-content h2 {
   color: #e67e22;
-  margin-bottom: 25px;
-  font-size: 1.8em;
+  margin-bottom: 20px;
+  font-size: 1.6em;
   font-weight: 700;
 }
 
 .modal-close {
   position: absolute;
-  top: 10px;
+  top: 15px;
   right: 20px;
   color: #aaa;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bold;
   cursor: pointer;
   transition: color 0.2s;
 }
-.modal-close:hover {
-  color: #777;
+.modal-close:hover { color: #d84315; }
+
+/* Caja de texto en el modal */
+.modal-post-box textarea {
+  width: 100%;
+  min-height: 120px; 
+  border: 2px solid #ffb74d; 
+  border-radius: 12px;
+  padding: 1rem;
+  font-size: 1rem;
+  resize: vertical;
+  margin-bottom: 1rem;
+  background-color: white;
+}
+.modal-post-box textarea:focus {
+  border-color: #ef6c00;
+  outline: none;
+  box-shadow: 0 0 8px rgba(239, 108, 0, 0.2);
 }
 
+/* Contenedor de botones en una sola línea */
+.post-controls {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* --- ESTILO BOTÓN AÑADIR FOTO (TU PEDIDO) --- */
+.btn-add-photo {
+  background-color: #fff3e0; /* Fondo crema */
+  color: #d84315;            /* Texto naranja oscuro */
+  border: 2px dashed #ffb74d; /* Borde discontinuo */
+  padding: 8px 18px;
+  border-radius: 25px;       /* Redondeado */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: fit-content;
+  white-space: nowrap;      /* No rompe línea */
+}
+
+.btn-add-photo:hover {
+  background-color: #ffe0b2;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+/* Botón publicar (naranja sólido) */
+#modalNewPostBtn {
+  background: linear-gradient(90deg, #f57c00, #ef6c00); 
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+#modalNewPostBtn:hover {
+  background: linear-gradient(90deg, #ff9800, #f57c00);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Animación de entrada */
 @keyframes modal-fade-in {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Estilos para la caja de publicación DENTRO DEL MODAL */
-.modal-post-box {
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-post-box textarea {
-  width: 100%;
-  min-height: 120px; 
-  border: 2px solid #ffb74d; 
-  border-radius: 8px;
-  padding: 0.8rem;
-  font-size: 1rem;
-  font-family: 'Poppins', sans-serif;
-  resize: vertical;
+/* Previsualización en el modal */
+.modal-post-box .image-preview-container {
+  border: 2px dashed #ffb74d;
+  background-color: white;
   margin-bottom: 1rem;
 }
-.modal-post-box textarea:focus {
-  border-color: #ef6c00;
-  box-shadow: 0 0 6px rgba(239, 108, 0, 0.5);
-  outline: none;
-}
 
-/* Botón de publicar (del modal) */
-#modalNewPostBtn {
-  background: linear-gradient(90deg, #f57c00, #ef6c00); 
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 12px;
-  font-size: 1em;
-  cursor: pointer;
-  font-weight: 600;
-  transition: transform 0.2s ease, background 0.3s;
-}
-#modalNewPostBtn:hover {
-  background: linear-gradient(90deg, #ff9800, #f57c00);
-  transform: scale(1.03);
-}
+/* --- FIN DEL MODAL --- */
 
-/* previsualizacion de imagen en modal */
-.modal-post-box .image-preview-container {
-  border-color: #ffb74d; 
-  max-height: 250px;
-}
-.modal-post-box .image-preview {
-  max-height: 230px; 
-}
-
-/* enlace autor en post */
 .post-author-link {
   text-decoration: none; 
-  color: inherit;       
+  color: inherit; 
 }
-
 .post-author-link:hover {
   text-decoration: underline; 
-}
-.post-header a {
-  text-decoration: none; 
+  color: #cc5500;
 }
 
 /* --------- PÁGINA BUSCAR AMIGOS --------- */

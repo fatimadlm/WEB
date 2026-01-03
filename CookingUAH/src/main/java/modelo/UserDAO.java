@@ -74,7 +74,7 @@ public class UserDAO {
     // -----------------------------------------------------------
     public List<User> buscarUsuarios(String busqueda) {
         List<User> lista = new ArrayList<>();
-        String sql = "SELECT * FROM users WHERE username LIKE ?"; 
+        String sql = "SELECT * FROM users WHERE UPPER(username) LIKE UPPER(?)"; 
 
         // Aquí también usamos getConexion()
         try (Connection conn = getConexion();
