@@ -32,6 +32,10 @@ public class EditarPerfilServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        // 1. Configuración de caracteres para evitar errores en la bio
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        
         HttpSession session = request.getSession(false);
         User usuarioActual = (session != null) ? (User) session.getAttribute("usuario") : null;
 
@@ -44,70 +48,68 @@ public class EditarPerfilServlet extends HttpServlet {
         Part filePart = request.getPart("avatar");
         String nombreArchivoAvatar = null;
 
-        // 1. Procesar la nueva foto de perfil si se ha subido una
-if (filePart != null && filePart.getSize() > 0) {
-    // Nombre del archivo con timestamp para evitar duplicados
-    String fileName = System.currentTimeMillis() + "_" + filePart.getSubmittedFileName();
-    
-    // Ruta RELATIVA para guardar en la base de datos
-    nombreArchivoAvatar = "Imagenes/avatares/" + fileName;
-    
-    // Ruta ABSOLUTA para escribir el archivo físicamente en el disco
-    // Usamos getRealPath("Imagenes/avatares") para obtener la carpeta correcta directamente
-    String uploadPath = getServletContext().getRealPath("/Imagenes/avatares");
-    
-    File uploadDir = new File(uploadPath);
-    if (!uploadDir.exists()) {
-        uploadDir.mkdirs(); // Crea la carpeta si no existe
-    }
-    
-    // Construimos la ruta final de forma segura
-    String fullPath = uploadPath + File.separator + fileName;
-    
-    try {
-        filePart.write(fullPath);
-        System.out.println("Archivo guardado en: " + fullPath);
-    } catch (IOException e) {
-        System.err.println("Error al escribir el archivo: " + e.getMessage());
-        throw e;
-    }
-}
-
-        // 2. Construir la SQL dinámicamente
-        StringBuilder sql = new StringBuilder("UPDATE users SET bio = ?");
-        if (nombreArchivoAvatar != null) {
-            sql.append(", avatar = ?");
-        }
-        sql.append(" WHERE id = ?");
-
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
-             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+        // 2. Lógica de ruta dinámica para Carpeta de GitHub
+        try {
+            // Obtenemos la ruta donde se está ejecutando el servidor
+            String pathDespliegue = getServletContext().getRealPath("/");
+            File carpetaDespliegue = new File(pathDespliegue);
             
-            ps.setString(1, nuevaBio);
-            if (nombreArchivoAvatar != null) {
-                ps.setString(2, nombreArchivoAvatar);
-                ps.setInt(3, usuarioActual.getId());
-            } else {
-                ps.setInt(2, usuarioActual.getId());
-            }
+            // Navegamos hacia atrás para encontrar la raíz del repositorio
+            // Desde target/CookingUAH-1.0-SNAPSHOT subimos 3 niveles para llegar a la carpeta WEB
+            File raizRepo = carpetaDespliegue.getParentFile().getParentFile().getParentFile();
+            File directorioSubidas = new File(raizRepo, "Uploads_CookingUAH");
 
-            int filas = ps.executeUpdate();
-            
-            if (filas > 0) {
-                // 3. ¡IMPORTANTE! Actualizar el objeto usuario en la sesión
-                // para que los cambios se vean reflejados inmediatamente sin re-loguear
-                usuarioActual.setBio(nuevaBio);
-                if (nombreArchivoAvatar != null) {
-                    usuarioActual.setAvatar(nombreArchivoAvatar);
+            // Procesar imagen si el usuario subió una
+            if (filePart != null && filePart.getSize() > 0) {
+                String fileName = System.currentTimeMillis() + "_" + filePart.getSubmittedFileName();
+                
+                if (!directorioSubidas.exists()) {
+                    directorioSubidas.mkdirs();
                 }
-                session.setAttribute("usuario", usuarioActual);
+                
+                File archivoDestino = new File(directorioSubidas, fileName);
+                
+                // Realizamos la copia física del archivo
+                filePart.write(archivoDestino.getAbsolutePath());
+                
+                // Guardamos solo el nombre para la BBDD
+                nombreArchivoAvatar = fileName; 
             }
-            
+
+            // 3. Actualizar la Base de Datos
+            StringBuilder sql = new StringBuilder("UPDATE users SET bio = ?");
+            if (nombreArchivoAvatar != null) {
+                sql.append(", avatar = ?");
+            }
+            sql.append(" WHERE id = ?");
+
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+                 PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+                
+                ps.setString(1, nuevaBio);
+                if (nombreArchivoAvatar != null) {
+                    ps.setString(2, nombreArchivoAvatar);
+                    ps.setInt(3, usuarioActual.getId());
+                } else {
+                    ps.setInt(2, usuarioActual.getId());
+                }
+
+                int filas = ps.executeUpdate();
+                
+                if (filas > 0) {
+                    // Sincronizamos el objeto en sesión
+                    usuarioActual.setBio(nuevaBio);
+                    if (nombreArchivoAvatar != null) {
+                        usuarioActual.setAvatar(nombreArchivoAvatar);
+                    }
+                    session.setAttribute("usuario", usuarioActual);
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        // 4. Volver al perfil
+        // Redirigimos al servlet de perfil para recargar todos los datos
         response.sendRedirect(request.getContextPath() + "/PerfilServlet");
     }
 }
