@@ -143,16 +143,29 @@
       </form>
     </div>
   </div>
+<div id="editPostModal" class="modal-backdrop" style="display: none;">
+  <div class="modal-content">
+    <span class="modal-close" onclick="cerrarModalEdicion()">&times;</span>
+    <h2>Editar Receta</h2>
+    <form action="${pageContext.request.contextPath}/EditarPostServlet" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="postId" id="editPostId">
+        
+        <textarea name="titulo" id="editPostContent" placeholder="Edita tu receta..." required></textarea>
+        
+        <div id="editImagePreviewContainer" style="display:none; margin-bottom:10px;">
+            <span id="editFileName"></span>
+        </div>
 
+        <div class="post-controls">
+            <input type="file" name="imagen" id="editImageUpload" style="display:none;" onchange="previsualizarImagenEdicion(this)">
+            <button type="button" class="btn-add-photo" onclick="document.getElementById('editImageUpload').click()">📸 Cambiar Foto</button>
+            <button type="submit" class="btn-primary">Guardar Cambios</button>
+        </div>
+    </form>
+  </div>
+</div>
   <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
-  <script>
-      function abrirModalEdicion(id, titulo) {
-          // Aquí podrías implementar el modal de edición de post similar al de creación
-          alert("Editando post " + id + ": " + titulo);
-      }
-      // Funciones para listas de seguidores (requieren Servlets/AJAX)
-      function abrirSeguidores() { console.log("Cargar seguidores..."); }
-      function abrirSiguiendo() { console.log("Cargar seguidos..."); }
-  </script>
+    <script src="${pageContext.request.contextPath}/js/MiPerfil.js"></script>
+
 </body>
 </html>
