@@ -18,40 +18,7 @@
   <title>CookingUAH - Inicio</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Home.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
-  
-  <style>
-      /* Utilidades básicas */
-      .hidden-input { display: none; }
-      .nav-buttons form { width: 100%; }
 
-      /* Caja de comentarios */
-      .comment-box { display: flex; gap: 5px; margin-top: 10px; }
-      .comment-box input { flex: 1; padding: 8px; border-radius: 5px; border: 1px solid #ccc; }
-      .comment-box button { background:#cc5500; color:white; border:none; padding:5px 15px; border-radius:5px; cursor:pointer; font-weight:bold; }
-      .comment-box button:hover { background:#b24900; }
-
-      /* --- ESTILO BOTÓN AÑADIR FOTO --- */
-    .btn-add-photo {
-        background-color: #fff3e0;
-        color: #d84315;
-        border: 2px dashed #ffb74d;
-        padding: 8px 15px;
-        border-radius: 20px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        width: fit-content;
-    }
-
-    .btn-add-photo:hover {
-        background-color: #ffe0b2;
-        transform: translateY(-2px);
-        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-    }
-  </style>
 </head>
 <body>
   <div class="home-container">

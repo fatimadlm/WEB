@@ -11,6 +11,7 @@ public class User implements Serializable {
     private String password;
     private String avatar;
     private String role;    // 'admin' o 'user'
+    private String bio;
     private boolean active;
 
     // 2. Constructor Vacío (Obligatorio para que funcione bien con JSP/Frameworks)
@@ -18,7 +19,7 @@ public class User implements Serializable {
     }
 
     // 3. Constructor Completo (Útil para crear objetos rápidos desde el DAO)
-    public User(int id, String username, String email, String password, String avatar, String role, boolean active) {
+    public User(int id, String username, String email, String password, String avatar, String role, boolean active, String bio) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -26,6 +27,7 @@ public class User implements Serializable {
         this.avatar = avatar;
         this.role = role;
         this.active = active;
+        this.bio = bio;
     }
     
     // Constructor sin ID (Para cuando vamos a registrar uno nuevo y aún no tiene ID de la BBDD)
@@ -82,6 +84,13 @@ public class User implements Serializable {
 
     public String getRole() {
         return role;
+    }
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public void setRole(String role) {

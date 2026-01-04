@@ -108,4 +108,35 @@ public class PostDAO {
         }
         return comments;
     }
+    
+    public List<Post> listarPostsPorUsuario(int userId) {
+    List<Post> posts = new ArrayList<>();
+    // Usamos un JOIN para obtener los datos del autor que pide tu constructor de Post
+    String sql = "SELECT p.*, u.username as authorName, u.avatar as authorAvatar " +
+                 "FROM posts p JOIN users u ON p.user_id = u.id " +
+                 "WHERE p.user_id = ? ORDER BY p.created_at DESC";
+    
+    try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, userId);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                // Tu constructor: id, userId, title, image, createdAt, authorName, authorAvatar
+                Post p = new Post(
+                    rs.getInt("id"),
+                    rs.getInt("user_id"),
+                    rs.getString("title"),
+                    rs.getString("image"),
+                    rs.getTimestamp("created_at"),
+                    rs.getString("authorName"),
+                    rs.getString("authorAvatar")
+                );
+                // Si tienes likes_count en la tabla, lo seteamos
+                p.setLikesCount(rs.getInt("likes_count"));
+                posts.add(p);
+            }
+        }
+    } catch (SQLException e) { e.printStackTrace(); }
+    return posts;
+}
 }
