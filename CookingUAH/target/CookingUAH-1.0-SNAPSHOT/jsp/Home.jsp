@@ -198,28 +198,7 @@
     </div>
 </div>
 <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
- <script>
-    const TIEMPO_REFRESCO = 2000;
+<script src="${pageContext.request.contextPath}/js/Home.js"></script>
 
-    function actualizarFeed() {
-        const elementoActivo = document.activeElement;
-        const escribiendo = elementoActivo && (elementoActivo.tagName === 'INPUT' || elementoActivo.tagName === 'TEXTAREA');
-
-        if (escribiendo) return;
-
-        fetch('${pageContext.request.contextPath}/FeedServlet')
-            .then(response => response.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const nuevosPosts = doc.getElementById('postsContainer').innerHTML;
-                document.getElementById('postsContainer').innerHTML = nuevosPosts;
-                console.log("Feed sincronizado con BBDD 🔄");
-            })
-            .catch(err => console.error('Error en refresco:', err));
-    }
-
-    setInterval(actualizarFeed, TIEMPO_REFRESCO);
-  </script>
 </body>
 </html>
