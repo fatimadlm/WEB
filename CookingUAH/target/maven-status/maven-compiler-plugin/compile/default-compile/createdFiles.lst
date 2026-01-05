@@ -2,9 +2,11 @@ modelo\Mensaje.class
 modelo\User.class
 servlets\InteraccionServlet.class
 modelo\Post.class
+modelo\Evento.class
 modelo\Follower.class
 modelo\UserDAO.class
 modelo\Comment.class
+modelo\EventoDAO.class
 com\mycompany\mavenproject1\resources\JakartaEE10Resource.class
 servlets\FeedServlet.class
 modelo\FollowerDAO.class
@@ -23,3 +25,4 @@ servlets\BuscarServlet.class
 modelo\PostDAO.class
 servlets\SetupServlet.class
 servlets\VerImagenServlet.class
+servlets\EventosServlet.class
