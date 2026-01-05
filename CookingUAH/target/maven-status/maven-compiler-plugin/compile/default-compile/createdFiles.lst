@@ -22,3 +22,4 @@ servlets\RegistroServlet.class
 servlets\BuscarServlet.class
 modelo\PostDAO.class
 servlets\SetupServlet.class
+servlets\VerImagenServlet.class
