@@ -22,6 +22,7 @@ servlets\PublicarServlet.class
 servlets\LoginServlet.class
 servlets\RegistroServlet.class
 servlets\BuscarServlet.class
+servlets\PodioServlet.class
 modelo\PostDAO.class
 servlets\SetupServlet.class
 servlets\VerImagenServlet.class

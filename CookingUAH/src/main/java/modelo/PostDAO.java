@@ -161,4 +161,27 @@ public class PostDAO {
     }
     return comments;
 }
+   
+   public List<Post> obtenerTop3() {
+    List<Post> top = new ArrayList<>();
+    // SQL: Unimos con usuarios y ordenamos por likes descendente, limitado a 3
+    String sql = "SELECT p.*, u.username as authorName, u.avatar as authorAvatar " +
+                 "FROM posts p JOIN users u ON p.user_id = u.id " +
+                 "ORDER BY p.likes_count DESC FETCH FIRST 3 ROWS ONLY";
+    
+    try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            Post p = new Post(
+                rs.getInt("id"), rs.getInt("user_id"), rs.getString("title"),
+                rs.getString("image"), rs.getTimestamp("created_at"),
+                rs.getString("authorName"), rs.getString("authorAvatar")
+            );
+            p.setLikesCount(rs.getInt("likes_count"));
+            top.add(p);
+        }
+    } catch (SQLException e) { e.printStackTrace(); }
+    return top;
+}
 } // Cierre correcto de la clase
