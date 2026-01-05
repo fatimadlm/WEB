@@ -46,9 +46,10 @@
     <main class="feed perfil-page" id="mi-perfil-main">
 
       <section class="perfil-info">
-        <img src="${pageContext.request.contextPath}/${usuario.avatar}" 
+        <img src="${pageContext.request.contextPath}/VerImagen?nombre=${usuario.avatar}" 
              onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'" 
              alt="Foto de perfil" class="perfil-img">
+             
         <div class="perfil-datos">
           <h2>${usuario.username}</h2>
           <p class="usuario">@${usuario.username}</p>
@@ -73,7 +74,7 @@
         <c:forEach var="post" items="${misPosts}">
             <div class="post">
                 <div class="post-header">
-                    <img src="${pageContext.request.contextPath}/${usuario.avatar}" 
+                    <img src="${pageContext.request.contextPath}/VerImagen?nombre=${usuario.avatar}" 
                          onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'" 
                          class="user-img">
                     <div>
@@ -84,7 +85,7 @@
                 <div class="post-content">
                     <p>${post.title}</p>
                     <c:if test="${not empty post.image}">
-                        <img src="${pageContext.request.contextPath}/${post.image}" class="post-img">
+                        <img src="${pageContext.request.contextPath}/VerImagen?nombre=${post.image}" class="post-img">
                     </c:if>
                 </div>
                 <div class="post-actions">
@@ -126,46 +127,9 @@
   </section>
 
   <div id="postModal" class="modal-backdrop" style="display: none;">
-    <div class="modal-content">
-      <span class="modal-close" onclick="cerrarModal()">&times;</span>
-      <h2>Nueva Receta</h2>
-      <form action="${pageContext.request.contextPath}/PublicarServlet" method="POST" enctype="multipart/form-data">
-          <textarea name="titulo" id="modalNewPostContent" placeholder="¿Qué cocinas hoy?" required></textarea>
-          <div id="modalImagePreviewContainer" style="display:none;">
-              <span id="modalFileName"></span>
-              <button type="button" onclick="quitarImagen()">&times;</button>
-          </div>
-          <div class="post-controls">
-              <input type="file" name="imagen" id="modalImageUpload" style="display:none;" onchange="previsualizarImagen(this)">
-              <button type="button" class="btn-add-photo" onclick="document.getElementById('modalImageUpload').click()">📸 Foto</button>
-              <button type="submit" class="btn-primary">Publicar</button>
-          </div>
-      </form>
     </div>
-  </div>
-<div id="editPostModal" class="modal-backdrop" style="display: none;">
-  <div class="modal-content">
-    <span class="modal-close" onclick="cerrarModalEdicion()">&times;</span>
-    <h2>Editar Receta</h2>
-    <form action="${pageContext.request.contextPath}/EditarPostServlet" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="postId" id="editPostId">
-        
-        <textarea name="titulo" id="editPostContent" placeholder="Edita tu receta..." required></textarea>
-        
-        <div id="editImagePreviewContainer" style="display:none; margin-bottom:10px;">
-            <span id="editFileName"></span>
-        </div>
 
-        <div class="post-controls">
-            <input type="file" name="imagen" id="editImageUpload" style="display:none;" onchange="previsualizarImagenEdicion(this)">
-            <button type="button" class="btn-add-photo" onclick="document.getElementById('editImageUpload').click()">📸 Cambiar Foto</button>
-            <button type="submit" class="btn-primary">Guardar Cambios</button>
-        </div>
-    </form>
-  </div>
-</div>
   <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
-    <script src="${pageContext.request.contextPath}/js/MiPerfil.js"></script>
-
+  <script src="${pageContext.request.contextPath}/js/MiPerfil.js"></script>
 </body>
 </html>

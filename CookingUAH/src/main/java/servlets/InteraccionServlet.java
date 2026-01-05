@@ -27,6 +27,5 @@ public class InteraccionServlet extends HttpServlet {
             }
         }
         // Recargar la página para ver cambios
-        response.sendRedirect("FeedServlet");
-    }
+response.sendRedirect(request.getContextPath() + "/FeedServlet");    }
 }

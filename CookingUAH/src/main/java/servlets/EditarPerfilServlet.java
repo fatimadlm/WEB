@@ -2,6 +2,11 @@ package servlets;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -32,7 +37,6 @@ public class EditarPerfilServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // 1. Configuración de caracteres para evitar errores en la bio
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         
@@ -48,31 +52,31 @@ public class EditarPerfilServlet extends HttpServlet {
         Part filePart = request.getPart("avatar");
         String nombreArchivoAvatar = null;
 
-        // 2. Lógica de ruta dinámica para Carpeta de GitHub
         try {
-            // Obtenemos la ruta donde se está ejecutando el servidor
+            // 1. Lógica de ruta dinámica para encontrar la carpeta hermana 'Uploads_CookingUAH'
             String pathDespliegue = getServletContext().getRealPath("/");
             File carpetaDespliegue = new File(pathDespliegue);
             
-            // Navegamos hacia atrás para encontrar la raíz del repositorio
-            // Desde target/CookingUAH-1.0-SNAPSHOT subimos 3 niveles para llegar a la carpeta WEB
+            // Subimos 3 niveles: SNAPSHOT -> target -> CookingUAH (Raíz del repo)
             File raizRepo = carpetaDespliegue.getParentFile().getParentFile().getParentFile();
             File directorioSubidas = new File(raizRepo, "Uploads_CookingUAH");
 
-            // Procesar imagen si el usuario subió una
+            if (!directorioSubidas.exists()) {
+                directorioSubidas.mkdirs();
+            }
+
+            // 2. Procesar imagen con el método robuso de Files.copy
             if (filePart != null && filePart.getSize() > 0) {
-                String fileName = System.currentTimeMillis() + "_" + filePart.getSubmittedFileName();
+                String fileName = "avatar_" + System.currentTimeMillis() + "_" + filePart.getSubmittedFileName();
                 
-                if (!directorioSubidas.exists()) {
-                    directorioSubidas.mkdirs();
+                // Normalizamos la ruta para evitar el error de volumen C:\...C:\
+                Path rutaLimpia = Paths.get(directorioSubidas.getAbsolutePath(), fileName).normalize();
+                
+                // Realizamos la copia física ignorando las restricciones de GlassFish
+                try (InputStream input = filePart.getInputStream()) {
+                    Files.copy(input, rutaLimpia, StandardCopyOption.REPLACE_EXISTING);
                 }
                 
-                File archivoDestino = new File(directorioSubidas, fileName);
-                
-                // Realizamos la copia física del archivo
-                filePart.write(archivoDestino.getAbsolutePath());
-                
-                // Guardamos solo el nombre para la BBDD
                 nombreArchivoAvatar = fileName; 
             }
 
@@ -97,7 +101,6 @@ public class EditarPerfilServlet extends HttpServlet {
                 int filas = ps.executeUpdate();
                 
                 if (filas > 0) {
-                    // Sincronizamos el objeto en sesión
                     usuarioActual.setBio(nuevaBio);
                     if (nombreArchivoAvatar != null) {
                         usuarioActual.setAvatar(nombreArchivoAvatar);
@@ -105,11 +108,13 @@ public class EditarPerfilServlet extends HttpServlet {
                     session.setAttribute("usuario", usuarioActual);
                 }
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            // Mostramos el error exacto si falla el guardado físico
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al actualizar perfil: " + e.getMessage());
+            return;
         }
 
-        // Redirigimos al servlet de perfil para recargar todos los datos
         response.sendRedirect(request.getContextPath() + "/PerfilServlet");
     }
 }

@@ -18,7 +18,6 @@
         <title>CookingUAH - Inicio</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Home.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
-
     </head>
     <body>
         <div class="home-container">
@@ -68,8 +67,7 @@
                         <div class="post-controls">
                             <div class="post-options">
                                 <label for="file-upload" class="btn-add-photo">📸 Añadir Foto</label>
-                                <input id="file-upload" type="file" name="imagen" accept="image/*" style="display:none;" 
-                                       onchange="mostrarNombreArchivo(this)">
+                                <input id="file-upload" type="file" name="imagen" accept="image/*" style="display:none;" onchange="mostrarNombreArchivo(this)">
                             </div>
                             <button type="submit" id="newPostBtn">Publicar Receta</button>
                         </div>
@@ -83,7 +81,9 @@
                         <div class="post">
                             <div class="post-header">
                                 <a href="${pageContext.request.contextPath}/jsp/PerfilOtro.jsp?id=${post.userId}">
-                                    <img src="${pageContext.request.contextPath}/${post.authorAvatar}" class="user-img" onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'">
+                                    <img src="${pageContext.request.contextPath}/VerImagen?nombre=${post.authorAvatar}" 
+                                         class="user-img" 
+                                         onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'">
                                 </a>
                                 <div>
                                     <a href="${pageContext.request.contextPath}/jsp/PerfilOtro.jsp?id=${post.userId}" class="post-author-link">
@@ -132,6 +132,7 @@
                 </div>
             </main>
         </div>
+        
         <div id="postModal" class="modal-backdrop" style="display: none;">
             <div class="modal-content">
                 <span class="modal-close" onclick="cerrarModal()">&times;</span>
@@ -140,12 +141,11 @@
                 <form action="${pageContext.request.contextPath}/PublicarServlet" method="POST" enctype="multipart/form-data">
                     <div class="modal-post-box">
                         <textarea name="titulo" id="modalNewPostContent" 
-                                  placeholder="¿Qué estás cocinando, <%= ((modelo.User) session.getAttribute("usuario")).getUsername()%>?" required></textarea>
+                                  placeholder="¿Qué estás cocinando, <%= actual.getUsername()%>?" required></textarea>
 
                         <div id="modalImagePreviewContainer" style="display: none; align-items: center; gap: 10px; margin-bottom: 15px; background: #fdf2e9; padding: 10px; border-radius: 10px; border: 1px dashed #ffb74d;">
                             <span style="font-size: 1.2rem;">📄</span>
                             <span id="modalFileName" style="font-size: 0.9rem; color: #d84315; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80%;"></span>
-
                             <button type="button" onclick="quitarImagen()" style="background: none; border: none; color: #cc5500; cursor: pointer; font-weight: bold; font-size: 1.2rem; margin-left: auto;">&times;</button>
                         </div>
 
@@ -166,6 +166,5 @@
         </div>
         <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
         <script src="${pageContext.request.contextPath}/js/Home.js"></script>
-
     </body>
 </html>

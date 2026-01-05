@@ -137,18 +137,28 @@ public class PostDAO {
         }
     }
 
-    private List<Comment> obtenerComentarios(Connection conn, int postId) throws SQLException {
-        List<Comment> comments = new ArrayList<>();
-        String sql = "SELECT c.*, u.username FROM comments c JOIN users u ON c.id = u.id WHERE c.post_id = ? ORDER BY c.created_at ASC";
-        PreparedStatement ps = conn.prepareStatement(sql);
+   private List<Comment> obtenerComentarios(Connection conn, int postId) throws SQLException {
+    List<Comment> comments = new ArrayList<>();
+    // CORRECCIÓN: c.user_id = u.id para obtener el nombre real del autor del comentario
+    String sql = "SELECT c.*, u.username FROM comments c " +
+                 "JOIN users u ON c.user_id = u.id " + 
+                 "WHERE c.post_id = ? ORDER BY c.created_at ASC";
+    
+    try (PreparedStatement ps = conn.prepareStatement(sql)) {
         ps.setInt(1, postId);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            comments.add(new Comment(
-                rs.getInt("id"), rs.getInt("user_id"), rs.getInt("post_id"),
-                rs.getString("content"), rs.getTimestamp("created_at"), rs.getString("username")
-            ));
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                comments.add(new Comment(
+                    rs.getInt("id"), 
+                    rs.getInt("user_id"), 
+                    rs.getInt("post_id"),
+                    rs.getString("content"), 
+                    rs.getTimestamp("created_at"), 
+                    rs.getString("username")
+                ));
+            }
         }
-        return comments;
     }
+    return comments;
+}
 } // Cierre correcto de la clase
