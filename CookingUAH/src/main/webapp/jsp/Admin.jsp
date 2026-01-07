@@ -27,7 +27,7 @@
       <img class="brand__logo" src="${pageContext.request.contextPath}/Imagenes/logo.png" alt="Logo Cooking UAH">
       <h1 class="brand__title">Cooking UAH</h1>
       <p class="brand__subtitle">Menú de administrador</p>
-      <p>Bienvenido, <%= actual.getUsername() %></p>
+      <p class="brand__subtitle">Bienvenido, <%= actual.getUsername() %></p>
     </header>
 
     <div class="card card--menu">
@@ -52,18 +52,50 @@
         </div>
       </div>
       <div class="table-wrap" role="region" aria-label="Tabla de usuarios">
-        <table class="table" id="usersTable">
-          <thead>
-            <tr>
-              <th>Usuario</th>
-              <th>Rol</th>
-              <th>Estado</th>
-              <th style="width:200px">Acciones</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
+  <table class="table" id="usersTable">
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Rol</th>
+        <th>Estado</th>
+        <th style="width:200px">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%-- Iteramos sobre la lista enviada por el Servlet [cite: 1148, 1164] --%>
+      <c:forEach var="u" items="${listaUsuarios}">
+        <tr>
+          <td>
+            <img src="${pageContext.request.contextPath}/${u.avatar}" 
+                 alt="@${u.username}" 
+                 style="width:30px; height:30px; border-radius:50%; margin-right:8px; vertical-align:middle;"
+                 onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'">
+            @<c:out value="${u.username}" />
+          </td>
+          <td><span class="badge neutral">${u.role}</span></td>
+          <td>
+            <span class="badge ${u.active ? 'success' : 'warn'}">
+              ${u.active ? 'Activo' : 'Bloqueado'}
+            </span>
+          </td>
+          <td class="actions">
+            <%-- Los botones pueden llamar a funciones de Admin.js pasando el ID real de la BBDD --%>
+            <button class="btn outline" onclick="toggleUser(${u.id})">
+              ${u.active ? 'Bloquear' : 'Desbloquear'}
+            </button>
+            <button class="btn danger" onclick="deleteUser(${u.id})">Eliminar</button>
+          </td>
+        </tr>
+      </c:forEach>
+      
+      <c:if test="${empty listaUsuarios}">
+        <tr>
+          <td colspan="4" style="text-align: center; color: #666;">No hay usuarios registrados en la base de datos.</td>
+        </tr>
+      </c:if>
+    </tbody>
+  </table>
+</div>
     </section>
 
     <section id="posts" class="card">
@@ -112,6 +144,9 @@
     </footer>
   </div>
 
+  <script>
+    window.currentUserRole = "<%= actual.getRole() %>";
+  </script>
   <%-- Carga del script con path dinámico --%>
   <script type="module" src="${pageContext.request.contextPath}/js/Admin.js"></script>
 </body>

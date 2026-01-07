@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
             // Usamos equalsIgnoreCase para que sea más robusto (acepta "admin" o "ADMIN")
             if ("admin".equalsIgnoreCase(usuarioEncontrado.getRole())) {
                 // Redirigir a la nueva página JSP de administración
-                response.sendRedirect(request.getContextPath() + "/jsp/Admin.jsp");
+                response.sendRedirect(request.getContextPath() + "/ListarUsuariosServlet");
             } else {
                 // Redirigir al flujo principal de la aplicación (Home/Feed)
                 response.sendRedirect(request.getContextPath() + "/FeedServlet");

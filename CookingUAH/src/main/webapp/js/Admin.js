@@ -1,11 +1,15 @@
 import { getUsers, saveUsers, getPosts, savePosts, getCurrentUser, seedDemo, safeParse } from './BBDD.js';
 
-// Verifica que el usuario actual sea administrador
+// Verifica que el usuario actual sea administrador (Conexión con JSP)
 (function guard() {
-  const current = getCurrentUser();
-  if (current.role !== 'admin') {
+  // Leemos el rol desde la variable global 'window.currentUserRole' 
+  // que definiremos en el JSP
+  const role = window.currentUserRole;
+
+  if (role !== 'admin') {
     alert('Acceso restringido. Debes ser administrador.');
-    window.location.href = 'IniciarSesion.html';
+    // Redirigimos al JSP de login en lugar del HTML antiguo
+    window.location.href = 'login.jsp'; 
   }
 })();
 
