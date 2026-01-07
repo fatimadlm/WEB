@@ -129,7 +129,11 @@
   <div id="postModal" class="modal-backdrop" style="display: none;">
     </div>
 
-  <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
+        <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
+        <%-- Home.js para actualizar el Feed de recetas --%>
+        <script src="${pageContext.request.contextPath}/js/Home.js"></script>
+        <%-- Actualizador.js para las notificaciones rojas de mensajes --%>
+        <script src="${pageContext.request.contextPath}/js/Actualizador.js"></script>
   <script src="${pageContext.request.contextPath}/js/MiPerfil.js"></script>
 </body>
 </html>

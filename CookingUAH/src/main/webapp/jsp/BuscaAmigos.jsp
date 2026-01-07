@@ -55,7 +55,7 @@
           <a href="${pageContext.request.contextPath}/jsp/Eventos.jsp" class="btn-secondary">Eventos</a>
           <a href="${pageContext.request.contextPath}/jsp/Notificaciones.jsp" class="btn-secondary">Notificaciones</a>
           <a href="${pageContext.request.contextPath}/jsp/MiPerfil.jsp" class="btn-secondary">Mi Perfil</a> 
-          <a href="${pageContext.request.contextPath}/PodioServlet" class="btn-secondary">Recetas TOP</a>
+                        <a href="${pageContext.request.contextPath}/PodioServlet" class="btn-secondary">Recetas TOP</a>
           <button onclick="document.getElementById('postModal').style.display = 'flex'" class="btn-primary">Crear publicación</button>
         </nav>
       </div>
@@ -155,6 +155,9 @@
         </form>
     </div>
 </div>
-<script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
+        <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
+        <script src="${pageContext.request.contextPath}/js/Home.js"></script>
+        <script src="${pageContext.request.contextPath}/js/Mensajes.js"></script>
+        <script src="${pageContext.request.contextPath}/js/Actualizador.js"></script>
 </body>
 </html>

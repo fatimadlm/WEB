@@ -19,7 +19,14 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Home.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
     </head>
-    <body>
+    
+    <%-- 
+       IMPORTANTE: Aquí añadimos 'data-context'. 
+       Esto permite que Actualizador.js y Home.js sepan la dirección del servidor 
+       para pedir mensajes y posts nuevos sin recargar la página.
+    --%>
+    <body data-context="${pageContext.request.contextPath}">
+        
         <div class="home-container">
 
             <aside class="sidebar">
@@ -31,7 +38,17 @@
 
                     <nav class="nav-buttons">
                         <a href="${pageContext.request.contextPath}/FeedServlet" class="btn-secondary">Inicio</a> 
-                        <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary">Mensajes</a>          
+                        
+                        <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary">
+                            Mensajes
+                            <%-- Burbuja roja inicial (se actualiza sola con JS) --%>
+                            <c:if test="${totalNoLeidos > 0}">
+                                <span class="badge" style="background-color: #d32f2f; color: white; padding: 2px 6px; border-radius: 50%; font-size: 0.8em; margin-left: 5px;">
+                                    ${totalNoLeidos}
+                                </span>
+                            </c:if>
+                        </a>       
+                        
                         <a href="${pageContext.request.contextPath}/EventosServlet" class="btn-secondary">Eventos</a>
                         <a href="${pageContext.request.contextPath}/jsp/Notificaciones.jsp" class="btn-secondary">Notificaciones</a>
                         <a href="${pageContext.request.contextPath}/PerfilServlet" class="btn-secondary">Mi Perfil</a> 
@@ -81,9 +98,7 @@
                         <div class="post">
                             <div class="post-header">
                                 <a href="${pageContext.request.contextPath}/jsp/PerfilOtro.jsp?id=${post.userId}">
-                                    <img src="${pageContext.request.contextPath}/VerImagen?nombre=${post.authorAvatar}" 
-                                         class="user-img" 
-                                         onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'">
+                                    <img src="${pageContext.request.contextPath}/VerImagen?nombre=${post.authorAvatar}" class="user-img" onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'">
                                 </a>
                                 <div>
                                     <a href="${pageContext.request.contextPath}/jsp/PerfilOtro.jsp?id=${post.userId}" class="post-author-link">
@@ -133,6 +148,7 @@
             </main>
         </div>
         
+        <%-- Modal para crear post --%>
         <div id="postModal" class="modal-backdrop" style="display: none;">
             <div class="modal-content">
                 <span class="modal-close" onclick="cerrarModal()">&times;</span>
@@ -140,8 +156,7 @@
 
                 <form action="${pageContext.request.contextPath}/PublicarServlet" method="POST" enctype="multipart/form-data">
                     <div class="modal-post-box">
-                        <textarea name="titulo" id="modalNewPostContent" 
-                                  placeholder="¿Qué estás cocinando, <%= actual.getUsername()%>?" required></textarea>
+                        <textarea name="titulo" id="modalNewPostContent" placeholder="¿Qué estás cocinando, <%= actual.getUsername()%>?" required></textarea>
 
                         <div id="modalImagePreviewContainer" style="display: none; align-items: center; gap: 10px; margin-bottom: 15px; background: #fdf2e9; padding: 10px; border-radius: 10px; border: 1px dashed #ffb74d;">
                             <span style="font-size: 1.2rem;">📄</span>
@@ -164,7 +179,11 @@
                 </form>
             </div>
         </div>
+
         <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
+        <%-- Home.js para actualizar el Feed de recetas --%>
         <script src="${pageContext.request.contextPath}/js/Home.js"></script>
+        <%-- Actualizador.js para las notificaciones rojas de mensajes --%>
+        <script src="${pageContext.request.contextPath}/js/Actualizador.js"></script>
     </body>
 </html>
