@@ -28,14 +28,17 @@ INSERT INTO comments (user_id, post_id, content) VALUES
 (2, 1, 'Esa lasaña tiene una pinta espectacular Juan.');
 
 -- 5. MENSAJES (Para probar tu sistema de chat)
--- Conversación entre Juan (3) y Tú (2)
-INSERT INTO messages (sender_id, receiver_id, content) VALUES 
-(3, 2, '¡Hola! Vi que te gustó mi lasaña.'),
-(2, 3, 'Sí, se ve genial. ¿Le pones algún queso especial?'),
-(3, 2, 'Uso una mezcla de mozzarella y parmesano fresco.'),
--- Conversación entre Ana (4) y Tú (2)
-(4, 2, '¿Te apuntas al taller de repostería del día 10?'),
-(2, 4, '¡Claro! Allí nos vemos.');
+INSERT INTO messages (sender_id, receiver_id, content, is_read) VALUES 
+-- Conversación antigua con Juan (Ya la leíste)
+(3, 2, '¡Hola! Vi que te gustó mi lasaña.', TRUE),
+(2, 3, 'Sí, se ve genial. ¿Le pones algún queso especial?', TRUE),
+(3, 2, 'Uso una mezcla de mozzarella y parmesano fresco.', TRUE),
+
+-- Conversación NUEVA con Ana (Aún NO la has leído, para probar la notificación)
+(4, 2, '¿Te apuntas al taller de repostería del día 10?', FALSE),
+(2, 4, '¡Claro! Allí nos vemos.', TRUE); 
+-- Nota: El último lo pones TRUE porque fuiste tú quien respondió, 
+-- no tiene sentido que tengas un mensaje tuyo sin leer.
 
 -- 6. EVENTOS
 INSERT INTO events (user_id, title, event_date, event_time, type) VALUES 

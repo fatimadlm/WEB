@@ -13,6 +13,8 @@ public class User implements Serializable {
     private String role;    // 'admin' o 'user'
     private String bio;
     private boolean active;
+    private String ultimoMensaje;
+    private int mensajesNoLeidos;
 
     // 2. Constructor Vacío (Obligatorio para que funcione bien con JSP/Frameworks)
     public User() {
@@ -104,6 +106,12 @@ public class User implements Serializable {
     public void setActive(boolean active) {
         this.active = active;
     }
+    
+    public String getUltimoMensaje() { return ultimoMensaje; }
+    public void setUltimoMensaje(String ultimoMensaje) { this.ultimoMensaje = ultimoMensaje; }
+
+    public int getMensajesNoLeidos() { return mensajesNoLeidos; }
+    public void setMensajesNoLeidos(int mensajesNoLeidos) { this.mensajesNoLeidos = mensajesNoLeidos; }
     
     // Método toString (Opcional, pero muy útil para depurar errores y ver qué datos tiene el objeto)
     @Override

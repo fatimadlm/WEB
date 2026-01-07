@@ -1,44 +1,41 @@
-
-// Definimos el intervalo de refresco
-const TIEMPO_REFRESCO = 3000;
+const TIEMPO_REFRESCO = 2000;
 
 function actualizarFeed() {
     const container = document.getElementById('postsContainer');
-    // SEGURIDAD: Si no existe el contenedor de posts, detenemos el bucle
-    // Esto evita que el script intente ejecutarse en la página de Mensajes
-    if (!container) return; 
+    if (!container) return; // No estamos en Home
 
+    // No molestar si escribe
     const elementoActivo = document.activeElement;
-    const escribiendo = elementoActivo && (elementoActivo.tagName === 'INPUT' || elementoActivo.tagName === 'TEXTAREA');
+    if (elementoActivo && (elementoActivo.tagName === 'INPUT' || elementoActivo.tagName === 'TEXTAREA')) {
+        return;
+    }
 
-    if (escribiendo) return;
-
-    // Obtenemos el contextPath desde el body (igual que en Mensajes.js)
     const contextPath = document.body.dataset.context || "";
+    // URL ÚNICA para saltar caché
+    const urlAntiCache = `${contextPath}/FeedServlet?ts=${Date.now()}`;
 
-    fetch(`${contextPath}/FeedServlet`)
+    fetch(urlAntiCache)
         .then(response => response.text())
         .then(html => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
-            const nuevosPosts = doc.getElementById('postsContainer').innerHTML;
+            const nuevosPosts = doc.getElementById('postsContainer');
             
-            // Solo actualizamos si el contenido ha cambiado para evitar parpadeos
-            if (container.innerHTML !== nuevosPosts) {
-                container.innerHTML = nuevosPosts;
-                console.log("Feed sincronizado con BBDD ");
+            if (nuevosPosts && container.innerHTML !== nuevosPosts.innerHTML) {
+                container.innerHTML = nuevosPosts.innerHTML;
+                console.log("Feed actualizado 🥘");
             }
         })
-        .catch(err => console.error('Error en refresco del feed:', err));
+        .catch(err => console.error('Error feed:', err));
 }
 
-// Funciones para la gestión de archivos en el Home
+// Fotos
 function mostrarNombreArchivo(input) {
     const container = document.getElementById('file-name-container');
     const spanNombre = document.getElementById('nombre-archivo');
     if (input.files && input.files[0]) {
         spanNombre.innerText = input.files[0].name;
-        container.style.display = 'flex';
+        if (container) container.style.display = 'flex';
     }
 }
 
@@ -49,5 +46,4 @@ function quitarArchivoHome() {
     if (container) container.style.display = 'none';
 }
 
-// Iniciar el intervalo
 setInterval(actualizarFeed, TIEMPO_REFRESCO);

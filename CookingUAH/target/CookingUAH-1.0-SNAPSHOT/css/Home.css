@@ -866,3 +866,49 @@ body::before {
     text-decoration: underline;
     color: #cc5500;
 }
+
+/* Burbuja de notificación roja */
+.badge {
+    background-color: #d32f2f; /* Rojo fuerte */
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+/* Estilo para el último mensaje en gris */
+.chat-last-message {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 2px;
+}
+/* Si el mensaje es nuevo, que salga en negrita */
+.chat-unread .chat-last-message {
+    color: #cc5500; /* Naranja */
+    font-weight: bold;
+}
+
+
+
+/* --- ESTILOS DE CHAT NUEVOS --- */
+
+/* Clase para cuando hay mensajes sin leer en la lista */
+.chat-list-item.unread {
+    background-color: #fff3e0; /* Un crema un poco más oscuro/anaranjado */
+    border-left: 4px solid #d32f2f; /* Línea roja elegante a la izquierda */
+    font-weight: 600; /* Texto un poco más grueso */
+}
+
+/* El punto rojo (Red Dot) */
+.unread-dot {
+    height: 10px;
+    width: 10px;
+    background-color: #d32f2f; /* Rojo */
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: auto; /* Esto empuja el punto a la derecha del todo */
+    box-shadow: 0 0 5px rgba(211, 47, 47, 0.5); /* Pequeño brillo */
+}

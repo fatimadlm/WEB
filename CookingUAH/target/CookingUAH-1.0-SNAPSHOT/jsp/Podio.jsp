@@ -87,9 +87,7 @@
 
     <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
     <script src="${pageContext.request.contextPath}/js/Home.js"></script>
-    <script src="${pageContext.request.contextPath}/js/Podio.js"></script>
-    <%-- Actualizador.js para las notificaciones rojas de mensajes --%>
-    <script src="${pageContext.request.contextPath}/js/Actualizador.js"></script>
+        <script src="${pageContext.request.contextPath}/js/Podio.js"></script>
 
 </body>
 </html>
