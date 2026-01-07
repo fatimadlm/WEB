@@ -30,7 +30,15 @@
 
                     <nav class="nav-buttons">
                         <a href="${pageContext.request.contextPath}/FeedServlet" class="btn-secondary">Inicio</a> 
-                        <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary">Mensajes</a>          
+                        <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary">
+                            Mensajes
+                            <%-- Si hay mensajes sin leer, mostramos la burbuja roja --%>
+                            <c:if test="${totalNoLeidos > 0}">
+                                <span class="badge" style="background-color: #d32f2f; color: white; padding: 2px 6px; border-radius: 50%; font-size: 0.8em; margin-left: 5px;">
+                                    ${totalNoLeidos}
+                                </span>
+                            </c:if>
+                        </a>          
                         <a href="${pageContext.request.contextPath}/EventosServlet" class="btn-secondary">Eventos</a>
                         <a href="${pageContext.request.contextPath}/jsp/Notificaciones.jsp" class="btn-secondary">Notificaciones</a>
                         <a href="${pageContext.request.contextPath}/PerfilServlet" class="btn-secondary">Mi Perfil</a> 
@@ -43,28 +51,46 @@
             </aside>
 
                 <main class="feed-chat-page">
-                      <div class="chat-list-container">
-                    <div class="search-bar">
-                        <form action="${pageContext.request.contextPath}/BuscarServlet" method="GET">
-                            <input type="text" name="busqueda" placeholder="Buscar usuarios..." />
-                            <button type="submit">Buscar</button>
-                        </form>
+                    <div class="chat-list-container">
+                        <div class="search-bar">
+                            <form action="${pageContext.request.contextPath}/BuscarServlet" method="GET">
+                                <input type="text" name="busqueda" placeholder="Buscar usuarios..." />
+                                <button type="submit">Buscar</button>
+                            </form>
+                        </div>
+                        <ul class="chat-list">
+                            <c:forEach var="contacto" items="${listaContactos}"> 
+                                <li>
+                                    <%-- Aplicamos la clase 'unread' si hay mensajes --%>
+                                   <%-- Añadimos id="chat-item-XXXX" para que el JS lo encuentre --%>
+                                    <div id="chat-item-${contacto.id}" 
+                                         class="chat-list-item ${contacto.mensajesNoLeidos > 0 ? 'unread' : ''}" 
+                                         onclick="cargarChat('${contacto.id}', '${contacto.username}')" role="button">
+
+                                        <img src="${pageContext.request.contextPath}/VerImagen?nombre=${contacto.avatar}" 
+                                             onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'" 
+                                             class="chat-avatar">
+
+                                        <div class="chat-info" style="width: 100%;">
+                                            <div style="display: flex; align-items: center; justify-content: space-between;">
+                                                <h3>@${contacto.username}</h3>
+
+                                                <%-- AQUÍ ESTÁ EL CAMBIO: Si hay mensajes, ponemos el PUNTO ROJO --%>
+                                                <c:if test="${contacto.mensajesNoLeidos > 0}">
+                                                    <span class="unread-dot" title="Nuevos mensajes"></span>
+                                                </c:if>
+                                            </div>
+
+                                            <%-- Mensaje en negrita si es nuevo (gracias a la clase .unread del padre) --%>
+                                            <p class="chat-last-message">
+                                                ${contacto.ultimoMensaje}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </c:forEach>
+                        </ul>
                     </div>
-                            <ul class="chat-list">
-                                  <c:forEach var="contacto" items="${listaContactos}"> 
-                                          <li>
-                                                <div class="chat-list-item" onclick="cargarChat('${contacto.id}', '${contacto.username}')" role="button">
-                                    <img src="${pageContext.request.contextPath}/VerImagen?nombre=${contacto.avatar}" 
-                                         onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'" 
-                                         class="chat-avatar">                  <div class="chat-info">
-                                                            <h3>@${contacto.username}</h3>
-                                                            <p class="chat-last-message">Haz clic para chatear</p>
-                                                          </div>
-                                                    </div>
-                                              </li>
-                                      </c:forEach>
-                                    </ul>
-                              </div>
 
                           <div class="chat-conversation-container">
                                 <div class="chat-placeholder" id="chatPlaceholder">
@@ -120,6 +146,8 @@
 
         <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
           <%-- CARGA DEL ARCHIVO JS SEPARADO --%>
-          <script src="${pageContext.request.contextPath}/js/Mensajes.js"></script>
+         <script src="${pageContext.request.contextPath}/js/Mensajes.js"></script>
+        <script src="${pageContext.request.contextPath}/js/Actualizador.js"></script>
+        <script src="${pageContext.request.contextPath}/js/Home.js"></script>
     </body>
 </html> 
