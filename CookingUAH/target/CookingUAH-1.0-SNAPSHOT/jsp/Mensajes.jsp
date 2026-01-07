@@ -74,9 +74,6 @@
                                 <div class="chat-active-window" id="chatActiveWindow" style="display: none;">
                                       <div class="chat-header">
                                 <h2 id="chatUserName">Chat</h2>
-                                <button id="btnRefrescarManual" onclick="refrescarMensajes(true)" class="btn-secondary" style="margin-left: auto; padding: 5px 10px;">
-                                    🔄 Actualizar
-                                </button>
                             </div>
                                       <div class="chat-box" id="chatBox"></div>
                                       <div class="chat-input-area">
