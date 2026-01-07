@@ -24,29 +24,30 @@ public class LoginServlet extends HttpServlet {
         User usuarioEncontrado = dao.validarLogin(user, pass);
 
         if (usuarioEncontrado != null) {
-            // Caso A: Usuario desactivado
+            // 1. Verificar si la cuenta está activa
             if (!usuarioEncontrado.isActive()) {
                 request.setAttribute("mensajeError", "Tu cuenta está desactivada.");
-                // CORRECCIÓN: Usar "/" para indicar la raíz de webapp
                 request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
                 return;
             }
 
-            // Caso B: Login exitoso
+            // 2. Login exitoso: Guardar objeto usuario en la sesión
             HttpSession session = request.getSession();
             session.setAttribute("usuario", usuarioEncontrado);
 
-            // Caso C: Redirección con ContextPath (Correcto)
-            if ("admin".equals(usuarioEncontrado.getRole())) {
-                response.sendRedirect(request.getContextPath() + "/jsp/admin.jsp");
+            // 3. Gestión de redirección según el ROL
+            // Usamos equalsIgnoreCase para que sea más robusto (acepta "admin" o "ADMIN")
+            if ("admin".equalsIgnoreCase(usuarioEncontrado.getRole())) {
+                // Redirigir a la nueva página JSP de administración
+                response.sendRedirect(request.getContextPath() + "/jsp/Admin.jsp");
             } else {
+                // Redirigir al flujo principal de la aplicación (Home/Feed)
                 response.sendRedirect(request.getContextPath() + "/FeedServlet");
             }
 
         } else {
-            // Caso D: Login fallido
+            // 4. Caso de error: Credenciales incorrectas
             request.setAttribute("mensajeError", "Usuario o contraseña incorrectos.");
-            // CORRECCIÓN: Añadir la barra "/" inicial
             request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
         }
     }

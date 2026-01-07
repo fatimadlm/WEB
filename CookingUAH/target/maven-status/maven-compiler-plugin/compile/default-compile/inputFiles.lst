@@ -1,29 +1,29 @@
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\modelo\Evento.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\modelo\InstalarDatos.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\CargarChatServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\InteraccionServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\modelo\UserDAO.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\modelo\User.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\com\mycompany\mavenproject1\resources\JakartaEE10Resource.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\modelo\EventoDAO.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\modelo\FollowerDAO.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\EliminarPostServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\SetupServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\EditarPerfilServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\modelo\MensajeDAO.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\FeedServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\RegistroServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\modelo\Comment.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\com\mycompany\mavenproject1\JakartaRestConfiguration.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\EventosServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\PodioServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\modelo\Mensaje.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\PublicarServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\modelo\Follower.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\modelo\PostDAO.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\MensajesServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\BuscarServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\LoginServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\VerImagenServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\servlets\PerfilServlet.java
-C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAH\src\main\java\modelo\Post.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/EditarPerfilServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/Evento.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/com/mycompany/mavenproject1/resources/JakartaEE10Resource.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/PodioServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/BuscarServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/User.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/InstalarDatos.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/PerfilServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/RegistroServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/Mensaje.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/InteraccionServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/VerImagenServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/PublicarServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/CargarChatServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/EventoDAO.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/SetupServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/MensajesServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/PostDAO.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/com/mycompany/mavenproject1/JakartaRestConfiguration.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/FeedServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/Comment.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/EventosServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/FollowerDAO.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/MensajeDAO.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/LoginServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/Follower.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/EliminarPostServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/UserDAO.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/Post.java
