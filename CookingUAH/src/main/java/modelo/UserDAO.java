@@ -114,7 +114,6 @@ public class UserDAO {
     public User obtenerUsuarioPorId(int id) {
         User u = null;
         String sql = "SELECT * FROM users WHERE id = ?";
-        // Corregido: Usar getConexion() para mantener consistencia
         try (Connection conn = getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -136,5 +135,68 @@ public class UserDAO {
             e.printStackTrace(); 
         }
         return u;
+    }
+    
+    /**
+    * Bloquea a un usuario estableciendo su columna 'active' a false
+    * @param id Identificador único del usuario
+    * @return true si se actualizó correctamente
+    */
+    public boolean bloquearUsuario(int id) {
+       String sql = "UPDATE users SET active = false WHERE id = ?";
+
+       try (Connection conn = getConexion();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+
+           ps.setInt(1, id);
+           int filas = ps.executeUpdate();
+           return filas > 0;
+
+       } catch (SQLException e) {
+           e.printStackTrace();
+           return false;
+       }
+    }
+
+    /**
+    * Desbloquea a un usuario estableciendo su columna 'active' a true
+    * @param id Identificador único del usuario
+    * @return true si se actualizó correctamente
+    */
+    public boolean desbloquearUsuario(int id) {
+       String sql = "UPDATE users SET active = true WHERE id = ?";
+
+       try (Connection conn = getConexion();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+
+           ps.setInt(1, id);
+           int filas = ps.executeUpdate();
+           return filas > 0;
+
+       } catch (SQLException e) {
+           e.printStackTrace();
+           return false;
+       }
+    }
+    
+    /**
+    * Elimina permanentemente un usuario de la base de datos
+    * @param id Identificador del usuario a borrar
+    * @return true si la operación tuvo éxito
+    */
+    public boolean eliminarUsuario(int id) {
+       String sql = "DELETE FROM users WHERE id = ?";
+
+       try (Connection conn = getConexion();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+
+           ps.setInt(1, id);
+           int filasAfectadas = ps.executeUpdate();
+           return filasAfectadas > 0;
+
+       } catch (SQLException e) {
+           e.printStackTrace();
+           return false;
+       }
     }
 }

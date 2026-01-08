@@ -9,6 +9,16 @@ public class MensajeDAO {
     private static final String URL = "jdbc:derby://localhost:1527/CookingUAHBBDD;create=true";
     private static final String USER = "root";
     private static final String PASS = "root";
+    
+    // Establecimiento de conexion
+    private Connection getConexion() throws SQLException {
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return DriverManager.getConnection(URL, USER, PASS);
+    }
 
     // 1. LISTAR CONTACTOS
     public List<User> listarContactos(int miId) {
@@ -18,7 +28,7 @@ public class MensajeDAO {
                      "JOIN messages m ON (u.id = m.sender_id OR u.id = m.receiver_id) " +
                      "WHERE (m.sender_id = ? OR m.receiver_id = ?) AND u.id <> ?";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+        try (Connection conn = getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, miId);
@@ -51,7 +61,7 @@ public class MensajeDAO {
                      "WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) " +
                      "ORDER BY created_at ASC";
         
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+        try (Connection conn = getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, emisorId); ps.setInt(2, receptorId);
             ps.setInt(3, receptorId); ps.setInt(4, emisorId);
@@ -71,7 +81,7 @@ public class MensajeDAO {
     // 3. ENVIAR MENSAJE
     public boolean enviarMensaje(int emisorId, int receptorId, String contenido) {
         String sql = "INSERT INTO messages (sender_id, receiver_id, content, is_read) VALUES (?, ?, ?, FALSE)";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+        try (Connection conn = getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, emisorId);
             ps.setInt(2, receptorId);
@@ -83,7 +93,7 @@ public class MensajeDAO {
     // 4. MARCAR COMO LEÍDOS
     public void marcarComoLeidos(int miId, int otroUsuarioId) {
         String sql = "UPDATE messages SET is_read = TRUE WHERE receiver_id = ? AND sender_id = ? AND is_read = FALSE";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+        try (Connection conn = getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, miId); 
             ps.setInt(2, otroUsuarioId); 
@@ -96,7 +106,7 @@ public class MensajeDAO {
         // AÑADIDO: "AND sender_id <> ?" para asegurar que NO cuente mensajes enviados por mí mismo
         String sql = "SELECT COUNT(DISTINCT sender_id) FROM messages WHERE receiver_id = ? AND is_read = FALSE AND sender_id <> ?";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+        try (Connection conn = getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, miId);
             ps.setInt(2, miId); // Me excluyo a mí mismo como remitente
@@ -112,7 +122,7 @@ public class MensajeDAO {
         // AÑADIDO: "AND sender_id <> ?"
         String sql = "SELECT DISTINCT sender_id FROM messages WHERE receiver_id = ? AND is_read = FALSE AND sender_id <> ?";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+        try (Connection conn = getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, miId);
             ps.setInt(2, miId); // Me excluyo

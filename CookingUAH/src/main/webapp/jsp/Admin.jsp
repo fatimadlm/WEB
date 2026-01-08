@@ -79,11 +79,24 @@
             </span>
           </td>
           <td class="actions">
-            <%-- Los botones pueden llamar a funciones de Admin.js pasando el ID real de la BBDD --%>
-            <button class="btn outline" onclick="toggleUser(${u.id})">
-              ${u.active ? 'Bloquear' : 'Desbloquear'}
-            </button>
-            <button class="btn danger" onclick="deleteUser(${u.id})">Eliminar</button>
+            <c:choose>
+                <%-- Si el usuario está activo, mostramos botón para BLOQUEAR --%>
+                <c:when test="${u.active}">
+                    <a href="${pageContext.request.contextPath}/GestionUsuarioServlet?id=${u.id}&accion=bloquear" 
+                       class="btn outline">Bloquear</a>
+                </c:when>
+                <%-- Si está bloqueado, mostramos botón para DESBLOQUEAR --%>
+                <c:otherwise>
+                    <a href="${pageContext.request.contextPath}/GestionUsuarioServletsid=${u.id}&accion=desbloquear" 
+                       class="btn outline">Desbloquear</a>
+                </c:otherwise>
+            </c:choose>
+            <%-- Enlace de eliminar con confirmación de seguridad --%>
+            <a href="${pageContext.request.contextPath}/GestionUsuarioServlet?id=${u.id}&accion=eliminar" 
+               class="btn danger" 
+               onclick="return confirm('¿Estás seguro de que deseas eliminar permanentemente a este usuario?')">
+               Eliminar
+            </a>
           </td>
         </tr>
       </c:forEach>
