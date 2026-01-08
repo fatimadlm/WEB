@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Admin.css">
 </head>
 <body>
-  <div class="page">
+    <div class="page">
     <header class="brand">
       <%-- Uso de path dinámico para la imagen del logo --%>
       <img class="brand__logo" src="${pageContext.request.contextPath}/Imagenes/logo.png" alt="Logo Cooking UAH">
@@ -87,7 +87,7 @@
                 </c:when>
                 <%-- Si está bloqueado, mostramos botón para DESBLOQUEAR --%>
                 <c:otherwise>
-                    <a href="${pageContext.request.contextPath}/GestionUsuarioServletsid=${u.id}&accion=desbloquear" 
+                    <a href="${pageContext.request.contextPath}/GestionUsuarioServlet?id=${u.id}&accion=desbloquear" 
                        class="btn outline">Desbloquear</a>
                 </c:otherwise>
             </c:choose>
@@ -126,29 +126,62 @@
               <th style="width:220px">Acciones</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+            <c:forEach var="p" items="${listaPosts}">
+              <tr>
+                <td>${p.title}</td>
+                <td>@${p.authorName}</td>
+                <td>${p.createdAt}</td>
+                <td>${p.likesCount}</td>
+                <td class="actions">
+                  <a href="${pageContext.request.contextPath}/GestionPostServlet?id=${p.id}&accion=eliminar" 
+                     class="btn danger" onclick="return confirm('¿Borrar receta?')">Borrar</a>
+                </td>
+              </tr>
+            </c:forEach>
+          </tbody>
         </table>
       </div>
     </section>
 
     <section id="comments" class="card">
-      <div class="card__header">
-        <h2>Comentarios</h2>
-      </div>
-      <div class="table-wrap" role="region" aria-label="Tabla de comentarios">
-        <table class="table" id="commentsTable">
-          <thead>
-            <tr>
-              <th>Publicación</th>
-              <th>Autor</th>
-              <th>Contenido</th>
-              <th>Fecha</th>
-              <th style="width:160px">Acciones</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
+        <div class="card__header">
+          <h2>Comentarios</h2>
+        </div>
+        <div class="table-wrap">
+          <table class="table" id="commentsTable">
+            <thead>
+              <tr>
+                <th>ID Post</th>
+                <th>Autor</th>
+                <th>Contenido</th>
+                <th>Fecha</th>
+                <th style="width:160px">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <c:forEach var="c" items="${listaComentarios}">
+                <tr>
+                  <td>#${c.postId}</td>
+                  <td>@${c.authorName}</td>
+                  <td>${c.content}</td>
+                  <td>${c.createdAt}</td>
+                  <td class="actions">
+                    <%-- Acción definida en el GestionPostServlet --%>
+                    <a href="${pageContext.request.contextPath}/GestionPostServlet?id=${c.id}&accion=eliminarComentario" 
+                       class="btn danger" 
+                       onclick="return confirm('¿Seguro que deseas borrar este comentario?')">
+                       Borrar
+                    </a>
+                  </td>
+                </tr>
+              </c:forEach>
+              <c:if test="${empty listaComentarios}">
+                <tr><td colspan="5" style="text-align:center;">No hay comentarios.</td></tr>
+              </c:if>
+            </tbody>
+          </table>
+        </div>
     </section>
 
     <footer class="footer">

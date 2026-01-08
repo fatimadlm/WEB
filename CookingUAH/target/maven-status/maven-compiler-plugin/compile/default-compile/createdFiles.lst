@@ -1,2 +1,4 @@
 servlets/LogoutServlet.class
 servlets/GestionUsuarioServlet.class
+servlets/AdminServlet.class
+servlets/GestionPostServlet.class

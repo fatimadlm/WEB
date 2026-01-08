@@ -35,7 +35,7 @@ public class PerfilServlet extends HttpServlet {
             User usuarioCompleto = uDao.obtenerUsuarioPorId(actual.getId());
 
             PostDAO pDao = new PostDAO();
-            List<Post> misPosts = pDao.listarPostsPorUsuario(actual.getId());
+            List<Post> misPosts = pDao.listarPosts(actual.getId());
 
             FollowerDAO fDao = new FollowerDAO();
             int seguidores = fDao.contarSeguidores(actual.getId());

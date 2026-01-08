@@ -5,13 +5,14 @@
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/GestionUsuarioServlet.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/BuscarServlet.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/User.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/LogoutServlet.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/InstalarDatos.java
-/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/ListarUsuariosServlet.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/PerfilServlet.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/RegistroServlet.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/Mensaje.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/InteraccionServlet.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/VerImagenServlet.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/AdminServlet.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/PublicarServlet.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/CargarChatServlet.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/EventoDAO.java
@@ -26,6 +27,7 @@
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/MensajeDAO.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/LoginServlet.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/Follower.java
+/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/GestionPostServlet.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/servlets/EliminarPostServlet.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/UserDAO.java
 /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAH/src/main/java/modelo/Post.java
