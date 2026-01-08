@@ -56,7 +56,6 @@
                         <button onclick="document.getElementById('postModal').style.display = 'flex'" class="btn-primary">Crear publicación</button>
                     </nav>
                 </div>
-
                 <a href="${pageContext.request.contextPath}/LogoutServlet" class="btn-logout">Cerrar sesión</a>
             </aside>
 
