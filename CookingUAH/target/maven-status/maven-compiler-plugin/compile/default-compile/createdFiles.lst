@@ -1,3 +1,5 @@
+servlets\EliminarEventoServlet.class
+servlets\ModificarEventoServlet.class
 modelo\Mensaje.class
 modelo\User.class
 servlets\InteraccionServlet.class

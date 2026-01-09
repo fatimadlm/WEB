@@ -19,7 +19,15 @@ function abrirModalEdicion(id, titulo) {
         inputContent.focus();
     }
 }
-
+function abrirModalEditarEvento(id, titulo, fecha, hora) {
+    document.getElementById('editEventoId').value = id;
+    document.getElementById('editEventoTitulo').value = titulo;
+    document.getElementById('editEventoFecha').value = fecha;
+    document.getElementById('editEventoHora').value = hora;
+    
+    // Redirigir al ancla del modal
+    window.location.hash = 'editarEvento';
+}
 /**
  * Cierra el modal de edición de posts
  */
@@ -65,4 +73,14 @@ function abrirSeguidores() {
 
 function abrirSiguiendo() {
     console.log("Cargando lista de usuarios seguidos...");
+}
+function cerrarModalEditarEvento() {
+    // Al usar anclas (#), para cerrar el modal volvemos a la URL base o arriba
+    window.location.hash = ''; 
+    
+    // Opcional: Limpiar los campos del formulario por seguridad
+    const formulario = document.querySelector('#editarEvento form');
+    if (formulario) {
+        formulario.reset();
+    }
 }

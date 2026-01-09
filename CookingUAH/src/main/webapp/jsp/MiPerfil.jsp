@@ -104,8 +104,67 @@
             <p style="padding: 20px; color: #666;">Aún no has compartido ninguna receta.</p>
         </c:if>
       </section>
+              
+             <section class="perfil-eventos">
+    <h3>Mis Eventos Creados</h3>
+    
+    <c:forEach var="evento" items="${misEventos}">
+        <div class="post event-item-perfil" style="border-left: 5px solid #FFA500;">
+            <div class="post-header">
+                <div>
+                    <h4>${evento.title}</h4>
+                    <span>📅 ${evento.eventDate} - 🕒 ${evento.eventTime}</span>
+                    <br>
+                    <small>Tipo: ${evento.type}</small>
+                </div>
+            </div>
+            
+            <div class="post-actions">
+                <%-- Botón Editar Evento --%>
+                <button class="btn-edit-post" onclick="abrirModalEditarEvento('${evento.id}', '${evento.title}', '${evento.eventDate}', '${evento.eventTime}')">
+                    📝 Editar
+                </button>
+                
+                <%-- Formulario Eliminar Evento --%>
+                <form action="${pageContext.request.contextPath}/EliminarEventoServlet" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este evento?')">
+                    <input type="hidden" name="eventoId" value="${evento.id}">
+                    <button type="submit" class="btn-delete-post">🗑️ Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </c:forEach>
+
+    <c:if test="${empty misEventos}">
+        <p style="padding: 20px; color: #666;">No has organizado ningún evento todavía.</p>
+    </c:if>
+</section>
     </main>
   </div>
+    <section id="editarEvento" class="modal">
+    <a href="#" class="modal__backdrop"></a>
+    <div class="modal__panel">
+        <header class="modal__header">
+            <h2>Editar Evento</h2>
+            <a href="#" class="modal__close">✕</a>
+        </header>
+        <div class="modal__body">
+            <form action="${pageContext.request.contextPath}/EditarEventoServlet" method="POST">
+                <input type="hidden" name="eventoId" id="editEventoId">
+                
+                <label>Título del Evento:</label>
+                <input type="text" name="titulo" id="editEventoTitulo" class="form-control" required>
+                
+                <label>Fecha:</label>
+                <input type="date" name="fecha" id="editEventoFecha" class="form-control" required>
+                
+                <label>Hora:</label>
+                <input type="time" name="hora" id="editEventoHora" class="form-control" required>
+                
+                <button type="submit" class="btn-primary" style="margin-top:15px; width:100%;">Actualizar Evento</button>
+            </form>
+        </div>
+    </div>
+</section>          
 
   <section id="editar" class="modal">
     <a href="#" class="modal__backdrop"></a>

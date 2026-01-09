@@ -13,7 +13,8 @@ import modelo.User;
 import modelo.UserDAO;
 import modelo.Post;
 import modelo.PostDAO;
-import modelo.FollowerDAO; 
+import modelo.Evento;
+import modelo.EventoDAO;
 
 @WebServlet(name = "PerfilServlet", urlPatterns = {"/PerfilServlet"})
 public class PerfilServlet extends HttpServlet {
@@ -31,18 +32,26 @@ public class PerfilServlet extends HttpServlet {
         }
 
         try {
+            // 1. Obtener datos actualizados del usuario
             UserDAO uDao = new UserDAO();
             User usuarioCompleto = uDao.obtenerUsuarioPorId(actual.getId());
 
+            // 2. Obtener publicaciones del usuario
             PostDAO pDao = new PostDAO();
-            List<Post> misPosts = pDao.listarPosts(actual.getId());
+            List<Post> misPosts = pDao.listarPostsPorUsuario(actual.getId());
 
-            FollowerDAO fDao = new FollowerDAO();
-            int seguidores = fDao.contarSeguidores(actual.getId());
-            int siguiendo = fDao.contarSiguiendo(actual.getId());
+            // 3. NUEVO: Obtener eventos creados por el usuario
+            EventoDAO eDao = new EventoDAO();
+            List<Evento> misEventos = eDao.listarPorUsuario(actual.getId());
 
+            // 4. Estadísticas de seguimiento
+            int seguidores = uDao.contarSeguidores(actual.getId());
+            int siguiendo = uDao.contarSiguiendo(actual.getId());
+
+            // 5. Pasar datos al JSP
             request.setAttribute("usuario", usuarioCompleto);
             request.setAttribute("misPosts", misPosts);
+            request.setAttribute("misEventos", misEventos); 
             request.setAttribute("seguidoresCount", seguidores);
             request.setAttribute("siguiendoCount", siguiendo);
 

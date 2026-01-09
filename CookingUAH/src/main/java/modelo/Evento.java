@@ -10,7 +10,10 @@ public class Evento {
     private Date eventDate;
     private Time eventTime;
     private String type;
-    private String authorName; // Para mostrar quién lo creó en el calendario
+    private String authorName;
+
+    // Constructor vacío (necesario para edición)
+    public Evento() {}
 
     // Constructor para crear nuevos eventos
     public Evento(int userId, String title, Date eventDate, Time eventTime, String type) {
@@ -32,12 +35,25 @@ public class Evento {
         this.authorName = authorName;
     }
 
-    // Getters y Setters
+    // Getters y Setters completos
     public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+    
     public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
+    
     public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+    
     public Date getEventDate() { return eventDate; }
+    public void setEventDate(Date eventDate) { this.eventDate = eventDate; }
+    
     public Time getEventTime() { return eventTime; }
+    public void setEventTime(Time eventTime) { this.eventTime = eventTime; }
+    
     public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
+    
     public String getAuthorName() { return authorName; }
+    public void setAuthorName(String authorName) { this.authorName = authorName; }
 }

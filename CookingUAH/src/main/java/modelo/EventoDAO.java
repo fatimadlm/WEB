@@ -9,6 +9,54 @@ public class EventoDAO {
     private static final String USER = "root";
     private static final String PASS = "root";
 
+    public List<Evento> listarPorUsuario(int userId) {
+        List<Evento> eventos = new ArrayList<>();
+        String sql = "SELECT e.*, u.username FROM events e JOIN users u ON e.user_id = u.id WHERE e.user_id = ? ORDER BY e.event_date ASC";
+        
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    eventos.add(new Evento(
+                        rs.getInt("id"), rs.getInt("user_id"), rs.getString("title"),
+                        rs.getDate("event_date"), rs.getTime("event_time"),
+                        rs.getString("type"), rs.getString("username")
+                    ));
+                }
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return eventos;
+    }
+
+    /**
+     * Actualiza los datos de un evento existente.
+     */
+    public boolean actualizar(Evento ev) {
+        String sql = "UPDATE events SET title = ?, event_date = ?, event_time = ? WHERE id = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, ev.getTitle());
+            ps.setDate(2, ev.getEventDate());
+            ps.setTime(3, ev.getEventTime());
+            ps.setInt(4, ev.getId());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) { e.printStackTrace(); return false; }
+    }
+
+    /**
+     * Elimina un evento de la base de datos.
+     */
+    public boolean eliminar(int id) {
+        String sql = "DELETE FROM events WHERE id = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) { e.printStackTrace(); return false; }
+    }
+
+
     public List<Evento> listarTodos() {
         List<Evento> eventos = new ArrayList<>();
         // JOIN con users para saber el nombre del organizador
