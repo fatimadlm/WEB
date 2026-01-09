@@ -71,22 +71,39 @@
 <body>
     <div class="home-container">
         <aside class="sidebar">
-            <div> 
-                <div class="logo">
-                    <img src="${pageContext.request.contextPath}/Imagenes/logo.png" alt="Logo" class="logo-img" />
-                    <h1>CookingUAH</h1>
-                </div>
-                <nav class="nav-buttons">
-                    <a href="${pageContext.request.contextPath}/FeedServlet" class="btn-secondary">Inicio</a> 
-                    <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary">Mensajes</a> 
-                    <a href="${pageContext.request.contextPath}/EventosServlet" class="btn-secondary">Eventos</a>
-                    <a href="${pageContext.request.contextPath}/NotificacionesServlet" class="btn-primary">Notificaciones</a>
-                    <a href="${pageContext.request.contextPath}/PerfilServlet" class="btn-secondary">Mi Perfil</a>
-                    <a href="${pageContext.request.contextPath}/PodioServlet" class="btn-secondary">Recetas TOP</a>
-                </nav>
-            </div>
-            <a href="${pageContext.request.contextPath}/LogoutServlet" class="btn-logout">Cerrar sesión</a>
-        </aside>
+    <div> 
+        <div class="logo">
+            <img src="${pageContext.request.contextPath}/Imagenes/logo.png" alt="Logo CookingUAH" class="logo-img" />
+            <h1>CookingUAH</h1>
+        </div>
+
+        <nav class="nav-buttons">
+            <%-- Todos con 'btn-secondary' para que midan lo mismo --%>
+            <a href="${pageContext.request.contextPath}/FeedServlet" class="btn-secondary">Inicio</a> 
+            
+            <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary">
+                Mensajes
+                <c:if test="${totalNoLeidos > 0}">
+                    <span class="badge" style="background-color: #d32f2f; color: white; padding: 2px 6px; border-radius: 50%; font-size: 0.8em; margin-left: 5px;">
+                        ${totalNoLeidos}
+                    </span>
+                </c:if>
+            </a>       
+            
+            <a href="${pageContext.request.contextPath}/EventosServlet" class="btn-secondary">Eventos</a>
+            
+            <%-- Ahora es btn-secondary como en Home.jsp --%>
+            <a href="${pageContext.request.contextPath}/NotificacionesServlet" class="btn-secondary">Notificaciones</a>
+            
+            <a href="${pageContext.request.contextPath}/PerfilServlet" class="btn-secondary">Mi Perfil</a> 
+            <a href="${pageContext.request.contextPath}/PodioServlet" class="btn-secondary">Recetas TOP</a>
+            
+            <%-- Este botón naranja es el que completa la sidebar --%>
+            <button onclick="document.getElementById('postModal').style.display = 'flex'" class="btn-primary">Crear publicación</button>
+        </nav>
+    </div>
+    <a href="${pageContext.request.contextPath}/LogoutServlet" class="btn-logout">Cerrar sesión</a>
+</aside>
 
         <main class="feed">
             <div class="notif-container">
