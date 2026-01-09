@@ -17,7 +17,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Perfil de ${perfil.username} - CookingUAH</title>
-  <%-- Se asume que Perfil.css es el estilo compartido para perfiles ajenos --%>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Perfil.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Home.css" />
 </head>
@@ -45,7 +44,6 @@
 
     <main class="feed perfil-page">
       <section class="perfil-info">
-        <%-- Uso de VerImagen para cargar el avatar desde la carpeta externa --%>
         <img src="${pageContext.request.contextPath}/VerImagen?nombre=${perfil.avatar}" 
              onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'" 
              alt="Foto de perfil" class="perfil-img" />
@@ -64,16 +62,35 @@
               </a>
           </div>
 
-          <%-- Formulario para seguir/dejar de seguir --%>
-          <form action="${pageContext.request.contextPath}/SeguirServlet" method="POST">
-              <input type="hidden" name="targetUserId" value="${perfil.id}">
-              <button type="submit" class="follow-btn ${esSeguido ? 'following' : ''}">
-                  ${esSeguido ? 'Siguiendo' : 'Seguir'}
-              </button>
-          </form>
-          
-          <%-- Botón para abrir chat directo --%>
-          <a href="${pageContext.request.contextPath}/CargarChatServlet?id=${perfil.id}" class="btn-secondary" style="margin-top:10px; display:inline-block;">Enviar Mensaje</a>
+          <%-- BLOQUE MODIFICADO: Lógica de Seguir/Dejar de Seguir --%>
+          <div class="perfil-actions-container" style="margin-top: 15px;">
+              <c:choose>
+                  <c:when test="${esSeguido}">
+                      <%-- Si ya lo sigue, el botón llama a DejarDeSeguirServlet --%>
+                      <form action="${pageContext.request.contextPath}/DejarDeSeguirServlet" method="POST" style="display:inline;">
+                          <input type="hidden" name="idSeguido" value="${perfil.id}">
+                          <button type="submit" class="follow-btn following">
+                              Dejar de seguir
+                          </button>
+                      </form>
+                  </c:when>
+                  <c:otherwise>
+                      <%-- Si no lo sigue, el botón llama a SeguirServlet --%>
+                      <form action="${pageContext.request.contextPath}/SeguirServlet" method="POST" style="display:inline;">
+                          <input type="hidden" name="idSeguido" value="${perfil.id}">
+                          <button type="submit" class="follow-btn">
+                              Seguir
+                          </button>
+                      </form>
+                  </c:otherwise>
+              </c:choose>
+
+              <%-- Botón para abrir chat directo --%>
+              <a href="${pageContext.request.contextPath}/CargarChatServlet?id=${perfil.id}" 
+                 class="btn-secondary" style="display:inline-block; margin-left: 10px; vertical-align: middle;">
+                 Enviar Mensaje
+              </a>
+          </div>
         </div>
       </section>
 
@@ -121,7 +138,7 @@
     </main>
   </div>
 
-  <%-- Modales de Seguidores/Siguiendo (se llenan mediante JS o JSTL en otra sección) --%>
+  <%-- Modales (Sin cambios) --%>
   <div id="userListModal" class="user-list-modal" style="display: none;">
     <div class="modal-backdrop" onclick="cerrarListaUsuarios()"></div>
     <div class="modal-panel">
@@ -130,16 +147,9 @@
         <button onclick="cerrarListaUsuarios()" class="modal-close-btn">✕</button>
       </header>
       <div class="modal-body">
-        <ul id="userList" class="user-list">
-            <%-- Aquí se cargarían dinámicamente los seguidores --%>
-        </ul>
+        <ul id="userList" class="user-list"></ul>
       </div>
     </div>
-  </div>
-
-  <%-- Modal estándar de creación de posts --%>
-  <div id="postModal" class="modal-backdrop" style="display: none;">
-      <%-- Contenido del modal igual a MiPerfil.jsp --%>
   </div>
 
   <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
