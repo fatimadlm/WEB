@@ -24,7 +24,12 @@ Ahora, en la parte superior derecha de la ventana, hacemos clic en el primer ico
 
 En este punto, nuestra Base de Datos ya no está vacía de tablas, pero sí de contenido. Esto nos permite comenzar a registrar usuarios
 
-
+IMPORTANTE BBDD:
+En los archivos SQL , hay varios tipos:
+PruebaDatos.sql:Los datos 
+ResetBBDD.sql :Para borrar los datos de las tablas y poner los contadores a 0, sino da error.
+ConsultarGeneralBBDD.sql:Para probar los servlets y ver si los datos llegan a la bbdd
+Tablas.sql:Las tablas de nuestra BBDD
 
 Validador de html: https://validator.w3.org/
 <br>Avatares:https://www.istockphoto.com/es/ilustraciones/character?page=2
