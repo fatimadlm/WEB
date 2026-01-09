@@ -52,21 +52,20 @@
 
                 <main class="feed-chat-page">
                     <div class="chat-list-container">
-                        <div class="search-bar">
-                            <form action="${pageContext.request.contextPath}/BuscarServlet" method="GET">
-                                <input type="text" name="busqueda" placeholder="Buscar usuarios..." />
-                                <button type="submit">Buscar</button>
-                            </form>
+                        <div class="search-bar" style="margin-bottom: 25px;">
+                            <input type="text" id="filtroChatsInput" onkeyup="filtrarChats()"
+                                   placeholder="🔎 Filtrar conversaciones..." 
+                                   style="width: 100%; padding: 12px; border-radius: 20px; border: 1px solid #ccc; font-size: 0.95rem;">
                         </div>
                         <ul class="chat-list">
                             <c:forEach var="contacto" items="${listaContactos}"> 
                                 <li>
-                                    <%-- Aplicamos la clase 'unread' si hay mensajes --%>
-                                   <%-- Añadimos id="chat-item-XXXX" para que el JS lo encuentre --%>
+                                    <%-- Contenedor del chat con ID para el JS --%>
                                     <div id="chat-item-${contacto.id}" 
                                          class="chat-list-item ${contacto.mensajesNoLeidos > 0 ? 'unread' : ''}" 
-                                         onclick="cargarChat('${contacto.id}', '${contacto.username}')" role="button">
+                                         onclick="cargarChat('${contacto.id}', '${contacto.username}', '${contacto.avatar}')" role="button">
 
+                                        <%-- 📸 ¡AQUÍ ESTÁ LA FOTO QUE SE HABÍA PERDIDO! --%>
                                         <img src="${pageContext.request.contextPath}/VerImagen?nombre=${contacto.avatar}" 
                                              onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'" 
                                              class="chat-avatar">
@@ -75,13 +74,13 @@
                                             <div style="display: flex; align-items: center; justify-content: space-between;">
                                                 <h3>@${contacto.username}</h3>
 
-                                                <%-- AQUÍ ESTÁ EL CAMBIO: Si hay mensajes, ponemos el PUNTO ROJO --%>
+                                                <%-- Punto rojo de notificación --%>
                                                 <c:if test="${contacto.mensajesNoLeidos > 0}">
                                                     <span class="unread-dot" title="Nuevos mensajes"></span>
                                                 </c:if>
                                             </div>
 
-                                            <%-- Mensaje en negrita si es nuevo (gracias a la clase .unread del padre) --%>
+                                            <%-- Último mensaje --%>
                                             <p class="chat-last-message">
                                                 ${contacto.ultimoMensaje}
                                             </p>
