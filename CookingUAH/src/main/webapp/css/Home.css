@@ -912,3 +912,60 @@ body::before {
     margin-left: auto; /* Esto empuja el punto a la derecha del todo */
     box-shadow: 0 0 5px rgba(211, 47, 47, 0.5); /* Pequeño brillo */
 }
+
+/* =========================================
+   ESTILOS PARA LA FECHA Y HORA DEL CHAT
+   ========================================= */
+
+/* 1. El contenedor de la fecha (la tira horizontal invisible) */
+.chat-date-separator {
+    display: flex;              /* Usamos Flexbox */
+    justify-content: center;    /* ESTO ES LO QUE LO CENTRA HORIZONTALMENTE */
+    align-items: center;        /* Centrado vertical (por si acaso) */
+    width: 100%;                /* Ocupa todo el ancho disponible */
+    margin: 20px 0;             /* Separación arriba y abajo del mensaje */
+    clear: both;                /* Evita que se monte sobre burbujas flotantes */
+}
+
+/* 2. La pastilla con el texto (ej: "20 oct 2025") */
+.chat-date-separator span {
+    background-color: rgba(0, 0, 0, 0.2); /* Fondo semitransparente oscuro */
+    color: white;               /* Texto blanco */
+    padding: 4px 12px;          /* Espacio interior */
+    border-radius: 12px;        /* Bordes redondeados */
+    font-size: 0.75rem;         /* Letra pequeñita */
+    font-weight: 500;           
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+    
+    /* Si prefieres estilo WhatsApp claro (fondo gris, letras oscuras):
+       background-color: #d1d7db;
+       color: #555;
+    */
+}
+
+/* 3. Ajuste para la hora pequeña dentro del mensaje */
+.chat-bubble {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    /* Aseguramos que el contenido no aplaste la hora */
+    min-width: 80px; 
+}
+
+.chat-time {
+    font-size: 0.65rem;       /* Hora muy pequeña */
+    margin-top: 4px;
+    margin-left: 8px;         /* Separación del texto */
+    align-self: flex-end;     /* Alinear a la derecha SIEMPRE */
+    opacity: 0.7;
+    line-height: 1;
+}
+
+/* Color de la hora según quien lo envía */
+.chat-bubble.sent .chat-time {
+    color: #fffaf2 /* Tono claro sobre tu burbuja naranja */
+}
+
+.chat-bubble.received .chat-time {
+    color: #888;    /* Gris sobre burbuja blanca */
+}
