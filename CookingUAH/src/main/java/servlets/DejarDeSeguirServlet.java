@@ -4,29 +4,38 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
+import java.sql.SQLException;
 import modelo.User;
 import modelo.UserDAO;
 
-@WebServlet(name = "DejarDeSeguirServlet", urlPatterns = {"/DejarDeSeguirServlet"})
+@WebServlet("/DejarDeSeguirServlet")
 public class DejarDeSeguirServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
-        HttpSession session = request.getSession(false);
-        User usuarioLogueado = (session != null) ? (User) session.getAttribute("usuario") : null;
-        String idSeguidoStr = request.getParameter("id");
+        User usuarioLogueado = (User) request.getSession().getAttribute("usuario");
+        String idSeguidoStr = request.getParameter("idSeguido");
 
         if (usuarioLogueado != null && idSeguidoStr != null) {
-            int idSeguido = Integer.parseInt(idSeguidoStr);
             try {
+                int idSeguido = Integer.parseInt(idSeguidoStr);
                 UserDAO dao = new UserDAO();
+                
                 dao.dejarDeSeguir(usuarioLogueado.getId(), idSeguido);
-            } catch (Exception e) {
+            } catch (SQLException | NumberFormatException e) {
                 e.printStackTrace();
             }
         }
-        response.sendRedirect(request.getHeader("referer"));
+
+        String origin = request.getHeader("referer");
+        response.sendRedirect(origin != null ? origin : request.getContextPath() + "/EventosServlet");
     }
+    @Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+        throws ServletException, IOException {
+    // Si alguien intenta entrar por URL (GET), lo mandamos al Feed
+    response.sendRedirect(request.getContextPath() + "/FeedServlet");
+}
 }
