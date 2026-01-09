@@ -238,6 +238,57 @@ public class PostDAO {
             }
         }
     }
+    /**
+ * Recupera todas las publicaciones de un usuario específico.
+ * Incluye el conteo de likes y los datos del autor para su correcta visualización.
+ * @param userId ID del usuario cuyo perfil se está consultando.
+ * @return Lista de objetos Post pertenecientes al usuario.
+ */
+public List<Post> listarPostsPorUsuario(int userId) {
+    List<Post> posts = new ArrayList<>();
+    
+    // Consulta optimizada con JOIN para traer datos del autor y conteo de likes
+    String sql = "SELECT p.id, p.user_id, p.title, p.image, p.created_at, " +
+                 "u.username as authorName, u.avatar as authorAvatar, " +
+                 "COUNT(l.user_id) as totalLikes " +
+                 "FROM posts p " +
+                 "JOIN users u ON p.user_id = u.id " +
+                 "LEFT JOIN likes l ON p.id = l.post_id " +
+                 "WHERE p.user_id = ? " +
+                 "GROUP BY p.id, p.user_id, p.title, p.image, p.created_at, u.username, u.avatar " +
+                 "ORDER BY p.created_at DESC";
+
+    try (Connection conn = getConexion();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setInt(1, userId);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Post p = new Post(
+                    rs.getInt("id"),
+                    rs.getInt("user_id"),
+                    rs.getString("title"),
+                    rs.getString("image"),
+                    rs.getTimestamp("created_at"),
+                    rs.getString("authorName"),
+                    rs.getString("authorAvatar")
+                );
+
+                // Asignamos el conteo de likes obtenido por el COUNT del SQL
+                p.setLikesCount(rs.getInt("totalLikes"));
+                
+                // Opcional: Si necesitas cargar los comentarios de cada post en el perfil
+                p.setComments(listarComentarios(p.getId()));
+                
+                posts.add(p);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return posts;
+}
     
     /**
     * Recupera comentarios de la base de datos. Si se proporciona un postId, devuelve solo los 
@@ -307,6 +358,7 @@ public class PostDAO {
                 top.add(p);
             }
         } catch (SQLException e) { e.printStackTrace(); }
-        return top;
-    }
+        return top;}
+    
+        
 } // Cierre correcto de la clase

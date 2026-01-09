@@ -51,4 +51,9 @@ public class Post {
     
     public List<Comment> getComments() { return comments; }
     public void addComment(Comment c) { this.comments.add(c); }
+    
+    
+    public void setComments(List<Comment> comments) {
+    this.comments = comments;
+}
 }

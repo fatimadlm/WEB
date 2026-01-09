@@ -9,6 +9,7 @@ modelo\Comment.class
 modelo\EventoDAO.class
 com\mycompany\mavenproject1\resources\JakartaEE10Resource.class
 servlets\FeedServlet.class
+servlets\PerfilOtroServlet.class
 modelo\FollowerDAO.class
 servlets\EditarPerfilServlet.class
 modelo\MensajeDAO.class

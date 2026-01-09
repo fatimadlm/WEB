@@ -1,7 +1,7 @@
-Fri Jan 09 13:37:58 CET 2026 : Servidor de red Apache Derby: Se ha iniciado 10.15.2.0 - (1873585) y está listo para aceptar las conexiones en el puerto 1527
+Fri Jan 09 14:00:53 CET 2026 : Servidor de red Apache Derby: Se ha iniciado 10.15.2.0 - (1873585) y está listo para aceptar las conexiones en el puerto 1527
 ----------------------------------------------------------------
-Fri Jan 09 13:37:58 CET 2026:
- Iniciando instancia a816c00e-019b-a2c3-78e0-ffff90928c38 de Derby, versión The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): 
+Fri Jan 09 14:02:14 CET 2026:
+ Iniciando instancia a816c00e-019b-a2d8-7297-ffff90928c38 de Derby, versión The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): 
 en el directorio de base de datos C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAHBBDD con el cargador de clases jdk.internal.loader.ClassLoaders$AppClassLoader@105be200
 Cargado desde file:/C:/glassfish7/javadb/lib/derby.jar
 java.vendor=Eclipse Adoptium
@@ -12,9 +12,3 @@ os.arch=amd64
 os.version=10.0
 derby.system.home=C:\Users\fatim\OneDrive\Documentos\GitHub\WEB
 Cargador de clases de base de datos iniciado - derby.database.classpath=''
-----------------------------------------------------------------
-Fri Jan 09 13:53:01 CET 2026: cerrando motor de Derby
-----------------------------------------------------------------
-Fri Jan 09 13:53:01 CET 2026:
-Cerrando la instancia a816c00e-019b-a2c3-78e0-ffff90928c38 en el directorio de base de datos C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAHBBDD con cargador de clases jdk.internal.loader.ClassLoaders$AppClassLoader@105be200
-----------------------------------------------------------------

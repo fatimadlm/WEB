@@ -100,7 +100,7 @@
                                     <img src="${pageContext.request.contextPath}/VerImagen?nombre=${post.authorAvatar}" class="user-img" onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'">
                                 </a>
                                 <div>
-                                    <a href="${pageContext.request.contextPath}/jsp/PerfilOtro.jsp?id=${post.userId}" class="post-author-link">
+                                    <a href="${pageContext.request.contextPath}/PerfilOtroServlet?id=${post.userId}" class="post-author-link">
                                         <h3>${post.authorName}</h3>
                                     </a>
                                     <span>${post.createdAt}</span>
