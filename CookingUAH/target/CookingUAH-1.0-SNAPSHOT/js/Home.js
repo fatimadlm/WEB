@@ -1,4 +1,4 @@
-const TIEMPO_REFRESCO = 2000;
+const TIEMPO_REFRESCO = 1000;
 
 function actualizarFeed() {
     const container = document.getElementById('postsContainer');
