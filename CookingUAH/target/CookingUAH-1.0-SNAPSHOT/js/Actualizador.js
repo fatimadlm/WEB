@@ -1,7 +1,6 @@
 const contextPathGlobal = document.body.dataset.context || "";
 
-// Iniciar bucle cada 2 segundos
-setInterval(verificarEstadoGlobal, 2000);
+setInterval(verificarEstadoGlobal, 1000);
 
 function verificarEstadoGlobal() {
     if (!contextPathGlobal) return;
@@ -10,16 +9,15 @@ function verificarEstadoGlobal() {
         .then(response => response.json())
         .then(data => {
             let total = data.total;
-            let ids = data.ids;
+            let ids = data.ids || [];      // Lista simple de IDs: [3, 5]
+            let updates = data.updates || []; // Lista con textos: [{id:3, text:"Hola"}, ...]
 
-            // --- LÓGICA INTELIGENTE ---
-            // Si tengo un chat abierto, ignoro las notificaciones de ESA persona
-            // para que no parpadee el icono rojo mientras hablo con ella.
+            // Anti-Parpadeo si estás dentro del chat
             if (window.idChatActivo) {
                 if (ids.includes(window.idChatActivo)) {
-                    // Lo quitamos de la lista para no iluminar el chat
                     ids = ids.filter(id => id !== window.idChatActivo);
-                    // Restamos 1 al total visualmente
+                    // Filtramos también los updates para no sobrescribir si estás escribiendo
+                    updates = updates.filter(u => u.id !== window.idChatActivo);
                     total = Math.max(0, total - 1);
                 }
             }
@@ -27,7 +25,8 @@ function verificarEstadoGlobal() {
             actualizarBadgeSidebar(total);
 
             if (document.querySelector('.chat-list')) {
-                actualizarListaChats(ids);
+                // Pasamos los updates (textos) también
+                actualizarListaChats(ids, updates);
             }
         })
         .catch(err => console.error("...", err));
@@ -36,7 +35,6 @@ function verificarEstadoGlobal() {
 function actualizarBadgeSidebar(total) {
     const linkMensajes = document.querySelector('a[href*="CargarChatServlet"]');
     if (!linkMensajes) return;
-
     let badge = linkMensajes.querySelector('.badge');
 
     if (total > 0) {
@@ -53,7 +51,7 @@ function actualizarBadgeSidebar(total) {
     }
 }
 
-function actualizarListaChats(ids) {
+function actualizarListaChats(ids, updates) {
     const items = document.querySelectorAll('.chat-list-item');
     items.forEach(item => {
         if (!item.id) return;
@@ -61,15 +59,29 @@ function actualizarListaChats(ids) {
         
         const tieneMensaje = ids.includes(userId);
         const dot = item.querySelector('.unread-dot');
+        const textElement = item.querySelector('.chat-last-message'); // El párrafo del texto
 
         if (tieneMensaje) {
             item.classList.add('unread');
+            
+            // 1. Poner punto rojo
             if (!dot) {
                 const h3Container = item.querySelector('h3').parentNode;
                 const newDot = document.createElement('span');
                 newDot.className = 'unread-dot';
                 h3Container.appendChild(newDot);
             }
+
+            // 2. ACTUALIZAR EL TEXTO (NUEVO)
+            // Buscamos si el servidor nos mandó texto nuevo para este usuario
+            const dataUsuario = updates.find(u => u.id === userId);
+            if (dataUsuario && textElement) {
+                // Solo actualizamos si es diferente para no molestar al navegador
+                if (textElement.innerText !== dataUsuario.text) {
+                    textElement.innerText = dataUsuario.text;
+                }
+            }
+
         } else {
             item.classList.remove('unread');
             if (dot) dot.remove();
