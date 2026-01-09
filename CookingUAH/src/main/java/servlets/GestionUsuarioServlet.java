@@ -61,7 +61,7 @@ public class GestionUsuarioServlet extends HttpServlet {
             }
         }
 
-        // 3. Redirigir siempre al ListarUsuariosServlet para refrescar la tabla
+        // 3. Redirigir siempre al para refrescar la tabla
         response.sendRedirect(request.getContextPath() + "/AdminServlet");
     }
     

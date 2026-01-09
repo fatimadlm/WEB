@@ -35,20 +35,19 @@ public class PostDAO {
             // SQL que une Posts, Autores, Likes (con DISTINCT) y Comentarios con sus Autores
             // l_all cuenta todos los likes para totalLikes.
             // l_me busca específicamente si el usuario actual ha dado like para userLiked.
-            String sql = "SELECT p.*, u.username as postAuthor, u.avatar as postAvatar, " +
-                         "COUNT(DISTINCT l_all.user_id) AS totalLikes, " +
-                         "COUNT(DISTINCT l_me.user_id) AS userLiked, " +
-                         "c.id as commentId, c.user_id as commentUserId, c.content as commentContent, " +
-                         "c.created_at as commentCreatedAt, uc.username as commentAuthorName " +
-                         "FROM posts p " +
-                         "JOIN users u ON p.user_id = u.id " +
-                         "LEFT JOIN likes l_all ON p.id = l_all.post_id " +
-                         "LEFT JOIN likes l_me ON p.id = l_me.post_id AND l_me.user_id = ? " +
-                         "LEFT JOIN comments c ON p.id = c.post_id " +
-                         "LEFT JOIN users uc ON c.user_id = uc.id " +
-                         "GROUP BY p.id, p.user_id, p.title, p.image, p.created_at, u.username, u.avatar, " +
-                         "c.id, c.user_id, c.content, c.created_at, uc.username " +
-                         "ORDER BY p.created_at DESC, c.created_at ASC";
+            String sql = "SELECT p.id, p.user_id, p.title, p.image, p.created_at, p.likes_count, " +
+                 "u.username as postAuthor, u.avatar as postAvatar, " +
+                 "COUNT(DISTINCT l_me.user_id) AS userLiked, " +
+                 "c.id as commentId, c.user_id as commentUserId, c.content as commentContent, " +
+                 "c.created_at as commentCreatedAt, uc.username as commentAuthorName " +
+                 "FROM posts p " +
+                 "JOIN users u ON p.user_id = u.id " +
+                 "LEFT JOIN likes l_me ON p.id = l_me.post_id AND l_me.user_id = ? " +
+                 "LEFT JOIN comments c ON p.id = c.post_id " +
+                 "LEFT JOIN users uc ON c.user_id = uc.id " +
+                 "GROUP BY p.id, p.user_id, p.title, p.image, p.created_at, p.likes_count, u.username, u.avatar, " +
+                 "c.id, c.user_id, c.content, c.created_at, uc.username " +
+                 "ORDER BY p.created_at DESC, c.created_at ASC";
             
             PreparedStatement ps = conn.prepareStatement(sql);
             
@@ -70,7 +69,7 @@ public class PostDAO {
                             rs.getString("postAuthor"),
                             rs.getString("postAvatar")
                         );
-                        p.setLikesCount(rs.getInt("totalLikes"));
+                        p.setLikesCount(rs.getInt("likes_count"));
                         p.setLikedByCurrentUser(rs.getInt("userLiked") > 0);
                         postsMap.put(postId, p);
                     }
