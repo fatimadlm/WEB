@@ -87,7 +87,8 @@
 
     <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
     <script src="${pageContext.request.contextPath}/js/Home.js"></script>
-        <script src="${pageContext.request.contextPath}/js/Podio.js"></script>
+    <script src="${pageContext.request.contextPath}/js/Podio.js"></script>
+    <script src="${pageContext.request.contextPath}/js/Actualizador.js"></script>
 
 </body>
 </html>
