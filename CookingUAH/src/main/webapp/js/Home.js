@@ -81,5 +81,50 @@ function darLike(boton, postId) {
     .catch(err => console.error("Error dando like:", err));
 }
 
+// --- LÓGICA DE COMENTARIOS INSTANTÁNEOS (AJAX) ---
+function enviarComentario(event, postId) {
+    event.preventDefault(); // 1. Evitar que el formulario recargue la página
+    
+    const form = event.target;
+    const input = form.querySelector('input[name="comentario"]');
+    const texto = input.value.trim();
+    
+    if (!texto) return;
+
+    const contextPath = document.body.dataset.context || "";
+    
+    // 2. Preparar datos
+    const params = new URLSearchParams();
+    params.append('accion', 'comentar');
+    params.append('postId', postId);
+    params.append('comentario', texto);
+
+    // 3. Enviar al servidor
+    fetch(`${contextPath}/InteraccionServlet`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString()
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'ok') {
+            // 4. ÉXITO: Pintar el comentario manualmente para efecto instantáneo
+            const p = document.createElement('p');
+            // Estructura: <strong>Usuario:</strong> Mensaje
+            p.innerHTML = `<strong>${data.author}:</strong> ${data.content}`;
+            
+            // Insertarlo justo antes del formulario (al final de la lista de comentarios)
+            form.parentNode.insertBefore(p, form);
+            
+            // 5. Limpiar el input
+            input.value = '';
+            
+            // Opcional: Hacer scroll si la lista es muy larga
+            // p.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    })
+    .catch(err => console.error("Error enviando comentario:", err));
+}
+
 setInterval(actualizarFeed, TIEMPO_REFRESCO);
 

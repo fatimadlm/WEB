@@ -123,10 +123,8 @@
                                     <p><strong>${comentario.authorName}:</strong> ${comentario.content}</p>
                                 </c:forEach>
 
-                                <form action="${pageContext.request.contextPath}/InteraccionServlet" method="POST" class="comment-box">
-                                    <input type="hidden" name="accion" value="comentar">
-                                    <input type="hidden" name="postId" value="${post.id}">
-                                    <input type="text" name="comentario" placeholder="Escribe un comentario..." required>
+                                <form class="comment-box" onsubmit="enviarComentario(event, ${post.id})">
+                                    <input type="text" name="comentario" placeholder="Escribe un comentario..." autocomplete="off" required>
                                     <button type="submit">Enviar</button>
                                 </form>
                             </div>

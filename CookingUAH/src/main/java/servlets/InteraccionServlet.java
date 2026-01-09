@@ -12,39 +12,47 @@ public class InteraccionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User usuario = (User) session.getAttribute("usuario");
-        if (usuario == null) return; // O enviar error 401
+        if (usuario == null) return;
 
         String accion = request.getParameter("accion");
+        int postId = Integer.parseInt(request.getParameter("postId"));
+        PostDAO dao = new PostDAO();
         
-        // --- CASO 1: LIKE (AJAX - Sin recarga) ---
+        // Preparamos la respuesta JSON común
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        // --- CASO 1: LIKE (AJAX) ---
         if ("like".equals(accion)) {
-            int postId = Integer.parseInt(request.getParameter("postId"));
-            PostDAO dao = new PostDAO();
-            
-            // 1. Hacemos el cambio en la BBDD
             dao.toggleLike(usuario.getId(), postId);
+            // AQUÍ IRÍA LA NOTIFICACIÓN DE LIKE
+            // notificacionesDao.notificarLike(...)
             
-            // 2. Obtenemos el nuevo número de likes REAL de la BBDD
-            int nuevosLikes = dao.contarLikes(postId); // ¡Necesitamos crear este método rápido en DAO!
-            
-            // 3. Respondemos al JavaScript con el número nuevo
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("{\"likes\": " + nuevosLikes + "}");
-            return; // ¡Importante! Cortamos aquí para no redirigir.
+            int nuevosLikes = dao.contarLikes(postId);
+            response.getWriter().write("{\"status\":\"ok\", \"likes\": " + nuevosLikes + "}");
         } 
         
-        // --- CASO 2: COMENTARIOS (Formulario normal - Con recarga y scroll) ---
+        // --- CASO 2: COMENTARIOS (AHORA TAMBIÉN AJAX) ---
         else if ("comentar".equals(accion)) {
-            int postId = Integer.parseInt(request.getParameter("postId"));
             String texto = request.getParameter("comentario");
             
             if (texto != null && !texto.trim().isEmpty()) {
-                PostDAO dao = new PostDAO();
+                // 1. Guardar en Base de Datos
                 dao.comentar(usuario.getId(), postId, texto);
+                
+                // AQUÍ IRÍA LA NOTIFICACIÓN DE COMENTARIO
+                // notificacionesDao.notificarComentario(...)
+
+                // 2. Limpiamos el texto para no romper el JSON (evitar comillas locas)
+                String textoLimpio = texto.replace("\"", "\\\"").replace("\n", " ");
+                
+                // 3. Devolvemos los datos para pintarlos al instante
+                // Devolvemos el nombre del usuario actual porque es quien acaba de comentar
+                String jsonResponse = String.format("{\"status\":\"ok\", \"author\":\"%s\", \"content\":\"%s\"}", 
+                        usuario.getUsername(), textoLimpio);
+                
+                response.getWriter().write(jsonResponse);
             }
-            // Redirigir al ancla para bajar scroll
-            response.sendRedirect(request.getContextPath() + "/FeedServlet#post-" + postId);
         }
     }
 }
