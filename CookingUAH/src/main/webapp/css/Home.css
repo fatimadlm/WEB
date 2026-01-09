@@ -343,73 +343,92 @@ body::before {
 
 #usersContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1.5rem;
+}
+
+.user-card-link {
+    transition: transform 0.2s;
+}
+
+.user-card-link:hover {
+    transform: translateY(-5px);
 }
 
 .user-card {
   background-color: #fff8f0;
   border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 2rem 1.5rem; /* Un poco más de espacio vertical */
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
+  height: 100%;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-.user-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+/* Efecto hover en la tarjeta */
+.user-card-link:hover .user-card {
+  box-shadow: 0 8px 20px rgba(204, 85, 0, 0.15);
+  border-color: #ffcc80;
+  background-color: #fff; /* Se vuelve blanca pura al pasar el ratón para resaltar */
 }
 
 .user-card-avatar {
-  width: 80px;
-  height: 80px;
+  width: 90px; /* Un pelín más grande */
+  height: 90px;
   border-radius: 50%;
+  object-fit: cover;
   margin-bottom: 1rem;
   border: 3px solid #ffb347;
+  background-color: #fff;
+  transition: border-color 0.3s;
+}
+
+.user-card-link:hover .user-card-avatar {
+    border-color: #ff9800; /* Borde más intenso al pasar ratón */
 }
 
 .user-card-name {
   color: #6b2b00;
   font-size: 1.2rem;
-  font-weight: 600;
-  /* El margen inferior se lo daremos al contenedor de botones */
-  margin-bottom: 0; 
+  font-weight: 700;
+  margin: 0 0 15px 0; /* Separación con el botón */
 }
 
-/* Contenedor para los dos botones (Perfil y Seguir) */
-.user-card-actions {
-  display: flex;
-  gap: 0.5rem; /* Espacio entre los botones */
-  width: 100%;
-  margin-top: 1.5rem;
+/* --- NUEVO ESTILO: Píldora "Ver Perfil" --- */
+.user-card-cta {
+    margin-top: auto; /* Empuja el botón al fondo si la tarjeta crece */
+    background-color: #ffe0b2; /* Fondo naranja muy clarito */
+    color: #e65100; /* Texto naranja oscuro */
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.user-card-actions .btn-perfil,
-.user-card-actions .btn-follow {
-  flex: 1;
-  padding: 0.6rem;
-  font-size: 0.9rem;
-  text-decoration: none;
+.user-card-cta .arrow {
+    transition: transform 0.3s ease;
+    display: inline-block;
 }
 
-/* Botón 'Seguir'*/
-.user-card-actions .btn-follow {
-  /* Hereda los estilos de .btn-primary que le daremos en el JS */
-  border: none;
-  cursor: pointer;
+/* Cuando pasas el ratón por CUALQUIER PARTE de la tarjeta... */
+.user-card-link:hover .user-card-cta {
+    background-color: #ef6c00; /* Se vuelve naranja fuerte */
+    color: white; /* Texto blanco */
+    box-shadow: 0 4px 8px rgba(239, 108, 0, 0.3);
 }
 
-.user-card-actions .btn-follow.following {
-  background-color: #ff7043; 
-  font-weight: bold;
-}
-.user-card-actions .btn-follow.following:hover {
-  background-color: #e64a19;
-}
+.user-card-link:hover .arrow {
+    transform: translateX(4px); /* La flechita se mueve a la derecha */
+}   
 
 /* Mensaje cuando no se encuentran resultados */
 .no-results {

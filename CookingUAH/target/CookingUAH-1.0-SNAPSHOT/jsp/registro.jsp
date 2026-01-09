@@ -28,23 +28,24 @@
           <p style="color: red; font-weight: bold; text-align: center;"><%= error %></p>
       <% } %>
 
-      <form action="RegistroServlet" method="POST">
-        <label for="username">Nombre de usuario</label>
-        <input type="text" name="username" placeholder="Elige un nombre único" required />
+        <form action="${pageContext.request.contextPath}/RegistroServlet" method="POST">
 
-        <label for="email">Correo Electrónico</label>
-        <input type="email" name="email" placeholder="tu@email.com" required />
+            <label for="username">Nombre de usuario</label>
+            <input type="text" name="username" placeholder="Elige un nombre único" required />
 
-        <label for="password">Contraseña</label>
-        <input type="password" name="password" placeholder="Mínimo 4 caracteres" required />
+            <label for="email">Correo Electrónico</label>
+            <input type="email" name="email" placeholder="tu@email.com" required />
 
-        <button type="submit" class="btn-primary">Registrarse</button>
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" placeholder="Mínimo 4 caracteres" required />
 
-        <p class="register-text">
-          ¿Ya tienes cuenta?
-          <a href="login.jsp">Iniciar Sesión</a>
-        </p>
-      </form>
+            <button type="submit" class="btn-primary">Registrarse</button>
+
+            <p class="register-text">
+              ¿Ya tienes cuenta?
+              <a href="${pageContext.request.contextPath}/jsp/login.jsp">Iniciar Sesión</a>
+            </p>
+      </form>   
     </main>
   </div>
 </body>

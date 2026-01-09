@@ -127,27 +127,42 @@ public class PostDAO {
         } catch (SQLException e) { e.printStackTrace(); return false; }
     }
 
-    // DAR/QUITAR LIKE (Toggle)
+
+// DAR/QUITAR LIKE (Toggle) + ACTUALIZAR CONTADOR
     public void toggleLike(int userId, int postId) {
         try (Connection conn = getConexion()) {
             if (usuarioDioLike(conn, postId, userId)) {
+                // 1. Si ya dio like, lo quitamos
                 String sqlDelete = "DELETE FROM likes WHERE user_id = ? AND post_id = ?";
                 try (PreparedStatement ps = conn.prepareStatement(sqlDelete)) {
                     ps.setInt(1, userId);
                     ps.setInt(2, postId);
                     ps.executeUpdate();
                 }
+                // 2. RESTAMOS 1 al contador del post
+                String sqlUpdate = "UPDATE posts SET likes_count = likes_count - 1 WHERE id = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sqlUpdate)) {
+                    ps.setInt(1, postId);
+                    ps.executeUpdate();
+                }
+                
             } else {
+                // 1. Si no dio like, lo ponemos
                 String sqlInsert = "INSERT INTO likes (user_id, post_id) VALUES (?, ?)";
                 try (PreparedStatement ps = conn.prepareStatement(sqlInsert)) {
                     ps.setInt(1, userId);
                     ps.setInt(2, postId);
                     ps.executeUpdate();
                 }
+                // 2. SUMAMOS 1 al contador del post
+                String sqlUpdate = "UPDATE posts SET likes_count = likes_count + 1 WHERE id = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sqlUpdate)) {
+                    ps.setInt(1, postId);
+                    ps.executeUpdate();
+                }
             }
         } catch (Exception e) { e.printStackTrace(); }
     }
-
     // AGREGAR COMENTARIO
     public void comentar(int userId, int postId, String contenido) {
         try (Connection conn = getConexion()) {
@@ -359,6 +374,18 @@ public List<Post> listarPostsPorUsuario(int userId) {
             }
         } catch (SQLException e) { e.printStackTrace(); }
         return top;}
+    
+    // Método auxiliar para obtener likes actuales
+    public int contarLikes(int postId) {
+        String sql = "SELECT likes_count FROM posts WHERE id = ?";
+        try (Connection conn = getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, postId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) { e.printStackTrace(); }
+        return 0;
+    }
     
         
 } // Cierre correcto de la clase

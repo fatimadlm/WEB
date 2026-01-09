@@ -77,37 +77,26 @@
         
         <c:forEach var="u" items="${resultadosBusqueda}">
             
-            <div class="user-card" style="background: white; padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-                
-<img src="${pageContext.request.contextPath}/VerImagen?nombre=${u.avatar}" 
-     onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'" 
-     style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px;">
+            <%-- ENLACE QUE ENVUELVE TODA LA TARJETA --%>
+            <a href="${pageContext.request.contextPath}/PerfilOtroServlet?id=${u.id}" 
+               class="user-card-link" 
+               style="text-decoration: none; color: inherit; display: block;">
+               
+                <div class="user-card">
+                    <img src="${pageContext.request.contextPath}/VerImagen?nombre=${u.avatar}" 
+                         onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'" 
+                         class="user-card-avatar">
 
-                <h3 style="color: #6b2b00; margin-bottom: 5px;">${u.username}</h3>
-                <p style="font-size: 0.8em; color: #666; margin-bottom: 15px;">${u.email}</p>
-                
-                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <h3 class="user-card-name">@${u.username}</h3>
                     
-                    <a href="${pageContext.request.contextPath}/PerfilOtroServlet?id=${u.id}" class="btn-secondary" style="font-size: 0.8em; padding: 5px 10px;">Perfil</a>
-
-                    <c:choose>
-                        <c:when test="${u.id == sessionScope.usuario.id}">
-                             <button class="btn-primary btn-disabled" style="font-size: 0.8em; padding: 5px 10px;">
-                                (Tú)
-                             </button>
-                        </c:when>
-                        <c:otherwise>
-                             <form action="SeguirServlet" method="POST">
-                                <input type="hidden" name="idASeguir" value="${u.id}">
-                                <button type="submit" class="btn-primary" style="font-size: 0.8em; padding: 5px 10px;">
-                                    Seguir
-                                </button>
-                             </form>
-                        </c:otherwise>
-                    </c:choose>
-
+                    <%-- YA NO SALE EL EMAIL POR SEGURIDAD --%>
+                    
+                    <%-- NUEVO ESTILO DE BOTÓN SUAVE --%>
+                    <div class="user-card-cta">
+                        Ver perfil <span class="arrow">→</span>
+                    </div>
                 </div>
-            </div>
+            </a>
             
         </c:forEach>
 

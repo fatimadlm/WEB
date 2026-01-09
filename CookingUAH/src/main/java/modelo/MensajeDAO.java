@@ -9,8 +9,9 @@ public class MensajeDAO {
     private static final String URL = "jdbc:derby://localhost:1527/CookingUAHBBDD;create=true";
     private static final String USER = "root";
     private static final String PASS = "root";
-    
-    // Establecimiento de conexion
+
+    // --- APORTACIÓN DE TU COMPAÑERO (MÉTODO HELPER PARA CONECTAR) ---
+    // Esto limpia el código y evita repetir el DriverManager en cada método.
     private Connection getConexion() throws SQLException {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -20,14 +21,19 @@ public class MensajeDAO {
         return DriverManager.getConnection(URL, USER, PASS);
     }
 
-    // 1. LISTAR CONTACTOS
+    // 1. LISTAR CONTACTOS (TU VERSIÓN: ORDENADA POR FECHA RECIENTE)
     public List<User> listarContactos(int miId) {
         List<User> contactos = new ArrayList<>();
-        // Obtenemos usuarios con los que has hablado, EXCLUYÉNDOTE a ti mismo
-        String sql = "SELECT DISTINCT u.id, u.username, u.avatar FROM users u " +
-                     "JOIN messages m ON (u.id = m.sender_id OR u.id = m.receiver_id) " +
-                     "WHERE (m.sender_id = ? OR m.receiver_id = ?) AND u.id <> ?";
 
+        // MANTENEMOS TU SQL AVANZADO (GROUP BY y MAX)
+        String sql = "SELECT u.id, u.username, u.avatar, MAX(m.created_at) as fecha_reciente " +
+                     "FROM users u " +
+                     "JOIN messages m ON (u.id = m.sender_id OR u.id = m.receiver_id) " +
+                     "WHERE (m.sender_id = ? OR m.receiver_id = ?) AND u.id <> ? " +
+                     "GROUP BY u.id, u.username, u.avatar " +
+                     "ORDER BY fecha_reciente DESC";
+
+        // Usamos su getConexion() aquí
         try (Connection conn = getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -44,13 +50,16 @@ public class MensajeDAO {
                     contactos.add(u);
                 }
             } 
-            
+
+            // Rellenamos datos extra
             for (User u : contactos) {
                 u.setUltimoMensaje(obtenerUltimoMensajeTexto(conn, miId, u.getId()));
                 u.setMensajesNoLeidos(contarNoLeidosDeUsuario(conn, miId, u.getId()));
             }
 
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { 
+            e.printStackTrace(); 
+        }
         return contactos;
     }
 
@@ -101,31 +110,29 @@ public class MensajeDAO {
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    // 5. CONTAR NO LEÍDOS TOTALES (CORREGIDO PARA EVITAR AUTO-MENSAJES) 🔴
+    // 5. CONTAR NO LEÍDOS TOTALES (TU VERSIÓN: EXCLUYENDO AUTO-MENSAJES)
     public int contarNoLeidosTotales(int miId) {
-        // AÑADIDO: "AND sender_id <> ?" para asegurar que NO cuente mensajes enviados por mí mismo
         String sql = "SELECT COUNT(DISTINCT sender_id) FROM messages WHERE receiver_id = ? AND is_read = FALSE AND sender_id <> ?";
 
         try (Connection conn = getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, miId);
-            ps.setInt(2, miId); // Me excluyo a mí mismo como remitente
+            ps.setInt(2, miId); 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) return rs.getInt(1);
         } catch (SQLException e) { e.printStackTrace(); }
         return 0;
     }
 
-    // 6. OBTENER IDs DE REMITENTES NO LEÍDOS (CORREGIDO) 🔴
+    // 6. OBTENER IDs DE REMITENTES NO LEÍDOS (TU VERSIÓN: EXCLUYENDO AUTO-MENSAJES)
     public List<Integer> obtenerIdsRemitentesNoLeidos(int miId) {
         List<Integer> ids = new ArrayList<>();
-        // AÑADIDO: "AND sender_id <> ?"
         String sql = "SELECT DISTINCT sender_id FROM messages WHERE receiver_id = ? AND is_read = FALSE AND sender_id <> ?";
 
         try (Connection conn = getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, miId);
-            ps.setInt(2, miId); // Me excluyo
+            ps.setInt(2, miId); 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     ids.add(rs.getInt("sender_id"));
@@ -135,7 +142,16 @@ public class MensajeDAO {
         return ids;
     }
 
-    // Auxiliares
+    // 7. OBTENER ÚLTIMO MENSAJE (TU VERSIÓN PÚBLICA: VITAL PARA ACTUALIZADOR.JS)
+    // Tu compañero borró esto, lo cual rompería las notificaciones de texto en vivo.
+    public String obtenerUltimoMensaje(int miId, int otroId) {
+        try (Connection conn = getConexion()) {
+            return obtenerUltimoMensajeTexto(conn, miId, otroId);
+        } catch (SQLException e) { e.printStackTrace(); return ""; }
+    }
+
+    // --- MÉTODOS AUXILIARES PRIVADOS ---
+
     private String obtenerUltimoMensajeTexto(Connection conn, int miId, int otroId) throws SQLException {
         String sql = "SELECT content FROM messages WHERE (sender_id=? AND receiver_id=?) OR (sender_id=? AND receiver_id=?) ORDER BY created_at DESC";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {

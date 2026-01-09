@@ -46,4 +46,40 @@ function quitarArchivoHome() {
     if (container) container.style.display = 'none';
 }
 
+// --- LÓGICA DE LIKE INSTANTÁNEO (AJAX) ---
+function darLike(boton, postId) {
+    const contextPath = document.body.dataset.context || "";
+    
+    // 1. Preparamos los datos para enviar
+    const params = new URLSearchParams();
+    params.append('accion', 'like');
+    params.append('postId', postId);
+
+    // 2. Enviamos al Servlet sin recargar página
+    fetch(`${contextPath}/InteraccionServlet`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString()
+    })
+    .then(response => response.json()) // Esperamos respuesta JSON {"likes": 5}
+    .then(data => {
+        // 3. ÉXITO: Actualizamos la pantalla
+        
+        // A) Cambiamos el número
+        const spanNumero = document.getElementById(`likes-count-${postId}`);
+        if (spanNumero) {
+            spanNumero.innerText = data.likes;
+        }
+
+        // B) Cambiamos el color del botón (Toggle de la clase 'liked')
+        boton.classList.toggle('liked');
+        
+        // Efecto visual opcional (pequeña animación)
+        boton.style.transform = "scale(1.2)";
+        setTimeout(() => boton.style.transform = "scale(1)", 200);
+    })
+    .catch(err => console.error("Error dando like:", err));
+}
+
 setInterval(actualizarFeed, TIEMPO_REFRESCO);
+

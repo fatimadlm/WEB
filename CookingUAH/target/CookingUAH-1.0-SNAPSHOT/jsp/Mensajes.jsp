@@ -148,5 +148,27 @@
          <script src="${pageContext.request.contextPath}/js/Mensajes.js"></script>
         <script src="${pageContext.request.contextPath}/js/Actualizador.js"></script>
         <script src="${pageContext.request.contextPath}/js/Home.js"></script>
+        
+        <%-- SCRIPT DE AUTO-APERTURA DE CHAT --%>
+        <c:if test="${not empty idChatAutomatico}">
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    // El Servlet nos ha dicho que abramos este chat:
+                    const idParaAbrir = "${idChatAutomatico}";
+                    
+                    // Buscamos los datos de ese usuario en la lista que JSTL ha pintado
+                    // (Buscamos el elemento HTML que tiene ese ID)
+                    const chatItem = document.getElementById('chat-item-' + idParaAbrir);
+                    
+                    if (chatItem) {
+                        // Simulamos un clic en el elemento para abrir el chat
+                        chatItem.click();
+                        
+                        // Opcional: Hacemos scroll para asegurar que se ve en la lista
+                        chatItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            </script>
+        </c:if>
     </body>
 </html> 

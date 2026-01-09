@@ -50,7 +50,7 @@ function cargarChat(id, nombre, avatar) {
 
     // Inyectamos HTML con la imagen y el enlace al perfil
     headerElement.innerHTML = `
-        <a href="${contextPath}/jsp/PerfilOtro.jsp?id=${id}" 
+        <a href="${contextPath}/PerfilOtroServlet?id=${id}" 
            style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit;">
             
             <img src="${rutaImagen}" 

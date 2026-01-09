@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%
-    // Recuperar usuario (Seguridad nivel JSP)
     User actual = (User) session.getAttribute("usuario");
     if (actual == null) {
         response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
@@ -20,11 +19,6 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
     </head>
     
-    <%-- 
-       IMPORTANTE: Aquí añadimos 'data-context'. 
-       Esto permite que Actualizador.js y Home.js sepan la dirección del servidor 
-       para pedir mensajes y posts nuevos sin recargar la página.
-    --%>
     <body data-context="${pageContext.request.contextPath}">
         
         <div class="home-container">
@@ -41,7 +35,6 @@
                         
                         <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary">
                             Mensajes
-                            <%-- Burbuja roja inicial (se actualiza sola con JS) --%>
                             <c:if test="${totalNoLeidos > 0}">
                                 <span class="badge" style="background-color: #d32f2f; color: white; padding: 2px 6px; border-radius: 50%; font-size: 0.8em; margin-left: 5px;">
                                     ${totalNoLeidos}
@@ -94,9 +87,11 @@
 
                 <div id="postsContainer">
                     <c:forEach var="post" items="${listaPosts}">
-                        <div class="post">
+                        
+                        <div class="post" id="post-${post.id}">
+                            
                             <div class="post-header">
-                                <a href="${pageContext.request.contextPath}/jsp/PerfilOtro.jsp?id=${post.userId}">
+                                <a href="${pageContext.request.contextPath}/PerfilOtroServlet?id=${post.userId}">
                                     <img src="${pageContext.request.contextPath}/VerImagen?nombre=${post.authorAvatar}" class="user-img" onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'">
                                 </a>
                                 <div>
@@ -115,14 +110,12 @@
                             </div>
 
                             <div class="post-actions">
-                                <form action="${pageContext.request.contextPath}/InteraccionServlet" method="POST">
-                                    <input type="hidden" name="accion" value="like">
-                                    <input type="hidden" name="postId" value="${post.id}">
-                                    <button type="submit" class="like-btn ${post.likedByCurrentUser ? 'liked' : ''}">
-                                        ❤️ ${post.likesCount} Me gusta
-                                    </button>
-                                </form>
-                                <button class="comment-btn">💬 Comentar</button>
+                                <button type="button" 
+                                        onclick="darLike(this, ${post.id})" 
+                                        class="like-btn ${post.likedByCurrentUser ? 'liked' : ''}">
+                                    <span class="heart-icon">❤️</span> 
+                                    <span id="likes-count-${post.id}">${post.likesCount}</span> Me gusta
+                                </button>
                             </div>
 
                             <div class="comments">
@@ -137,8 +130,8 @@
                                     <button type="submit">Enviar</button>
                                 </form>
                             </div>
-                        </div>
-                    </c:forEach>
+
+                        </div> </c:forEach>
 
                     <c:if test="${empty listaPosts}">
                         <p style="text-align: center; color: #666; padding: 20px;">No hay publicaciones aún. ¡Sé el primero!</p>
@@ -147,7 +140,6 @@
             </main>
         </div>
         
-        <%-- Modal para crear post --%>
         <div id="postModal" class="modal-backdrop" style="display: none;">
             <div class="modal-content">
                 <span class="modal-close" onclick="cerrarModal()">&times;</span>
@@ -180,9 +172,7 @@
         </div>
 
         <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
-        <%-- Home.js para actualizar el Feed de recetas --%>
         <script src="${pageContext.request.contextPath}/js/Home.js"></script>
-        <%-- Actualizador.js para las notificaciones rojas de mensajes --%>
         <script src="${pageContext.request.contextPath}/js/Actualizador.js"></script>
     </body>
 </html>
