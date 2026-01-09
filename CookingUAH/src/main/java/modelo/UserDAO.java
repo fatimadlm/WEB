@@ -268,4 +268,30 @@ public int contarSiguiendo(int userId) {
     }
     return 0;
 }
+/**
+ * Crea una nueva relación de seguimiento
+ */
+public void seguir(int followerId, int followedId) throws SQLException {
+    String sql = "INSERT INTO followers (follower_id, followed_id) VALUES (?, ?)";
+    try (Connection conn = getConexion();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, followerId);
+        ps.setInt(2, followedId);
+        ps.executeUpdate();
+    }
+}
+
+/**
+ * Elimina una relación de seguimiento existente
+ */
+public void dejarDeSeguir(int followerId, int followedId) throws SQLException {
+    String sql = "DELETE FROM followers WHERE follower_id = ? AND followed_id = ?";
+    try (Connection conn = getConexion();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, followerId);
+        ps.setInt(2, followedId);
+        ps.executeUpdate();
+    }
+}
+
 }
