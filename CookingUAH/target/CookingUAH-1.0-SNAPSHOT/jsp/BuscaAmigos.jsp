@@ -79,14 +79,16 @@
             
             <div class="user-card" style="background: white; padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                 
-                <img src="${u.avatar}" onerror="this.src='Imagenes/default.png'" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px;">
-                
+<img src="${pageContext.request.contextPath}/VerImagen?nombre=${u.avatar}" 
+     onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'" 
+     style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px;">
+
                 <h3 style="color: #6b2b00; margin-bottom: 5px;">${u.username}</h3>
                 <p style="font-size: 0.8em; color: #666; margin-bottom: 15px;">${u.email}</p>
                 
                 <div style="display: flex; gap: 10px; justify-content: center;">
                     
-                    <a href="PerfilOtro.jsp?id=${u.id}" class="btn-secondary" style="font-size: 0.8em; padding: 5px 10px;">Perfil</a>
+                    <a href="${pageContext.request.contextPath}/PerfilOtroServlet?id=${u.id}" class="btn-secondary" style="font-size: 0.8em; padding: 5px 10px;">Perfil</a>
 
                     <c:choose>
                         <c:when test="${u.id == sessionScope.usuario.id}">
