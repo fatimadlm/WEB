@@ -23,6 +23,7 @@ servlets\GestionUsuarioServlet.class
 servlets\PublicarServlet.class
 servlets\AdminServlet.class
 servlets\LoginServlet.class
+servlets\SeguirServlet.class
 servlets\GestionPostServlet.class
 servlets\RegistroServlet.class
 servlets\BuscarServlet.class
@@ -32,3 +33,4 @@ modelo\PostDAO.class
 servlets\SetupServlet.class
 servlets\VerImagenServlet.class
 servlets\EventosServlet.class
+servlets\DejarDeSeguirServlet.class
