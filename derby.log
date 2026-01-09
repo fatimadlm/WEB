@@ -12,3 +12,9 @@ os.arch=amd64
 os.version=10.0
 derby.system.home=C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB
 Cargador de clases de base de datos iniciado - derby.database.classpath=''
+----------------------------------------------------------------
+Fri Jan 09 18:04:35 CET 2026: cerrando motor de Derby
+----------------------------------------------------------------
+Fri Jan 09 18:04:35 CET 2026:
+Cerrando la instancia a816c00e-019b-a361-540b-ffffeb8a3c67 en el directorio de base de datos C:\Users\cjcre\OneDrive\Escritorio\universidad\web\PL2\WEB\WEB\CookingUAHBBDD con cargador de clases jdk.internal.loader.ClassLoaders$AppClassLoader@105be200
+----------------------------------------------------------------
