@@ -33,7 +33,7 @@
           <a href="${pageContext.request.contextPath}/FeedServlet" class="btn-secondary">Inicio</a> 
           <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary">Mensajes</a> 
           <a href="${pageContext.request.contextPath}/EventosServlet" class="btn-secondary">Eventos</a>
-          <a href="${pageContext.request.contextPath}/jsp/Notificaciones.jsp" class="btn-secondary">Notificaciones</a>
+          <a href="${pageContext.request.contextPath}/NotificacionesServlet" class="btn-secondary">Notificaciones</a>
           <a href="${pageContext.request.contextPath}/PerfilServlet" class="btn-secondary">Mi Perfil</a>
           <a href="${pageContext.request.contextPath}/PodioServlet" class="btn-secondary">Recetas TOP</a>
           <button onclick="abrirModal()" class="btn-primary">Crear publicación</button>
