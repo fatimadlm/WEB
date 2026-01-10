@@ -180,6 +180,29 @@ public class UserDAO {
     }
     
     /**
+    * Actualiza la información de perfil de un usuario.
+    * @param id Identificador del usuario.
+    * @param avatar Nueva ruta de la imagen (o la actual si no cambió).
+    * @param bio Nueva biografía del usuario.
+    * @return true si la actualización fue exitosa.
+    */
+    public boolean actualizarPerfil(int id, String avatar, String bio) {
+       String sql = "UPDATE users SET avatar = ?, bio = ? WHERE id = ?";
+       try (Connection conn = getConexion();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+
+           ps.setString(1, avatar);
+           ps.setString(2, bio);
+           ps.setInt(3, id);
+
+           return ps.executeUpdate() > 0;
+       } catch (SQLException e) {
+           e.printStackTrace();
+           return false;
+       }
+    }
+    
+    /**
     * Elimina permanentemente un usuario de la base de datos
     * @param id Identificador del usuario a borrar
     * @return true si la operación tuvo éxito
