@@ -19,8 +19,11 @@ modelo\InstalarDatos.class
 com\mycompany\mavenproject1\JakartaRestConfiguration.class
 servlets\CargarChatServlet.class
 servlets\PerfilServlet.class
+modelo\NotificacionDAO.class
 servlets\EliminarPostServlet.class
+servlets\NotificacionesServlet.class
 servlets\MensajesServlet.class
+modelo\Notificacion.class
 servlets\GestionUsuarioServlet.class
 servlets\PublicarServlet.class
 servlets\AdminServlet.class

@@ -14,35 +14,80 @@ import modelo.User;
 @WebServlet("/EventosServlet")
 public class EventosServlet extends HttpServlet {
     
-    // ESTO SE EJECUTA AL ENTRAR EN LA PÁGINA
+    /**
+     * Se ejecuta al cargar la página de eventos.
+     * Recupera todos los eventos de la BBDD para mostrarlos en el calendario.
+     */
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
-        EventoDAO dao = new EventoDAO();
-        List<Evento> lista = dao.listarTodos(); // Método que hace el SELECT
+        // 1. Validación de seguridad: comprobar sesión activa
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("usuario") == null) {
+            response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
+            return;
+        }
         
-        // Guardamos la lista para que el JSP la vea
+        // 2. Obtener la lista de eventos desde el DAO
+        EventoDAO dao = new EventoDAO();
+        List<Evento> lista = dao.listarTodos();
+        
+        // 3. Pasar la lista al JSP para que el bucle <c:forEach> la procese
         request.setAttribute("listaEventos", lista);
         
-        // Enviamos al usuario al JSP
+        // 4. Redirigir a la vista
         request.getRequestDispatcher("/jsp/Eventos.jsp").forward(request, response);
     }
 
-    // ESTO SE EJECUTA AL DARLE A "AÑADIR EVENTO"
+    /**
+     * Se ejecuta al enviar el formulario de "Añadir evento".
+     */
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+    
+        HttpSession session = request.getSession(false);
+        User actual = (User) session.getAttribute("usuario");
+
+        // Solo permitir crear si el usuario está logueado
+        if (actual != null) {
+            try {
+                // 1. Recuperar los parámetros del formulario
+                String titulo = request.getParameter("titulo");
+                String fechaStr = request.getParameter("fecha");
+                String horaStr = request.getParameter("hora");
+                String tipo = request.getParameter("tipo"); // Captura el valor del <select>
+
+                // 2. Formatear y convertir datos para SQL
+                Date fecha = Date.valueOf(fechaStr);
+                
+                // Si la hora viene como HH:mm, añadimos segundos para java.sql.Time
+                if (horaStr != null && horaStr.length() == 5) {
+                    horaStr += ":00";
+                }
+                Time hora = Time.valueOf(horaStr);
+
+                // 3. Crear el objeto Evento usando el constructor de 5 parámetros
+                // El campo 'tipo' es fundamental para los colores del CSS
+                Evento nuevoEvento = new Evento(actual.getId(), titulo, fecha, hora, tipo);
+
+                // 4. Guardar en BBDD a través del DAO
+                EventoDAO dao = new EventoDAO();
+                boolean exito = dao.crear(nuevoEvento);
+                
+                if (exito) {
+                    // Opcional: podrías añadir un mensaje de éxito para el JSP
+                    request.getSession().setAttribute("mensaje", "Evento creado correctamente");
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         
-        // 1. Recoger datos del formulario
-        String titulo = request.getParameter("titulo");
-        String fecha = request.getParameter("fecha");
-        String hora = request.getParameter("hora");
-        User usuario = (User) request.getSession().getAttribute("usuario");
-
-        // 2. Guardar en BBDD
-        Evento nuevo = new Evento(usuario.getId(), titulo, Date.valueOf(fecha), Time.valueOf(hora + ":00"), "TALLER");
-        new EventoDAO().crear(nuevo);
-
-        // 3. Volver a cargar la página para ver el nuevo evento
+        // 5. Redirigir de vuelta al propio servlet (doGet) para refrescar la lista
         response.sendRedirect(request.getContextPath() + "/EventosServlet");
     }
 }

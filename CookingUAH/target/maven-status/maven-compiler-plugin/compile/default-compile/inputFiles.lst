@@ -5,6 +5,7 @@ C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\EventosServlet.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\BuscarServlet.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\LoginServlet.java
+C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\NotificacionesServlet.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\PodioServlet.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\modelo\UserDAO.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\GestionPostServlet.java
@@ -16,6 +17,7 @@ C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\modelo\Fo
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\modelo\Mensaje.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\DejarDeSeguirServlet.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\modelo\Evento.java
+C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\modelo\NotificacionDAO.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\com\mycompany\mavenproject1\JakartaRestConfiguration.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\CargarChatServlet.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\modelo\PostDAO.java
@@ -25,8 +27,11 @@ C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\EditarPerfilServlet.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\modelo\Comment.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\modelo\User.java
+C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\modelo\Notificacion.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\InteraccionServlet.java
+C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\ModificarEventoServlet.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\PerfilOtroServlet.java
+C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\EliminarEventoServlet.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\PublicarServlet.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\LogoutServlet.java
 C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAH\src\main\java\servlets\EliminarPostServlet.java

@@ -15,8 +15,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>CookingUAH - Eventos</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Eventos.css" />
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Home.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/Eventos.css?v=2.0" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/Home.css" />
 </head>
 <body data-context="${pageContext.request.contextPath}">
   <div class="home-container">
@@ -31,7 +31,7 @@
           <a href="${pageContext.request.contextPath}/FeedServlet" class="btn-secondary">Inicio</a> 
           <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary">Mensajes</a>
           <a href="${pageContext.request.contextPath}/EventosServlet" class="btn-secondary active">Eventos</a> 
-          <a href="${pageContext.request.contextPath}/jsp/Notificaciones.jsp" class="btn-secondary">Notificaciones</a>
+          <a href="${pageContext.request.contextPath}/NotificacionesServlet" class="btn-secondary">Notificaciones</a>
           <a href="${pageContext.request.contextPath}/PerfilServlet" class="btn-secondary">Mi Perfil</a>
                         <a href="${pageContext.request.contextPath}/PodioServlet" class="btn-secondary">Recetas TOP</a>
           <button onclick="abrirModal()" class="btn-primary">Crear publicación</button>
@@ -59,21 +59,31 @@
         </ul>
       </div>
 
-      <section class="crear-evento">
-        <h3>Crear un nuevo evento</h3>
-        <form action="${pageContext.request.contextPath}/EventosServlet" method="POST" class="form-evento">
-          <label>Fecha:</label>
-          <input type="date" name="fecha" id="eventDate" required />
+     <section class="crear-evento">
+  <h3>Crear un nuevo evento</h3>
+  <form action="${pageContext.request.contextPath}/EventosServlet" method="POST" class="form-evento">
+    <label>Fecha:</label>
+    <input type="date" name="fecha" id="eventDate" required />
 
-          <label>Título:</label>
-          <input type="text" name="titulo" placeholder="Ej: Taller de Pasta" required />
+    <label>Título:</label>
+    <input type="text" name="titulo" placeholder="Ej: Taller de Pasta" required />
 
-          <label>Hora:</label>
-          <input type="time" name="hora" required />
+    <label>Hora:</label>
+    <input type="time" name="hora" required />
 
-          <button type="submit" class="btn-primary">Añadir evento</button>
-        </form>
-      </section>
+    <label>Tipo de evento:</label>
+    <select name="tipo" required class="form-control">
+      <option value="" disabled selected>Selecciona una categoría</option>
+      <option value="Taller">Taller de cocina</option>
+      <option value="Degustación">Degustación</option>
+      <option value="Concurso">Concurso</option>
+      <option value="Quedada">Quedada / Cena</option>
+      <option value="Online">Evento Online</option>
+    </select>
+
+    <button type="submit" class="btn-primary" style="margin-top: 10px;">Añadir evento</button>
+  </form>
+</section>
     </main>
   </div>
 <script>
@@ -83,14 +93,14 @@
                 fecha: "${ev.eventDate}", 
                 titulo: "${ev.title}",
                 hora: "${ev.eventTime}",
-                creador: "${ev.authorName}"
+                creador: "${ev.authorName}",
+                tipo: "${ev.type}" // Añadido para que Eventos.js pueda mostrarlo
             }${not loop.last ? ',' : ''}
         </c:forEach>
     ];
 </script>
   
   <script src="${pageContext.request.contextPath}/js/Home.js"></script>
-        <%-- Actualizador.js para las notificaciones rojas de mensajes --%>
   <script src="${pageContext.request.contextPath}/js/Actualizador.js"></script>
   <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
   <script src="${pageContext.request.contextPath}/js/Eventos.js"></script>

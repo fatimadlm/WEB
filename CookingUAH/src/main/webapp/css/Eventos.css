@@ -13,6 +13,7 @@ body {
     background-position: center;
     background-attachment: fixed;
     position: relative;
+    min-height: 100vh;
 }
 
 body::before {
@@ -101,6 +102,10 @@ body::before {
     font-size: 1em;
 }
 
+.btn-primary:hover {
+    background-color: #e69500;
+}
+
 .btn-logout {
     background-color: #ff7043;
     color: white;
@@ -139,11 +144,22 @@ body::before {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .calendar-header h3 {
     color: #6b2b00;
+    font-size: 1.4rem;
+}
+
+.calendar-header button {
+    background: #cc5500;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
 }
 
 .calendar-grid {
@@ -151,6 +167,14 @@ body::before {
     grid-template-columns: repeat(7, 1fr);
     gap: 10px;
     text-align: center;
+}
+
+.calendar-weekday {
+    font-weight: bold;
+    color: #8d6e63;
+    font-size: 0.8rem;
+    padding-bottom: 10px;
+    text-transform: uppercase;
 }
 
 .calendar-day {
@@ -166,6 +190,7 @@ body::before {
     align-items: center;
     justify-content: center;
     font-weight: 600;
+    color: #4a2a0a;
 }
 
 .calendar-day:hover {
@@ -173,7 +198,6 @@ body::before {
     transform: translateY(-3px);
 }
 
-/* CORRECCIÓN: Estilo para días con evento */
 .calendar-day.has-event {
     border: 2px solid #cc5500;
     background-color: #fff8e1;
@@ -191,10 +215,10 @@ body::before {
     border-radius: 50%;
 }
 
-/* Resaltado de día seleccionado */
 .calendar-day.selected {
     background-color: #ffcc80 !important;
     color: #6b2b00;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
 }
 
 /* ---------- DETALLES DE EVENTOS ---------- */
@@ -211,18 +235,19 @@ body::before {
     margin-bottom: 1rem;
 }
 
-.event-details ul {
-    list-style: none;
-}
-
-/* CORRECCIÓN: Estilo de tarjeta de evento en la lista */
 .event-item {
     background-color: #fff1e0;
     border-left: 5px solid #cc5500;
-    margin-bottom: 10px;
-    padding: 12px;
+    margin-bottom: 12px;
+    padding: 15px;
     border-radius: 8px;
     transition: 0.2s;
+}
+
+.event-item:hover {
+    background-color: #ffecd1;
+    transform: scale(1.01);
+    box-shadow: 2px 4px 8px rgba(0,0,0,0.05);
 }
 
 .event-card {
@@ -242,9 +267,23 @@ body::before {
     font-size: 0.9rem;
 }
 
-.event-card small {
-    color: #8d6e63;
+/* BADGES DE CATEGORÍA */
+.badge-tipo {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 5px;
+    width: fit-content;
 }
+
+.tipo-taller { background-color: #e3f2fd; color: #1976d2; }
+.tipo-degustacion { background-color: #f3e5f5; color: #7b1fa2; }
+.tipo-concurso { background-color: #fff3e0; color: #e65100; }
+.tipo-quedada { background-color: #e8f5e9; color: #2e7d32; }
+.tipo-online { background-color: #ffebee; color: #c62828; }
 
 /* ---------- FORMULARIO CREAR EVENTO ---------- */
 .crear-evento {
@@ -257,7 +296,7 @@ body::before {
 .form-evento {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 1.2rem;
     align-items: center;
 }
 
@@ -266,11 +305,19 @@ body::before {
     color: #4a2a0a;
 }
 
-.form-evento input {
+.form-evento input, .form-evento select {
     padding: 10px;
     border: 1px solid #d6b58e;
     border-radius: 8px;
     width: 100%;
+    background-color: white;
+    transition: 0.3s;
+}
+
+.form-evento input:focus, .form-evento select:focus {
+    outline: none;
+    border-color: #cc5500;
+    box-shadow: 0 0 5px rgba(204, 85, 0, 0.2);
 }
 
 .form-evento button {
@@ -278,44 +325,26 @@ body::before {
     margin-top: 10px;
 }
 
-/* ---------- MODAL (POSTS) ---------- */
-.modal-backdrop {
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: none;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background-color: #fffaf3;
-    border-radius: 15px;
-    padding: 30px;
-    width: 90%;
-    max-width: 500px;
-    position: relative;
-}
-
-.modal-close {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 2rem;
-    cursor: pointer;
-    color: #888;
-}
-
-.modal-post-box textarea {
-    width: 100%;
-    height: 100px;
-    border: 2px solid #ffb74d;
-    border-radius: 8px;
-    padding: 10px;
-    resize: none;
-    margin-bottom: 10px;
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .home-container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        padding: 1rem;
+    }
+    .nav-buttons {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+    .form-evento {
+        grid-template-columns: 1fr;
+    }
+    .form-evento button {
+        grid-column: 1 / 2;
+    }
 }
