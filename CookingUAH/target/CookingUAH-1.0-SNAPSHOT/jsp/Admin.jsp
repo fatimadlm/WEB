@@ -62,14 +62,14 @@
       </tr>
     </thead>
     <tbody>
-      <%-- Iteramos sobre la lista enviada por el Servlet [cite: 1148, 1164] --%>
+      <%-- Iteramos sobre la lista enviada por el Servlet --%>
       <c:forEach var="u" items="${listaUsuarios}">
         <tr>
           <td>
-            <img src="${pageContext.request.contextPath}/${u.avatar}" 
+            <img src="${pageContext.request.contextPath}/Imagenes/${u.avatar}" 
                  alt="@${u.username}" 
                  style="width:30px; height:30px; border-radius:50%; margin-right:8px; vertical-align:middle;"
-                 onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'">
+                 onerror="this.src='${pageContext.request.contextPath}/Imagenes/Default.png'">
             @<c:out value="${u.username}" />
           </td>
           <td><span class="badge neutral">${u.role}</span></td>

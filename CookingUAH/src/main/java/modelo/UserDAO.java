@@ -98,7 +98,7 @@ public class UserDAO {
             pstmt.setString(1, usuario.getUsername());
             pstmt.setString(2, usuario.getEmail());
             pstmt.setString(3, usuario.getPassword());
-            pstmt.setString(4, "Imagenes/default.png");
+            pstmt.setString(4, "Imagenes/Default.png");
             pstmt.setString(5, "¡Hola! Soy nuevo en CookingUAH."); // Bio por defecto
             
             int filasAfectadas = pstmt.executeUpdate();

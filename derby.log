@@ -1,20 +1,14 @@
-Sat Jan 10 12:46:05 CET 2026 : Servidor de red Apache Derby: Se ha iniciado 10.15.2.0 - (1873585) y está listo para aceptar las conexiones en el puerto 1527
+Sat Jan 10 17:37:51 CET 2026 : Servidor de red Apache Derby: Se ha iniciado 10.15.2.0 - (1873585) y está listo para aceptar las conexiones en el puerto 1527
 ----------------------------------------------------------------
-Sat Jan 10 12:46:25 CET 2026:
- Iniciando instancia a816c00e-019b-a7ba-54ae-ffff90928c38 de Derby, versión The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): 
-en el directorio de base de datos C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAHBBDD con el cargador de clases jdk.internal.loader.ClassLoaders$AppClassLoader@105be200
-Cargado desde file:/C:/glassfish7/javadb/lib/derby.jar
-java.vendor=Eclipse Adoptium
-java.runtime.version=25.0.1+8-LTS
-user.dir=C:\glassfish7\javadb
-os.name=Windows 11
+Sat Jan 10 17:44:17 CET 2026:
+ Iniciando instancia a816c00e-019b-a8c5-7448-000011be516d de Derby, versión The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): 
+en el directorio de base de datos /home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB/CookingUAHBBDD con el cargador de clases jdk.internal.loader.ClassLoaders$AppClassLoader@502f3a78
+Cargado desde file:/home/fernando/GlassFish_Server/javadb/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=24.0.2+12-54
+user.dir=/home/fernando/GlassFish_Server/javadb
+os.name=Linux
 os.arch=amd64
-os.version=10.0
-derby.system.home=C:\Users\fatim\OneDrive\Documentos\GitHub\WEB
+os.version=6.14.0-37-generic
+derby.system.home=/home/fernando/Escritorio/(5 - J) Arquitectura y Diseño Web/Laboratorio/PL2/WEB
 Cargador de clases de base de datos iniciado - derby.database.classpath=''
-----------------------------------------------------------------
-Sat Jan 10 13:46:16 CET 2026: cerrando motor de Derby
-----------------------------------------------------------------
-Sat Jan 10 13:46:16 CET 2026:
-Cerrando la instancia a816c00e-019b-a7ba-54ae-ffff90928c38 en el directorio de base de datos C:\Users\fatim\OneDrive\Documentos\GitHub\WEB\CookingUAHBBDD con cargador de clases jdk.internal.loader.ClassLoaders$AppClassLoader@105be200
-----------------------------------------------------------------
