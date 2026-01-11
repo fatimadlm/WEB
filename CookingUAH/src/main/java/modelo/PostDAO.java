@@ -266,4 +266,24 @@ public class PostDAO {
         } catch (SQLException e) { e.printStackTrace(); }
         return 0;
     }
+
+    /**
+ * Obtiene el ID del autor de una publicación específica.
+ * Necesario para enviar notificaciones al dueño del post.
+ */
+public int getAutorId(int postId) {
+    String sql = "SELECT user_id FROM posts WHERE id = ?";
+    try (Connection conn = getConexion();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, postId);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt("user_id");
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return -1; // Retorna -1 si hay un error o no se encuentra el post
+}
 }
