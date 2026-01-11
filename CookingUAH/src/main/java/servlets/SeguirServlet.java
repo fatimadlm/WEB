@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import modelo.User;
 import modelo.UserDAO;
+import modelo.NotificacionDAO; // Importación necesaria
 
 @WebServlet("/SeguirServlet")
 public class SeguirServlet extends HttpServlet {
@@ -29,6 +30,13 @@ public class SeguirServlet extends HttpServlet {
                 // Evitar que un usuario se siga a sí mismo
                 if (usuarioLogueado.getId() != idSeguido) {
                     dao.seguir(usuarioLogueado.getId(), idSeguido);
+                    
+                    // --- NUEVA LÓGICA DE NOTIFICACIONES ---
+                    NotificacionDAO nDao = new NotificacionDAO();
+                    String mensaje = "@" + usuarioLogueado.getUsername() + " ha comenzado a seguirte.";
+                    // Se crea la notificación para el usuario seguido (idSeguido)
+                    nDao.crear(idSeguido, mensaje, "FOLLOW"); 
+                    // --------------------------------------
                 }
             } catch (SQLException | NumberFormatException e) {
                 e.printStackTrace(); // Log del error
@@ -36,14 +44,14 @@ public class SeguirServlet extends HttpServlet {
         }
 
         // 3. Redirigir de vuelta al perfil del usuario o a la lista
-        // Usamos el 'referer' para volver a la misma página donde estábamos
         String origin = request.getHeader("referer");
-        response.sendRedirect(origin != null ? origin : request.getContextPath() + "/EventosServlet");
+        response.sendRedirect(origin != null ? origin : request.getContextPath() + "/FeedServlet");
     }
+
     @Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response) 
-        throws ServletException, IOException {
-    // Si alguien intenta entrar por URL (GET), lo mandamos al Feed
-    response.sendRedirect(request.getContextPath() + "/FeedServlet");
-}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        // Si alguien intenta entrar por URL (GET), lo mandamos al Feed
+        response.sendRedirect(request.getContextPath() + "/FeedServlet");
+    }
 }
