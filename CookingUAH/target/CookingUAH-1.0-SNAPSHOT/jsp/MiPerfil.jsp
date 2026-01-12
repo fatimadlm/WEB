@@ -51,26 +51,39 @@
              onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'" 
              alt="Foto de perfil" class="perfil-img">
              
-        <div class="perfil-datos">
-          <h2>${usuario.username}</h2>
-          <p class="usuario">@${usuario.username}</p>
-          <p class="bio">${not empty usuario.bio ? usuario.bio : '¡Bienvenido a mi cocina!'}</p>
-          
-          <div class="perfil-stats">
-              <a href="javascript:void(0)" onclick="abrirSeguidores()" class="stat-link">
-                <strong>${seguidoresCount}</strong> Seguidores
-              </a>
-              <a href="javascript:void(0)" onclick="abrirSiguiendo()" class="stat-link">
-                <strong>${siguiendoCount}</strong> Siguiendo
-              </a>
-          </div>
+       <div class="perfil-datos">
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
+    <div>
+      <h2 id="profileName" style="margin-bottom: 5px;">${usuario.username}</h2>
+      <p class="usuario" id="profileUsername">@${usuario.username}</p>
+    </div>
 
-          <button type="button" class="btn-editar" 
-                  onclick="document.getElementById('editProfileModal').style.display='flex'"
-                  style="border: none;">
-                    Editar perfil
-          </button>
-        </div>
+    <a href="${pageContext.request.contextPath}/jsp/ConfiguracionCuenta.jsp" 
+       title="Configuración de la cuenta"
+       style="text-decoration: none; font-size: 0.9rem; color: #ff4d4d; padding: 6px 12px; border: 1px solid #ff4d4d; border-radius: 20px; transition: 0.3s; margin-left: 20px; white-space: nowrap;">
+       ⚙️ Borrar cuenta
+    </a>
+  </div>
+
+  <p class="bio" id="profileBio" style="margin-top: 15px;">
+    ${not empty usuario.bio ? usuario.bio : '¡Bienvenido a mi cocina!'}
+  </p>
+  
+  <div class="perfil-stats" style="margin-top: 15px;">
+      <a href="javascript:void(0)" onclick="abrirSeguidores()" class="stat-link">
+        <strong>${seguidoresCount}</strong> Seguidores
+      </a>
+      <a href="javascript:void(0)" onclick="abrirSiguiendo()" class="stat-link" style="margin-left: 15px;">
+        <strong>${seguiendoCount}</strong> Siguiendo
+      </a>
+  </div>
+
+  <button type="button" class="btn-editar" 
+          onclick="document.getElementById('editProfileModal').style.display='flex'"
+          style="border: none; margin-top: 15px;">
+            Editar perfil
+  </button>
+</div>
       </section>
 
       <section class="perfil-posts">
