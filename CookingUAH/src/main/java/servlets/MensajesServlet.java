@@ -25,7 +25,7 @@ public class MensajesServlet extends HttpServlet {
         MensajeDAO dao = new MensajeDAO();
         String accion = request.getParameter("accion");
 
-        // --- MODO "ESTADO" (CORREGIDO: IDs + Texto) ---
+
         if ("estado".equals(accion)) {
             response.setContentType("application/json"); 
             response.setCharacterEncoding("UTF-8");
@@ -37,7 +37,7 @@ public class MensajesServlet extends HttpServlet {
             json.append("{");
             json.append("\"total\":").append(total).append(",");
             
-            // ¡¡ESTA ES LA LÍNEA QUE FALTABA!! Sin esto, se borraban los puntos rojos
+
             json.append("\"ids\":").append(ids.toString()).append(","); 
 
             json.append("\"updates\":[");
