@@ -24,7 +24,7 @@ body {
   position: relative;
 }
 
-/* Overlay cálido para mejorar legibilidad */
+
 body::before {
   content: "";
   position: absolute;
