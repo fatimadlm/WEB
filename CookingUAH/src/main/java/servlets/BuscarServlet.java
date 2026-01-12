@@ -11,29 +11,20 @@ import jakarta.servlet.http.HttpSession;
 import java.util.stream.Collectors;
 import modelo.User;
 import modelo.UserDAO;
+import modelo.MensajeDAO;
 
 /**
  * Servlet que gestiona la búsqueda de usuarios para la red social.
- * Implementa un filtro de seguridad para excluir a los administradores de los resultados,
- * asegurando que las cuentas de gestión no sean visibles en la búsqueda pública.
+ * Implementa un filtro de seguridad para excluir a los administradores.
  */
 @WebServlet(name = "BuscarServlet", urlPatterns = {"/BuscarServlet"})
 public class BuscarServlet extends HttpServlet {
     
-    /**
-     * Procesa la petición GET de búsqueda, recupera los usuarios del DAO y
-     * aplica un filtrado por rol antes de enviar los resultados a BuscaAmigos.jsp.
-     * @param request Objeto que contiene el parámetro 'busqueda'.
-     * @param response Objeto para redirigir o reenviar la petición.
-     * @throws ServletException si ocurre un error específico del servlet.
-     * @throws IOException si ocurre un error de entrada/salida.
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
-        //1. Codificacion UTF-8 (para ñ y tildes)
+        // 1. Forzar codificación UTF-8 (para ñ y tildes)
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         
@@ -65,11 +56,16 @@ public class BuscarServlet extends HttpServlet {
             }
         }
 
-        // 4. Preparación de datos para la Vista. Guardamos los resultados en el request para enviarlos al JSP
+        // 5. Preparación de datos para la Vista
         request.setAttribute("resultadosBusqueda", listaResultados);
-        request.setAttribute ("terminoBusqueda", textoBusqueda);
+        request.setAttribute("terminoBusqueda", textoBusqueda);
 
-        // 5. Envío a la página de resultados
+        // 6. Contador de mensajes instantáneos para que salga en la sidebar al instante
+        MensajeDAO msgDao = new MensajeDAO();
+        int totalNoLeidos = msgDao.contarNoLeidosTotales(usuarioLogueado.getId());
+        request.setAttribute("totalNoLeidos", totalNoLeidos);
+        
+        // 7. Envío a la página de resultados
         request.getRequestDispatcher("/jsp/BuscaAmigos.jsp").forward(request, response);
     }
 }

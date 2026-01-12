@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. CONFIGURAR EL FILTRO DE CHATS (NUEVO)
     const filtroInput = document.getElementById('filtroChatsInput');
     if (filtroInput) {
-        // Cada vez que levantes una tecla, ejecutamos el filtro
+        // Filtrar la lista en tiempo real al escribir
         filtroInput.addEventListener('keyup', filtrarChats);
     }
 });

@@ -119,7 +119,7 @@ function enviarComentario(event, postId) {
             // 5. Limpiar el input
             input.value = '';
             
-            // Opcional: Hacer scroll si la lista es muy larga
+            //  Hacer scroll si la lista es muy larga
             // p.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     })

@@ -193,7 +193,6 @@
   <script>
     window.currentUserRole = "<%= actual.getRole() %>";
   </script>
-  <%-- Carga del script con path dinámico --%>
   <script type="module" src="${pageContext.request.contextPath}/js/Admin.js"></script>
 </body>
 </html>

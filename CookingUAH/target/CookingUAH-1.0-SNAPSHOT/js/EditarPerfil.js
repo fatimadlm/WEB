@@ -14,7 +14,7 @@
       setTimeout(function () {
         status && (status.textContent = '¡Cambios guardados!');
   
-        // --- CERRAR MODAL DIRECTAMENTE DESDE EL IFRAME ---
+        // Cerrar Modal directamente
         try {
           // Método 1: limpiar hash (desactiva :target)
           parent.location.hash = '';
@@ -24,7 +24,7 @@
           }
         } catch (_) {}
   
-        // (opcional) resetea el formulario tras guardar
+        // resetea el formulario tras guardar
         // form.reset();
       }, 300);
     });

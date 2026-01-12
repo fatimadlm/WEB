@@ -10,19 +10,20 @@
         return; 
     }
 %>
-<input type="hidden" id="userIdHidden" value="${usuario.id}">
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Mi Perfil - CookingUAH</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/MiPerfil.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/PerfilModal.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Home.css">
 </head>
 
 <body data-context="${pageContext.request.contextPath}">
+  <input type="hidden" id="userIdHidden" value="${usuario.id}">
   <div class="home-container">
 
     <aside class="sidebar">
@@ -33,7 +34,13 @@
         </div>
         <nav class="nav-buttons">
           <a href="${pageContext.request.contextPath}/FeedServlet" class="btn-secondary">Inicio</a>
-          <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary">Mensajes</a>
+          <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary"> Mensajes
+            <c:if test="${totalNoLeidos > 0}">
+                <span class="badge" style="background-color: #d32f2f; color: white; padding: 2px 6px; border-radius: 50%; font-size: 0.8em; margin-left: 5px;">
+                    ${totalNoLeidos}
+                </span>
+            </c:if>
+          </a>
           <a href="${pageContext.request.contextPath}/EventosServlet" class="btn-secondary">Eventos</a>
           <a href="${pageContext.request.contextPath}/NotificacionesServlet" class="btn-secondary">Notificaciones</a>
           <a href="${pageContext.request.contextPath}/PerfilServlet" class="btn-secondary active">Mi Perfil</a> 
@@ -43,13 +50,14 @@
       </div>
       <a href="${pageContext.request.contextPath}/LogoutServlet" class="btn-logout">Cerrar sesión</a>
     </aside>
-si
+
+    
     <main class="feed perfil-page" id="mi-perfil-main">
 
       <section class="perfil-info">
-<img src="${pageContext.request.contextPath}/VerImagen?nombre=${usuario.avatar}" 
-     onerror="this.src='${pageContext.request.contextPath}/Imagenes/DEFECTO.png'" 
-     alt="Foto de perfil" class="perfil-img">
+        <img src="${pageContext.request.contextPath}/VerImagen?nombre=${usuario.avatar}" 
+             onerror="this.src='${pageContext.request.contextPath}/Imagenes/DEFECTO.png'" 
+             alt="Foto de perfil" class="perfil-img">
              
        <div class="perfil-datos">
   <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
@@ -93,8 +101,8 @@ si
             <div class="post">
                 <div class="post-header">
                     <img src="${pageContext.request.contextPath}/VerImagen?nombre=${usuario.avatar}" 
-                         onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'" 
-                         class="user-img">
+                         onerror="this.src='${pageContext.request.contextPath}/Imagenes/DEFECTO.png'" 
+                         alt="Foto de perfil" class="perfil-img">
                     <div>
                         <h4>${usuario.username}</h4>
                         <span>${post.createdAt}</span>
@@ -186,7 +194,7 @@ si
             </form>
         </div>
     </div>
-</section>          
+</section>           
 
   <%-- Nuevo Modal de Editar Perfil en MiPerfil.jsp --%>
 <div id="editProfileModal" class="modal-backdrop" style="display: none;">
@@ -284,7 +292,7 @@ si
                     <label style="display: block; margin-bottom: 10px; color: #6b2b00; font-weight: 600;">Título o descripción:</label>
                     <textarea name="titulo" id="editPostTitle" placeholder="¿Qué cambios tiene tu receta?" required></textarea>
 
-                    <%-- Estilo de subida de foto coherente con Editar Perfil [cite: 1166, 1167] --%>
+                    <%-- Estilo de subida de foto coherente con Editar Perfil --%>
                     <div class="post-controls" style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 15px;">
                         <div class="post-options">
                             <input type="file" name="imagen" id="editPostImageUpload" accept="image/*" style="display: none;">

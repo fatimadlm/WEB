@@ -54,15 +54,13 @@ public class GestionPostServlet extends HttpServlet {
         if (idParam != null && accion != null) {
             try {
                 int id = Integer.parseInt(idParam);
-                PostDAO pDao = new PostDAO(); // Usamos 'pDao' como en tu declaración
+                PostDAO pDao = new PostDAO(); 
 
                 // 4. Ejecución de la lógica según la acción solicitada
                 if ("eliminar".equalsIgnoreCase(accion)) {
-                    // Error corregido: añadimos 'actual.getId()' para coincidir con la firma (int, int)
-                    // que establecimos para el método eliminarPost
                     pDao.eliminarPost(id, actual.getId()); 
                 } else if ("eliminarComentario".equalsIgnoreCase(accion)) {
-                    // Error corregido: cambiamos 'dao' por 'pDao' para que coincida con la variable declarada arriba
+ 
                     pDao.eliminarComentario(id);
                 }
             } catch (NumberFormatException e) {

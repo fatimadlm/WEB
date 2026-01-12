@@ -12,11 +12,11 @@ function verificarEstadoGlobal() {
             let ids = data.ids || [];      // Lista simple de IDs: [3, 5]
             let updates = data.updates || []; // Lista con textos: [{id:3, text:"Hola"}, ...]
 
-            // Anti-Parpadeo si estás dentro del chat
+            // Anti-Parpadeo si estamos dentro del chat
             if (window.idChatActivo) {
                 if (ids.includes(window.idChatActivo)) {
                     ids = ids.filter(id => id !== window.idChatActivo);
-                    // Filtramos también los updates para no sobrescribir si estás escribiendo
+                    // Filtramos también los updates para no sobrescribir si estamos escribiendo
                     updates = updates.filter(u => u.id !== window.idChatActivo);
                     total = Math.max(0, total - 1);
                 }
@@ -72,7 +72,7 @@ function actualizarListaChats(ids, updates) {
                 h3Container.appendChild(newDot);
             }
 
-            // 2. ACTUALIZAR EL TEXTO (NUEVO)
+            // 2. ACTUALIZAR EL TEXTO
             // Buscamos si el servidor nos mandó texto nuevo para este usuario
             const dataUsuario = updates.find(u => u.id === userId);
             if (dataUsuario && textElement) {

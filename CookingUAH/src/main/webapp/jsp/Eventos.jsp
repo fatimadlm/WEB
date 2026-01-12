@@ -26,10 +26,17 @@
         <div class="logo">
           <img src="${pageContext.request.contextPath}/Imagenes/logo.png" alt="Logo" class="logo-img" />
           <h1>CookingUAH</h1>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
         </div>
         <nav class="nav-buttons">
           <a href="${pageContext.request.contextPath}/FeedServlet" class="btn-secondary">Inicio</a> 
-          <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary">Mensajes</a>
+          <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary"> Mensajes
+            <c:if test="${totalNoLeidos > 0}">
+                <span class="badge" style="background-color: #d32f2f; color: white; padding: 2px 6px; border-radius: 50%; font-size: 0.8em; margin-left: 5px;">
+                    ${totalNoLeidos}
+                </span>
+            </c:if>
+          </a>
           <a href="${pageContext.request.contextPath}/EventosServlet" class="btn-secondary active">Eventos</a> 
           <a href="${pageContext.request.contextPath}/NotificacionesServlet" class="btn-secondary">Notificaciones</a>
           <a href="${pageContext.request.contextPath}/PerfilServlet" class="btn-secondary">Mi Perfil</a>
@@ -124,7 +131,7 @@
                 titulo: "${ev.title}",
                 hora: "${ev.eventTime}",
                 creador: "${ev.authorName}",
-                tipo: "${ev.type}" // Añadido para que Eventos.js pueda mostrarlo
+                tipo: "${ev.type}" 
             }${not loop.last ? ',' : ''}
         </c:forEach>
     ];

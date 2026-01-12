@@ -16,6 +16,7 @@
     <head>
           <meta charset="UTF-8">
           <title>Mensajes - CookingUAH</title>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
           <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Home.css"> 
     </head>
     <body data-context="${pageContext.request.contextPath}"> 
@@ -144,12 +145,10 @@
         </div>
 
         <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
-          <%-- CARGA DEL ARCHIVO JS SEPARADO --%>
          <script src="${pageContext.request.contextPath}/js/Mensajes.js"></script>
         <script src="${pageContext.request.contextPath}/js/Actualizador.js"></script>
         <script src="${pageContext.request.contextPath}/js/Home.js"></script>
         
-        <%-- SCRIPT DE AUTO-APERTURA DE CHAT --%>
         <c:if test="${not empty idChatAutomatico}">
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
@@ -164,7 +163,7 @@
                         // Simulamos un clic en el elemento para abrir el chat
                         chatItem.click();
                         
-                        // Opcional: Hacemos scroll para asegurar que se ve en la lista
+                        //  Hacemos scroll para asegurar que se ve en la lista
                         chatItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 });

@@ -11,7 +11,7 @@ function eliminarNotif(id) {
                 element.style.transform = 'translateX(20px)';
                 setTimeout(() => {
                     element.remove();
-                    // Opcional: Si la lista queda vacía, mostrar mensaje
+                    //  Si la lista queda vacía, mostrar mensaje
                     const list = document.getElementById('notif-list');
                     if (list && list.children.length === 0) {
                         list.innerHTML = '<div style="text-align: center; padding: 50px; color: #888;"><p>No tienes notificaciones por el momento.</p></div>';

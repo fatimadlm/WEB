@@ -60,7 +60,7 @@ public class PublicarServlet extends HttpServlet {
                 // Generar nombre de archivo único
                 String fileName = "post_" + System.currentTimeMillis() + "_" + filePart.getSubmittedFileName();
 
-                // NORMALIZACIÓN DE RUTA: Forzamos una ruta absoluta limpia para Windows
+                // Forzamos una ruta absoluta limpia para Windows
                 Path rutaLimpia = Paths.get(directorioSubidas.getAbsolutePath(), fileName).normalize();
                 
                 // GUARDADO MANUAL: Usamos Files.copy para saltarnos las restricciones de GlassFish

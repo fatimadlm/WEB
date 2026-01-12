@@ -20,7 +20,6 @@
     </head>
     
     <body data-context="${pageContext.request.contextPath}">
-        
         <div class="home-container">
 
             <aside class="sidebar">

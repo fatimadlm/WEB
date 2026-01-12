@@ -30,12 +30,12 @@
       /* Estilo para el mensaje de error con buen contraste */
       .mensaje-vacio {
           grid-column: 1 / -1; /* Ocupa todo el ancho */
-          background-color: rgba(255, 250, 245, 0.95); /* Fondo casi blanco */
+          background-color: rgba(255, 250, 245, 0.95); 
           padding: 30px;
           border-radius: 15px;
           text-align: center;
           box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-          border: 2px dashed #d6b58e; /* Borde punteado decorativo */
+          border: 2px dashed #d6b58e; 
       }
   </style>
 </head>
@@ -51,7 +51,13 @@
 
         <nav class="nav-buttons">
           <a href="${pageContext.request.contextPath}/FeedServlet" class="btn-secondary">Inicio</a> 
-          <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary">Mensajes</a>          
+          <a href="${pageContext.request.contextPath}/CargarChatServlet" class="btn-secondary"> Mensajes
+            <c:if test="${totalNoLeidos > 0}">
+                <span class="badge" style="background-color: #d32f2f; color: white; padding: 2px 6px; border-radius: 50%; font-size: 0.8em; margin-left: 5px;">
+                    ${totalNoLeidos}
+                </span>
+            </c:if>
+          </a>        
           <a href="${pageContext.request.contextPath}/jsp/Eventos.jsp" class="btn-secondary">Eventos</a>
           <a href="${pageContext.request.contextPath}/NotificacionesServlet" class="btn-secondary">Notificaciones</a>
           <a href="${pageContext.request.contextPath}/jsp/MiPerfil.jsp" class="btn-secondary">Mi Perfil</a> 

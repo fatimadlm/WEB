@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import modelo.MensajeDAO;
 import modelo.Post;
 import modelo.PostDAO;
 import modelo.User;
@@ -36,6 +37,7 @@ public class PerfilOtroServlet extends HttpServlet {
         
         int targetId = Integer.parseInt(idParam);
 
+        // 0. AUTO-REDIRECCIÓN INTELIGENTE
         // Si el ID que intentas visitar es TU propio ID...
         if (targetId == actual.getId()) {
             // ...te mandamos internamente a tu servlet de "Mi Perfil"
@@ -63,6 +65,12 @@ public class PerfilOtroServlet extends HttpServlet {
         // 4. Calcular estadísticas
         int seguidores = uDao.contarSeguidores(targetId);
         int siguiendo = uDao.contarSiguiendo(targetId);
+        
+        // 5. Contador de mensajes instantáneos para que salga en la sidebar al instante
+        MensajeDAO msgDao = new MensajeDAO();
+        int totalNoLeidos = msgDao.contarNoLeidosTotales(actual.getId());
+        request.setAttribute("totalNoLeidos", totalNoLeidos);
+        // ------------------------------------------------------------
         
         // 5. Enviar atributos al JSP
         request.setAttribute("perfil", perfil);

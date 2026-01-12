@@ -9,6 +9,7 @@ import java.sql.Time;
 import java.util.List;
 import modelo.Evento;
 import modelo.EventoDAO;
+import modelo.MensajeDAO;
 import modelo.User;
 
 @WebServlet("/EventosServlet")
@@ -16,29 +17,37 @@ public class EventosServlet extends HttpServlet {
     
     /**
      * Se ejecuta al cargar la página de eventos.
-     * Recupera todos los eventos de la BBDD para mostrarlos en el calendario.
+     * Recupera eventos Y cuenta notificaciones para el sidebar.
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
-        // 1. Validación de seguridad: comprobar sesión activa
+        // 1. Configuración de codificación
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
+        // 2. Validación de seguridad y obtención de usuario
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("usuario") == null) {
+        User actual = (session != null) ? (User) session.getAttribute("usuario") : null;
+
+        if (actual == null) {
             response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
             return;
         }
-                request.setCharacterEncoding("UTF-8");
-
         
-        // 2. Obtener la lista de eventos desde el DAO
+        // 3. Obtener la lista de eventos (Lógica original)
         EventoDAO dao = new EventoDAO();
         List<Evento> lista = dao.listarTodos();
-        
-        // 3. Pasar la lista al JSP para que el bucle <c:forEach> la procese
         request.setAttribute("listaEventos", lista);
         
-        // 4. Redirigir a la vista
+        // 4. Contador de mensajes instantáneos para que salga en la sidebar al instante
+        MensajeDAO msgDao = new MensajeDAO();
+        int totalNoLeidos = msgDao.contarNoLeidosTotales(actual.getId());
+        request.setAttribute("totalNoLeidos", totalNoLeidos);
+        // -----------------------------------------------------------------
+        
+        // 5. Redirigir a la vista
         request.getRequestDispatcher("/jsp/Eventos.jsp").forward(request, response);
     }
 
@@ -48,10 +57,11 @@ public class EventosServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+        
         request.setCharacterEncoding("UTF-8");
     
         HttpSession session = request.getSession(false);
-        User actual = (User) session.getAttribute("usuario");
+        User actual = (session != null) ? (User) session.getAttribute("usuario") : null;
 
         // Solo permitir crear si el usuario está logueado
         if (actual != null) {
@@ -71,16 +81,14 @@ public class EventosServlet extends HttpServlet {
                 }
                 Time hora = Time.valueOf(horaStr);
 
-                // 3. Crear el objeto Evento usando el constructor de 5 parámetros
-                // El campo 'tipo' es fundamental para los colores del CSS
+                // 3. Crear el objeto Evento
                 Evento nuevoEvento = new Evento(actual.getId(), titulo, fecha, hora, tipo);
 
-                // 4. Guardar en BBDD a través del DAO
+                // 4. Guardar en BBDD
                 EventoDAO dao = new EventoDAO();
                 boolean exito = dao.crear(nuevoEvento);
                 
                 if (exito) {
-                    // Mensaje de éxito para el JSP
                     request.getSession().setAttribute("mensaje", "Evento creado correctamente");
                 }
 
@@ -89,7 +97,7 @@ public class EventosServlet extends HttpServlet {
             }
         }
         
-        // 5. Redirigir de vuelta al propio servlet (doGet) para refrescar la lista
+        // 5. Redirigir de vuelta al propio servlet para refrescar
         response.sendRedirect(request.getContextPath() + "/EventosServlet");
     }
 }
