@@ -112,6 +112,24 @@ public class PostDAO {
             return false;
         }
     }
+
+    /**
+    * Método exclusivo para administradores.
+    * Elimina un post basándose únicamente en su ID, sin comprobar la propiedad.
+    */
+    public boolean eliminarPostAdmin(int postId) {
+        String sql = "DELETE FROM POSTS WHERE ID = ?";
+        try (Connection conn = this.getConexion();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setInt(1, postId);
+            
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        return false;
+        }
+    }
     
     public boolean actualizarPost(int postId, String nuevoTitulo, String rutaImagen, int userId) {
         String sql;
