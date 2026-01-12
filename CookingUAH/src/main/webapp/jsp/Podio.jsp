@@ -35,7 +35,7 @@
                     <a href="${pageContext.request.contextPath}/NotificacionesServlet" class="btn-secondary">Notificaciones</a>
                     <a href="${pageContext.request.contextPath}/PerfilServlet" class="btn-secondary">Mi Perfil</a>
                     <a href="${pageContext.request.contextPath}/PodioServlet" class="btn-secondary active">Recetas TOP</a> 
-                    <button onclick="abrirModal()" class="btn-primary">Crear publicación</button>
+                    <button type="button" class="btn-primary" onclick="abrirModal()" style="margin-top: 10px; width: 100%; border: none; cursor: pointer;">Crear publicación</button>
                 </nav>
             </div>
             <a href="${pageContext.request.contextPath}/LogoutServlet" class="btn-logout">Cerrar sesión</a>
@@ -71,18 +71,35 @@
             </div>
         </main>
     </div>
-
-    <%-- Reutilizamos el modal de publicación estándar --%>
     <div id="postModal" class="modal-backdrop" style="display: none;">
-        <div class="modal-content">
-            <span class="modal-close" onclick="cerrarModal()">&times;</span>
-            <h2>Nueva Receta</h2>
-            <form action="${pageContext.request.contextPath}/PublicarServlet" method="POST" enctype="multipart/form-data">
-                <textarea name="titulo" placeholder="¿Qué estás cocinando?" required></textarea>
-                <input type="file" name="imagen" accept="image/*">
-                <button type="submit" class="btn-primary">Publicar</button>
-            </form>
-        </div>
+            <div class="modal-content">
+                <span class="modal-close" onclick="cerrarModal()">&times;</span>
+                <h2>Crear una nueva publicación</h2>
+
+                <form action="${pageContext.request.contextPath}/PublicarServlet" method="POST" enctype="multipart/form-data">
+                    <div class="modal-post-box">
+                        <textarea name="titulo" id="modalNewPostContent" placeholder="¿Qué estás cocinando, <%= actual.getUsername()%>?" required></textarea>
+
+                        <div id="modalImagePreviewContainer" style="display: none; align-items: center; gap: 10px; margin-bottom: 15px; background: #fdf2e9; padding: 10px; border-radius: 10px; border: 1px dashed #ffb74d;">
+                            <span style="font-size: 1.2rem;">📄</span>
+                            <span id="modalFileName" style="font-size: 0.9rem; color: #d84315; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80%;"></span>
+                            <button type="button" onclick="quitarImagen()" style="background: none; border: none; color: #cc5500; cursor: pointer; font-weight: bold; font-size: 1.2rem; margin-left: auto;">&times;</button>
+                        </div>
+
+                        <div class="post-controls" style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                            <div class="post-options">
+                                <input type="file" name="imagen" id="modalImageUpload" accept="image/*" style="display: none;" onchange="previsualizarImagen(this)">
+                                <button type="button" class="btn-add-photo" onclick="document.getElementById('modalImageUpload').click()">
+                                    📸 Añadir Foto
+                                </button>
+                            </div>
+                            <button type="submit" class="btn-primary" id="modalNewPostBtn" style="padding: 10px 25px; border-radius: 25px; white-space: nowrap;">
+                                Publicar Receta
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
     </div>
 
     <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
