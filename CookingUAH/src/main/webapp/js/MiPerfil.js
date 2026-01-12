@@ -103,6 +103,7 @@ function cerrarModalEditarEvento() {
         formulario.reset();
     }
 }
+
 function abrirSeguidores() {
     cargarListaUsuarios('seguidores', 'Seguidores');
 }

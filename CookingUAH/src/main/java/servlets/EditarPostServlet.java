@@ -30,6 +30,8 @@ public class EditarPostServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+                request.setCharacterEncoding("UTF-8");
+
         
         HttpSession session = request.getSession(false);
         User actual = (session != null) ? (User) session.getAttribute("usuario") : null;

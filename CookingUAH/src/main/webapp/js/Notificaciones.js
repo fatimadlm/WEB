@@ -1,63 +1,33 @@
-import { getNotificaciones, saveNotificaciones, seedDemo, uid } from './BBDD.js';
-
-// Obtener el contenedor de notificaciones y el boton de recarga
-const container = document.getElementById("notificationsContainer");
-const refreshBtn = document.getElementById('notifRefreshBtn')
-
-// Mostrar todas las notificaciones
-function mostrarNotificaciones() {
-  const notificaciones = getNotificaciones();
-  container.innerHTML = "";
-
-  if (notificaciones.length === 0) {
-    container.innerHTML = "<p>No tienes notificaciones por ahora</p>";
-    return;
-  }
-
-  // Crear un elemento para cada notificacion
-  notificaciones.forEach((n, index) => {
-    const div = document.createElement("div");
-    div.classList.add("notification-item");
-    div.innerHTML = `
-      <div>
-        <p class="notification-text">${n.texto}</p>
-        <small class="notification-time">${n.tiempo}</small>
-      </div>
-      <button class="delete-btn" data-index="${index}">❌</button>
-    `;
-    container.appendChild(div);
-  });
-
-  // Conectar los botones de eliminar a su funcion
-  document.querySelectorAll(".delete-btn").forEach(btn => {
-    btn.addEventListener("click", e => {
-      const idx = e.target.dataset.index;
-      eliminarNotificacion(idx);
+function eliminarNotif(id) {
+    // Usamos contextPath en lugar de la expresión ${...}
+    fetch(contextPath + '/MarcarLeidasServlet?id=' + id, {
+        method: 'POST'
+    }).then(response => {
+        if (response.ok) {
+            const element = document.getElementById('notif-' + id);
+            if (element) {
+                element.style.transition = 'all 0.3s ease';
+                element.style.opacity = '0';
+                element.style.transform = 'translateX(20px)';
+                setTimeout(() => {
+                    element.remove();
+                    // Opcional: Si la lista queda vacía, mostrar mensaje
+                    const list = document.getElementById('notif-list');
+                    if (list && list.children.length === 0) {
+                        list.innerHTML = '<div style="text-align: center; padding: 50px; color: #888;"><p>No tienes notificaciones por el momento.</p></div>';
+                    }
+                }, 300);
+            }
+        }
     });
-  });
 }
 
-// Eliminar una notificacion y actualizar la vista
-function eliminarNotificacion(index) {
-  const notificaciones = getNotificaciones();
-  notificaciones.splice(index, 1);
-  saveNotificaciones(notificaciones);
-  mostrarNotificaciones();
+function marcarTodas() {
+    fetch(contextPath + '/MarcarLeidasServlet', {
+        method: 'POST'
+    }).then(response => {
+        if (response.ok) {
+            location.reload();
+        }
+    });
 }
-
-// Recargar las notificaciones de prueba
-refreshBtn?.addEventListener("click", () => {
-  if (confirm("Quieres recargar las notificaciones de prueba")) {
-    seedDemo();
-    mostrarNotificaciones();
-    alert("Notificaciones recargadas");
-  }
-});
-
-// Inicializar al cargar la pagina
-(function init() {
-  if (!getNotificaciones().length) {
-    seedDemo();
-  }
-  mostrarNotificaciones();
-})();

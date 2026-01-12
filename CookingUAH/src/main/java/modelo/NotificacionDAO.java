@@ -63,4 +63,8 @@ public class NotificacionDAO {
         } catch (SQLException e) { e.printStackTrace(); }
         return lista;
     }
+
+    public List<Notificacion> obtenerPorUsuario(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

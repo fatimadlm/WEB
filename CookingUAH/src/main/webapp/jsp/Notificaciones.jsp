@@ -19,57 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Notificaciones - CookingUAH</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Home.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Perfil.css" />
-    <style>
-        .notif-container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .notif-item {
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            border-left: 5px solid #ccc;
-        }
-        .notif-item:hover { transform: translateY(-2px); }
-        .notif-unread {
-            background: #f0f7ff;
-            border-left-color: #3498db;
-        }
-        .notif-icon { font-size: 1.5rem; margin-right: 15px; }
-        .notif-content { flex-grow: 1; }
-        .notif-text { margin: 0; color: #333; font-size: 0.95rem; }
-        .notif-date { font-size: 0.8rem; color: #888; display: block; margin-top: 5px; }
-        
-        /* Botón "Marcar todas" */
-        .btn-mark-read-all {
-            background: none;
-            border: none;
-            color: #3498db;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-        .btn-mark-read-all:hover { text-decoration: underline; }
-
-        /* Botón "X" individual */
-        .btn-delete-notif {
-            background: none;
-            border: none;
-            color: #ccc;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0 10px;
-            transition: color 0.2s;
-        }
-        .btn-delete-notif:hover { color: #e74c3c; }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Notificaciones.css" />
 </head>
 
 <body>
@@ -178,36 +128,14 @@
                 </form>
             </div>
     </div>
-    <script>
-        
-        function eliminarNotif(id) {
-            // Petición AJAX al Servlet
-            fetch('${pageContext.request.contextPath}/MarcarLeidasServlet?id=' + id, {
-                method: 'POST'
-            }).then(response => {
-                if (response.ok) {
-                    // Animación y borrado del elemento
-                    const element = document.getElementById('notif-' + id);
-                    element.style.opacity = '0';
-                    element.style.transform = 'translateX(20px)';
-                    setTimeout(() => element.remove(), 300);
-                }
-            });
-        }
+<script>
+    const contextPath = "${pageContext.request.contextPath}";
+</script>
 
-        function marcarTodas() {
-            fetch('${pageContext.request.contextPath}/MarcarLeidasServlet', {
-                method: 'POST'
-            }).then(response => {
-                if (response.ok) {
-                    // Recargamos la página para mostrar todas como leídas (sin fondo azul)
-                    location.reload();
-                }
-            });
-        }
-    </script>
     <script src="${pageContext.request.contextPath}/js/Actualizador.js"></script>
     <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
+<script src="${pageContext.request.contextPath}/js/Notificaciones.js"></script>
+
 </body>
 </html>
 

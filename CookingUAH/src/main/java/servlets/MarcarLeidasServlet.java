@@ -16,6 +16,7 @@ public class MarcarLeidasServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         User usuario = (session != null) ? (User) session.getAttribute("usuario") : null;
         if (usuario == null) { response.setStatus(401); return; }
+        
 
         NotificacionDAO dao = new NotificacionDAO();
         String idParam = request.getParameter("id");

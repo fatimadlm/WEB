@@ -33,6 +33,7 @@ public class EditarPerfilServlet extends HttpServlet {
         // 1. Validar Sesión
         HttpSession session = request.getSession(false);
         User actual = (session != null) ? (User) session.getAttribute("usuario") : null;
+        request.setCharacterEncoding("UTF-8");
 
         if (actual == null) {
             response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");

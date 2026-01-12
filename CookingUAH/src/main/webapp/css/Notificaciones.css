@@ -1,4 +1,4 @@
-/* ---------- RESET ---------- */
+/* --- ESTILOS GLOBALES --- */
 * {
   margin: 0;
   padding: 0;
@@ -6,28 +6,31 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* ---------- FONDO ---------- */
 body {
   background-image: url('../Imagenes/Comida.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  position: relative;
+  min-height: 100vh;
 }
+
 body::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-color: rgba(252, 239, 220, 0.8);
+  background-color: rgba(252, 239, 220, 0.85);
   z-index: -1;
 }
 
-/* ---------- CONTENEDOR PRINCIPAL ---------- */
-.notificaciones-container {
+/* --- CONTENEDOR PRINCIPAL --- */
+.home-container {
   display: flex;
+  position: relative;
   min-height: 100vh;
 }
 
-/* ---------- SIDEBAR (CORREGIDO) ---------- */
+/* --- BARRA LATERAL (SIDEBAR) --- */
 .sidebar {
   width: 250px;
   flex-shrink: 0; 
@@ -42,25 +45,20 @@ body::before {
   position: sticky; 
   top: 0; 
 }
-.logo {
-  text-align: center;
-  margin-bottom: 2rem;
-  width: 100%;
-}
-.logo-img {
-  width: 70px;
-  margin-bottom: 0.5rem;
-}
+
 .logo h1 {
   color: #6b2b00;
   font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
+
 .nav-buttons {
   display: flex;
   flex-direction: column;
   gap: 1rem; 
   width: 100%;
 }
+
 .btn-secondary {
   background-color: #cc5500;
   color: white;
@@ -71,116 +69,171 @@ body::before {
   font-weight: bold;
   text-decoration: none;
   transition: 0.3s;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
 }
-.btn-secondary:hover, .btn-secondary.active {
+
+.btn-secondary:hover {
   background-color: #b24900;
   transform: translateY(-2px);
 }
+
 .btn-primary {
   background-color: #FFA500;
   color: white;
-  text-decoration: none;
   padding: 12px 18px;
   border-radius: 10px;
   font-weight: bold;
   transition: 0.3s;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  text-align: center;
   width: 100%;
-  border: none; 
-  cursor: pointer; 
-  font-size: 1em; 
+  cursor: pointer;
 }
-.btn-primary:hover {
-  background-color: #ff8c00;
-  transform: translateY(-2px);
-}
+
 .btn-logout {
-  text-decoration: none;
   background-color: #ff7043;
   color: white;
   padding: 10px;
   border-radius: 8px;
   text-align: center;
+  text-decoration: none;
   font-weight: 600;
-  transition: all 0.3s ease;
   width: 100%; 
 }
-.btn-logout:hover {
-  background-color: #e64a19;
-  transform: translateY(-2px);
-}
 
-.home-container { /* Renombrado de .notificaciones-container */
-  display: flex;
-  position: relative;
-}
-/* ---------- CONTENIDO PRINCIPAL ---------- */
-.main-content {
+/* --- ÁREA DE CONTENIDO (CENTRO) --- */
+.feed {
   flex: 1;
   padding: 2rem;
-  max-width: 1000px;
+  max-width: 900px;
   margin: 0 auto;
 }
-.main-content h2 {
+
+.notif-container {
+  width: 100%;
+}
+
+.notif-container h2 {
   color: #5a2500;
-  margin-bottom: 1.5rem;
 }
 
-
-/* ---------- BARRA DE ACCIONES ---------- */
-.actions-bar {
-  display: flex;
-  justify-content: flex-end; /* Mover boton de refrescar a la derecha */
-  margin-bottom: 1rem;
-}
-
-/* ---------- BOTÓN REFRESCAR ---------- */
-.main-content .btn-refresh {
-  background-color: #ffb347;
-  color: white;
+/* --- ACCIONES --- */
+.btn-mark-read-all {
+  background: none;
   border: none;
-  border-radius: 8px;
-  padding: 0.7rem 1rem;
-  font-weight: bold;
+  color: #cc5500;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
-  
-  /* Reseteamos estilos de Home.css que no queremos */
-  width: auto;
-  height: auto;
-  font-size: inherit;
-  line-height: inherit;
-}
-.main-content .btn-refresh:hover {
-  background-color: #ff9800;
+  font-size: 0.9rem;
+  transition: 0.2s;
 }
 
-/* ---------- LISTA DE NOTIFICACIONES ---------- */
-.notifications-list {
+.btn-mark-read-all:hover {
+  color: #b24900;
+  text-decoration: underline;
+}
+
+/* --- LISTA DE NOTIFICACIONES --- */
+#notif-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
-.notification-item {
-  background-color: #fffaf5;
-  border-radius: 12px;
-  padding: 1rem 1.2rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: background-color 0.3s;
-}
-.notification-item:hover {
-  background-color: #fff1e0;
-}
-.notification-text {
-  color: #4a2a0a;
-}
-.notification-time {
-  color: #a46b3b;
-  font-size: 0.9rem;
+  margin-top: 1rem;
 }
 
+/* Tarjeta individual (Leída) */
+.notif-item {
+  background: white;
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border-left: 5px solid #d6b58e; /* Color neutro para leídas */
+}
+
+/* Tarjeta individual (No leída) */
+.notif-unread {
+  background: #fff4e6; /* Fondo cálido suave */
+  border-left-color: #ffa500; /* Naranja vibrante */
+}
+
+.notif-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.notif-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.notif-content {
+  flex-grow: 1;
+}
+
+.notif-text {
+  color: #4a2a0a;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.notif-date {
+  color: #a46b3b;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Botón Eliminar (X) */
+.btn-delete-notif {
+  background: none;
+  border: none;
+  color: #d6b58e;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px;
+  line-height: 1;
+  transition: 0.2s;
+}
+
+.btn-delete-notif:hover {
+  color: #ff7043;
+  transform: scale(1.2);
+}
+
+/* --- MODAL CREAR POST (Compatibilidad) --- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fffaf5;
+  padding: 2rem;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+}
+
+/* Ajuste del contenedor de la notificación para que crezca verticalmente si hay botones */
+.notif-item {
+    align-items: flex-start; /* Alinea los iconos arriba para dar espacio abajo */
+    min-height: 80px;
+}
+
+/* Estilo para los enlaces de acción dentro de la notificación */
+.notif-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Pequeño ajuste para que el enlace de publicación resalte al pasar el mouse */
+.notif-actions a:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}

@@ -18,6 +18,7 @@ public class MensajesServlet extends HttpServlet {
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
+        request.setCharacterEncoding("UTF-8");
         User actual = (session != null) ? (User) session.getAttribute("usuario") : null;
         if (actual == null) return;
 
@@ -102,6 +103,7 @@ public class MensajesServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
+        request.setCharacterEncoding("UTF-8");
         User actual = (session != null) ? (User) session.getAttribute("usuario") : null;
         if (actual == null) return;
 

@@ -19,7 +19,8 @@ public class CargarChatServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         User actual = (session != null) ? (User) session.getAttribute("usuario") : null;
-        
+                request.setCharacterEncoding("UTF-8");
+
         if (actual != null) {
             MensajeDAO msgDao = new MensajeDAO();
             

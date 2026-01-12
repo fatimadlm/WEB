@@ -28,6 +28,8 @@ public class EventosServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
             return;
         }
+                request.setCharacterEncoding("UTF-8");
+
         
         // 2. Obtener la lista de eventos desde el DAO
         EventoDAO dao = new EventoDAO();
