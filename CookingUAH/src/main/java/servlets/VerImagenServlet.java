@@ -12,6 +12,8 @@ import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+
+
 @WebServlet(name = "VerImagenServlet", urlPatterns = {"/VerImagen"})
 public class VerImagenServlet extends HttpServlet {
 
@@ -19,56 +21,73 @@ public class VerImagenServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // 1. Obtener el nombre del archivo desde la URL (ej: /VerImagen?nombre=foto.jpg)
         String nombreImagen = request.getParameter("nombre");
 
         if (nombreImagen == null || nombreImagen.trim().isEmpty()) {
-            return; // Si no hay nombre, no hacemos nada
+            enviarImagenPorDefecto(response);
+            return;
         }
 
         try {
-            // 2. Lógica de ruta dinámica para encontrar la carpeta en GitHub
+            // 1. Obtener la ruta base (puedes hacerla configurable)
             String pathDespliegue = getServletContext().getRealPath("/");
             File carpetaDespliegue = new File(pathDespliegue);
-
-            // Subimos 3 niveles para llegar a la raíz donde está 'Uploads_CookingUAH'
-            File raizRepo = carpetaDespliegue.getParentFile().getParentFile().getParentFile();
+            
+            // Subida de niveles con validación
+            File raizRepo = carpetaDespliegue;
+            for(int i=0; i<3; i++) {
+                if(raizRepo.getParentFile() != null) raizRepo = raizRepo.getParentFile();
+            }
+            
             File directorioSubidas = new File(raizRepo, "Uploads_CookingUAH");
+            
+            // 2. Construcción segura del Path
+            Path rutaArchivo = directorioSubidas.toPath().resolve(nombreImagen).normalize();
+            
+            // SEGURIDAD: Validar que el archivo esté DENTRO del directorio de subidas
+            if (!rutaArchivo.startsWith(directorioSubidas.toPath())) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN);
+                return;
+            }
 
-            // 3. Construir y normalizar la ruta del archivo solicitado
-            Path rutaArchivo = Paths.get(directorioSubidas.getAbsolutePath(), nombreImagen).toAbsolutePath().normalize();
             File imagenFile = rutaArchivo.toFile();
 
-            // 4. Verificar si el archivo existe físicamente
             if (imagenFile.exists() && imagenFile.isFile()) {
-                
-                // Definir el tipo de contenido (image/jpeg, image/png, etc.)
-                String mimeType = getServletContext().getMimeType(imagenFile.getName());
-                if (mimeType == null) {
-                    mimeType = "application/octet-stream";
-                }
-                response.setContentType(mimeType);
-                response.setContentLength((int) imagenFile.length());
-
-                // 5. Leer el archivo y escribirlo en la respuesta del navegador
-                try (FileInputStream in = new FileInputStream(imagenFile);
-                     OutputStream out = response.getOutputStream()) {
-                    
-                    byte[] buffer = new byte[4096];
-                    int bytesRead;
-                    while ((bytesRead = in.read(buffer)) != -1) {
-                        out.write(buffer, 0, bytesRead);
-                    }
-                }
+                servirArchivo(imagenFile, response);
             } else {
-                // Si la imagen no existe en la carpeta de GitHub, no enviamos nada o podrías enviar una por defecto
-                System.out.println("Imagen no encontrada en el disco: " + imagenFile.getAbsolutePath());
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                // Si no existe, enviamos la imagen por defecto en lugar de error 404
+                enviarImagenPorDefecto(response);
             }
             
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private void servirArchivo(File file, HttpServletResponse response) throws IOException {
+        String mimeType = getServletContext().getMimeType(file.getName());
+        response.setContentType(mimeType != null ? mimeType : "image/jpeg");
+        response.setContentLength((int) file.length());
+
+        try (FileInputStream in = new FileInputStream(file);
+             OutputStream out = response.getOutputStream()) {
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = in.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesRead);
+            }
+        }
+    }
+
+    private void enviarImagenPorDefecto(HttpServletResponse response) throws IOException {
+        // Busca el default.png interno del proyecto
+        String defaultPath = getServletContext().getRealPath("/Imagenes/DEFECTO.png");
+        File defaultFile = new File(defaultPath);
+        if (defaultFile.exists()) {
+            servirArchivo(defaultFile, response);
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 }

@@ -45,9 +45,9 @@
 
     <main class="feed perfil-page">
       <section class="perfil-info">
-        <img src="${pageContext.request.contextPath}/VerImagen?nombre=${perfil.avatar}" 
-             onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'" 
-             alt="Foto de perfil" class="perfil-img" />
+<img src="${pageContext.request.contextPath}/VerImagen?nombre=${usuario.avatar}" 
+     onerror="this.src='${pageContext.request.contextPath}/Imagenes/DEFECTO.png'" 
+     alt="Foto de perfil" class="perfil-img">
              
         <div class="perfil-datos">
           <h2>${perfil.username}</h2>
@@ -92,7 +92,7 @@
         <c:forEach var="post" items="${posts}">
             <div class="post">
                 <div class="post-header">
-                    <img src="${pageContext.request.contextPath}/VerImagen?nombre=${perfil.avatar}" onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'" class="user-img" />
+                    <img src="${pageContext.request.contextPath}/VerImagen?nombre=${perfil.avatar}" onerror="this.src='${pageContext.request.contextPath}/Imagenes/DEFECTO.png'" class="user-img" />
                     <div>
                         <h4>@${perfil.username}</h4>
                         <span>${post.createdAt}</span>

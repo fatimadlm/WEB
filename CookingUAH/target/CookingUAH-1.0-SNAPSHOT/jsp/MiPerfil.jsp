@@ -43,13 +43,13 @@
       </div>
       <a href="${pageContext.request.contextPath}/LogoutServlet" class="btn-logout">Cerrar sesión</a>
     </aside>
-
+si
     <main class="feed perfil-page" id="mi-perfil-main">
 
       <section class="perfil-info">
-        <img src="${pageContext.request.contextPath}/VerImagen?nombre=${usuario.avatar}" 
-             onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'" 
-             alt="Foto de perfil" class="perfil-img">
+<img src="${pageContext.request.contextPath}/VerImagen?nombre=${usuario.avatar}" 
+     onerror="this.src='${pageContext.request.contextPath}/Imagenes/DEFECTO.png'" 
+     alt="Foto de perfil" class="perfil-img">
              
        <div class="perfil-datos">
   <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
@@ -69,14 +69,14 @@
     ${not empty usuario.bio ? usuario.bio : '¡Bienvenido a mi cocina!'}
   </p>
   
-  <div class="perfil-stats" style="margin-top: 15px;">
-      <a href="javascript:void(0)" onclick="abrirSeguidores()" class="stat-link">
-        <strong>${seguidoresCount}</strong> Seguidores
-      </a>
-      <a href="javascript:void(0)" onclick="abrirSiguiendo()" class="stat-link" style="margin-left: 15px;">
-        <strong>${seguiendoCount}</strong> Siguiendo
-      </a>
-  </div>
+ <div class="perfil-stats" style="margin-top: 15px;">
+    <a href="javascript:void(0)" onclick="abrirSeguidores()" class="stat-link">
+      <strong>${seguidoresCount}</strong> Seguidores
+    </a>
+    <a href="javascript:void(0)" onclick="abrirSiguiendo()" class="stat-link" style="margin-left: 15px;">
+      <strong>${siguiendoCount}</strong> Siguiendo
+    </a>
+</div>
 
   <button type="button" class="btn-editar" 
           onclick="document.getElementById('editProfileModal').style.display='flex'"

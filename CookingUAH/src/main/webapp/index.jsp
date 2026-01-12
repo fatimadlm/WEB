@@ -25,8 +25,8 @@
       </div>
       
       <div class="register-text" style="margin-top: 2rem;">
-        <a href="sobreNosotros.jsp">Sobre nosotros</a> | 
-        <a href="terminos.jsp">Términos y condiciones</a>
+        <a href="jsp/SobreNosotros.jsp">Sobre nosotros</a> | 
+        <a href="jsp/Terminos.jsp">Términos y condiciones</a>
       </div>
     </main>
   </div>

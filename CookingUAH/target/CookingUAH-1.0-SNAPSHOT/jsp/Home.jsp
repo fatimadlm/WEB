@@ -91,7 +91,7 @@
                             
                             <div class="post-header">
                                 <a href="${pageContext.request.contextPath}/PerfilOtroServlet?id=${post.userId}">
-                                    <img src="${pageContext.request.contextPath}/VerImagen?nombre=${post.authorAvatar}" class="user-img" onerror="this.src='${pageContext.request.contextPath}/Imagenes/default.png'">
+                                    <img src="${pageContext.request.contextPath}/VerImagen?nombre=${post.authorAvatar}" class="user-img" onerror="/Imagenes/DEFECTO.png">
                                 </a>
                                 <div>
                                     <a href="${pageContext.request.contextPath}/PerfilOtroServlet?id=${post.userId}" class="post-author-link">

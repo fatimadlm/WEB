@@ -2,7 +2,15 @@ package servlets;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,66 +20,101 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import modelo.User;
-import modelo.UserDAO;
 
-/**
- * Servlet que procesa la actualización de los datos de perfil.
- * Soporta la subida de archivos (avatar) y actualización de biografía.
- */
 @WebServlet(name = "EditarPerfilServlet", urlPatterns = {"/EditarPerfilServlet"})
 @MultipartConfig(
-    fileSizeThreshold = 1024 * 1024, // 1MB
-    maxFileSize = 1024 * 1024 * 5,    // 5MB
-    maxRequestSize = 1024 * 1024 * 10 // 10MB
+    fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+    maxFileSize = 1024 * 1024 * 10,      // 10MB
+    maxRequestSize = 1024 * 1024 * 50    // 50MB
 )
 public class EditarPerfilServlet extends HttpServlet {
+
+    private static final String URL = "jdbc:derby://localhost:1527/CookingUAHBBDD;create=true";
+    private static final String USER = "root";
+    private static final String PASS = "root";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // 1. Validar Sesión
-        HttpSession session = request.getSession(false);
-        User actual = (session != null) ? (User) session.getAttribute("usuario") : null;
         request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        
+        HttpSession session = request.getSession(false);
+        User usuarioActual = (session != null) ? (User) session.getAttribute("usuario") : null;
 
-        if (actual == null) {
+        if (usuarioActual == null) {
             response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
             return;
         }
 
-        // 2. Obtener parámetros de texto
         String nuevaBio = request.getParameter("bio");
-        String rutaAvatar = actual.getAvatar(); // Por defecto mantenemos la actual
-
-        // 3. Gestionar subida de Imagen (Avatar)
         Part filePart = request.getPart("avatar");
-        if (filePart != null && filePart.getSize() > 0) {
-            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-            // Nombre único para evitar colisiones: id_nombrearchivo
-            String nombreFinal = actual.getId() + "_" + fileName;
+        String nombreArchivoAvatar = null;
+
+        try {
+            // 1. Lógica de ruta dinámica para encontrar la carpeta hermana 'Uploads_CookingUAH'
+            String pathDespliegue = getServletContext().getRealPath("/");
+            File carpetaDespliegue = new File(pathDespliegue);
             
-            // Ruta física en el servidor (Carpeta Imagenes)
-            String uploadPath = getServletContext().getRealPath("") + File.separator + "Imagenes";
-            File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) uploadDir.mkdir();
+            // Subimos 3 niveles: SNAPSHOT -> target -> CookingUAH (Raíz del repo)
+            File raizRepo = carpetaDespliegue.getParentFile().getParentFile().getParentFile();
+            File directorioSubidas = new File(raizRepo, "Uploads_CookingUAH");
 
-            filePart.write(uploadPath + File.separator + nombreFinal);
-            rutaAvatar = "Imagenes/" + nombreFinal;
+            if (!directorioSubidas.exists()) {
+                directorioSubidas.mkdirs();
+            }
+
+            // 2. Procesar imagen con el método robuso de Files.copy
+            if (filePart != null && filePart.getSize() > 0) {
+                String fileName = "avatar_" + System.currentTimeMillis() + "_" + filePart.getSubmittedFileName();
+                
+                // Normalizamos la ruta para evitar el error de volumen C:\...C:\
+                Path rutaLimpia = Paths.get(directorioSubidas.getAbsolutePath(), fileName).normalize();
+                
+                // Realizamos la copia física ignorando las restricciones de GlassFish
+                try (InputStream input = filePart.getInputStream()) {
+                    Files.copy(input, rutaLimpia, StandardCopyOption.REPLACE_EXISTING);
+                }
+                
+                nombreArchivoAvatar = fileName; 
+            }
+
+            // 3. Actualizar la Base de Datos
+            StringBuilder sql = new StringBuilder("UPDATE users SET bio = ?");
+            if (nombreArchivoAvatar != null) {
+                sql.append(", avatar = ?");
+            }
+            sql.append(" WHERE id = ?");
+
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+                 PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+                
+                ps.setString(1, nuevaBio);
+                if (nombreArchivoAvatar != null) {
+                    ps.setString(2, nombreArchivoAvatar);
+                    ps.setInt(3, usuarioActual.getId());
+                } else {
+                    ps.setInt(2, usuarioActual.getId());
+                }
+
+                int filas = ps.executeUpdate();
+                
+                if (filas > 0) {
+                    usuarioActual.setBio(nuevaBio);
+                    if (nombreArchivoAvatar != null) {
+                        usuarioActual.setAvatar(nombreArchivoAvatar);
+                    }
+                    session.setAttribute("usuario", usuarioActual);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Mostramos el error exacto si falla el guardado físico
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al actualizar perfil: " + e.getMessage());
+            return;
         }
 
-        // 4. Actualizar en Base de Datos
-        UserDAO dao = new UserDAO();
-        boolean exito = dao.actualizarPerfil(actual.getId(), rutaAvatar, nuevaBio);
-
-        if (exito) {
-            // IMPORTANTE: Actualizar el objeto en la sesión para refrescar la vista
-            actual.setBio(nuevaBio);
-            actual.setAvatar(rutaAvatar);
-            session.setAttribute("usuario", actual);
-        }
-
-        // 5. Redirigir de vuelta al perfil para ver los cambios
         response.sendRedirect(request.getContextPath() + "/PerfilServlet");
     }
 }
