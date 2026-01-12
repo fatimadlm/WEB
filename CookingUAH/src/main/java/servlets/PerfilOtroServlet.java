@@ -70,7 +70,7 @@ public class PerfilOtroServlet extends HttpServlet {
         MensajeDAO msgDao = new MensajeDAO();
         int totalNoLeidos = msgDao.contarNoLeidosTotales(actual.getId());
         request.setAttribute("totalNoLeidos", totalNoLeidos);
-        // ------------------------------------------------------------
+
         
         // 5. Enviar atributos al JSP
         request.setAttribute("perfil", perfil);
