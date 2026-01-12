@@ -375,11 +375,11 @@ body::before {
 .user-card-link:hover .user-card {
   box-shadow: 0 8px 20px rgba(204, 85, 0, 0.15);
   border-color: #ffcc80;
-  background-color: #fff; /* Se vuelve blanca pura al pasar el ratón para resaltar */
+  background-color: #fff; 
 }
 
 .user-card-avatar {
-  width: 90px; /* Un pelín más grande */
+  width: 90px; 
   height: 90px;
   border-radius: 50%;
   object-fit: cover;
@@ -390,21 +390,21 @@ body::before {
 }
 
 .user-card-link:hover .user-card-avatar {
-    border-color: #ff9800; /* Borde más intenso al pasar ratón */
+    border-color: #ff9800; 
 }
 
 .user-card-name {
   color: #6b2b00;
   font-size: 1.2rem;
   font-weight: 700;
-  margin: 0 0 15px 0; /* Separación con el botón */
+  margin: 0 0 15px 0; 
 }
 
-/* --- NUEVO ESTILO: Píldora "Ver Perfil" --- */
+/* --- "Ver Perfil" --- */
 .user-card-cta {
-    margin-top: auto; /* Empuja el botón al fondo si la tarjeta crece */
-    background-color: #ffe0b2; /* Fondo naranja muy clarito */
-    color: #e65100; /* Texto naranja oscuro */
+    margin-top: auto; 
+    background-color: #ffe0b2; 
+    color: #e65100; 
     padding: 8px 16px;
     border-radius: 20px;
     font-size: 0.85rem;
@@ -420,15 +420,15 @@ body::before {
     display: inline-block;
 }
 
-/* Cuando pasas el ratón por CUALQUIER PARTE de la tarjeta... */
+
 .user-card-link:hover .user-card-cta {
-    background-color: #ef6c00; /* Se vuelve naranja fuerte */
+    background-color: #ef6c00; 
     color: white; /* Texto blanco */
     box-shadow: 0 4px 8px rgba(239, 108, 0, 0.3);
 }
 
 .user-card-link:hover .arrow {
-    transform: translateX(4px); /* La flechita se mueve a la derecha */
+    transform: translateX(4px); 
 }   
 
 /* Mensaje cuando no se encuentran resultados */
@@ -713,7 +713,7 @@ body::before {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6); 
-  backdrop-filter: blur(5px); /* Efecto desenfoque fondo */
+  backdrop-filter: blur(5px); 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -721,11 +721,11 @@ body::before {
 }
 
 .modal-content {
-  background-color: #fffbf5; /* Fondo ligeramente crema */
+  background-color: #fffbf5; 
   padding: 30px;
   border-radius: 20px;
   width: 95%;
-  max-width: 600px; /* Ancho ampliado para que quepa en una línea */
+  max-width: 600px;
   position: relative;
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   animation: modal-fade-in 0.3s ease-out;
@@ -777,7 +777,7 @@ body::before {
   margin-top: 10px;
 }
 
-/* --- ESTILO BOTÓN AÑADIR FOTO (TU PEDIDO) --- */
+/* --- ESTILO BOTÓN AÑADIR FOTO --- */
 .btn-add-photo {
   background-color: #fff3e0; /* Fondo crema */
   color: #d84315;            /* Texto naranja oscuro */
@@ -800,7 +800,7 @@ body::before {
   box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
-/* Botón publicar (naranja sólido) */
+/* Botón publicar */
 #modalNewPostBtn {
   background: linear-gradient(90deg, #f57c00, #ef6c00); 
   color: white;
@@ -913,24 +913,23 @@ body::before {
 
 
 
-/* --- ESTILOS DE CHAT NUEVOS --- */
 
 /* Clase para cuando hay mensajes sin leer en la lista */
 .chat-list-item.unread {
-    background-color: #fff3e0; /* Un crema un poco más oscuro/anaranjado */
-    border-left: 4px solid #d32f2f; /* Línea roja elegante a la izquierda */
-    font-weight: 600; /* Texto un poco más grueso */
+    background-color: #fff3e0; 
+    border-left: 4px solid #d32f2f; 
+    font-weight: 600; 
 }
 
-/* El punto rojo (Red Dot) */
+
 .unread-dot {
     height: 10px;
     width: 10px;
-    background-color: #d32f2f; /* Rojo */
+    background-color: #d32f2f; 
     border-radius: 50%;
     display: inline-block;
-    margin-left: auto; /* Esto empuja el punto a la derecha del todo */
-    box-shadow: 0 0 5px rgba(211, 47, 47, 0.5); /* Pequeño brillo */
+    margin-left: auto; 
+    box-shadow: 0 0 5px rgba(211, 47, 47, 0.5);
 }
 
 /* =========================================
@@ -939,28 +938,25 @@ body::before {
 
 /* 1. El contenedor de la fecha (la tira horizontal invisible) */
 .chat-date-separator {
-    display: flex;              /* Usamos Flexbox */
-    justify-content: center;    /* ESTO ES LO QUE LO CENTRA HORIZONTALMENTE */
-    align-items: center;        /* Centrado vertical (por si acaso) */
-    width: 100%;                /* Ocupa todo el ancho disponible */
-    margin: 20px 0;             /* Separación arriba y abajo del mensaje */
-    clear: both;                /* Evita que se monte sobre burbujas flotantes */
+    display: flex;              
+    justify-content: center;    
+    align-items: center;        
+    width: 100%;               
+    margin: 20px 0;            
+    clear: both;                
 }
 
 /* 2. La pastilla con el texto (ej: "20 oct 2025") */
 .chat-date-separator span {
-    background-color: rgba(0, 0, 0, 0.2); /* Fondo semitransparente oscuro */
-    color: white;               /* Texto blanco */
-    padding: 4px 12px;          /* Espacio interior */
-    border-radius: 12px;        /* Bordes redondeados */
-    font-size: 0.75rem;         /* Letra pequeñita */
+    background-color: rgba(0, 0, 0, 0.2); 
+    color: white;             
+    padding: 4px 12px;         
+    border-radius: 12px;       
+    font-size: 0.75rem;         
     font-weight: 500;           
     text-shadow: 0 1px 1px rgba(0,0,0,0.2);
     
-    /* Si prefieres estilo WhatsApp claro (fondo gris, letras oscuras):
-       background-color: #d1d7db;
-       color: #555;
-    */
+    
 }
 
 /* 3. Ajuste para la hora pequeña dentro del mensaje */
@@ -968,24 +964,23 @@ body::before {
     display: flex;
     flex-direction: column;
     position: relative;
-    /* Aseguramos que el contenido no aplaste la hora */
     min-width: 80px; 
 }
 
 .chat-time {
-    font-size: 0.65rem;       /* Hora muy pequeña */
+    font-size: 0.65rem;       
     margin-top: 4px;
-    margin-left: 8px;         /* Separación del texto */
-    align-self: flex-end;     /* Alinear a la derecha SIEMPRE */
+    margin-left: 8px;         
+    align-self: flex-end;     
     opacity: 0.7;
     line-height: 1;
 }
 
 /* Color de la hora según quien lo envía */
 .chat-bubble.sent .chat-time {
-    color: #fffaf2 /* Tono claro sobre tu burbuja naranja */
+    color: #fffaf2 
 }
 
 .chat-bubble.received .chat-time {
-    color: #888;    /* Gris sobre burbuja blanca */
+    color: #888;    
 }
