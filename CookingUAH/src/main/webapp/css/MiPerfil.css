@@ -23,7 +23,6 @@ body::before {
   z-index: -1; 
 }
 
-/* Layout consistente */
 .home-container {
   display: flex;
   position: relative;
@@ -230,7 +229,7 @@ body::before {
   border-radius: 10px;
   margin-top: 10px;
 }
-/*  Añadimos espacio entre los botones */
+/*  Espacio entre los botones */
 .post-actions {
   display: flex;
   gap: 1rem;
@@ -263,9 +262,8 @@ body::before {
   color: white;
 }
 
-/* Estilos para el botón de Edición */
 .btn-edit-post {
-  background-color: #3498db; /* Azul suave */
+  background-color: #3498db;
   order: 1; /* Para que aparezca después de los botones de interacción */
 }
 .btn-edit-post:hover {
@@ -274,7 +272,7 @@ body::before {
 
 /* Estilos para el botón de Eliminación */
 .btn-delete-post {
-  background-color: #e74c3c; /* Rojo de peligro */
+  background-color: #e74c3c;
   order: 2; /* Para que aparezca al final */
 }
 .btn-delete-post:hover {
