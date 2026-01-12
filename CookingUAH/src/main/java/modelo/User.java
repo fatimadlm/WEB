@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     
-    // 1. Atributos (Coinciden con las columnas de tu tabla SQL 'users')
+    // 1. Atributos 
     private int id;
     private String username;
     private String email;
