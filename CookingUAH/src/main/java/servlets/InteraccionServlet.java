@@ -23,6 +23,11 @@ public class InteraccionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
+        
+        //1. Codificacion UTF-8 (para ñ y tildes)
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        
         HttpSession session = request.getSession(false);
         User usuario = (session != null) ? (User) session.getAttribute("usuario") : null;
         

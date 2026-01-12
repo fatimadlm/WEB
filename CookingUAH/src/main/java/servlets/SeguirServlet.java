@@ -31,12 +31,11 @@ public class SeguirServlet extends HttpServlet {
                 if (usuarioLogueado.getId() != idSeguido) {
                     dao.seguir(usuarioLogueado.getId(), idSeguido);
                     
-                    // --- NUEVA LÓGICA DE NOTIFICACIONES ---
                     NotificacionDAO nDao = new NotificacionDAO();
                     String mensaje = "@" + usuarioLogueado.getUsername() + " ha comenzado a seguirte.";
+                    
                     // Se crea la notificación para el usuario seguido (idSeguido)
                     nDao.crear(idSeguido, mensaje, "FOLLOW"); 
-                    // --------------------------------------
                 }
             } catch (SQLException | NumberFormatException e) {
                 e.printStackTrace(); // Log del error

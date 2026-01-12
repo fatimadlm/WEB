@@ -60,7 +60,7 @@ public class EventosServlet extends HttpServlet {
                 String titulo = request.getParameter("titulo");
                 String fechaStr = request.getParameter("fecha");
                 String horaStr = request.getParameter("hora");
-                String tipo = request.getParameter("tipo"); // Captura el valor del <select>
+                String tipo = request.getParameter("tipo");
 
                 // 2. Formatear y convertir datos para SQL
                 Date fecha = Date.valueOf(fechaStr);
@@ -80,7 +80,7 @@ public class EventosServlet extends HttpServlet {
                 boolean exito = dao.crear(nuevoEvento);
                 
                 if (exito) {
-                    // Opcional: podrías añadir un mensaje de éxito para el JSP
+                    // Mensaje de éxito para el JSP
                     request.getSession().setAttribute("mensaje", "Evento creado correctamente");
                 }
 

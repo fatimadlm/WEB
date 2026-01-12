@@ -33,7 +33,8 @@ public class EliminarPostServlet extends HttpServlet {
         
         // Llamada al DAO para eliminar
         PostDAO pDao = new PostDAO();
-        // Es recomendable pasar el ID del usuario actual para validar propiedad en el SQL
+        
+        // Borramos el post (confirmando que es tuyo)
         boolean ok =pDao.eliminarPost(Integer.parseInt(postId), actual.getId());
 
         response.sendRedirect(request.getContextPath() + "/PerfilServlet");

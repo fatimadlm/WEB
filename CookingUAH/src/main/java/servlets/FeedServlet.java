@@ -16,7 +16,10 @@ public class FeedServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-                request.setCharacterEncoding("UTF-8");
+        
+        //Codificacion UTF-8 (para ñ y tildes)
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         
         HttpSession session = request.getSession(false);

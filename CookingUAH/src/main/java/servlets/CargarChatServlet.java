@@ -27,7 +27,7 @@ public class CargarChatServlet extends HttpServlet {
             // 1. Cargar lista de contactos existente (Gente con la que ya has hablado)
             List<User> contactos = msgDao.listarContactos(actual.getId());
             
-            // 2. LOGICA DE CHAT NUEVO O DIRECTO 🧠
+            // 2. Lógica de Chat Nuevo o directo
             String idParam = request.getParameter("id");
             
             if (idParam != null && !idParam.isEmpty()) {

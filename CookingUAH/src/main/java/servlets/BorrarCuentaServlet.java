@@ -22,7 +22,7 @@ public class BorrarCuentaServlet extends HttpServlet {
         String passwordConfirm = request.getParameter("passwordConfirm");
 
         if (actual != null && passwordConfirm != null) {
-            // 1. Validar la contraseña (asumiendo que User tiene el método getPassword())
+            // 1. Validar la contraseña
             if (passwordConfirm.equals(actual.getPassword())) {
                 UserDAO dao = new UserDAO();
                 boolean eliminado = dao.eliminarUsuario(actual.getId());

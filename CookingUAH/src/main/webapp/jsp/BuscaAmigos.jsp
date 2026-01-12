@@ -89,9 +89,6 @@
 
                     <h3 class="user-card-name">@${u.username}</h3>
                     
-                    <%-- YA NO SALE EL EMAIL POR SEGURIDAD --%>
-                    
-                    <%-- NUEVO ESTILO DE BOTÓN SUAVE --%>
                     <div class="user-card-cta">
                         Ver perfil <span class="arrow">→</span>
                     </div>

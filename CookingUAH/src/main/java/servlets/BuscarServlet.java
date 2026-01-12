@@ -32,7 +32,12 @@ public class BuscarServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // 1. Verificación de sesión
+        
+        //1. Codificacion UTF-8 (para ñ y tildes)
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        
+        // 2. Verificación de sesión
         HttpSession session = request.getSession();
         User usuarioLogueado = (User) session.getAttribute("usuario");
         
@@ -41,10 +46,10 @@ public class BuscarServlet extends HttpServlet {
             return;
         }
 
-        // 2. Obtención del término de búsqueda
+        // 3. Obtención del término de búsqueda
         String textoBusqueda = request.getParameter("busqueda");
 
-        // 3. Consulta al Modelo (UserDAO)
+        // 4. Consulta al Modelo (UserDAO)
         UserDAO dao = new UserDAO();
         List<User> listaResultados = null;
 
@@ -60,9 +65,7 @@ public class BuscarServlet extends HttpServlet {
             }
         }
 
-        // 4. Preparación de datos para la Vista
-        // Guardamos la lista en la "mochila" (request) con la etiqueta "resultadosBusqueda"
-        // Esta etiqueta DEBE coincidir con la que pusiste en el JSP: request.getAttribute("resultadosBusqueda")
+        // 4. Preparación de datos para la Vista. Guardamos los resultados en el request para enviarlos al JSP
         request.setAttribute("resultadosBusqueda", listaResultados);
         request.setAttribute ("terminoBusqueda", textoBusqueda);
 
