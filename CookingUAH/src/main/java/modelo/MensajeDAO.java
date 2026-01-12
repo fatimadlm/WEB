@@ -10,7 +10,7 @@ public class MensajeDAO {
     private static final String USER = "root";
     private static final String PASS = "root";
 
-    // --- APORTACIÓN DE TU COMPAÑERO (MÉTODO HELPER PARA CONECTAR) ---
+
     // Esto limpia el código y evita repetir el DriverManager en cada método.
     private Connection getConexion() throws SQLException {
         try {
@@ -21,7 +21,7 @@ public class MensajeDAO {
         return DriverManager.getConnection(URL, USER, PASS);
     }
 
-    // 1. LISTAR CONTACTOS (TU VERSIÓN: ORDENADA POR FECHA RECIENTE)
+    // 1. LISTAR CONTACTOS 
     public List<User> listarContactos(int miId) {
         List<User> contactos = new ArrayList<>();
 
@@ -110,7 +110,7 @@ public class MensajeDAO {
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    // 5. CONTAR NO LEÍDOS TOTALES (TU VERSIÓN: EXCLUYENDO AUTO-MENSAJES)
+    // 5. CONTAR NO LEÍDOS TOTALES 
     public int contarNoLeidosTotales(int miId) {
         String sql = "SELECT COUNT(DISTINCT sender_id) FROM messages WHERE receiver_id = ? AND is_read = FALSE AND sender_id <> ?";
 
@@ -124,7 +124,7 @@ public class MensajeDAO {
         return 0;
     }
 
-    // 6. OBTENER IDs DE REMITENTES NO LEÍDOS (TU VERSIÓN: EXCLUYENDO AUTO-MENSAJES)
+    // 6. OBTENER IDs DE REMITENTES NO LEÍDOS
     public List<Integer> obtenerIdsRemitentesNoLeidos(int miId) {
         List<Integer> ids = new ArrayList<>();
         String sql = "SELECT DISTINCT sender_id FROM messages WHERE receiver_id = ? AND is_read = FALSE AND sender_id <> ?";
