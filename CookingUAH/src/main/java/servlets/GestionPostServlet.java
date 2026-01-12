@@ -55,7 +55,7 @@ public class GestionPostServlet extends HttpServlet {
 
                 // 4. Ejecución de la lógica según la acción solicitada
                 if ("eliminar".equalsIgnoreCase(accion)) {
-                    pDao.eliminarPost(id, actual.getId()); 
+                    pDao.eliminarPostAdmin(id);
                 } else if ("eliminarComentario".equalsIgnoreCase(accion)) {
  
                     pDao.eliminarComentario(id);
