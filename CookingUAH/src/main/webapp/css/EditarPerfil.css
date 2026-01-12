@@ -23,7 +23,7 @@ form {
   flex-direction: column;
 }
 
-/* --- Tus estilos de formulario (adaptados) --- */
+/* --- Estilos de formulario --- */
 
 label {
   display: block;
@@ -66,20 +66,16 @@ textarea {
 fieldset {
   border: none;
   margin-top: 1.5rem;
-  /* CORREGIDO: Quita el padding para que se alinee */
   padding: 0;
   border-radius: 10px;
-  /* CORREGIDO: Fondo transparente, el estilo del recuadro ya no es necesario aquí */
   background-color: transparent;
 }
 legend {
   font-weight: 600;
   font-size: 1.2rem;
   color: #6b2b00;
-  /* CORREGIDO: Quita los márgenes del legend */
   padding: 0; 
   margin: 0;
-  /* Añade un margen superior para separarlo */
   margin-top: 1rem;
 }
 
@@ -105,7 +101,6 @@ legend {
   transform: scale(1.03);
 }
 
-/* --- Tus estilos de Avatar (adaptados) --- */
 .avatar {
   position: relative;
   width: 100px;
