@@ -72,7 +72,7 @@ section p {
   text-decoration: underline;
 }
 
-/* ---------- RESPONSIVE DESIGN ---------- */
+/* ---------- RESPONSIVE---------- */
 @media (max-width: 600px) {
   .container {
     padding: 1.5rem;
