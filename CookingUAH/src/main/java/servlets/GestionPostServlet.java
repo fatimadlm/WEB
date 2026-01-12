@@ -54,15 +54,16 @@ public class GestionPostServlet extends HttpServlet {
         if (idParam != null && accion != null) {
             try {
                 int id = Integer.parseInt(idParam);
-                PostDAO dao = new PostDAO();
+                PostDAO pDao = new PostDAO(); // Usamos 'pDao' como en tu declaración
 
                 // 4. Ejecución de la lógica según la acción solicitada
                 if ("eliminar".equalsIgnoreCase(accion)) {
-                    // Borra la publicación completa (y sus comentarios por cascada en BBDD)
-                    dao.eliminarPost(id); 
+                    // Error corregido: añadimos 'actual.getId()' para coincidir con la firma (int, int)
+                    // que establecimos para el método eliminarPost
+                    pDao.eliminarPost(id, actual.getId()); 
                 } else if ("eliminarComentario".equalsIgnoreCase(accion)) {
-                    // Borra un comentario específico usando el ID proporcionado
-                    dao.eliminarComentario(id);
+                    // Error corregido: cambiamos 'dao' por 'pDao' para que coincida con la variable declarada arriba
+                    pDao.eliminarComentario(id);
                 }
             } catch (NumberFormatException e) {
                 e.printStackTrace();

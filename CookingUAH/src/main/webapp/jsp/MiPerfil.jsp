@@ -94,7 +94,11 @@
                     </c:if>
                 </div>
                 <div class="post-actions">
-                    <button class="like-btn">❤️ ${post.likesCount} Likes</button>
+                    <button type="button" 
+                        onclick="darLike(this, ${post.id})" 
+                        class="like-btn ${post.likedByCurrentUser ? 'liked' : ''}">
+                        ❤️ <span id="likes-count-${post.id}">${post.likesCount}</span> Likes
+                    </button>
                     <button class="btn-edit-post" onclick="abrirModalEdicion('${post.id}', '${post.title}')">📝 Editar</button>
                     
                     <form action="${pageContext.request.contextPath}/EliminarPostServlet" method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar esta receta?')">
@@ -248,7 +252,42 @@
                     </div>
                 </form>
             </div>
+    </div>
+    <div id="editPostModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-content">
+            <%-- Botón de cierre --%>
+            <span class="modal-close" onclick="document.getElementById('editPostModal').style.display='none'">&times;</span>
+
+            <h2>Editar mi Receta</h2>
+
+            <%-- Cambiamos el action al servlet unificado y añadimos el onsubmit para AJAX --%>
+            <form id="formEditarPost" onsubmit="guardarEdicionPost(event)" enctype="multipart/form-data">
+                <%-- Campo para que InteraccionServlet sepa qué lógica ejecutar --%>
+                <input type="hidden" name="accion" value="editar">
+                <%-- ID del post que se va a editar (se rellena vía JS) --%>
+                <input type="hidden" name="postId" id="editPostId">
+
+                <div class="modal-post-box">
+                    <label style="display: block; margin-bottom: 10px; color: #6b2b00; font-weight: 600;">Título o descripción:</label>
+                    <textarea name="titulo" id="editPostTitle" placeholder="¿Qué cambios tiene tu receta?" required></textarea>
+
+                    <%-- Estilo de subida de foto coherente con Editar Perfil [cite: 1166, 1167] --%>
+                    <div class="post-controls" style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 15px;">
+                        <div class="post-options">
+                            <input type="file" name="imagen" id="editPostImageUpload" accept="image/*" style="display: none;">
+                            <button type="button" class="btn-add-photo" onclick="document.getElementById('editPostImageUpload').click()">
+                                📸 Cambiar Foto
+                            </button>
+                        </div>
+
+                        <button type="submit" class="btn-primary" style="padding: 10px 25px; border-radius: 25px;">
+                            Guardar cambios
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
+    </div>
         <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
         <%-- Home.js para actualizar el Feed de recetas --%>
         <script src="${pageContext.request.contextPath}/js/Home.js"></script>

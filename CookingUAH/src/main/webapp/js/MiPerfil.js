@@ -156,3 +156,53 @@ function cargarListaUsuarios(tipo, titulo) {
             container.innerHTML = '<p style="color:red; text-align:center;">Error al conectar con el servidor.</p>';
         });
 }
+
+function abrirModalEdicion(id, titulo) {
+    document.getElementById('editPostId').value = id;
+    document.getElementById('editPostTitle').value = titulo;
+    document.getElementById('editPostModal').style.display = 'flex';
+}
+
+function guardarEdicionPost(event) {
+    event.preventDefault(); // Evita la recarga
+    const form = event.target;
+    const formData = new FormData(form);
+    formData.append("accion", "editar"); // Aseguramos la acción para el servlet
+
+    const contextPath = document.body.dataset.context || "";
+
+    fetch(`${contextPath}/InteraccionServlet`, {
+        method: 'POST',
+        body: formData // FormData maneja automáticamente el enctype="multipart/form-data"
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'ok') {
+            const postId = formData.get("postId");
+            // 1. Actualizar el título en el post correspondiente
+            const postElement = document.querySelector(`.post[id="post-${postId}"]`) 
+                                || document.querySelector(`button[onclick*="'${postId}'"]`).closest('.post');
+            
+            if (postElement) {
+                postElement.querySelector('.post-content p').innerText = data.title;
+                
+                // 2. Si se subió una imagen nueva, actualizarla
+                if (data.image) {
+                    let imgHtml = postElement.querySelector('.post-img');
+                    const nuevaRuta = `${contextPath}/VerImagen?nombre=${data.image}`;
+                    if (imgHtml) {
+                        imgHtml.src = nuevaRuta;
+                    } else {
+                        // Si antes no tenía imagen, la creamos
+                        const contentDiv = postElement.querySelector('.post-content');
+                        contentDiv.innerHTML += `<img src="${nuevaRuta}" class="post-img">`;
+                    }
+                }
+            }
+            // 3. Cerrar el modal
+            document.getElementById('editPostModal').style.display = 'none';
+            alert("¡Receta actualizada con éxito! 🍳");
+        }
+    })
+    .catch(err => console.error("Error al editar:", err));
+}

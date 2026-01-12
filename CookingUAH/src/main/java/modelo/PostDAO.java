@@ -98,13 +98,49 @@ public class PostDAO {
         } catch (Exception e) { e.printStackTrace(); return false; }
     }
 
-    public boolean eliminarPost(int id) {
-        String sql = "DELETE FROM posts WHERE id = ?";
-        try (Connection conn = getConexion();
+    public boolean eliminarPost(int postId, int userId) {
+        String sql = "DELETE FROM POSTS WHERE ID = ? AND USER_ID = ?";
+        try (Connection conn = this.getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
+
+            ps.setInt(1, postId);
+            ps.setInt(2, userId);
+
+            return ps.executeUpdate() > 0; // Retorna true si se eliminó el registro
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean actualizarPost(int postId, String nuevoTitulo, String rutaImagen, int userId) {
+        String sql;
+        boolean tieneImagen = (rutaImagen != null && !rutaImagen.isEmpty());
+
+        if (tieneImagen) {
+            sql = "UPDATE POSTS SET TITLE = ?, IMAGE = ? WHERE ID = ? AND USER_ID = ?";
+        } else {
+            sql = "UPDATE POSTS SET TITLE = ? WHERE ID = ? AND USER_ID = ?";
+        }
+
+        try (Connection conn = this.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, nuevoTitulo);
+            if (tieneImagen) {
+                ps.setString(2, rutaImagen);
+                ps.setInt(3, postId);
+                ps.setInt(4, userId);
+            } else {
+                ps.setInt(2, postId);
+                ps.setInt(3, userId);
+            }
+
             return ps.executeUpdate() > 0;
-        } catch (SQLException e) { e.printStackTrace(); return false; }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public void toggleLike(int userId, int postId) {
