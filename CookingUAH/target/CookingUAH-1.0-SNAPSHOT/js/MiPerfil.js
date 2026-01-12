@@ -42,18 +42,37 @@ function cerrarModalEdicion() {
 }
 
 /**
- * Previsualización específica para la edición
+ * Muestra el nombre del archivo seleccionado para el avatar y activa el contenedor de previsualización.
  */
-function previsualizarImagenEdicion(input) {
-    if (input.files && input.files[0]) {
-        const span = document.getElementById('editFileName');
-        const container = document.getElementById('editImagePreviewContainer');
-        if (span && container) {
-            span.innerText = "Nueva: " + input.files[0].name;
-            container.style.display = 'flex';
-        }
+function previsualizarAvatar(input) {
+    const fileName = input.files[0]?.name;
+    if (fileName) {
+        document.getElementById('avatarFileName').textContent = fileName;
+        document.getElementById('avatarPreviewContainer').style.display = 'flex';
     }
 }
+
+/**
+ * Limpia el input de archivo y oculta el contenedor de previsualización.
+ */
+function quitarAvatarEdicion() {
+    document.getElementById('editAvatarUpload').value = "";
+    document.getElementById('avatarPreviewContainer').style.display = 'none';
+}
+
+/**
+ * Previsualización específica para la edición
+ */
+//function previsualizarImagenEdicion(input) {
+//    if (input.files && input.files[0]) {
+//       const span = document.getElementById('editFileName');
+//       const container = document.getElementById('editImagePreviewContainer');
+//       if (span && container) {
+//           span.innerText = "Nueva: " + input.files[0].name;
+//           container.style.display = 'flex';
+//       }
+//    }
+//}
 
 // Lógica para cerrar modales al hacer clic fuera (Específico de Perfil)
 window.addEventListener('click', function(event) {

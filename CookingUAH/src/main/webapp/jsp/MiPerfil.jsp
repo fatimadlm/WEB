@@ -64,7 +64,11 @@
               </a>
           </div>
 
-          <a href="#editar" class="btn-editar">Editar perfil</a>
+          <button type="button" class="btn-editar" 
+                  onclick="document.getElementById('editProfileModal').style.display='flex'"
+                  style="border: none;">
+                    Editar perfil
+          </button>
         </div>
       </section>
 
@@ -166,24 +170,43 @@
     </div>
 </section>          
 
-  <section id="editar" class="modal">
-    <a href="#" class="modal__backdrop"></a>
-    <div class="modal__panel">
-      <header class="modal__header">
+  <%-- Nuevo Modal de Editar Perfil en MiPerfil.jsp --%>
+<div id="editProfileModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-content">
+        <%-- Botón de cierre con la misma clase que en el modal de post --%>
+        <span class="modal-close" onclick="document.getElementById('editProfileModal').style.display='none'">&times;</span>
+        
         <h2>Editar perfil</h2>
-        <a href="#" class="modal__close">✕</a>
-      </header>
-      <div class="modal__body">
+
         <form action="${pageContext.request.contextPath}/EditarPerfilServlet" method="POST" enctype="multipart/form-data">
-            <label>Biografía:</label>
-            <textarea name="bio" style="width:100%; height:80px;">${usuario.bio}</textarea>
-            <label>Nueva foto de perfil:</label>
-            <input type="file" name="avatar" accept="image/*">
-            <button type="submit" class="btn-primary" style="margin-top:15px; width:100%;">Guardar cambios</button>
+            <div class="modal-post-box">
+                <label style="display: block; margin-bottom: 10px; color: #6b2b00; font-weight: 600;">Biografía:</label>
+                <textarea name="bio" placeholder="Cuéntanos sobre ti..." required>${usuario.bio}</textarea>
+
+                <%-- Contenedor de previsualización (mismo estilo que en Home.jsp) --%>
+                <div id="avatarPreviewContainer" style="display: none; align-items: center; gap: 10px; margin-bottom: 15px; background: #fdf2e9; padding: 10px; border-radius: 10px; border: 1px dashed #ffb74d;">
+                    <span style="font-size: 1.2rem;">🖼️</span>
+                    <span id="avatarFileName" style="font-size: 0.9rem; color: #d84315; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80%;"></span>
+                    <button type="button" onclick="quitarAvatarEdicion()" style="background: none; border: none; color: #cc5500; cursor: pointer; font-weight: bold; font-size: 1.2rem; margin-left: auto;">&times;</button>
+                </div>
+
+                <div class="post-controls" style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                    <div class="post-options">
+                        <%-- Input de archivo oculto --%>
+                        <input type="file" name="avatar" id="editAvatarUpload" accept="image/*" style="display: none;" onchange="previsualizarAvatar(this)">
+                        <%-- Botón con el estilo discontinuo de Home.jsp --%>
+                        <button type="button" class="btn-add-photo" onclick="document.getElementById('editAvatarUpload').click()">
+                            📸 Cambiar Foto
+                        </button>
+                    </div>
+                    <button type="submit" class="btn-primary" style="padding: 10px 25px; border-radius: 25px; white-space: nowrap;">
+                        Guardar cambios
+                    </button>
+                </div>
+            </div>
         </form>
-      </div>
     </div>
-  </section>
+</div>
 
   <div id="postModal" class="modal-backdrop" style="display: none;">
             <div class="modal-content">
