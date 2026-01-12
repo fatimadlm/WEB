@@ -30,7 +30,6 @@ body::before {
   min-height: 100vh;
 }
 
-/* --- BARRA LATERAL (SIDEBAR) --- */
 .sidebar {
   width: 250px;
   flex-shrink: 0; 
@@ -200,7 +199,7 @@ body::before {
   transform: scale(1.2);
 }
 
-/* --- MODAL CREAR POST (Compatibilidad) --- */
+/* --- MODAL CREAR POST --- */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -232,7 +231,7 @@ body::before {
     gap: 10px;
 }
 
-/* Pequeño ajuste para que el enlace de publicación resalte al pasar el mouse */
+/* enlace de publicación resaltado al pasar el ratón por encima */
 .notif-actions a:hover {
     text-decoration: underline;
     opacity: 0.8;
