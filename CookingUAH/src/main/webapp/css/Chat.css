@@ -1,23 +1,5 @@
 /* CHATS.CSS*/
-/* ---------- FONDO ---------- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ---------- CONTENIDO PRINCIPAL DEL CHAT (CORREGIDO) ---------- */
+/* ---------- CONTENIDO PRINCIPAL DEL CHAT ---------- */
 .feed.chat-page {
   flex: 1; 
   max-width: 1000px; 
@@ -60,7 +42,7 @@
   background-color: #ffe0b2;
 }
 
-/* AÑADIDO: Estilo para el espaciador invisible */
+/* Estilo para el espaciador invisible */
 .header-spacer {
   /* Hacemos que tenga el mismo ancho que el botón "Volver" */
   /* (El padding del botón es 0.5rem 1rem) */
@@ -118,7 +100,7 @@
   border-bottom-right-radius: 0.5rem;
 }
 
-/* Área de input de texto (MODIFICADA) */
+/* Área de input de texto */
 .chat-input-area {
   display: flex;
   gap: 1rem;
@@ -153,7 +135,6 @@
 }
 
 /* ... (Estilos del MODAL de Home.css) ... */
-
 
 .modal-backdrop {
   position: fixed; 
