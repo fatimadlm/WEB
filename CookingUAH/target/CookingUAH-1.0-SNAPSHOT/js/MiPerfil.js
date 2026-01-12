@@ -103,3 +103,56 @@ function cerrarModalEditarEvento() {
         formulario.reset();
     }
 }
+function abrirSeguidores() {
+    cargarListaUsuarios('seguidores', 'Seguidores');
+}
+
+function abrirSiguiendo() {
+    cargarListaUsuarios('siguiendo', 'Siguiendo');
+}
+
+function cargarListaUsuarios(tipo, titulo) {
+    const context = document.body.dataset.context;
+    const userId = document.getElementById('userIdHidden').value; 
+    
+    // Configuración visual del Modal
+    document.getElementById('userListModal').style.display = 'flex';
+    document.getElementById('userListTitle').innerText = titulo;
+    const container = document.getElementById('userListContainer');
+    
+    container.innerHTML = '<p style="text-align:center; padding:20px; color:#666;">Cargando...</p>';
+
+    fetch(`${context}/ListarSeguidoresServlet?userId=${userId}&tipo=${tipo}`)
+        .then(response => response.json())
+        .then(data => {
+            container.innerHTML = ''; 
+
+            if (data.length === 0) {
+                container.innerHTML = `<p style="text-align:center; padding:20px; color:#888;">No hay usuarios en esta lista.</p>`;
+                return;
+            }
+
+            data.forEach(u => {
+                // Generamos la fila con el botón "Ver Perfil"
+                const itemHtml = `
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; border-bottom: 1px solid #eee;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <img src="${context}/VerImagen?nombre=${u.avatar}" 
+                                 onerror="this.src='${context}/Imagenes/default.png'"
+                                 style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #ffb74d;">
+                            <span style="color: #6b2b00; font-weight: bold;">@${u.username}</span>
+                        </div>
+                        
+                        <a href="${context}/PerfilOtroServlet?id=${u.id}" class="btn-primary" 
+                           style="font-size: 0.75rem; padding: 6px 14px; text-decoration:none; border-radius:20px; width:auto;">
+                            Ver Perfil
+                        </a>
+                    </div>
+                `;
+                container.innerHTML += itemHtml;
+            });
+        })
+        .catch(err => {
+            container.innerHTML = '<p style="color:red; text-align:center;">Error al conectar con el servidor.</p>';
+        });
+}

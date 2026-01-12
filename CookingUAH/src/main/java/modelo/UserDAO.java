@@ -317,4 +317,49 @@ public void dejarDeSeguir(int followerId, int followedId) throws SQLException {
     }
 }
 
+// Obtener usuarios que TE siguen a ti
+public List<User> obtenerSeguidores(int userId) {
+    List<User> lista = new ArrayList<>();
+    // Ajustado: followed_id es el usuario que recibe el seguimiento
+    String sql = "SELECT u.id, u.username, u.avatar FROM users u " +
+                 "JOIN followers f ON u.id = f.follower_id " +
+                 "WHERE f.followed_id = ?";
+    try (Connection conn = getConexion();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, userId);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setUsername(rs.getString("username"));
+                u.setAvatar(rs.getString("avatar"));
+                lista.add(u);
+            }
+        }
+    } catch (SQLException e) { e.printStackTrace(); }
+    return lista;
+}
+
+// Obtener usuarios a los que TÚ sigues
+public List<User> obtenerSiguiendo(int userId) {
+    List<User> lista = new ArrayList<>();
+    // Ajustado: follower_id es quien realiza la acción de seguir
+    String sql = "SELECT u.id, u.username, u.avatar FROM users u " +
+                 "JOIN followers f ON u.id = f.followed_id " +
+                 "WHERE f.follower_id = ?";
+    try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, userId);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setUsername(rs.getString("username"));
+                u.setAvatar(rs.getString("avatar"));
+                lista.add(u);
+            }
+        }
+    } catch (SQLException e) { e.printStackTrace(); }
+    return lista;
+}
 }

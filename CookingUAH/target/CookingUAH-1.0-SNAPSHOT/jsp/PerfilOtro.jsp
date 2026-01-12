@@ -62,11 +62,9 @@
               </a>
           </div>
 
-          <%-- BLOQUE MODIFICADO: Lógica de Seguir/Dejar de Seguir --%>
           <div class="perfil-actions-container" style="margin-top: 15px;">
               <c:choose>
                   <c:when test="${esSeguido}">
-                      <%-- Si ya lo sigue, el botón llama a DejarDeSeguirServlet --%>
                       <form action="${pageContext.request.contextPath}/DejarDeSeguirServlet" method="POST" style="display:inline;">
                           <input type="hidden" name="idSeguido" value="${perfil.id}">
                           <button type="submit" class="follow-btn following">
@@ -75,7 +73,6 @@
                       </form>
                   </c:when>
                   <c:otherwise>
-                      <%-- Si no lo sigue, el botón llama a SeguirServlet --%>
                       <form action="${pageContext.request.contextPath}/SeguirServlet" method="POST" style="display:inline;">
                           <input type="hidden" name="idSeguido" value="${perfil.id}">
                           <button type="submit" class="follow-btn">
@@ -85,7 +82,6 @@
                   </c:otherwise>
               </c:choose>
 
-              <%-- Botón para abrir chat directo --%>
               <a href="${pageContext.request.contextPath}/CargarChatServlet?id=${perfil.id}" 
                  class="btn-secondary" style="display:inline-block; margin-left: 10px; vertical-align: middle;">
                  Enviar Mensaje
@@ -114,15 +110,17 @@
                         <img src="${pageContext.request.contextPath}/VerImagen?nombre=${post.image}" alt="Imagen post" class="post-img" />
                     </c:if>
                 </div>
+
+                <%-- BLOQUE MODIFICADO: Ahora usa darLikePerfil con AJAX --%>
                 <div class="post-actions">
-                    <form action="${pageContext.request.contextPath}/InteraccionServlet" method="POST" style="display:inline;">
-                        <input type="hidden" name="accion" value="like">
-                        <input type="hidden" name="postId" value="${post.id}">
-                        <button type="submit" class="like-btn ${post.likedByCurrentUser ? 'liked' : ''}">
-                            ❤️ Me gusta (${post.likesCount})
-                        </button>
-                    </form>
+                    <button type="button" 
+                            id="btn-like-${post.id}"
+                            class="like-btn ${post.likedByCurrentUser ? 'liked' : ''}"
+                            onclick="darLikePerfil('${post.id}')">
+                        ❤️ Me gusta (<span id="likes-count-${post.id}">${post.likesCount}</span>)
+                    </button>
                 </div>
+
                 <div class="comments">
                     <c:forEach var="c" items="${post.comments}">
                         <p><strong>@${c.authorName}:</strong> ${c.content}</p>
@@ -137,6 +135,34 @@
       </section>
     </main>
   </div>
+
+  <%-- Script AJAX para procesar el Like sin recargar --%>
+  <script>
+    function darLikePerfil(postId) {
+        const params = new URLSearchParams();
+        params.append('accion', 'like');
+        params.append('postId', postId);
+
+        fetch('${pageContext.request.contextPath}/InteraccionServlet', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                // 1. Actualizar el contador visual
+                const spanCount = document.getElementById('likes-count-' + postId);
+                if (spanCount) spanCount.innerText = data.likes;
+
+                // 2. Cambiar estilo del botón (opcional, si tienes la clase .liked en CSS)
+                const btn = document.getElementById('btn-like-' + postId);
+                btn.classList.toggle('liked');
+            }
+        })
+        .catch(err => console.error("Error al dar like:", err));
+    }
+  </script>
 
   <%-- Modales (Sin cambios) --%>
   <div id="userListModal" class="user-list-modal" style="display: none;">
@@ -154,6 +180,9 @@
 
   <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
   <script src="${pageContext.request.contextPath}/js/Home.js"></script>
+  <script src="${pageContext.request.contextPath}/js/Actualizador.js"></script>
+</body>
+</html>
   <script src="${pageContext.request.contextPath}/js/Actualizador.js"></script>
 </body>
 </html>

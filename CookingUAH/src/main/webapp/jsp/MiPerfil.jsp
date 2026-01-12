@@ -10,6 +10,7 @@
         return; 
     }
 %>
+<input type="hidden" id="userIdHidden" value="${usuario.id}">
 
 <!DOCTYPE html>
 <html lang="es">
@@ -207,6 +208,16 @@
         </form>
     </div>
 </div>
+  <%-- Modal para la lista de usuarios --%>
+<div id="userListModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-content" style="max-width: 400px;">
+        <span class="modal-close" onclick="document.getElementById('userListModal').style.display='none'">&times;</span>
+        <h2 id="userListTitle">Usuarios</h2>
+        <div id="userListContainer" style="max-height: 400px; overflow-y: auto; margin-top: 15px;">
+            <%-- Aquí se cargarán los usuarios vía JS --%>
+        </div>
+    </div>
+</div>
 
   <div id="postModal" class="modal-backdrop" style="display: none;">
             <div class="modal-content">
@@ -238,7 +249,6 @@
                 </form>
             </div>
         </div>
-
         <script src="${pageContext.request.contextPath}/js/LogicaModal.js"></script>
         <%-- Home.js para actualizar el Feed de recetas --%>
         <script src="${pageContext.request.contextPath}/js/Home.js"></script>
